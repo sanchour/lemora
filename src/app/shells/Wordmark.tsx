@@ -12,11 +12,12 @@ export function LogoMark({ size = 28, className }: { size?: number; className?: 
   );
 }
 
+/** Wordmark: lowercase serif "lingua" with an accent full stop. */
 export function Wordmark({ className, size = 'md' }: { className?: string; size?: 'sm' | 'md' }) {
   return (
-    <span className={cx('flex items-center gap-2', className)}>
-      <LogoMark size={size === 'sm' ? 24 : 28} />
-      <span className={cx('font-serif font-semibold tracking-tight', size === 'sm' ? 'text-lg' : 'text-[22px]')}><UiText source={'Lingua'} /></span>
+    <span className={cx('font-serif leading-none font-semibold tracking-tight text-ink', size === 'sm' ? 'text-[22px]' : 'text-[30px]', className)}>
+      <UiText source={'lingua'} />
+      <span className="text-accent" aria-hidden>.</span>
     </span>
   );
 }
