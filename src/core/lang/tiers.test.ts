@@ -9,7 +9,7 @@ const count = (tier: (typeof LANGUAGES)[number]['tier']) => LANGUAGES.filter((l)
 describe('language tiers', () => {
   it('sorts the languages as the 4.0 plan says', () => {
     expect(LANGUAGES.filter((l) => l.tier === 1).map((l) => l.code).sort()).toEqual(['ar', 'de', 'es', 'fr', 'ru', 'zh']);
-    expect([count(1), count(2), count(3), count(4), count('x')]).toEqual([6, 14, 20, 20, 10]);
+    expect([count(1), count(2), count(3), count(4), count('x')]).toEqual([6, 14, 20, 23, 10]);
     expect(Object.keys(TIERS)).toHaveLength(5);
   });
 
