@@ -1,9 +1,12 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 import type { KeyboardEvent } from 'react';
+import { ArrowRight } from 'lucide-react';
+import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import type { Level } from '@/core/lang/levels';
 import type { CefrLevel } from '@/data/types';
 import { spring } from '@/design/motion';
+import { Button } from '@/design/primitives';
 import { cx } from '@/lib/cx';
 import { LevelIcon } from './LevelStep';
 import { StepTitle } from './StepTitle';
@@ -30,24 +33,9 @@ const MILESTONE: Record<CefrLevel, string> = {
   C1: 'Read anything',
   C2: 'Like a native',
 };
-/**
- * Roughly how many hours of study reach each level from zero: the middle of the guided learning hours
- * usually given for the CEFR levels (Cambridge's estimates). Only for a rough "how long".
- */
-const HOURS: Record<CefrLevel, number> = { A0: 0, A1: 95, A2: 190, B1: 375, B2: 550, C1: 750, C2: 1100 };
-
 /** The goal a level starts with: two steps up from zero, one step up after that. */
 export function defaultGoal(level: Level): CefrLevel {
   return level === 'A0' ? 'A2' : ORDER[Math.min(ORDER.length - 1, ORDER.indexOf(level) + 1)];
-}
-
-/** About how long the goal takes at so many minutes a day, said plainly. */
-function howLong(from: Level, to: CefrLevel, minutes: number, translate: (source: string, values?: readonly unknown[]) => string): string {
-  const days = ((HOURS[to] - HOURS[from]) * 60) / minutes;
-  const months = days / 30.4;
-  if (months < 1.5) return translate('a few weeks');
-  if (months < 24) return translate('{0} months', [Math.round(months)]);
-  return translate('{0} years', [Math.round(months / 12)]);
 }
 
 const PEACH = '#f6bd8a';
@@ -83,20 +71,21 @@ export function GoalStep({ level, goal, minutes, onGoal, onMinutes }: GoalStepPr
     e.preventDefault();
     step(to);
   };
+  /** The goal comes first; once you have picked one a Next button appears, and it brings in the time a day. */
+  const [picked, setPicked] = useState(false);
+  const [timeShown, setTimeShown] = useState(false);
   const stops: Level[] = [level, ...(ahead as Level[])];
   const lastStop = stops.length - 1;
   const goalAt = Math.max(1, stops.indexOf(goal as Level));
-  const verdict = minutes >= 45 ? 'Ambitious. We like it.' : minutes <= 5 ? 'Small sips add up.' : 'A pace that lasts.';
-  const time = howLong(level, goal, minutes, translateUi);
   const crop = (frac: number) => `inset(-12px ${100 - frac * 100}% -12px -12px)`;
 
   return (
     <div>
-      <StepTitle center title={translateUi('Set your own goal')} body="Aim high, start small. Both can change any time in Settings." />
+      <StepTitle center title={translateUi('Set your own goal') + '.'} body="Aim high, start small. Both can change any time in Settings." />
 
       {/* The trail: where you are, then each level ahead, one little drawing apiece; the goal has a flag planted in it. */}
       <h2 className="mb-2 text-center text-[12px] font-bold tracking-[0.08em] text-ink-faint uppercase"><UiText source={'Where do you want to get?'} /></h2>
-      <div role="radiogroup" aria-label={translateUi('The level to reach')} className="relative mx-auto mt-10 h-16 max-w-3xl">
+      <div role="radiogroup" aria-label={translateUi('The level to reach')} className="relative mx-auto mt-20 h-16 max-w-3xl">
         <svg viewBox="0 0 600 20" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-1/2 h-5 -translate-y-1/2 overflow-visible text-line-strong" aria-hidden>
           <path d={WOBBLE} fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeDasharray="1 7" vectorEffect="non-scaling-stroke" />
         </svg>
@@ -115,7 +104,10 @@ export function GoalStep({ level, goal, minutes, onGoal, onMinutes }: GoalStepPr
               aria-checked={on}
               aria-label={you ? `${translateUi('You')}, ${l}` : `${l}, ${translateUi(MILESTONE[l])}`}
               disabled={you}
-              onClick={() => onGoal(l)}
+              onClick={() => {
+                onGoal(l);
+                setPicked(true);
+              }}
               className="group absolute top-1/2 grid size-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-bg disabled:cursor-default"
               style={{ left: `${(i / lastStop) * 100}%` }}
             >
@@ -135,8 +127,22 @@ export function GoalStep({ level, goal, minutes, onGoal, onMinutes }: GoalStepPr
         })}
       </div>
 
+      {/* Next, once a goal is picked; it brings in the time a day. */}
+      <div className="mt-24 flex h-12 justify-center">
+        <AnimatePresence initial={false}>
+          {picked && !timeShown && (
+            <motion.div key="next" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={spring.snappy}>
+              <Button size="lg" className="!rounded-full px-8" iconRight={ArrowRight} onClick={() => setTimeShown(true)}><UiText source={'Next'} /></Button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      <AnimatePresence initial={false}>
+        {timeShown && (
+          <motion.div key="time" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} className="-mt-12">
       {/* Minutes a day: a pen line to slide along, the knob a little clock whose orange slice is the time. */}
-      <h2 className="mt-24 text-center text-[12px] font-bold tracking-[0.08em] text-ink-faint uppercase"><UiText source={'Time a day'} /></h2>
+      <h2 className="text-center text-[12px] font-bold tracking-[0.08em] text-ink-faint uppercase"><UiText source={'Time a day'} /></h2>
       <p className="mt-1 text-center font-serif text-[30px] leading-none font-semibold text-accent-text tabular-nums"><UiText source={'{0} min'} values={[minutes]} /></p>
       <div className="mx-auto mt-3 max-w-3xl px-6">
         <div
@@ -196,20 +202,9 @@ export function GoalStep({ level, goal, minutes, onGoal, onMinutes }: GoalStepPr
           ))}
         </div>
       </div>
-
-      {/* The sum, said plainly under a pen squiggle. */}
-      <div className="mt-10 text-center">
-        <svg viewBox="0 0 120 8" className="mx-auto mb-5 h-2 w-28 text-line-strong" aria-hidden>
-          <path d="M2 4C12 1 20 7 30 4C40 1 48 7 58 4C68 1 76 7 86 4C96 1 104 7 118 3" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" />
-        </svg>
-        <p className="text-[17px] leading-snug"><UiText source={'At {0} minutes a day, {1} in about{2}{3}.'} values={[minutes, goal, ' ', <AnimatePresence mode="popLayout" initial={false}>
-            <motion.span key={time} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={spring.snappy} className="inline-block font-serif text-[24px] font-semibold text-accent-text">
-              {time}
-            </motion.span>
-          </AnimatePresence>]} /></p>
-        <p className="mt-1.5 font-serif text-[16px] text-ink-soft italic"><UiText source={verdict} /></p>
-        <p className="mt-3 text-[12px] text-ink-faint"><UiText source={'A rough guide from the usual hours of study per level. Reading and listening every day count.'} /></p>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
