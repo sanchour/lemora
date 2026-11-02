@@ -250,6 +250,11 @@ export function SpeakStep({ spoken, target, level: targetLevel, onSpoken }: Spea
                     onClick={() => add(level)}
                     className="no-callout flex flex-col items-center rounded-xl border border-line bg-raised px-1 py-2 transition-[transform,border-color,background-color] duration-150 hover:-translate-y-0.5 hover:border-accent hover:bg-accent-soft active:scale-[0.97]"
                   >
+                    <span className="mb-1.5 flex items-end gap-0.5" aria-hidden>
+                      {BARS.map((_, i) => (
+                        <span key={i} className={cx('block w-1.5 rounded-[2px]', i <= BARS.indexOf(level === 'native' ? 'C2' : level) ? (level === 'native' ? 'bg-sage' : 'bg-accent') : 'bg-line-strong/70')} style={{ height: 6 + i * 2.6 }} />
+                      ))}
+                    </span>
                     <span className="text-[14px] font-bold">{level === 'native' ? translateUi('Native') : level}</span>
                     <span className="mt-0.5 truncate text-[11px] text-ink-faint">{level === 'native' ? translateUi('From birth') : LEVEL_NAME[level]}</span>
                   </button>
