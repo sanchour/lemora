@@ -103,7 +103,7 @@ export function PlanPitch({ current, onFree, replay = false }: { current: PlanKi
   const pre = at >= 0 ? title.slice(0, at) : title;
   const post = at >= 0 ? title.slice(at + 'Lingua'.length) : '';
   const price: Record<Plan, string> = { free: translateUi('Free'), plus: PRICES.plus, max: PRICES.maxMonth };
-  const names: Record<Plan, ReactNode> = { free: translateUi('Free'), plus: <>Lingua<span className="text-accent-text">+</span></>, max: 'Max' };
+  const names: Record<Plan, ReactNode> = { free: translateUi('Free'), plus: <>{'Lingua'}<span className="text-accent-text">+</span></>, max: 'Max' };
 
   return (
     <div>
@@ -111,7 +111,7 @@ export function PlanPitch({ current, onFree, replay = false }: { current: PlanKi
         {pre}
         {at >= 0 && (
           <span className="relative inline-block">
-            lingua<span className="text-accent">.</span>
+            {'lingua'}<span className="text-accent">.</span>
             <svg viewBox="0 0 120 10" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 -bottom-1.5 h-2.5 w-full text-accent" aria-hidden>
               <motion.path d="M3 6C25 2 50 9 70 5C90 2 105 7 117 4" fill="none" stroke="currentColor" strokeWidth={2.6} strokeLinecap="round" vectorEffect="non-scaling-stroke" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }} />
             </svg>
