@@ -125,9 +125,10 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
         onClick={() => !l.soon && onTarget(l.code)}
         {...hoverProps(l)}
         className={cx(
-          'no-callout inline-flex items-center rounded-full border',
+          'no-callout inline-flex items-center rounded-full border transition-[background-color,border-color] duration-200',
           big ? 'h-9 gap-2 pr-3.5 pl-2' : 'h-8 gap-1.5 pr-3 pl-1.5 text-[13px]',
           on ? 'border-accent-fill bg-accent-fill font-semibold text-on-accent shadow-elev-1' : 'border-line bg-raised',
+          !on && !l.soon && 'hover:border-accent hover:bg-accent-soft',
           l.soon && 'cursor-default opacity-45',
         )}
       >
@@ -280,7 +281,8 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
               transition={{ ...spring.soft, delay: 0.05 * i }}
               className={cx(
                 'no-callout group relative flex min-h-[140px] min-w-0 flex-col items-start overflow-hidden rounded-[20px] border p-4 text-left outline-none',
-                on ? 'border-accent bg-accent-soft' : 'border-line bg-raised',
+                'transition-[background-color,border-color,box-shadow] duration-200',
+                on ? 'border-accent bg-accent-soft shadow-[0_0_0_1px_var(--accent)]' : 'border-line bg-raised hover:border-accent hover:bg-accent-soft/50',
               )}
             >
               <span className="flex h-8 items-center"><LanguageFlag lang={l.code} width={34} /></span>
