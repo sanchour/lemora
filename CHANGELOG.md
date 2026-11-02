@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.6.0-alpha.165** · 2026-11-02 · record A1 offline diagnosis before A2
 - **0.6.0-alpha.164** · 2026-11-02 · 6-23 A1 checkpoint: Unicode reference implemented; offline reload acceptance open
 - **0.6.0-alpha.163** · 2026-11-02 · 6-23 A1: claim Unicode character reference only
 - **0.6.0-alpha.162** · 2026-11-02 · 6-23 T0: measured source audit, corrected deep plan and closed audit claim
