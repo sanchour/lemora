@@ -125,7 +125,6 @@ function ReadDemo({ kept, onKeep }: { kept: string[]; onKeep: (key: string) => v
           </span>
         ))}
       </p>
-      <p className="mt-6 text-[13px] text-ink-faint"><UiText source={'Point at any word for its meaning. Click one to keep it.'} /></p>
     </div>
   );
 }
