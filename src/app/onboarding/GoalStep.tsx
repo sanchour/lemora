@@ -83,6 +83,9 @@ export function GoalStep({ level, goal, minutes, onGoal, onMinutes }: GoalStepPr
     <div>
       <StepTitle center title={translateUi('Set your own goal') + '.'} body="Aim high, start small. Both can change any time in Settings." />
 
+      <AnimatePresence mode="wait" initial={false}>
+        {!timeShown ? (
+          <motion.div key="goal" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -14, filter: 'blur(4px)' }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
       {/* The trail: where you are, then each level ahead, one little drawing apiece; the goal has a flag planted in it. */}
       <h2 className="mb-2 text-center text-[12px] font-bold tracking-[0.08em] text-ink-faint uppercase"><UiText source={'Where do you want to get?'} /></h2>
       <div role="radiogroup" aria-label={translateUi('The level to reach')} className="relative mx-auto mt-20 h-16 max-w-3xl">
@@ -126,21 +129,19 @@ export function GoalStep({ level, goal, minutes, onGoal, onMinutes }: GoalStepPr
           );
         })}
       </div>
-
       {/* Next, once a goal is picked; it brings in the time a day. */}
-      <div className="mt-24 flex h-12 justify-center">
+      <div className="mt-20 flex h-12 justify-center">
         <AnimatePresence initial={false}>
-          {picked && !timeShown && (
+          {picked && (
             <motion.div key="next" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={spring.snappy}>
               <Button size="lg" className="!rounded-full px-8" iconRight={ArrowRight} onClick={() => setTimeShown(true)}><UiText source={'Next'} /></Button>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-
-      <AnimatePresence initial={false}>
-        {timeShown && (
-          <motion.div key="time" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} className="-mt-12">
+          </motion.div>
+        ) : (
+          <motion.div key="time" initial={{ opacity: 0, y: 16, filter: 'blur(4px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} className="pt-10">
       {/* Minutes a day: a pen line to slide along, the knob a little clock whose orange slice is the time. */}
       <h2 className="text-center text-[12px] font-bold tracking-[0.08em] text-ink-faint uppercase"><UiText source={'Time a day'} /></h2>
       <p className="mt-1 text-center font-serif text-[30px] leading-none font-semibold text-accent-text tabular-nums"><UiText source={'{0} min'} values={[minutes]} /></p>
