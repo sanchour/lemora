@@ -12,14 +12,14 @@ function Pen({ d, delay, duration = 0.4, fade = 1, strokeWidth }: { d: string; d
   return <motion.path {...LINE} strokeWidth={strokeWidth ?? LINE.strokeWidth} d={d} initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: fade }} transition={{ duration, delay, ease: 'easeInOut' }} />;
 }
 
-/** The words that get written on the book: left page, then right page. */
+/** "Hello" in six languages, written on the book one after the other: Spanish, French, Chinese, Russian, Arabic (under the Chinese), German. */
 const WORDS = [
-  { text: 'hola', x: 48, y: 66 },
-  { text: 'こんにちは', x: 148, y: 66, accent: true },
-  { text: '你好', x: 48, y: 88, accent: true },
-  { text: 'bonjour', x: 148, y: 88 },
-  { text: 'مرحبا', x: 112, y: 110, rtl: true },
-  { text: '안녕', x: 148, y: 110, accent: true },
+  { text: 'hola', x: 80, y: 66 },
+  { text: 'bonjour', x: 180, y: 66, accent: true },
+  { text: '你好', x: 80, y: 88, accent: true },
+  { text: 'привет', x: 180, y: 88 },
+  { text: 'مرحبا', x: 80, y: 110, rtl: true },
+  { text: 'hallo', x: 180, y: 110, accent: true },
 ];
 
 /** An open book, drawn in fine line that draws itself in: stacked pages, text lines, a highlighted word, a sprig, a ribbon and a few sparks of language. */
@@ -35,14 +35,24 @@ function OpenBook() {
       <Pen d="M130 42V134" delay={0.35} duration={0.28} />
       <Pen d="M126 46V130" delay={0.4} duration={0.28} fade={0.35} />
       {/* A highlighted word on the left page. */}
-      {/* Greetings in other languages, typed onto the pages one letter at a time. */}
+      {/* Hello in six languages, each one fading in letter by letter and settling into place, one after the other. */}
       {WORDS.map((w, i) => (
-        <text key={w.text} x={w.x} y={w.y} fontSize={13} className={cx('font-serif', w.accent ? 'fill-accent' : 'fill-current')} direction={w.rtl ? 'rtl' : undefined} textAnchor={w.rtl ? 'end' : 'start'} opacity={0.9}>
+        <motion.text
+          key={w.text}
+          x={w.x}
+          y={w.y}
+          fontSize={14}
+          textAnchor="middle"
+          className={cx('font-serif', w.accent ? 'fill-accent' : 'fill-current')}
+          initial={{ y: w.y + 5 }}
+          animate={{ y: w.y }}
+          transition={{ duration: 0.9, delay: 0.6 + i * 0.85, ease: [0.22, 1, 0.36, 1] }}
+        >
           {/* Arabic letters join, so that word fades in whole rather than letter by letter. */}
           {(w.rtl ? [w.text] : [...w.text]).map((ch, j) => (
-            <motion.tspan key={j} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.2, delay: 0.5 + i * 0.6 + j * 0.09 }}>{ch}</motion.tspan>
+            <motion.tspan key={j} initial={{ opacity: 0 }} animate={{ opacity: 0.92 }} transition={{ duration: 0.5, ease: 'easeOut', delay: 0.6 + i * 0.85 + j * 0.08 }}>{ch}</motion.tspan>
           ))}
-        </text>
+        </motion.text>
       ))}
       {/* A sage sprig tucked into the right page. */}
       <g stroke="#6b8e78">
@@ -187,7 +197,7 @@ export function WelcomePage({ name }: { name: string }) {
   // The book starts drawing only once the greeting and the quip have settled.
   const [bookIn, setBookIn] = useState(false);
   useEffect(() => {
-    const t = setTimeout(() => setBookIn(true), 3000);
+    const t = setTimeout(() => setBookIn(true), 2100);
     return () => clearTimeout(t);
   }, []);
   const translateUi = useUi();
@@ -202,10 +212,10 @@ export function WelcomePage({ name }: { name: string }) {
     <div className="flex flex-col items-center py-6 text-center">
       <h1 className="flex max-w-2xl items-baseline justify-center font-serif text-[44px] leading-[1.12] font-semibold tracking-tight whitespace-nowrap" aria-label={full}>
         {/* "Welcome" arrives alone and centred; then the name opens up beside it and the two re-centre together. */}
-        <motion.span aria-hidden initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}>{lead}</motion.span>
-        <motion.span aria-hidden className="-my-1 overflow-hidden py-1 whitespace-pre" initial={{ width: 0, opacity: 0 }} animate={{ width: 'auto', opacity: 1 }} transition={{ width: { duration: 1.3, delay: 1.5, ease: [0.45, 0, 0.2, 1] }, opacity: { duration: 1.1, delay: 1.7, ease: 'easeOut' } }}>{rest}</motion.span>
+        <motion.span aria-hidden initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}>{lead}</motion.span>
+        <motion.span aria-hidden className="-my-1 overflow-hidden py-1 whitespace-pre" initial={{ width: 0, opacity: 0 }} animate={{ width: 'auto', opacity: 1 }} transition={{ width: { duration: 0.9, delay: 1, ease: [0.45, 0, 0.2, 1] }, opacity: { duration: 0.7, delay: 1.15, ease: 'easeOut' } }}>{rest}</motion.span>
       </h1>
-      <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 2.8, ease: [0.22, 1, 0.36, 1] }} className="mt-3 max-w-md text-[16.5px] leading-relaxed text-ink-soft italic">
+      <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.9, ease: [0.22, 1, 0.36, 1] }} className="mt-3 max-w-md text-[16.5px] leading-relaxed text-ink-soft italic">
         {quip}
       </motion.p>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, ease: 'easeOut' }} className="mt-10 h-[200px]">
