@@ -75,7 +75,17 @@ export function NamePage({ name, onName, onEnter }: { name: string; onName: (nam
   useEffect(() => input.current?.focus(), []);
   return (
     <div className="flex flex-col items-center py-6 text-center">
-      <HandMark size={72} className="text-ink" />
+      <div className="group relative cursor-default">
+        <HandMark size={72} className="text-ink" />
+        {/* A little note that pops up when you say hello to the icon. */}
+        <div
+          role="tooltip"
+          className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-3 w-max max-w-[15rem] -translate-x-1/2 translate-y-1 scale-90 rounded-2xl border border-accent/30 bg-raised px-4 py-2.5 font-serif text-[14.5px] leading-snug text-ink opacity-0 shadow-elev-2 transition-[opacity,transform] duration-200 ease-out group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100"
+        >
+          <UiText source={'Hello, lovely! So glad you are here.'} />
+          <span aria-hidden className="absolute top-full left-1/2 size-3 -translate-x-1/2 -translate-y-1.5 rotate-45 border-r border-b border-accent/30 bg-raised" />
+        </div>
+      </div>
       <h1 className="mt-6 font-serif text-[40px] leading-[1.15] font-semibold tracking-tight"><span className="not-italic"><UiText source={'First things first.'} /></span></h1>
       <p className="mt-2 text-[16.5px] text-ink-soft"><UiText source={'What should we call you?'} /></p>
       <div className="group relative mt-10 inline-grid max-w-full">
@@ -92,23 +102,20 @@ export function NamePage({ name, onName, onEnter }: { name: string; onName: (nam
           className="col-start-1 row-start-1 w-full min-w-0 bg-transparent px-2 pb-3 text-center font-serif text-[32px] outline-none"
         />
         {/* A small pencil waiting on the line: it says "write here" without a word, and puts itself away once you type. */}
-        <motion.svg
+        <svg
           viewBox="0 0 24 24"
           width={26}
           height={26}
-          className="pointer-events-none absolute -left-9 bottom-2.5 text-ink-soft transition-opacity duration-200"
-          style={{ opacity: name ? 0 : 1, transformOrigin: '4px 20px' }}
-          animate={{ rotate: [0, -10, 0, -6, 0] }}
-          transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 1.2, ease: 'easeInOut' }}
+          className="pointer-events-none absolute right-1 bottom-3 text-ink-soft transition-opacity duration-200"
+          style={{ opacity: name ? 0 : 1 }}
           aria-hidden
         >
           <g {...LINE} strokeWidth={1.5}>
             <path d="M4 20L5.2 15L16 4.2L19.8 8L9 18.8Z" />
             <path d="M14 6.2L17.8 10" />
-            <path d="M5.2 15L9 18.8" className="text-accent" stroke="currentColor" />
           </g>
           <path d="M4 20L5.2 15L9 18.8Z" fill="var(--accent)" opacity={0.85} />
-        </motion.svg>
+        </svg>
         {/* A pen-drawn line: a little wobble, a loose tail, and a second thin pass that appears on focus. */}
         <svg viewBox="0 0 384 14" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-0 h-3.5 w-full text-line-strong transition-colors duration-200 group-focus-within:text-accent" aria-hidden>
           <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
