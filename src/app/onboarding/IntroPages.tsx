@@ -41,7 +41,7 @@ function OpenBook() {
           key={w.text}
           x={w.x}
           y={w.y}
-          fontSize={14}
+          fontSize={13}
           textAnchor="middle"
           className={cx('font-serif', w.accent ? 'fill-accent' : 'fill-current')}
           initial={{ y: w.y + 5 }}
@@ -55,7 +55,7 @@ function OpenBook() {
         </motion.text>
       ))}
       {/* A sage sprig tucked into the right page. */}
-      <g stroke="#6b8e78">
+      <g stroke="#6b8e78" transform="translate(95 55) scale(0.55)">
         <Pen d="M206 122C204 112 208 102 216 96" delay={0.9} duration={0.33} />
         <Pen d="M216 96C224 96 228 90 228 84C220 84 216 90 216 96Z" delay={1.1} duration={0.22} />
         <Pen d="M208 110C200 110 196 104 196 100C204 100 208 104 208 110Z" delay={1.2} duration={0.22} />
