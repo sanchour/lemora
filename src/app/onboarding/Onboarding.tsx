@@ -10,7 +10,7 @@ import { codeForLanguage } from '@/core/parsers/notion';
 import { completeOnboarding, useActiveLanguage } from '@/data/languages';
 import { useDevLab } from '@/features/lab/devLab';
 import { planOf } from '@/data/plan';
-import { patchSetting, useSettings } from '@/data/settings';
+import { patchSetting, setSetting, useSettings } from '@/data/settings';
 import type { LearningReason, ThemePref } from '@/data/settings';
 import type { CefrLevel } from '@/data/types';
 import { useHotkeys } from '@/design/hooks/useHotkeys';
@@ -77,6 +77,8 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const [busy, setBusy] = useState(false);
   /** Which demo room the about page shows: Codex, Thesaurus, then Sonus & Visio; Next walks through them first. */
   const [room, setRoom] = useState(0);
+  /** Which light the Lux and Nox page shows: 0 Lux (light), 1 Nox (dark); Continue goes from one to the other. */
+  const [lightStage, setLightStage] = useState<0 | 1>(0);
   const page = pages[index];
   const steps = pages.filter((p) => !INTRO.has(p));
   const theme: ThemePref = settings?.theme ?? 'system';
@@ -133,11 +135,23 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const next = () => {
     if (!canContinue || busy) return;
     if (page === 'about' && room < ROOM_COUNT - 1) setRoom(room + 1);
-    else if (index < pages.length - 1) go(index + 1);
-    else void finish();
+    else if (page === 'light' && lightStage === 0) setLightStage(1);
+    else if (index < pages.length - 1) {
+      // Past the lights the app follows the device: Lux by day, Nox at night.
+      if (page === 'light') void setSetting('theme', 'system');
+      if (page === 'goal') setLightStage(0);
+      go(index + 1);
+    } else void finish();
   };
 
-  const back = () => (page === 'about' && room > 0 ? setRoom(room - 1) : go(index - 1));
+  const back = () => {
+    if (page === 'about' && room > 0) setRoom(room - 1);
+    else if (page === 'light' && lightStage === 1) setLightStage(0);
+    else {
+      if (page === 'plans') setLightStage(1);
+      go(index - 1);
+    }
+  };
 
   // Enter moves on, like the Next button, unless you are typing (or on the footer's own buttons, which answer Enter themselves).
   const nextRef = useRef(next);
@@ -215,7 +229,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
               {page === 'speak' && <SpeakStep spoken={spoken} target={target} level={level} onSpoken={setSpoken} />}
               {page === 'why' && <WhyStep language={languageName} reasons={reasonsNow} onReasons={setReasons} />}
               {page === 'goal' && <GoalStep level={level} goal={goalNow} minutes={minutes} onGoal={setGoal} onMinutes={setMinutes} />}
-              {page === 'light' && settings && <AestheticStep pref={theme} palette={settings.palette} sample={getLanguage(target ?? 'en')?.sample || LANGUAGES[0].sample} lang={target ?? 'en'} />}
+              {page === 'light' && settings && <AestheticStep stage={lightStage} palette={settings.palette} sample={getLanguage(target ?? 'en')?.sample || LANGUAGES[0].sample} lang={target ?? 'en'} />}
               {page === 'plans' && settings && <PlanPitch current={planOf(settings.meta)} onFree={() => void finish()} replay={replaying} />}
             </motion.section>
           </AnimatePresence>

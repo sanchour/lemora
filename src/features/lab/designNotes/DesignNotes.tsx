@@ -89,7 +89,7 @@ function around(box: Rect): Element {
 function lightNow(): string {
   const { theme, palette } = document.documentElement.dataset;
   const name = palette ? palette[0].toUpperCase() + palette.slice(1) : '';
-  return `${theme === 'nocturne' ? 'Nocturne' : 'Paper'}${name ? `, ${name}` : ''}`;
+  return `${theme === 'nocturne' ? 'Nox' : 'Lux'}${name ? `, ${name}` : ''}`;
 }
 
 const place = (box: HTMLElement, r: Rect) => {

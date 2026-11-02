@@ -87,14 +87,14 @@ export function AppearanceSection({
           onChange={(value) => void setSetting('theme', value)}
           block
           options={[
-            { value: 'paper', label: translateUi('Paper'), icon: Sun },
-            { value: 'nocturne', label: translateUi('Nocturne'), icon: Moon },
+            { value: 'paper', label: translateUi('Lux'), icon: Sun },
+            { value: 'nocturne', label: translateUi('Nox'), icon: Moon },
             { value: 'system', label: translateUi('Device'), icon: Monitor },
           ]}
         />
-        <p data-hint="" className="mt-2 text-[13px] text-ink-soft"><UiText source={'Paper for daylight, Nocturne for the evening. On iPhone, the status bar colour updates the next time you open Lingua.'} /></p>
-        <PaletteRow title={translateUi('Paper')} palettes={PAPER_PALETTES} value={palette.paper} onChange={(id) => void patchSetting('palette', { paper: id as Settings['palette']['paper'] })} />
-        <PaletteRow title={translateUi('Nocturne')} palettes={NOCTURNE_PALETTES} value={palette.nocturne} onChange={(id) => void patchSetting('palette', { nocturne: id as Settings['palette']['nocturne'] })} />
+        <p data-hint="" className="mt-2 text-[13px] text-ink-soft"><UiText source={'Lux for daylight, Nox for the evening. On iPhone, the status bar colour updates the next time you open Lingua.'} /></p>
+        <PaletteRow title={translateUi('Lux')} palettes={PAPER_PALETTES} value={palette.paper} onChange={(id) => void patchSetting('palette', { paper: id as Settings['palette']['paper'] })} />
+        <PaletteRow title={translateUi('Nox')} palettes={NOCTURNE_PALETTES} value={palette.nocturne} onChange={(id) => void patchSetting('palette', { nocturne: id as Settings['palette']['nocturne'] })} />
       </div>
 
       <div className="mt-6">

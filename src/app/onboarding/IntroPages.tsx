@@ -170,11 +170,11 @@ function WordsDemo({ kept }: { kept: string[] }) {
           >
             <span className="absolute inset-0 grid place-items-center rounded-[20px] border border-line bg-raised shadow-elev-2" style={{ backfaceVisibility: 'hidden' }}>
               <span lang="es" className="font-serif text-[30px] font-semibold">{cur}</span>
-              <span className="absolute bottom-3 text-[11.5px] font-semibold tracking-wide text-accent-text uppercase">Turn over</span>
+              <span className="absolute bottom-3 text-[11.5px] font-semibold tracking-wide text-accent-text uppercase"><UiText source={'Turn over'} /></span>
             </span>
             <span className="absolute inset-0 grid place-items-center rounded-[20px] border border-accent/40 bg-accent/10 px-4" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
               <span className="text-center text-[17px] leading-snug font-semibold text-accent-text">{GLOSS[cur]}</span>
-              <span className="absolute bottom-3 text-[11.5px] font-semibold tracking-wide text-accent-text/80 uppercase">I knew it</span>
+              <span className="absolute bottom-3 text-[11.5px] font-semibold tracking-wide text-accent-text/80 uppercase"><UiText source={'I knew it'} /></span>
             </span>
           </motion.button>
         </AnimatePresence>
@@ -536,7 +536,7 @@ export function AboutPage({ room: roomIndex, onRoom }: { room: number; onRoom: (
         {pre}
         {hasName ? (
           <span className="relative inline-block">
-            lingua<span className="text-accent">.</span>
+            {'lingua'}<span className="text-accent">.</span>
             {/* A smooth orange line that fades and draws itself in under the name. */}
             <svg viewBox="0 0 120 10" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 -bottom-1.5 h-2.5 w-full text-accent" aria-hidden>
               <motion.path d="M3 6C25 2 50 9 70 5C90 2 105 7 117 4" fill="none" stroke="currentColor" strokeWidth={2.6} strokeLinecap="round" vectorEffect="non-scaling-stroke" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ pathLength: { duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.6, delay: 0.3 } }} />

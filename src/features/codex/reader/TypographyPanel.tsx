@@ -107,8 +107,8 @@ function TextSection({ reader, theme, lang }: TypographyPanelProps) {
           value={theme}
           onChange={(t) => void setSetting('theme', t)}
           options={[
-            { value: 'paper', label: translateUi(''), icon: Sun, ariaLabel: 'Paper' },
-            { value: 'nocturne', label: translateUi(''), icon: Moon, ariaLabel: 'Nocturne' },
+            { value: 'paper', label: translateUi(''), icon: Sun, ariaLabel: 'Lux' },
+            { value: 'nocturne', label: translateUi(''), icon: Moon, ariaLabel: 'Nox' },
           ]}
         />
       </div>

@@ -14866,5 +14866,69 @@
     "src/features/ordo/sections/ResetSection.tsx",
     "src/features/ordo/sections/LanguageSection.tsx",
     "src/data/removalUndo.ts"
+  ],
+  "Well done.": [
+    "src/app/onboarding/IntroPages.tsx"
+  ],
+  "Hello! So glad you are here.": [
+    "src/app/onboarding/IntroPages.tsx"
+  ],
+  "What Lingua can do": [
+    "src/app/onboarding/IntroPages.tsx"
+  ],
+  "Click a country to see what’s spoken there, or pick one of the six below.": [
+    "src/app/onboarding/LanguageStep.tsx"
+  ],
+  "Our core languages": [
+    "src/app/onboarding/LanguageStep.tsx"
+  ],
+  "Six languages with the full course: grammar, alphabet, dictionary and natural voices.": [
+    "src/app/onboarding/LanguageStep.tsx"
+  ],
+  "All {0} languages": [
+    "src/app/onboarding/LanguageStep.tsx"
+  ],
+  "Language library": [
+    "src/app/onboarding/LanguageStep.tsx"
+  ],
+  "Every other language, shelved by how much Lingua has for it.": [
+    "src/app/onboarding/LanguageStep.tsx"
+  ],
+  "See example": [
+    "src/app/onboarding/LevelStep.tsx"
+  ],
+  "Slide to the level that sounds most like you. You can change it any time.": [
+    "src/app/onboarding/LevelStep.tsx"
+  ],
+  "Nothing to skip yet": [
+    "src/app/onboarding/LevelStep.tsx"
+  ],
+  "lingua": [
+    "src/app/shells/Wordmark.tsx"
+  ],
+  "Lux": [
+    "src/features/lab/LabTools.tsx",
+    "src/features/ordo/SimpleSettings.tsx",
+    "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "Nox": [
+    "src/features/lab/LabTools.tsx",
+    "src/features/ordo/SimpleSettings.tsx",
+    "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "Lux palettes": [
+    "src/features/lab/LabTools.tsx"
+  ],
+  "Nox palettes": [
+    "src/features/lab/LabTools.tsx"
+  ],
+  "Lux for daylight, Nox for the evening. On iPhone, the status bar colour updates the next time you open Lingua.": [
+    "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "Switch to Lux (light)": [
+    "src/features/sonus/CommutePage.tsx"
+  ],
+  "Switch to Nox (dark)": [
+    "src/features/sonus/CommutePage.tsx"
   ]
 }
