@@ -1,0 +1,18 @@
+{
+  "retrieved": "2026-11-02",
+  "approval": "Up to 25 MB of public A2 references, sequentially; user approved 2026-11-02",
+  "sources": [
+    {
+      "file": "russian-bgn-2022.pdf",
+      "url": "https://assets.publishing.service.gov.uk/media/636cd2828fa8f5357a0c652c/ROMANIZATION_OF_RUSSIAN_2022_final.pdf",
+      "bytes": 151086,
+      "sha256": "6447ee0dabc61100764a86ea277ea3fb8ce69cba1bec3ceb9766df06e5335a77"
+    },
+    {
+      "file": "iso-9-1995-preview.pdf",
+      "url": "https://cdn.standards.iteh.ai/samples/3589/3b8e97e9a40c4e668f22b30a0735fd4a/ISO-9-1995.pdf",
+      "bytes": 1813466,
+      "sha256": "b1fcdea74f90ca0cac56973db3280fcc5039bc149a51c10654b8c45ab8830d6e"
+    }
+  ]
+}

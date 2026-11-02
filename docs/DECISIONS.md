@@ -2125,3 +2125,15 @@ native capability, deployment channel or minimum OS decision is introduced by th
   desktop sizes in Paper/Nocturne and Arabic text inspected. Offline reload failed and browser
   policy blocked error-page inspection. Stop with a branch checkpoint, retain A1, leave F1306 open;
   do not alter the shared app shell or claim an unrelated root cause without evidence.
+
+## 2026-11-02 · 6-23 A2 begins with named, source-backed display conversions
+
+Keep the existing alphabet-lesson romanizer and fixtures intact. New named systems live under
+core/script/translit, and Russian BGN/PCGN 1947 and ISO 9:1995 are chosen per language in Reading
+settings. Pass the scheme to the memoized ChapterBody from the reader/transcript callers; this
+keeps it independently renderable and avoids making all chapter words subscribe to app context.
+Russian named conversion wins over an older supplied reading; source text, selection/copy and
+stored words stay intact. Do not drop ISO/BGN marks through the Arabic-only plain-letters switch.
+Refuse unmapped Cyrillic; do not infer an unwritten ё. Primary-source fixtures are distinguished
+from synthetic edge tests and human language review. A2's full acceptance is still open; this
+checkpoint does not claim the remaining schemes or five independent surface settings.

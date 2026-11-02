@@ -7474,5 +7474,6 @@
   "NFD": "NFD",
   "UTF-8 bytes (hex)": "Octets UTF-8 (hex)",
   "Character data could not be loaded. Connect once and try again.": "Impossible de charger les données des caractères. Connectez-vous et réessayez.",
-  "Character data has an unexpected format. Please try again.": "Le format des données des caractères est inattendu. Veuillez réessayer."
+  "Character data has an unexpected format. Please try again.": "Le format des données des caractères est inattendu. Veuillez réessayer.",
+  "Transliteration scheme": "Système de translittération"
 }

@@ -2533,3 +2533,31 @@ an online reload. The subsequent server-off reload still failed. No service-work
 established and no runtime code was changed. Safari comparison could not run: native Computer Use
 permissions were not granted. A1 acceptance/F1306 remain open. The user's next request explicitly
 switches to A2; preserve this gap rather than mark A1 complete.
+
+### 6-23 A2 · Codex · 2026-11-02
+
+Claim published alone as alpha.166; A1's offline acceptance gap remains open. Work in checked,
+versioned slices, preserving the original A2 acceptance rather than ticking partial implementations:
+
+- [~] A2.1: source-backed Russian BGN/PCGN 1947 and ISO 9:1995 engines, Settings › Reading scheme
+  selection and reader use; preserve legacy alphabet-lesson fixtures until explicitly migrated.
+- [ ] A2.2: remaining named systems for Russian, Greek, Arabic, Japanese, Korean, Mandarin,
+  Georgian and Cantonese; published examples per named edition, with review files and limits.
+- [ ] A2.3: shared per-language scheme and per-surface display controls (reader, cards, dictionary,
+  lessons, subtitles), over/under/hover, click reveal, word/lesson fading and check-yourself mode.
+- [ ] A2.4: desktop acceptance at 1280, 1440 and 1366×768, Paper/Nocturne and Arabic; final tests,
+  typecheck and build, honest source/native-review/offline limits, versioned Codex push.
+
+Callers to cover: ChapterBody/ReaderPage, KaraokeTranscript, FlipCard, dictionary Entry, CourseIntro
+and SpeakLesson; settings persistence, shared CSS, golden fixtures and interface catalogues. No
+learner text or stored readings are rewritten; conversion is a display operation. No Claude-owned
+exercise views, card editor or SRS files will be edited.
+
+**A2.1 checkpoint:** two source-backed engines and their persistent selector/preview are implemented;
+Codex and Russian transcripts receive the scheme without changing saved words or alphabet lesson
+fixtures. Typecheck, 250 files/1,637 tests passing/one skipped and production-path build pass. A
+regression caused by adding app context inside ChapterBody was corrected by passing the scheme
+from its callers; the existing test remains intact and a selected-scheme/source-text regression
+was added. Russian browser acceptance is pending the requested 2.6 MB local test-pack approval.
+Arabic Settings was opened after rebuild; this is not certification of the new Russian controls.
+No A2 audit ticks, acceptance, main merge or deployment. A2 claim remains; A1 offline gap remains.

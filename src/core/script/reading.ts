@@ -1,12 +1,14 @@
 // Reading aids over words (6-23): the Latin-letter reading of a word in a script the learner is still
 // learning, and the code points of a letter. Pure, so the reader and the letter sheet share it.
 import { ROMANIZE } from './romanize';
+import { russian, RUSSIAN_SCHEMES } from './translit/russian';
 
 /** Languages whose words get a transliteration over them (Mandarin, Cantonese and Japanese have readings of their own). */
 export const TRANSLIT_LANGS = new Set(['ru', 'el', 'ar', 'ko', 'ka']);
 
 /** A word's transliteration, or undefined when the scheme can't read it (Arabic without vowel marks) or it would only repeat the word. */
-export function translitFor(lang: string, text: string): string | undefined {
+export function translitFor(lang: string, text: string, scheme?: string): string | undefined {
+  if (lang === 'ru' && scheme) return RUSSIAN_SCHEMES.includes(scheme as typeof RUSSIAN_SCHEMES[number]) ? russian(text, scheme as typeof RUSSIAN_SCHEMES[number]) : undefined;
   if (!TRANSLIT_LANGS.has(lang)) return undefined;
   const out = ROMANIZE[lang]?.(text);
   return out && out !== text.toLowerCase() ? out : undefined;

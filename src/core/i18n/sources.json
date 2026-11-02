@@ -14957,5 +14957,8 @@
   "NFD": ["src/features/cursus/characters/CharactersPage.tsx"],
   "UTF-8 bytes (hex)": ["src/features/cursus/characters/CharactersPage.tsx"],
   "Character data could not be loaded. Connect once and try again.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Character data has an unexpected format. Please try again.": ["src/features/cursus/characters/CharactersPage.tsx"]
+  "Character data has an unexpected format. Please try again.": ["src/features/cursus/characters/CharactersPage.tsx"],
+  "Transliteration scheme": [
+    "src/features/ordo/sections/ReadingSection.tsx"
+  ]
 }

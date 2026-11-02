@@ -91,6 +91,14 @@ Acceptance/F1306 remain open; A1 claim retained, A2 not started.
   reading is shown over, under, or in a hover; "reveal this word" on a click; fading by word state (done) and by lesson. Golden tests per scheme from published
   examples. **Done when:** every scheme has golden tests from its standard's own examples, the schemes are chosen in Settings › Reading
   and honoured in every surface, and F1300 (reading with no transliteration) is a visible mode with a "check yourself" reveal.
+**A2.1 checkpoint, Codex 2026-11-02:** Russian BGN/PCGN 1947 and ISO 9:1995 are implemented,
+with primary-source golden fixtures, a persistent Settings › Reading selector/preview and scheme
+props into the reader/transcript ChapterBody. [Review ledger and exact scope](review/6-23-ru.md).
+Typecheck, 1,637 tests/one skipped and production build pass. Russian browser acceptance awaits the
+requested local test-pack approval. No other named scheme, per-surface setting, new reveal/lesson
+fading mode or A2 acceptance is claimed. The original A2 “done when” and all its feature entries
+remain open; Codex retains the A2 claim. A1's offline gap remains open separately.
+
 - **A3 · Script conversion (F1299).** Chinese: OpenCC's phrase dictionaries (s2t, t2s, s2tw, s2twp, s2hk, tw2s, hk2s) compiled to a
   compact trie, lazy; conversion of text, of a whole book in the reader ("show in Traditional / Simplified / Taiwan"), of a card's
   fields on export; the many-to-one traps (发, 后, 干, 面) handled by phrases and listed. Serbian: Cyrillic ⇄ Latin with the

@@ -7,6 +7,7 @@ import { packId } from '@/core/packs/format';
 import { endingStart, markMatches, MARK_COLOURS, POS_COLOURS } from '@/core/reading/aids';
 import type { ReadingAids, ReadingMark } from '@/core/reading/aids';
 import { READING_LANGS } from '@/core/lang/languages';
+import { russianScheme } from '@/core/script/translit/russian';
 import { TRANSLIT_LANGS, translitFor } from '@/core/script/reading';
 import { simpleTranslit } from '@/core/script/arabic';
 import { blobUrl } from '@/data/library';
@@ -17,7 +18,8 @@ import type { ChapterModel } from './model';
  * (data-o) and state (data-s). Rendered once per chapter; after that the word engine updates
  * spans directly, so word clicks never re-render this tree.
  */
-export const ChapterBody = memo(function ChapterBody({ model, lang, images = true, aids, marks = [], plainTranslit, onLayout }: { model: ChapterModel; lang: string; images?: boolean; aids?: ReadingAids; marks?: ReadingMark[]; plainTranslit?: boolean; onLayout?: () => void }) {
+export const ChapterBody = memo(function ChapterBody({ model, lang, images = true, aids, marks = [], plainTranslit, scheme, onLayout }: { model: ChapterModel; lang: string; images?: boolean; aids?: ReadingAids; marks?: ReadingMark[]; plainTranslit?: boolean; scheme?: string; onLayout?: () => void }) {
+  const selectedScheme = lang === 'ru' ? russianScheme(scheme) : scheme;
   const readings = READING_LANGS.has(lang) || TRANSLIT_LANGS.has(lang);
   const [revealed, setRevealed] = useState<Set<string>>(() => new Set());
   useEffect(() => setRevealed(new Set()), [model.chapter.id]);
@@ -42,7 +44,7 @@ export const ChapterBody = memo(function ChapterBody({ model, lang, images = tru
             const mark = localMarks.find((m) => t.start < m.end && t.start + t.text.length > m.start);
             const sentence = `${b}:${sentences.containing(t.start)?.index ?? 0}`;
             return <span key={i} className="w" data-n={t.norm} data-o={t.start} data-s={model.states.get(t.norm!) ?? 0}
-              data-r={readings ? readingFor(lang, t.text, gloss?.reading) ?? plain(translitFor(lang, t.text), plainTranslit) : undefined}
+              data-r={readings ? lang === 'ru' ? translitFor(lang, t.text, selectedScheme) : readingFor(lang, t.text, gloss?.reading) ?? plain(translitFor(lang, t.text, selectedScheme), lang === 'ar' && plainTranslit) : undefined}
               data-gloss={aids?.glosses ? (!aids.hideGlosses || revealed.has(sentence) ? gloss?.text ?? '—' : '…') : undefined}
               title={aids?.pos ? `${pos || 'Category not listed'}${ending !== undefined ? ` · dictionary form: ${gloss?.lemma}` : ''}` : ending !== undefined ? `Dictionary form: ${gloss?.lemma}` : undefined}
               style={{ color: aids?.pos ? POS_COLOURS[pos] : undefined, backgroundColor: mark ? MARK_COLOURS[mark.colour] : undefined, boxShadow: mark ? 'inset 0 -2px currentColor' : undefined }}>

@@ -520,7 +520,7 @@ export default function ReaderPage() {
   }
   if (!text) return null;
 
-  const body = ready ? <ChapterBody model={model} lang={lang} images={!comic} aids={aids} marks={text?.readingMarks} plainTranslit={reader.translit === 'plain'} onLayout={onAidLayout} /> : null;
+  const body = ready ? <ChapterBody model={model} lang={lang} images={!comic} aids={aids} marks={text?.readingMarks} plainTranslit={reader.translit === 'plain'} scheme={reader.readingSchemes?.[lang]} onLayout={onAidLayout} /> : null;
 
   return (
     <motion.div

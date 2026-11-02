@@ -7474,5 +7474,6 @@
   "NFD": "NFD",
   "UTF-8 bytes (hex)": "Байты UTF-8 (hex)",
   "Character data could not be loaded. Connect once and try again.": "Не удалось загрузить данные символов. Подключитесь и попробуйте снова.",
-  "Character data has an unexpected format. Please try again.": "Неожиданный формат данных символов. Попробуйте снова."
+  "Character data has an unexpected format. Please try again.": "Неожиданный формат данных символов. Попробуйте снова.",
+  "Transliteration scheme": "Система транслитерации"
 }

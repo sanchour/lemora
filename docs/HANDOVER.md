@@ -298,3 +298,20 @@ or shared-shell fix attempted. Branch checkpoint only, not merged or deployed; F
 Codex retains the A1 claim, A2 is not claimed. Resume only when requested to resolve this check.
 Screen readers, installed-PWA offline launch, native-speaker locale review, clipboard, real AI/audio/
 microphone and rare-font coverage remain unverified. No phone work.
+
+## 2026-11-02 · Codex 6-23 A2.1 checkpoint
+
+The user explicitly requested A2 after A1's diagnostic follow-up. Alpha.165 records the unresolved
+A1 offline gap; alpha.166 is the A2-only claim. A2.1 implements Russian BGN/PCGN 1947 and ISO
+9:1995 with primary-source tests, a saved Reading selector/preview and reader/transcript wiring.
+[Scope, sources and review limits](review/6-23-ru.md). Typecheck, 250 test files/1,637 passing tests/
+one skipped and production-path build pass. The ChapterBody regression this change caused was
+fixed at the caller boundary and covered without altering the existing test.
+
+Russian browser verification is pending the separately requested 2.6 MB local test-pack approval;
+the earlier 25 MB approval covers public romanization references, not app packs. Only Arabic
+Settings was opened after rebuild. No Russian UI, screen-reader, native linguistic review or
+live transcript playback certification. No new A2 audit tick, acceptance, merge or deployment.
+Next: finish Russian browser acceptance, then ALA-LC/passport and the other seven languages,
+shared per-surface controls, reveal and lesson fading. A2 claim stays with Codex; A1's offline
+acceptance remains open. Main stays protected; Codex checkpoint only.

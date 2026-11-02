@@ -18,3 +18,15 @@ it('keeps source words intact while adding gloss attributes and changed endings'
   expect(hidden).toContain('Reveal');
   expect(hidden).not.toContain('we speak');
 });
+
+it('uses the selected Russian scheme without putting the reading in selectable word text', () => {
+  const text = 'Щит.';
+  const model: ChapterModel = { chapter: { id: 'r', textId: 't', index: 0, wordCount: 1, blocks: [{ t: 'p', text }] }, blocks: [{ block: { t: 'p', text }, tokens: tokenize(text, 'ru') }], norms: ['щит'], states: new Map(), senses: new Map(), glosses: new Map([['щит', { text: 'shield', source: 'dict', reading: 'old-default-reading' }]]) };
+  const iso = renderToStaticMarkup(createElement(ChapterBody, { model, lang: 'ru', scheme: 'iso-9-1995' }));
+  expect(iso).toContain('data-r="Ŝit"');
+  expect(iso).toContain('>Щит</span>.');
+  const bgn = renderToStaticMarkup(createElement(ChapterBody, { model, lang: 'ru', scheme: 'bgn-pcgn-1947' }));
+  expect(bgn).toContain('data-r="Shchit"');
+  const unknown = renderToStaticMarkup(createElement(ChapterBody, { model, lang: 'ru', scheme: 'unknown-old-setting' }));
+  expect(unknown).toContain('data-r="Shchit"');
+});

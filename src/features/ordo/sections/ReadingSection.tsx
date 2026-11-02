@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react';
 import { useApp } from '@/app/context';
 import { resolveTheme } from '@/app/theme';
 import { getLanguage, LANGUAGES, READING_LANGS } from '@/core/lang/languages';
+import { russian, russianScheme, RUSSIAN_SCHEME_NAMES, RUSSIAN_SCHEMES } from '@/core/script/translit/russian';
 import { TRANSLIT_LANGS } from '@/core/script/reading';
 import type { Script } from '@/core/lang/languages';
 import { patchSetting } from '@/data/settings';
@@ -12,7 +13,7 @@ import { fallbackFamily, getReaderFont, READER_FONTS, readerFontStack } from '@/
 import { useMediaQuery } from '@/design/hooks/useMediaQuery';
 import { darkPaper, lightPaper, paperStyle } from '@/design/papers';
 import { PaperPicker } from '@/features/codex/reader/PaperPicker';
-import { Badge, Segmented, Slider, ToggleRow } from '@/design/primitives';
+import { Badge, Segmented, Select, Slider, ToggleRow } from '@/design/primitives';
 import { cx } from '@/lib/cx';
 import { SettingsSection } from '../SettingsSection';
 import { useDraft } from '../useDraft';
@@ -142,6 +143,15 @@ export function ReadingSection({ reader, lang }: { reader: Settings['reader']; l
           />
         </div>
       )}
+
+      {target.code === 'ru' && <div className="mt-5 space-y-3">
+        <Select label={translateUi('Transliteration scheme')} value={russianScheme(reader.readingSchemes?.ru)}
+          onChange={(scheme) => void patchSetting('reader', { readingSchemes: { ...reader.readingSchemes, ru: scheme } })}
+          options={RUSSIAN_SCHEMES.map((value) => ({ value, label: RUSSIAN_SCHEME_NAMES[value] }))} />
+        <p lang="ru" className="rounded-xl border border-line bg-raised px-4 py-3 text-[15px]">Екатеринбург · Ёлкино · Змеевка<br />
+          <bdi lang="en" className="text-ink-soft">{russian('Екатеринбург · Ёлкино · Змеевка', russianScheme(reader.readingSchemes?.ru))}</bdi>
+        </p>
+      </div>}
 
       {target.code === 'ar' && (
         <div className="mt-5">

@@ -7474,5 +7474,6 @@
   "NFD": "NFD",
   "UTF-8 bytes (hex)": "بايتات UTF-8 (ست عشري)",
   "Character data could not be loaded. Connect once and try again.": "تعذّر تحميل بيانات المحارف. اتصل وحاول مجددًا.",
-  "Character data has an unexpected format. Please try again.": "تنسيق بيانات المحارف غير متوقع. يُرجى المحاولة مجددًا."
+  "Character data has an unexpected format. Please try again.": "تنسيق بيانات المحارف غير متوقع. يُرجى المحاولة مجددًا.",
+  "Transliteration scheme": "نظام النقل الحرفي"
 }

@@ -2147,3 +2147,11 @@ With this many possibilities, the danger is building a sprawling collection of t
 
 
 **6-25 final audit, Codex 2026-11-02:** F1546/F1550 controls are learner-reachable. [The final inventory](LINGUA-6-25-AUDIT.md) states the exact recovery lifetime, permanent device-forgetting boundary and checks not completed after browser review hit its usage limit. No real AI, microphone or screen-reader certification is implied by these ticks.
+
+### 6-23 A2.1 checkpoint · Codex · 2026-11-02
+
+F1298/F1300/F1301/F1371 remain unticked under the deep plan. The new Russian BGN/PCGN 1947
+and ISO 9:1995 engines, Settings selector/preview and reader/transcript wiring are checked by
+source-backed and integration tests; Russian browser acceptance is pending test-pack approval.
+Other named schemes, per-surface choices, position/reveal controls and lesson-based fading remain.
+[Source/review scope](review/6-23-ru.md). This does not close A1's offline verification gap.
