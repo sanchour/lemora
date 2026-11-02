@@ -86,7 +86,7 @@ export function NamePage({ name, onName, onEnter }: { name: string; onName: (nam
           role="tooltip"
           className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-3 w-max max-w-[15rem] -translate-x-1/2 translate-y-1 scale-90 rounded-2xl border border-accent/30 bg-raised px-4 py-2.5 font-serif text-[14.5px] leading-snug text-ink opacity-0 shadow-elev-2 transition-[opacity,transform] duration-200 ease-out group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100"
         >
-          <UiText source={'Hello, lovely! So glad you are here.'} />
+          <UiText source={'Hello! So glad you are here.'} />
           <span aria-hidden className="absolute top-full left-1/2 size-3 -translate-x-1/2 -translate-y-1.5 rotate-45 border-r border-b border-accent/30 bg-raised" />
         </div>
       </div>
