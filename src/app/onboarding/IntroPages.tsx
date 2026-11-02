@@ -236,13 +236,14 @@ export function AboutPage() {
   const upcoming = shown < last ? shown : -1; // and the one that comes next
   return (
     <div className="py-6">
-      <h1 className="flex flex-col items-center" aria-label="Lingua">
-        <Wordmark className="!text-[52px]" />
-        {/* A smooth orange line that draws itself in under the name. */}
-        <svg viewBox="0 0 220 14" className="mt-1 h-3.5 w-[200px] text-accent" aria-hidden>
+      <div className="flex flex-col items-center">
+        <Wordmark className="!text-[44px]" />
+        {/* A smooth orange line that fades and draws itself in under the name. */}
+        <svg viewBox="0 0 220 14" className="mt-1 h-3.5 w-[180px] text-accent" aria-hidden>
           <motion.path d="M4 8C40 3 78 12 112 7C150 2 186 10 216 6" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ pathLength: { duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.6, delay: 0.2 } }} />
         </svg>
-      </h1>
+      </div>
+      <h1 className="mt-8 text-center font-serif text-[36px] leading-tight font-semibold tracking-tight"><UiText source={'See what Lingua can do'} /></h1>
       <p className="mt-2 text-center text-[16px] text-ink-soft"><UiText source={'Learn a language by living in it. Three things, done well.'} /></p>
       <div className="mt-12 grid grid-cols-3 gap-8">
         {VIGNETTES.map((v, i) => {
@@ -283,13 +284,10 @@ export function AboutPage() {
                   {v.draw}
                 </motion.svg>
                 {isNext && (
-                  <motion.svg aria-hidden viewBox="0 0 40 40" className="absolute size-11 text-ink" initial={{ scale: 0, rotate: -12 }} animate={{ scale: [1, 1.07, 1], rotate: [-3, 3, -3] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}>
-                    {/* A hand-inked sticker: a wobbly orange blob, its pen line nudged off-register, and a pen-drawn numeral. */}
-                    <path d="M20 4C30 3 37 10 36 20C35 31 28 37 19 36C9 35 3 29 4 19C5 10 11 5 20 4Z" fill="var(--accent-fill)" />
-                    <path d="M20 4C30 3 37 10 36 20C35 31 28 37 19 36C9 35 3 29 4 19C5 10 11 5 20 4Z" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" transform="translate(-1 1)" />
-                    {/* A pen-drawn pointing hand with two little click marks. */}
-                    <path d="M17 29V14.5C17 12.5 20 12.5 20 14.5V21C20 19.5 23 19.5 23 21.2C23 20 26 20 26 21.8C26 20.8 28.5 21 28.5 22.8V27.5C28.5 30.5 26.5 33 23.5 33H21C19 33 18 32 16.5 30.5L13 26.5C12 25.3 13.6 24 14.8 25L17 27" fill="var(--raised)" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M12.5 12C11.3 10.8 11.3 9 12.5 7.8M25 12C26.2 10.8 26.2 9 25 7.8M18.5 9.5V6.5" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" />
+                  <motion.svg aria-hidden viewBox="0 0 32 32" className="absolute size-9 text-ink-soft" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: 'easeOut' }}>
+                    {/* A small pen-drawn pointer with one click mark, still until you use it. */}
+                    <path d="M11 6L11.6 23L15.8 19.2L19 26.4L22 25L18.8 18L24.6 17.6Z" fill="var(--raised)" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M7.5 10C6.2 8.6 6.2 6.4 7.5 5M5 12.5C2.6 10 2.6 6 5 3.5" fill="none" stroke="var(--accent)" strokeWidth={1.4} strokeLinecap="round" />
                   </motion.svg>
                 )}
               </span>
