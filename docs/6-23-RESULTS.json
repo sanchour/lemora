@@ -1,0 +1,848 @@
+{
+  "sourceBytes": 454927564,
+  "opencc": {
+    "configs": {
+      "s2t": [
+        "CJK_Compatibility_Ideographs.ocd2",
+        "STCharacters.ocd2",
+        "STPhrases.ocd2",
+        "STPhrases_GeneratedFromRegionalPhrases.ocd2"
+      ],
+      "t2s": [
+        "CJK_Compatibility_Ideographs.ocd2",
+        "TSCharacters.ocd2",
+        "TSCharactersExt.ocd2",
+        "TSPhrases.ocd2"
+      ],
+      "s2tw": [
+        "CJK_Compatibility_Ideographs.ocd2",
+        "STCharacters.ocd2",
+        "STPhrases.ocd2",
+        "STPhrases_GeneratedFromRegionalPhrases.ocd2",
+        "TWVariants.ocd2",
+        "TWVariantsPhrases.ocd2"
+      ],
+      "s2twp": [
+        "CJK_Compatibility_Ideographs.ocd2",
+        "STCharacters.ocd2",
+        "STPhrases.ocd2",
+        "STPhrases_GeneratedFromRegionalPhrases.ocd2",
+        "TWPhrases.ocd2",
+        "TWVariants.ocd2",
+        "TWVariantsPhrases.ocd2"
+      ],
+      "s2hk": [
+        "CJK_Compatibility_Ideographs.ocd2",
+        "HKVariants.ocd2",
+        "HKVariantsPhrases.ocd2",
+        "STCharacters.ocd2",
+        "STPhrases.ocd2",
+        "STPhrases_GeneratedFromRegionalPhrases.ocd2"
+      ],
+      "tw2s": [
+        "CJK_Compatibility_Ideographs.ocd2",
+        "TSCharacters.ocd2",
+        "TSCharactersExt.ocd2",
+        "TSPhrases.ocd2",
+        "TWVariantsRev.ocd2",
+        "TWVariantsRevPhrases.ocd2"
+      ],
+      "hk2s": [
+        "CJK_Compatibility_Ideographs.ocd2",
+        "HKVariantsRev.ocd2",
+        "HKVariantsRevPhrases.ocd2",
+        "TSCharacters.ocd2",
+        "TSCharactersExt.ocd2",
+        "TSPhrases.ocd2"
+      ]
+    },
+    "dictionaries": {
+      "CJK_Compatibility_Ideographs.ocd2": {
+        "bytes": 13843,
+        "gzipBytes": 4565,
+        "textBytes": 8670,
+        "entries": 1002
+      },
+      "HKVariants.ocd2": {
+        "bytes": 4957,
+        "gzipBytes": 1296,
+        "textBytes": 572,
+        "entries": 66
+      },
+      "HKVariantsPhrases.ocd2": {
+        "bytes": 10522,
+        "gzipBytes": 5104,
+        "textBytes": 6334,
+        "entries": 272
+      },
+      "HKVariantsRev.ocd2": {
+        "bytes": 4989,
+        "gzipBytes": 1364,
+        "textBytes": 604,
+        "entries": 74
+      },
+      "HKVariantsRevPhrases.ocd2": {
+        "bytes": 10336,
+        "gzipBytes": 5094,
+        "textBytes": 6041,
+        "entries": 310
+      },
+      "STCharacters.ocd2": {
+        "bytes": 45879,
+        "gzipBytes": 17074,
+        "textBytes": 34787,
+        "entries": 4012
+      },
+      "STPhrases.ocd2": {
+        "bytes": 927077,
+        "gzipBytes": 466407,
+        "textBytes": 1006285,
+        "entries": 49238
+      },
+      "STPhrases_GeneratedFromRegionalPhrases.ocd2": {
+        "bytes": 19885,
+        "gzipBytes": 11655,
+        "textBytes": 15301,
+        "entries": 556
+      },
+      "TSCharacters.ocd2": {
+        "bytes": 52410,
+        "gzipBytes": 20870,
+        "textBytes": 38961,
+        "entries": 4148
+      },
+      "TSCharactersExt.ocd2": {
+        "bytes": 14362,
+        "gzipBytes": 5765,
+        "textBytes": 8345,
+        "entries": 895
+      },
+      "TSPhrases.ocd2": {
+        "bytes": 13496,
+        "gzipBytes": 7384,
+        "textBytes": 8527,
+        "entries": 477
+      },
+      "TWPhrases.ocd2": {
+        "bytes": 24015,
+        "gzipBytes": 14081,
+        "textBytes": 19181,
+        "entries": 818
+      },
+      "TWVariants.ocd2": {
+        "bytes": 4623,
+        "gzipBytes": 997,
+        "textBytes": 336,
+        "entries": 41
+      },
+      "TWVariantsPhrases.ocd2": {
+        "bytes": 4407,
+        "gzipBytes": 616,
+        "textBytes": 264,
+        "entries": 12
+      },
+      "TWVariantsRev.ocd2": {
+        "bytes": 4655,
+        "gzipBytes": 993,
+        "textBytes": 336,
+        "entries": 41
+      },
+      "TWVariantsRevPhrases.ocd2": {
+        "bytes": 27059,
+        "gzipBytes": 14694,
+        "textBytes": 22709,
+        "entries": 1128
+      }
+    },
+    "compiledBytes": 1182515,
+    "gzipBytes": 577959
+  },
+  "unicode": {
+    "dataRows": 40575,
+    "expandedCodepointsIncludingPrivateUseAndSurrogates": 299382,
+    "blocks": {
+      "bytes": 11663,
+      "gzipBytes": 4781,
+      "rows": 346
+    },
+    "scripts": {
+      "bytes": 192460,
+      "gzipBytes": 45586,
+      "rows": 2287
+    },
+    "confusables": {
+      "bytes": 745683,
+      "gzipBytes": 132984,
+      "rows": 6565
+    }
+  },
+  "unihan": {
+    "educationCharacters": 1800,
+    "educationValues": {
+      "2007": 1800
+    },
+    "readings": {
+      "kHangul": 8525,
+      "kJapaneseKun": 11296,
+      "kJapaneseOn": 13177
+    },
+    "koreanFields": {
+      "kKoreanName": 6367,
+      "kKoreanEducationHanja": 1800,
+      "kHangul": 8525,
+      "kKorean": 9050
+    }
+  },
+  "strokes": {
+    "mmhFull": {
+      "characters": 9574,
+      "rawJsonBytes": 33214181,
+      "shards": 38,
+      "gzipBytes": 13133677,
+      "largestShardBytes": 466900
+    },
+    "mmhCurrentFields": {
+      "characters": 9574,
+      "rawJsonBytes": 31294942,
+      "shards": 38,
+      "gzipBytes": 12864385,
+      "largestShardBytes": 459210
+    },
+    "kanjivgLosslessSvg": {
+      "characters": 6703,
+      "rawJsonBytes": 31232558,
+      "shards": 27,
+      "gzipBytes": 4523321,
+      "largestShardBytes": 235889
+    },
+    "kanjivgPathsOnly": {
+      "characters": 6703,
+      "rawJsonBytes": 6619791,
+      "shards": 27,
+      "gzipBytes": 2533086,
+      "largestShardBytes": 133237
+    },
+    "kanjivgSvgBytes": 28995941,
+    "kanjivgStrokeTypes": {
+      "missing": 670,
+      "㇑": 10130,
+      "㇚": 854,
+      "㇔": 8346,
+      "㇒": 11981,
+      "㇕": 758,
+      "㇐": 13381,
+      "㇐c": 214,
+      "㇀": 1180,
+      "㇏": 2613,
+      "㇁": 343,
+      "㇇": 1029,
+      "㇋": 151,
+      "㇏a": 65,
+      "㇑a": 5490,
+      "㇜": 895,
+      "㇟": 696,
+      "㇖b": 412,
+      "㇆": 761,
+      "㇟/㇑": 34,
+      "㇄": 139,
+      "㇐b/㇔": 25,
+      "㇉": 144,
+      "㇕c": 341,
+      "㇕b": 2127,
+      "㇐a": 5612,
+      "㇐b": 3752,
+      "㇗": 119,
+      "㇑a/㇒": 8,
+      "㇆a": 1025,
+      "㇔/㇏": 1010,
+      "㇄a": 207,
+      "㇈": 75,
+      "㇡": 14,
+      "㇆v": 10,
+      "㇖": 126,
+      "㇀/㇐": 590,
+      "㇕a": 2032,
+      "㇇a": 72,
+      "㇗a": 59,
+      "㇞": 39,
+      "㇈b": 88,
+      "㇂": 229,
+      "㇙": 302,
+      "㇛": 314,
+      "㇈a": 29,
+      "㇔/㇀": 6,
+      "㇑/㇒": 23,
+      "㇓": 194,
+      "㇐/㇔": 16,
+      "㇟a/㇏": 19,
+      "㇃": 153,
+      "㇔a": 150,
+      "㇅": 5,
+      "㇔/㇑": 191,
+      "㇖b/㇆": 62,
+      "㇒/㇑": 25,
+      "㇖a": 97,
+      "㇟a": 120,
+      "㇔/㇐": 10,
+      "６": 11,
+      "一": 1,
+      "㇒/㇔": 24,
+      "㇔/㇒": 6,
+      "㇐/㇑a": 4,
+      "㇑/㇔": 20,
+      "㇟/㇏": 33,
+      "㇏/㇒": 4,
+      "㇒/㇚": 126,
+      "㇒/㇐": 6,
+      "㇑/㇙": 3,
+      "㇑/㇚": 5,
+      "㇙/㇏": 1,
+      "㇕a/㇆": 2,
+      "㇒/㇀": 8,
+      "㇐c/㇔": 2,
+      "㇐c/㇀": 2,
+      "㇀/㇏": 67,
+      "㇆/㇚": 1,
+      "㇟b": 8,
+      "㇕/㇆": 5,
+      "㇙/㇟": 3,
+      "㇇/㇆": 3,
+      "㇀/㇑": 1,
+      "㇐/㇒": 3,
+      "㇏/㇔": 2,
+      "㇕b/㇆": 2,
+      "㇑a/㇔": 2,
+      "㇗/㇛": 1,
+      "㇕/㇑": 1,
+      "㇙/㇑": 1,
+      "㇑/㇐": 1
+    },
+    "kanaCharacters": 184
+  },
+  "kanjidic": {
+    "header": {
+      "file_version": "4",
+      "database_version": "2026-306",
+      "date_of_creation": "2026-11-02"
+    },
+    "characters": 13108,
+    "grade": 2999,
+    "jlptPre2010": 2230,
+    "frequency": 2501,
+    "onKana": 12161,
+    "kunKana": 9827,
+    "englishMeaning": 10384,
+    "grades": {
+      "8": 1110,
+      "null": 10109,
+      "9": 651,
+      "4": 202,
+      "3": 200,
+      "5": 193,
+      "6": 191,
+      "1": 80,
+      "2": 160,
+      "10": 212
+    }
+  },
+  "cedict": {
+    "entries": 125356,
+    "withClassifiers": 1454,
+    "classifierSenses": 1460,
+    "header": [
+      "#! version=1",
+      "#! subversion=0",
+      "#! format=ts",
+      "#! charset=UTF-8",
+      "#! entries=125356",
+      "#! publisher=MDBG",
+      "#! license=https://creativecommons.org/licenses/by-sa/4.0/",
+      "#! date=2026-11-02T01:18:15Z",
+      "#! time=1793582295"
+    ]
+  },
+  "shippedParadigms": {
+    "ja": {
+      "lemmas": 20388,
+      "paradigms": 2041,
+      "tagSets": [
+        "terminative",
+        "conditional",
+        "past",
+        "imperative",
+        "passive",
+        "perfect",
+        "passive past",
+        "adverbial",
+        "conditional past"
+      ],
+      "rowsWithPolitenessTags": 0
+    },
+    "ko": {
+      "lemmas": 8213,
+      "paradigms": 1410,
+      "tagSets": [
+        "infinitive",
+        "indicative",
+        "indicative past",
+        "past",
+        "imperative",
+        "conditional",
+        "present",
+        "future"
+      ],
+      "rowsWithPolitenessTags": 0
+    }
+  },
+  "piper": [
+    [
+      "fr_FR-siwis-medium",
+      "fr-FR"
+    ],
+    [
+      "es_ES-davefx-medium",
+      "es-ES"
+    ],
+    [
+      "es_MX-ald-medium",
+      "es-MX"
+    ],
+    [
+      "de_DE-thorsten-medium",
+      "de-DE"
+    ],
+    [
+      "ru_RU-denis-medium",
+      "ru-RU"
+    ],
+    [
+      "ru_RU-dmitri-medium",
+      "ru-RU"
+    ],
+    [
+      "zh_CN-chaowen-medium",
+      "zh-CN"
+    ]
+  ],
+  "lexicons": {
+    "korean-native": {
+      "records": 356341,
+      "senses": 114229,
+      "hanjaEtymologyRecords": 34112,
+      "etymologyLinksWithHanRecords": 34812,
+      "withForms": 34419,
+      "uniqueWords": 104549,
+      "langCodes": {
+        "ko": 109000,
+        "unknown": 45075,
+        "": 1970,
+        "en": 17829,
+        "haw": 255,
+        "fr": 5866,
+        "wa": 202,
+        "oc": 545,
+        "ia": 258,
+        "bm": 130,
+        "ms": 779,
+        "de": 7163,
+        "la": 2109,
+        "it": 5001,
+        "br": 539,
+        "hr": 1599,
+        "cs": 2241,
+        "ku": 777,
+        "lv": 2010,
+        "lt": 1602,
+        "pt": 2170,
+        "es": 5057,
+        "sw": 680,
+        "ain": 975,
+        "tt": 4677,
+        "ja": 13633,
+        "nrm": 217,
+        "nl": 1573,
+        "mnc": 943,
+        "mg": 371,
+        "vi": 5504,
+        "sv": 2025,
+        "da": 1092,
+        "tl": 525,
+        "lad": 499,
+        "co": 228,
+        "scn": 274,
+        "fo": 385,
+        "is": 707,
+        "hu": 2247,
+        "be": 2686,
+        "af": 596,
+        "grc": 562,
+        "el": 772,
+        "az": 1857,
+        "ug": 756,
+        "tk": 1583,
+        "et": 1678,
+        "uz": 1355,
+        "sq": 1057,
+        "tly": 18,
+        "id": 1174,
+        "pl": 2786,
+        "mt": 403,
+        "gag": 666,
+        "no": 1014,
+        "eu": 753,
+        "lb": 283,
+        "su": 119,
+        "ro": 1385,
+        "ch": 122,
+        "gl": 523,
+        "bs": 1998,
+        "sr": 3545,
+        "sl": 1051,
+        "fi": 2257,
+        "hi": 924,
+        "sk": 1203,
+        "kaa": 350,
+        "zh": 19780,
+        "ht": 240,
+        "xno": 20,
+        "kl": 233,
+        "mo": 395,
+        "cbk-zam": 37,
+        "ga": 595,
+        "he": 383,
+        "pau": 158,
+        "yi": 1392,
+        "rhg": 24,
+        "jje": 43,
+        "ha": 155,
+        "ryu": 35,
+        "tao": 84,
+        "ang": 1,
+        "rup": 194,
+        "gd": 42,
+        "cak": 46,
+        "sms": 74,
+        "sjo": 10,
+        "kgp": 5,
+        "se": 256,
+        "tn": 207,
+        "wo": 190,
+        "krl": 379,
+        "ka": 1114,
+        "smn": 105,
+        "mas": 149,
+        "zu": 329,
+        "bi": 16,
+        "ay": 232,
+        "nv": 121,
+        "ru": 17172,
+        "bg": 3150,
+        "ce": 373,
+        "chm": 445,
+        "tnq": 10,
+        "chg": 17,
+        "qu": 340,
+        "kk": 1939,
+        "kv": 332,
+        "ba": 828,
+        "abq": 239,
+        "kjh": 229,
+        "ky": 584,
+        "uk": 3093,
+        "mk": 1335,
+        "mn": 660,
+        "tg": 1302,
+        "sah": 1165,
+        "gld": 211,
+        "yrk": 317,
+        "rue": 110,
+        "te": 20,
+        "ta": 431,
+        "lbe": 209,
+        "nog": 45,
+        "prs": 271,
+        "fa": 1359,
+        "tr": 46,
+        "xal": 359,
+        "mdf": 382,
+        "tkr": 4,
+        "mns": 34,
+        "ar": 1651,
+        "ur": 664,
+        "ks": 55,
+        "ps": 468,
+        "bal": 123,
+        "bo": 217,
+        "chr": 172,
+        "gu": 327,
+        "kw": 216,
+        "ckt": 147,
+        "hy": 1438,
+        "pa": 347,
+        "dz": 33,
+        "dlg": 44,
+        "sjd": 172,
+        "mvi": 2,
+        "sma": 18,
+        "kg": 31,
+        "vai": 5,
+        "smj": 16,
+        "ale": 178,
+        "km": 139,
+        "brh": 6,
+        "enm": 4,
+        "slr": 31,
+        "rut": 25,
+        "doi": 32,
+        "ne": 127,
+        "koi": 6,
+        "sga": 2,
+        "pwn": 65,
+        "ami": 30,
+        "got": 129,
+        "frk": 7,
+        "ak": 2,
+        "hz": 17,
+        "sth": 5,
+        "cop": 70,
+        "arw": 4,
+        "sa": 352,
+        "new": 34,
+        "mr": 17,
+        "akk": 14,
+        "sux": 17,
+        "aa": 16,
+        "hai": 11,
+        "my": 299,
+        "mnw": 16,
+        "del": 12,
+        "lo": 392,
+        "tay": 34,
+        "men": 3,
+        "lkt": 14,
+        "kac": 16,
+        "mic": 21,
+        "arp": 12,
+        "naq": 5,
+        "crg": 32,
+        "pi": 5,
+        "trv": 9,
+        "quc": 14,
+        "dum": 1,
+        "ary": 24,
+        "gil": 7,
+        "nah": 90,
+        "ki": 6,
+        "fkv": 4,
+        "arz": 3,
+        "zh-classical": 3,
+        "yo": 53,
+        "ota": 2,
+        "hak": 7,
+        "chy": 29,
+        "arc": 169,
+        "syc": 4,
+        "aii": 6,
+        "am": 338,
+        "ti": 97,
+        "dv": 185,
+        "as": 178,
+        "bn": 356,
+        "fur": 1,
+        "frm": 1,
+        "hrx": 4,
+        "gaa": 6,
+        "or": 53,
+        "cy": 5,
+        "ceb": 2,
+        "mi": 4,
+        "cr": 1,
+        "bas": 3,
+        "ane": 5,
+        "guw": 1,
+        "ml": 11,
+        "raj": 16,
+        "hne": 3,
+        "ig": 2,
+        "lmn": 2,
+        "blk": 1,
+        "lmo": 1,
+        "arq": 3,
+        "tdd": 6,
+        "shn": 14,
+        "tig": 1
+      },
+      "distinctGlosses": 72700,
+      "hanjaWords": 0,
+      "hanjaTemplates": {}
+    },
+    "korean": {
+      "records": 64457,
+      "senses": 82555,
+      "withForms": 64180,
+      "hanjaForms": 18868,
+      "hangulWordsWithHanja": 18754,
+      "uniqueWords": 57810,
+      "langCodes": {
+        "ko": 64457
+      },
+      "distinctGlosses": 69245,
+      "hanjaWords": 15275,
+      "hanjaTemplates": {
+        "ko-hanja": 10177,
+        "hanja-ety": 303,
+        "ko-hanja/new": 237,
+        "hanja-hunmong": 379,
+        "ko-hanja/old": 5433,
+        "hanja-dongguk": 63,
+        "hanja-sinjeung": 45,
+        "hanja-gwangju": 4,
+        "hanja-juhae": 17,
+        "ko-hanja-pron": 1,
+        "ko-hanjatab": 4,
+        "hanja-gugeup": 1,
+        "hanja-samun": 1,
+        "ko-syllable-hanja": 376
+      }
+    },
+    "chinese": {
+      "records": 328919,
+      "senses": 392965,
+      "withForms": 122043,
+      "structuredClassifiers": 0,
+      "sensesWithClassifiers": 0,
+      "nounRecords": 91611,
+      "nounHeadTemplatesWithClassifierText": 1,
+      "uniqueWords": 308751,
+      "langCodes": {
+        "zh": 328919
+      },
+      "distinctGlosses": 194993,
+      "classifierMentionFields": {
+        "senses": 4549,
+        "pos": 185,
+        "head_templates": 184,
+        "synonyms": 22,
+        "etymology_text": 33,
+        "etymology_templates": 18,
+        "related": 1,
+        "sounds": 1,
+        "descendants": 1,
+        "categories": 1,
+        "etymology_links": 2,
+        "hypernyms": 1,
+        "etymology_examples": 1
+      }
+    },
+    "arabic": {
+      "records": 233417,
+      "senses": 256920,
+      "withForms": 233345,
+      "rootTemplates": 7552,
+      "uniqueWords": 177029,
+      "langCodes": {
+        "ar": 233417
+      },
+      "distinctGlosses": 53959,
+      "rootLinkedWords": 10449,
+      "distinctExplicitRoots": 2944,
+      "rootSources": {
+        "etymology_templates": 8050,
+        "senses": 11510,
+        "etymology_text": 2336,
+        "categories": 21
+      },
+      "rootTemplateNames": {
+        "ar-rootbox": 4989,
+        "ar-root": 2532,
+        "root": 31
+      },
+      "templateRootWords": 5044,
+      "shippedWordsWithExplicitRoot": 9601
+    },
+    "russian": {
+      "records": 443260,
+      "senses": 493243,
+      "withForms": 443221,
+      "uniqueWords": 428275,
+      "langCodes": {
+        "ru": 443260
+      },
+      "distinctGlosses": 446963,
+      "explicitAspectLinks": 11134,
+      "distinctAspectSourceWords": 10833
+    },
+    "egyptian": {
+      "records": 1575,
+      "senses": 2075,
+      "withForms": 1567,
+      "uniqueWords": 1287,
+      "langCodes": {
+        "arz": 1575
+      },
+      "distinctGlosses": 1969
+    },
+    "north-levantine": {
+      "records": 961,
+      "senses": 1264,
+      "withForms": 955,
+      "uniqueWords": 773,
+      "langCodes": {
+        "apc": 961
+      },
+      "distinctGlosses": 1191
+    },
+    "south-levantine": {
+      "records": 3467,
+      "senses": 4383,
+      "withForms": 3461,
+      "uniqueWords": 3012,
+      "langCodes": {
+        "ajp": 3467
+      },
+      "distinctGlosses": 3941
+    },
+    "gulf": {
+      "records": 830,
+      "senses": 1039,
+      "withForms": 827,
+      "uniqueWords": 701,
+      "langCodes": {
+        "afb": 830
+      },
+      "distinctGlosses": 1006
+    },
+    "moroccan": {
+      "records": 2404,
+      "senses": 2874,
+      "withForms": 2402,
+      "uniqueWords": 2079,
+      "langCodes": {
+        "ary": 2404
+      },
+      "distinctGlosses": 2514
+    }
+  },
+  "shippedArabicWords": 17369,
+  "dialectExactGlossCandidatesExcludingMissingIraqi": 19,
+  "cldr": {
+    "kazakh": {
+      "source": "kk",
+      "target": "kk_Latn",
+      "variant": "BGN",
+      "direction": "forward",
+      "draft": "contributed",
+      "alias": "Kazakh-Latin/BGN kk-Latn-t-kk-m0-bgn",
+      "bytes": 11657
+    },
+    "mongolian": {
+      "source": "mn",
+      "target": "mn_Latn",
+      "variant": "BGN",
+      "direction": "forward",
+      "draft": "contributed",
+      "alias": "Mongolian-Latin/BGN mn-Latn-t-mn-m0-bgn",
+      "bytes": 7278
+    }
+  }
+}

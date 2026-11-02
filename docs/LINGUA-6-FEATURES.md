@@ -1657,6 +1657,10 @@ These are integrated activities that combine skills instead of training each one
 
 Different languages require different learning interfaces. This could become a major advantage over apps that treat every language as if it works like English.
 
+**2026-11-02 · T0:** [source-data audit](6-23-DATA.md) completed; source sizes, licences and coverage
+correct the deep plan. No language-tool implementation or browser acceptance was checked, and no
+feature checkbox changes in this audit. Tracks A–G remain open.
+
 #### Scripts and writing systems
 
 *In Lingua: Alphabets, writing letters, typing practice, kana and pinyin over words, Grammatica's topics for Russian, the Romance languages, Mandarin and Arabic.*

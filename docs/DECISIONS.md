@@ -2095,3 +2095,20 @@ readable while native iOS controls/navigation use suitable system materials. App
 at the relevant decisions. System UI type is proposed for iOS chrome; learner reading fonts remain.
 This request supersedes desktop-only guidance for this design exploration only. No mobile code,
 native capability, deployment channel or minimum OS decision is introduced by the brief.
+
+## 2026-11-02 · 6-23 T0 source audit, without implementation
+
+- User scope is T0 only, then stop. [6-23-DATA.md](6-23-DATA.md) records full scans, measured
+  sizes, licences, source hashes and limitations; no learner feature is completed by the audit.
+- The approved public inputs total 454,927,564 bytes, retained only in the ignored audit cache.
+  No runtime learner data, repository wording or keys were sent. No app assets or precache change.
+- Full lossless MMH + KanjiVG prototypes take 17,656,998 gzip bytes. Replace the unproved 8 MB
+  stroke assumption with a 20 MB allocation inside the existing 40 MB total; remeasure actual
+  production encoding and preserve the separate APL/LGPL/CC BY-SA data notices.
+- Prefer explicit source data: OpenCC's whole configuration closure, KANJIDIC kana with old JLPT
+  labels, Unihan's 1,800-character education membership (2007 is a year), structured English-edition
+  Korean hanja and CC-CEDICT classifiers. Arabic root templates include ar-rootbox, which the
+  existing builder omits; extract and review links before inferring missing roots.
+- Iraqi sourcing and five-dialect alignment are not established. Forward Japanese/Korean style
+  conversion still needs an engine and retained speech-level tags. CLDR Kazakh/Mongolian BGN rules
+  are forward-only; do not promise reversible or current-official-orthography conversion from them.
