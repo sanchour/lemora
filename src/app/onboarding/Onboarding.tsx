@@ -143,7 +143,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const cancel = () => (replaying ? leaveReplay() : void patchSetting('meta', { onboardedAt: Date.now() }));
   useHotkeys({ escape: cancel }, canCancel || replaying);
 
-  const width = page === 'language' ? 'max-w-7xl' : page === 'about' || page === 'light' || page === 'plans' || page === 'level' ? 'max-w-6xl' : 'max-w-3xl';
+  const width = page === 'language' ? 'max-w-7xl' : page === 'about' || page === 'light' || page === 'plans' ? 'max-w-6xl' : page === 'level' ? 'max-w-4xl' : 'max-w-3xl';
   const label =
     page === 'name'
       ? nameNow.trim()
