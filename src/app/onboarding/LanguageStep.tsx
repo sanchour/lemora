@@ -31,7 +31,7 @@ const groupOf = (l: LanguageInfo) => GROUPS.find((g) => g.has(l))!;
 /** How each core language says hello: the first thing its card says to you. */
 const HELLO: Record<string, string> = { es: 'Hola', fr: 'Bonjour', de: 'Hallo', ru: 'Привет', ar: 'مرحبا', zh: '你好' };
 /** The panel's width, and how much of the map it covers with its margin. */
-const PANEL = 340;
+const PANEL = 460;
 const COVER = PANEL + 12;
 
 /**
@@ -73,7 +73,7 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
   };
 
   /** A language as a row in the panel: flag, its own name, where it stands there, and what Lingua has. */
-  const row = (l: LanguageInfo, status?: PlaceStatus) => (
+  const row = (l: LanguageInfo, status?: PlaceStatus, compact = false) => (
     <button
       key={l.code}
       type="button"
@@ -84,30 +84,31 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
       onClick={() => !l.soon && onTarget(l.code)}
       {...hoverProps(l)}
       className={cx(
-        'no-callout flex w-full items-center gap-3 rounded-2xl border px-3 py-2 text-left transition-[background-color,border-color,transform] duration-150',
+        'no-callout flex w-full items-center border text-left transition-[background-color,border-color,transform] duration-150',
+        compact ? 'gap-2 rounded-xl px-2 py-1' : 'gap-3 rounded-2xl px-3 py-2',
         target === l.code ? 'border-accent bg-accent-soft' : 'border-transparent hover:border-line hover:bg-surface',
         l.soon ? 'cursor-default opacity-50' : 'active:scale-[0.98]',
       )}
     >
-      <LanguageFlag lang={l.code} width={28} />
+      <LanguageFlag lang={l.code} width={compact ? 20 : 28} />
       <span className="min-w-0 flex-1">
         <span className="flex items-baseline gap-2">
-          <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="truncate font-serif text-[16.5px] font-semibold">
+          <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className={cx('truncate font-serif font-semibold', compact ? 'text-[14px]' : 'text-[16.5px]')}>
             {l.endonym}
           </span>
-          <span className="truncate text-[12px] text-ink-faint"><UiText source={l.name} /></span>
+          <span className={cx('truncate text-ink-faint', compact ? 'text-[11px]' : 'text-[12px]')}><UiText source={l.name} /></span>
         </span>
-        <span className="block truncate text-[11.5px] text-ink-soft">
+        <span className={cx('block truncate text-[11.5px] text-ink-soft', compact && 'hidden')}>
           {status ? `${translateUi(STATUS_NAME[status])} · ` : ''}
           {l.soon ? translateUi('Coming') : translateUi(groupOf(l).name)}
         </span>
       </span>
       {target === l.code ? (
-        <span className="grid size-6 shrink-0 place-items-center rounded-full bg-accent-fill text-on-accent">
-          <Check size={14} strokeWidth={3.2} aria-hidden />
+        <span className={cx('grid shrink-0 place-items-center rounded-full bg-accent-fill text-on-accent', compact ? 'size-5' : 'size-6')}>
+          <Check size={compact ? 12 : 14} strokeWidth={3.2} aria-hidden />
         </span>
       ) : (
-        l.tier === 1 && <span className="shrink-0 rounded-full bg-accent-soft px-2 py-0.5 text-[10.5px] font-bold tracking-wide text-accent-text uppercase"><UiText source={'Core'} /></span>
+        l.tier === 1 && !compact && <span className="shrink-0 rounded-full bg-accent-soft px-2 py-0.5 text-[10.5px] font-bold tracking-wide text-accent-text uppercase"><UiText source={'Core'} /></span>
       )}
     </button>
   );
@@ -236,9 +237,9 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
                     if (!langs.length) return null;
                     return (
                       <section key={g.key} className="mb-2">
-                        <h2 className="px-2 pt-2 text-[11.5px] font-bold tracking-[0.08em] text-ink-faint uppercase"><UiText source={g.name} /></h2>
-                        <p className="px-2 pb-1 text-[11.5px] text-ink-soft"><UiText source={g.blurb} /></p>
-                        {langs.map((l) => row(l))}
+                        <h2 className="px-2 pt-1.5 text-[11px] font-bold tracking-[0.08em] text-ink-faint uppercase"><UiText source={g.name} /></h2>
+                        <p className="px-2 pb-1 text-[11px] leading-snug text-ink-soft"><UiText source={g.blurb} /></p>
+                        <div className="grid grid-cols-2 gap-x-1">{langs.map((l) => row(l, undefined, true))}</div>
                       </section>
                     );
                   })}
