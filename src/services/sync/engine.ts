@@ -46,7 +46,7 @@ async function localSide(secret: string): Promise<SessionSide> {
     name: deviceName(),
     makeBackup: async () => (await exportBackup({ includeMedia: false, includeApiKeys: settings.sync.includeApiKeys, markBackup: false })).arrayBuffer(),
     applyBackup: async (zip) => {
-      const summary = await restoreBackup(await readBackup(new Blob([zip])), 'merge');
+      const summary = await restoreBackup(await readBackup(new Blob([zip])), 'merge', undefined, false);
       return { added: summary.added, updated: summary.updated };
     },
   };

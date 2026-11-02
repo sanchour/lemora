@@ -1,11 +1,12 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Eraser, RotateCcw, TriangleAlert } from 'lucide-react';
 import { getLanguage } from '@/core/lang/languages';
-import { eraseEverything, resetLanguageProgress } from '@/data/reset';
+import { resetLanguageProgress } from '@/data/reset';
 import type { LanguageProfile } from '@/data/types';
 import { Button, Dialog } from '@/design/primitives';
 import { toast } from '@/state/ui';
+import { EraseCountdown } from './EraseCountdown';
 import { SettingsSection } from '../SettingsSection';
 
 type Kind = 'language' | 'everything';
@@ -15,6 +16,8 @@ const WORD: Record<Kind, string> = { language: 'reset', everything: 'erase' };
 /** Starting over, on purpose: a typed word guards against a slip of the finger. */
 export function ResetSection({ language }: { language: LanguageProfile }) {
   const translateUi = useUi();
+  const [erasing, setErasing] = useState(false);
+  const cancelErase = useCallback(() => setErasing(false), []);
   const [open, setOpen] = useState<Kind | null>(null);
   const [typed, setTyped] = useState('');
   const [busy, setBusy] = useState(false);
@@ -30,7 +33,7 @@ export function ResetSection({ language }: { language: LanguageProfile }) {
     setBusy(true);
     try {
       if (open === 'everything') {
-        await eraseEverything();
+        setOpen(null); setTyped(''); setErasing(true);
         return;
       }
       const counts = await resetLanguageProgress(language.id);
@@ -64,6 +67,7 @@ export function ResetSection({ language }: { language: LanguageProfile }) {
         <p className="text-[13px] text-ink-faint"><UiText source={'Tip: make a backup first (just above), so you can bring things back.{0}{1}'} values={[' ', <a href="#backup" className="font-semibold text-ink-soft underline-offset-2 hover:underline"><UiText source={'Go to Backup'} /></a>]} /></p>
       </div>
 
+      {erasing && <EraseCountdown onCancel={cancelErase} />}
       <Dialog
         open={open !== null}
         onClose={close}
@@ -79,7 +83,7 @@ export function ResetSection({ language }: { language: LanguageProfile }) {
       >
         <p className="flex gap-2">
           <TriangleAlert size={17} className="mt-0.5 shrink-0 text-accent-text" aria-hidden />
-          <span>{open === 'everything' ? translateUi('This can’t be undone without a backup. Everything on this device goes.') : translateUi('Your {0} progress goes back to zero. This can’t be undone without a backup.', [name])}</span>
+          <span>{open === 'everything' ? translateUi('This can’t be undone without a backup. Everything on this device goes.') : translateUi('Your {0} progress goes back to zero. Use Undo in the message before your next removal, dismissing it or reloading.', [name])}</span>
         </p>
         <label className="mt-4 block">
           <span className="text-[13px] font-semibold text-ink"><UiText source={'Type {0} to confirm'} values={[<span className="font-mono">{open ? WORD[open] : ''}</span>]} /></span>

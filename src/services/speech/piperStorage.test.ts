@@ -5,7 +5,7 @@ vi.mock('@/workers/piper.worker?worker', () => ({ default: vi.fn() }));
 vi.mock('./voice', () => ({ resetSpeakers: vi.fn() }));
 import { removePiperVoice, storedPiperVoices } from './piper';
 afterEach(() => { vi.unstubAllGlobals(); useUI.setState({ toasts: [] }); });
-it('counts exact cached bytes and restores both voice files without a request or replacing newer data', async () => {
+it('counts exact cached bytes and restores both voice files without a request and rejects a conflicting newer download', async () => {
   const id = 'es_ES-davefx-medium';
   const model = piperModelUrl(id, 'onnx'), config = piperModelUrl(id, 'onnx.json');
   const rows = new Map([[model, new Response('model')], [config, new Response('{}')]]);
@@ -14,10 +14,14 @@ it('counts exact cached bytes and restores both voice files without a request or
   const network = vi.fn(); vi.stubGlobal('fetch', network);
   expect(await storedPiperVoices()).toEqual([{ id, bytes: 7 }]);
   await removePiperVoice(id); expect(rows.size).toBe(0);
-  rows.set(model, new Response('new model'));
-  useUI.getState().toasts.find((t) => t.action)?.action?.onClick();
-  await vi.waitFor(() => expect(rows.size).toBe(2));
-  expect(await rows.get(model)?.clone().text()).toBe('new model');
+  const recover = useUI.getState().toasts.find((t) => t.duration === 0)?.action;
+  await recover?.onClick();
+  expect(await rows.get(model)?.clone().text()).toBe('model');
   expect(await rows.get(config)?.clone().text()).toBe('{}');
+  await removePiperVoice(id); rows.set(model, new Response('new model'));
+  const conflict = useUI.getState().toasts.find((t) => t.duration === 0)?.action;
+  await expect(conflict?.onClick()).rejects.toThrow('changed again');
+  expect(await rows.get(model)?.clone().text()).toBe('new model');
+  expect(rows.has(config)).toBe(false);
   expect(network).not.toHaveBeenCalled();
 });

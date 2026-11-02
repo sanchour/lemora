@@ -24,6 +24,7 @@ export const PRESET_REAL_LIFE_GOALS = [
 ];
 
 export function RealLifeGoalsPanel({ lang }: { lang: string }) {
+  const translateUi = useUi();
   const allGoals = useGoals();
   const realGoals = (allGoals ?? []).filter((g) => g.lang === lang && g.kind === 'real-life');
 
@@ -89,7 +90,7 @@ export function RealLifeGoalsPanel({ lang }: { lang: string }) {
                       {done ? <CheckCircle2 size={18} className="text-sage" /> : <Circle size={18} className="text-ink-faint" />}
                       <span className={cx('text-[14px] font-medium', done && 'line-through')}>{String(g.target)}</span>
                     </button>
-                    <Button size="sm" variant="ghost" icon={Trash2} onClick={() => void removeGoal(g.id)} />
+                    <Button size="sm" variant="ghost" icon={Trash2} aria-label={translateUi('Remove {0}', [String(g.target)])} onClick={() => void removeGoal(g.id)} />
                   </li>
                 );
               })}

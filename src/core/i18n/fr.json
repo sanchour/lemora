@@ -7379,5 +7379,10 @@
   "Could not restore this content.": "Impossible de restaurer ce contenu.",
   "Undo stopped because this content changed again. Your newer changes were kept.": "Annulation interrompue car ce contenu a encore changé. Vos modifications récentes ont été conservées.",
   "Wait for the language pack to finish installing.": "Attendez la fin de l’installation du pack de langue.",
-  "Wait for the dictionary to finish installing.": "Attendez la fin de l’installation du dictionnaire."
+  "Wait for the dictionary to finish installing.": "Attendez la fin de l’installation du dictionnaire.",
+  "Your {0} progress goes back to zero. Use Undo in the message before your next removal, dismissing it or reloading.": "Votre progression en {0} repart de zéro. Utilisez Annuler dans le message avant une autre suppression, sa fermeture ou le rechargement.",
+  "Its saved content and progress are removed from this device. Your other languages stay. Use Undo in the message before your next removal, dismissing it or reloading.": "Son contenu enregistré et sa progression sont supprimés de cet appareil. Les autres langues restent. Utilisez Annuler dans le message avant une autre suppression, sa fermeture ou le rechargement.",
+  "Erasing in {0} seconds. Undo or leave this page to cancel. After erasure, recovery requires your backup.": "Effacement dans {0} secondes. Annulez ou quittez cette page pour arrêter. Après l’effacement, votre sauvegarde sera nécessaire pour restaurer les données.",
+  "Erasing failed. Check your local data before trying again.": "L’effacement a échoué. Vérifiez vos données locales avant de réessayer.",
+  "Change saved. Undo is available until this message is replaced, dismissed or the app reloads.": "Modification enregistrée. Annuler reste disponible jusqu’au remplacement ou à la fermeture de ce message, ou au rechargement de l’application."
 }

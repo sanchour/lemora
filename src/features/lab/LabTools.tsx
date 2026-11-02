@@ -1,3 +1,4 @@
+import { undoableRemoval } from '@/data/removalUndo';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useEffect, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -201,7 +202,7 @@ export function CachesCard() {
   const translateUi = useUi();
   const counts = useLiveQuery(async () => ({ translations: await db.translationCache.count(), ai: await db.llmCache.count() }), []);
   const clear = async (which: 'translations' | 'ai') => {
-    await (which === 'translations' ? db.translationCache.clear() : db.llmCache.clear());
+    await undoableRemoval(db, [which === 'translations' ? 'translationCache' : 'llmCache'], () => which === 'translations' ? db.translationCache.clear() : db.llmCache.clear());
     toast(which === 'translations' ? 'The translation cache is empty.' : 'The AI cache is empty.', { tone: 'success' });
   };
   return (

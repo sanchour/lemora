@@ -14836,5 +14836,35 @@
   "Wait for the dictionary to finish installing.": [
     "src/features/ordo/sections/StoredResources.tsx",
     "src/data/removalUndo.ts"
+  ],
+  "Your {0} progress goes back to zero. Use Undo in the message before your next removal, dismissing it or reloading.": [
+    "src/features/ordo/sections/EraseCountdown.tsx",
+    "src/features/ordo/sections/ResetSection.tsx",
+    "src/features/ordo/sections/LanguageSection.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Its saved content and progress are removed from this device. Your other languages stay. Use Undo in the message before your next removal, dismissing it or reloading.": [
+    "src/features/ordo/sections/EraseCountdown.tsx",
+    "src/features/ordo/sections/ResetSection.tsx",
+    "src/features/ordo/sections/LanguageSection.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Erasing in {0} seconds. Undo or leave this page to cancel. After erasure, recovery requires your backup.": [
+    "src/features/ordo/sections/EraseCountdown.tsx",
+    "src/features/ordo/sections/ResetSection.tsx",
+    "src/features/ordo/sections/LanguageSection.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Erasing failed. Check your local data before trying again.": [
+    "src/features/ordo/sections/EraseCountdown.tsx",
+    "src/features/ordo/sections/ResetSection.tsx",
+    "src/features/ordo/sections/LanguageSection.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Change saved. Undo is available until this message is replaced, dismissed or the app reloads.": [
+    "src/features/ordo/sections/EraseCountdown.tsx",
+    "src/features/ordo/sections/ResetSection.tsx",
+    "src/features/ordo/sections/LanguageSection.tsx",
+    "src/data/removalUndo.ts"
   ]
 }

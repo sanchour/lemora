@@ -1,0 +1,62 @@
+import { afterAll, beforeEach, expect, it } from 'vitest';
+import { createDb, TABLE_NAMES } from './db';
+import { completeOnboarding } from './languages';
+import { addNote, createDeck } from './decks';
+import { deleteNotes } from './deckTools';
+import { setWordState } from './words';
+import { resetLanguageProgress } from './reset';
+import { removeLanguage } from './removeLanguage';
+import { addText, deleteText } from './library';
+import { exportBackup, readBackup, restoreBackup } from './backup';
+import { useUI } from '@/state/ui';
+const database = createDb('destructive-undo-' + Math.random());
+const incoming = createDb('destructive-undo-incoming-' + Math.random());
+afterAll(async () => { await database.delete(); await incoming.delete(); });
+beforeEach(async () => { useUI.setState({ toasts: [] }); for (const name of TABLE_NAMES) await database.table(name).clear(); });
+const start = (target: string) => completeOnboarding({ target, native: 'en', level: 'A1', theme: 'paper', seedKnown: false }, database);
+const undo = async () => {
+  const recoveries = useUI.getState().toasts.filter((t) => t.duration === 0 && t.action);
+  expect(recoveries).toHaveLength(1);
+  await recoveries[0].action!.onClick();
+};
+it('restores a bulk card deletion as one operation, including linked word IDs', async () => {
+  await start('es'); const deckId = await createDeck('es', { name: 'My deck' }, database);
+  const first = await addNote(deckId, { term: 'hola', meaning: 'hello' }, database);
+  const second = await addNote(deckId, { term: 'casa', meaning: 'house' }, database);
+  await deleteNotes([first, second], database); await undo();
+  expect((await database.notes.get(first))?.deletedAt).toBeUndefined();
+  expect((await database.notes.get(second))?.deletedAt).toBeUndefined();
+  expect((await database.cards.toArray()).every((c) => !c.deletedAt && c.deckId === deckId)).toBe(true);
+});
+it('restores removed books with their chapters and original image bytes', async () => {
+  await start('es');
+  const id = await addText({ lang: 'es', title: 'Cuento', source: 'paste', kind: 'article', chapters: [{ blocks: [{ t: 'p', text: 'Hola casa.' }] }] }, database);
+  const chapter = (await database.chapters.where('textId').equals(id).first())!;
+  await database.blobs.put({ id: 'picture', kind: 'image', blob: new Blob(['original']), mime: 'image/png', size: 8, createdAt: 1 });
+  await database.chapters.update(chapter.id, { blocks: [...chapter.blocks, { t: 'img', blobId: 'picture', alt: 'Picture' }] });
+  await deleteText(id, database); expect(await database.blobs.get('picture')).toBeUndefined();
+  await undo();
+  expect((await database.texts.get(id))?.deletedAt).toBeUndefined();
+  expect((await database.chapters.get(chapter.id))?.blocks).toHaveLength(2);
+  expect(await (await database.blobs.get('picture'))?.blob.text()).toBe('original');
+});
+it('restores a progress reset and a removed active language without losing another language', async () => {
+  await start('es'); await start('de');
+  await setWordState('es', 'casa', 2, { gloss: 'house' }, database);
+  await resetLanguageProgress('es', database); await undo();
+  expect((await database.words.get('es:casa'))?.state).toBe(2);
+  await removeLanguage('de', database); await undo();
+  expect((await database.languages.get('de'))?.isActive).toBe(1);
+  expect((await database.languages.get('es'))?.deletedAt).toBeUndefined();
+});
+it('undoes backup replacement including new keys and new binary attachments', async () => {
+  await database.settings.put({ key: 'old-record', value: 'original', updatedAt: 1 });
+  await incoming.settings.put({ key: 'new-record', value: 'incoming', updatedAt: 2 });
+  await incoming.blobs.put({ id: 'incoming-file', kind: 'audio', blob: new Blob(['sound']), mime: 'audio/wav', size: 5, createdAt: 2 });
+  const backup = await readBackup(await exportBackup({ includeMedia: true, includeApiKeys: false, markBackup: false }, incoming));
+  await restoreBackup(backup, 'replace', database); expect(await database.settings.get('old-record')).toBeUndefined();
+  await undo();
+  expect((await database.settings.get('old-record'))?.value).toBe('original');
+  expect(await database.settings.get('new-record')).toBeUndefined();
+  expect(await database.blobs.get('incoming-file')).toBeUndefined();
+});

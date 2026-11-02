@@ -1,3 +1,5 @@
+import { db } from '@/data/db';
+import { undoableRemoval } from '@/data/removalUndo';
 import { UiText, useUi } from '@/design/i18n/UiText';
 // Collectible milestone stamps ("Stamps, not points") and custom self-set learner rewards (6-17, F1167, F1168, F1178).
 // Designed in the bookish handbook style: scalloped perforated edges, vintage postmark cancellation marks, and calm celebration.
@@ -229,7 +231,7 @@ function RewardsDrawer({ open, onClose }: { open: boolean; onClose: () => void }
   };
 
   const removeReward = async (id: string) => {
-    await patchSetting('habits', { rewards: rewards.filter((r) => r.id !== id) });
+    await undoableRemoval(db, ['settings'], () => patchSetting('habits', { rewards: rewards.filter((r) => r.id !== id) }));
     toast('Reward removed.');
   };
 
@@ -284,7 +286,7 @@ function RewardsDrawer({ open, onClose }: { open: boolean; onClose: () => void }
                       <p className="text-[14px] font-semibold text-ink">{r.reward}</p>
                       <p className="text-[12px] text-ink-soft"><UiText source={'Upon reaching: {0}'} values={[stamp?.title ?? r.milestone]} /></p>
                     </div>
-                    <Button size="sm" variant="ghost" icon={Trash2} onClick={() => void removeReward(r.id)} />
+                    <Button size="sm" variant="ghost" icon={Trash2} aria-label={translateUi('Remove {0}', [r.reward])} onClick={() => void removeReward(r.id)} />
                   </li>
                 );
               })}

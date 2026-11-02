@@ -90,7 +90,13 @@ export async function removePiperVoice(id: string): Promise<void> {
       if (typeof window !== 'undefined') window.dispatchEvent(new Event('lingua:voices-changed'));
     };
     await changed();
-    if (entries.some((e) => e.response)) offerRemovalUndo(restore, changed);
+    if (entries.some((e) => e.response)) offerRemovalUndo(async () => {
+      for (const entry of entries) if (await cache.match(entry.url)) throw new Error('Undo stopped because this content changed again. Your newer changes were kept.');
+      const written: string[] = [];
+      try {
+        for (const entry of entries) if (entry.response) { await cache.put(entry.url, entry.response.clone()); written.push(entry.url); }
+      } catch (error) { for (const url of written) await cache.delete(url); throw error; }
+    }, changed);
   });
   busy = job.catch(() => undefined);
   await job;

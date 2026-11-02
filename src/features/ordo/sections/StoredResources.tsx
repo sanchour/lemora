@@ -6,7 +6,7 @@ import { db } from '@/data/db';
 import { getLanguage } from '@/core/lang/languages';
 import { piperVoice } from '@/core/audio/piper';
 import { removePack, usePackJobs } from '@/services/packs/packs';
-import { removeDictionary, useDictJobs } from '@/services/dictionary/fullDict';
+import { dictionaryDownloads, removeDictionary, useDictJobs } from '@/services/dictionary/fullDict';
 import { removePiperVoice, storedPiperVoices } from '@/services/speech/piper';
 import { formatBytes } from '@/lib/format';
 import { Button, Dialog } from '@/design/primitives';
@@ -26,8 +26,7 @@ export function StoredResources({ onChange }: { onChange: () => void }) {
   const data = useLiveQuery(async () => {
     try {
       const packs = await db.dictPacks.toArray();
-      const langs = await db.fullDict.orderBy('lang').uniqueKeys();
-      const dictionaries = await Promise.all(langs.map(async (lang) => ({ lang: String(lang), words: await db.fullDict.where('lang').equals(lang).filter((r) => r.key !== '#version').count() })));
+      const dictionaries = await dictionaryDownloads();
       return { packs, dictionaries, error: false };
     } catch { return { packs: [], dictionaries: [], error: true }; }
   }, []);

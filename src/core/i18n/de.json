@@ -7379,5 +7379,10 @@
   "Could not restore this content.": "Dieser Inhalt konnte nicht wiederhergestellt werden.",
   "Undo stopped because this content changed again. Your newer changes were kept.": "Rückgängig wurde gestoppt, weil dieser Inhalt erneut geändert wurde. Die neueren Änderungen bleiben erhalten.",
   "Wait for the language pack to finish installing.": "Warte, bis das Sprachpaket fertig installiert ist.",
-  "Wait for the dictionary to finish installing.": "Warte, bis das Wörterbuch fertig installiert ist."
+  "Wait for the dictionary to finish installing.": "Warte, bis das Wörterbuch fertig installiert ist.",
+  "Your {0} progress goes back to zero. Use Undo in the message before your next removal, dismissing it or reloading.": "Dein Fortschritt in {0} wird zurückgesetzt. Nutze Rückgängig vor der nächsten Entfernung, dem Schließen der Nachricht oder Neuladen.",
+  "Its saved content and progress are removed from this device. Your other languages stay. Use Undo in the message before your next removal, dismissing it or reloading.": "Gespeicherte Inhalte und Fortschritt werden von diesem Gerät entfernt. Andere Sprachen bleiben. Nutze Rückgängig vor der nächsten Entfernung, dem Schließen der Nachricht oder Neuladen.",
+  "Erasing in {0} seconds. Undo or leave this page to cancel. After erasure, recovery requires your backup.": "Löschen in {0} Sekunden. Nutze Rückgängig oder verlasse die Seite zum Abbrechen. Nach dem Löschen ist deine Sicherung zur Wiederherstellung nötig.",
+  "Erasing failed. Check your local data before trying again.": "Löschen fehlgeschlagen. Prüfe deine lokalen Daten, bevor du es erneut versuchst.",
+  "Change saved. Undo is available until this message is replaced, dismissed or the app reloads.": "Änderung gespeichert. Rückgängig ist verfügbar, bis diese Nachricht ersetzt oder geschlossen oder die App neu geladen wird."
 }

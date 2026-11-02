@@ -1,3 +1,4 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { toGoodreadsCsv } from '@/core/parsers/goodreads';
 import type { GoodreadsBook } from '@/core/parsers/goodreads';
@@ -238,6 +239,7 @@ export async function setCoverImage(textId: string, image: Blob, database: Lingu
 
 /** Back to a designed cover. */
 export async function removeCoverImage(textId: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['texts', 'blobs'], () => removeCoverImage(textId, database));
   await database.transaction('rw', database.texts, database.blobs, async () => {
     const text = await database.texts.get(textId);
     if (text?.coverBlobId) await database.blobs.delete(text.coverBlobId);
@@ -262,6 +264,7 @@ const imagesOf = (blocks: Block[]) => blocks.flatMap((b) => (b.t === 'img' ? [b.
  * reading position past the end moves to the last chapter.
  */
 export async function rewriteChapters(textId: string, list: ChapterEdit[], images: NonNullable<NewText['images']> = [], database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['texts', 'chapters', 'blobs', 'textVocab', 'readingProgress', 'words', 'frequency'], () => rewriteChapters(textId, list, images, database));
   const text = await database.texts.get(textId);
   if (!text) throw new Error('This text isn’t in your library.');
   const current = await textChapters(textId, database);
@@ -322,6 +325,7 @@ export async function appendChapters(textId: string, drafts: ChapterDraft[], ima
 
 /** Removes a text: the row is kept as a tombstone (so backups merge correctly); its content is deleted. */
 export async function deleteText(textId: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['texts', 'chapters', 'textVocab', 'readingProgress', 'blobs'], () => deleteText(textId, database));
   await database.transaction('rw', [database.texts, database.chapters, database.textVocab, database.readingProgress, database.blobs], async () => {
     const text = await database.texts.get(textId);
     const chapters = await database.chapters.where('[textId+index]').between([textId, 0], [textId, Infinity]).toArray();

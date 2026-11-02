@@ -1,3 +1,4 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 // Thesaurus storage: folders, decks, notes and their cards. Deleting keeps tombstones (deletedAt)
 // so backups merge correctly; tombstoned cards move to TRASH_DECK so deck counts stay index-only.
 import Dexie from 'dexie';
@@ -109,6 +110,7 @@ export async function updateFolder(id: string, patch: Partial<Pick<Folder, 'name
 
 /** Removes a folder; its decks and sub-folders move up to its parent. */
 export async function deleteFolder(id: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['folders', 'decks'], () => deleteFolder(id, database));
   await database.transaction('rw', database.folders, database.decks, async () => {
     const folder = await database.folders.get(id);
     if (!folder) return;
@@ -161,6 +163,7 @@ export async function updateDeck(id: string, patch: Partial<Pick<Deck, 'name' | 
 
 /** Deletes a deck with its notes and cards. Words keep their reading state. */
 export async function deleteDeck(id: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['decks', 'notes', 'cards', 'words'], () => deleteDeck(id, database));
   await database.transaction('rw', [database.decks, database.notes, database.cards, database.words], async () => {
     const now = Date.now();
     const notes = await database.notes.where('deckId').equals(id).toArray();
@@ -201,6 +204,7 @@ export async function moveNote(id: string, deckId: string, database: LinguaDB = 
 }
 
 export async function deleteNote(id: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['notes', 'cards', 'words'], () => deleteNote(id, database));
   const now = Date.now();
   await database.transaction('rw', [database.notes, database.cards, database.words], async () => {
     const note = await database.notes.get(id);
@@ -215,6 +219,7 @@ export async function deleteNote(id: string, database: LinguaDB = db): Promise<v
  * cards to every note and removes cards of a direction that was turned off.
  */
 export async function setDeckDirections(deckId: string, directions: Card['direction'][], database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['decks', 'notes', 'cards'], () => setDeckDirections(deckId, directions, database));
   await database.transaction('rw', database.decks, database.notes, database.cards, async () => {
     const deck = await database.decks.get(deckId);
     if (!deck || !directions.length) return;
@@ -232,6 +237,7 @@ export async function setDeckDirections(deckId: string, directions: Card['direct
 
 /** Every card of a deck back to new, in the deck's order of new cards (5.1-3b, the settings' danger zone). The review history stays. */
 export async function forgetDeck(deckId: string, database: LinguaDB = db): Promise<number> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['cards', 'decks', 'notes'], () => forgetDeck(deckId, database));
   const now = Date.now();
   const cards = (await database.cards.where('[deckId+due]').between([deckId, Dexie.minKey], [deckId, Dexie.maxKey]).toArray()).filter((c) => !c.deletedAt).sort((a, b) => a.createdAt - b.createdAt);
   await database.cards.bulkPut(

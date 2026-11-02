@@ -1,3 +1,4 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 // Audiobooks and courses. A book is its parts: ordinary Sonus items that share a `bookId`, with
 // `episode` as the part's number, so downloads, transcripts, sync and backups work unchanged. The
 // book's title is its parts' `collection` and its author their `artist`; changing the book writes
@@ -149,6 +150,7 @@ export async function setLessonDone(mediaId: string, done: boolean, database: Li
 
 /** Removes the book: every part with its audio, transcript and position. */
 export async function deleteBook(bookId: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['media', 'blobs', 'transcripts', 'playbackProgress'], () => deleteBook(bookId, database));
   for (const part of await partsOf(bookId, database)) await deleteMedia(part.id, database);
 }
 

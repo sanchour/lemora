@@ -1,3 +1,4 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 import JSZip from 'jszip';
 import { planMerge } from '@/core/backup/merge';
 import type { MergePolicy } from '@/core/backup/merge';
@@ -182,7 +183,8 @@ export interface RestoreSummary {
  * merge:   newest edit wins per row; logs are combined; nothing local is lost.
  * replace: tables present in the backup are cleared first (device-only settings are kept).
  */
-export async function restoreBackup(backup: ParsedBackup, mode: 'merge' | 'replace', database: LinguaDB = db): Promise<RestoreSummary> {
+export async function restoreBackup(backup: ParsedBackup, mode: 'merge' | 'replace', database: LinguaDB = db, undo = true): Promise<RestoreSummary> {
+  if (undo && !removalInProgress(database)) return undoableRemoval(database, (Object.keys(backup.tables) as TableName[]).filter((n) => BACKUP_POLICIES[n]?.policy !== 'skip'), () => restoreBackup(backup, mode, database, false));
   const summary: RestoreSummary = { added: 0, updated: 0, perTable: {} };
   const names = (Object.keys(backup.tables) as TableName[]).filter((n) => BACKUP_POLICIES[n]?.policy !== 'skip');
   const tables = names.map((n) => database.table(n));

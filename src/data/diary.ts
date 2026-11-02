@@ -1,3 +1,4 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 // The pronunciation diary (6-10): the same passage read aloud now and then, kept on the device, played back over time, deleted at will.
 // A recording is a blob of kind 'recording' whose id says what it is: `diary:<lang>:<time>`.
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -26,6 +27,7 @@ export async function readings(lang: string, database: LinguaDB = db): Promise<D
 }
 
 export async function deleteReading(id: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['blobs'], () => deleteReading(id, database));
   await database.blobs.delete(id);
 }
 

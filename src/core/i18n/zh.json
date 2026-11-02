@@ -7379,5 +7379,10 @@
   "Could not restore this content.": "无法恢复此内容。",
   "Undo stopped because this content changed again. Your newer changes were kept.": "内容再次发生了更改，已停止撤销。你的较新更改已保留。",
   "Wait for the language pack to finish installing.": "请等待语言包安装完成。",
-  "Wait for the dictionary to finish installing.": "请等待词典安装完成。"
+  "Wait for the dictionary to finish installing.": "请等待词典安装完成。",
+  "Your {0} progress goes back to zero. Use Undo in the message before your next removal, dismissing it or reloading.": "你的{0}学习进度会归零。请在下次移除、关闭提示或重新加载前点击提示中的撤销。",
+  "Its saved content and progress are removed from this device. Your other languages stay. Use Undo in the message before your next removal, dismissing it or reloading.": "此设备上该语言的已保存内容和进度会被移除。其他语言会保留。请在下次移除、关闭提示或重新加载前点击提示中的撤销。",
+  "Erasing in {0} seconds. Undo or leave this page to cancel. After erasure, recovery requires your backup.": "将在 {0} 秒后清除。点击撤销或离开此页面可取消。清除后需要你的备份才能恢复。",
+  "Erasing failed. Check your local data before trying again.": "清除失败。请检查本地数据后再试。",
+  "Change saved. Undo is available until this message is replaced, dismissed or the app reloads.": "更改已保存。在此提示被替换、关闭或应用重新加载前，你都可以撤销。"
 }

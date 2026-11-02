@@ -1,3 +1,4 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 // Colloquium's chats: a conversation with the learner's own AI, kept so it can be read again or
 // carried on. Backed up and synced like journal entries.
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -48,5 +49,6 @@ export async function updateLastMessage(id: string, role: ChatMessage['role'], p
 }
 
 export async function deleteChat(id: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['chats'], () => deleteChat(id, database));
   await database.chats.update(id, { deletedAt: Date.now(), updatedAt: Date.now() });
 }

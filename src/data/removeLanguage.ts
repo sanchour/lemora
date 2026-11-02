@@ -1,10 +1,11 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 // Removing a language (Settings › Languages): the language and everything learnt in it go from this
 // device, with the files and the offline dictionary that took their room. Other languages stay.
 import Dexie from 'dexie';
 import { removePack } from '@/services/packs/packs';
 import { deleteBook } from './books';
 import { db } from './db';
-import type { LinguaDB } from './db';
+import type { LinguaDB, TableName } from './db';
 import { deleteDeck, deleteFolder } from './decks';
 import { deleteEntry } from './journal';
 import { forgetEvidence } from './learner';
@@ -15,6 +16,7 @@ import { deleteMedia } from './media';
 import { removeSong } from './songs';
 
 export async function removeLanguage(lang: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, database.tables.map((t) => t.name as TableName), () => removeLanguage(lang, database));
   const others = (await database.languages.toArray()).filter((l) => !l.deletedAt && l.id !== lang);
   if (!others.length) throw new Error('Lingua needs one language to study: add another before removing this one.');
   if ((await database.languages.get(lang))?.isActive === 1) await switchLanguage(others[0].id, database);
@@ -50,7 +52,7 @@ export async function removeLanguage(lang: string, database: LinguaDB = db): Pro
   await forgetEvidence(lang, database);
   await database.generated.where('[lang+kind]').between([lang, Dexie.minKey], [lang, Dexie.maxKey]).delete();
   await database.reviewLogs.where('[deckId+reviewedAt]').between([`grammar:${lang}`, Dexie.minKey], [`grammar:${lang}`, Dexie.maxKey]).delete();
-  await removePack(lang);
+  await removePack(lang, database);
 
   const now = Date.now();
   await database.languages.update(lang, { deletedAt: now, isActive: 0, updatedAt: now });

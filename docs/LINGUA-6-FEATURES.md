@@ -1957,7 +1957,7 @@ Different languages require different learning interfaces. This could become a m
 - [x] `F1547` Battery-efficient audio · **6-25** · S4 adds hidden-page transcription cancellation/restart; fake visibility/worker tests pass, real model unverified
 - [x] `F1548` Local data caching
 - [x] `F1549` Clear error messages · **6-25**
-- [ ] `F1550` Undo for destructive actions · **6-25** · S1 media deletion now confirms and supports page Undo; comprehensive destructive-action pass still pending
+- [x] `F1550` Undo for destructive actions · **6-25** · Learning-content deletion recovery wired and audited; whole-app erase has a cancellation window; device forgetting stays permanent. Scope and verification limits: [final audit](LINGUA-6-25-AUDIT.md).
 
 ## 25 · Advanced and experimental features
 
@@ -2140,3 +2140,6 @@ With this many possibilities, the danger is building a sprawling collection of t
 
 
 **Final repair verification (Codex, 2026-10-31):** 6-22/6-24 repairs checked and learner-reachable. 6-25 quick review now uses the real study engine, media deletion is explicit/reversible on the page, reader keyboard/typography and hidden transcription are repaired. F1546 stays incomplete for dedicated pack/voice storage management; F1550 stays incomplete for the comprehensive app-wide destructive-action audit. No blanket whole-step accessibility or external-app certification; exact evidence/limits in [LINGUA-6-VERIFICATION.md](LINGUA-6-VERIFICATION.md).
+
+
+**6-25 final audit, Codex 2026-11-02:** F1546/F1550 controls are learner-reachable. [The final inventory](LINGUA-6-25-AUDIT.md) states the exact recovery lifetime, permanent device-forgetting boundary and checks not completed after browser review hit its usage limit. No real AI, microphone or screen-reader certification is implied by these ticks.

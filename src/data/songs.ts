@@ -1,3 +1,4 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 // Cantus: songs and their lyrics, saved lines, and lyrics opened as a Codex text.
 import { useLiveQuery } from 'dexie-react-hooks';
 import { getLanguage } from '@/core/lang/languages';
@@ -96,6 +97,7 @@ export async function markSongPlayed(id: string, database: LinguaDB = db): Promi
 
 /** Forgets a song (its saved lines and words stay in your decks). */
 export async function removeSong(id: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['songs'], () => removeSong(id, database));
   await patchSong(id, { deletedAt: Date.now(), savedAt: undefined, lastPlayedAt: undefined }, database);
 }
 

@@ -67,6 +67,13 @@ export async function removeDictionary(lang: string, database: LinguaDB = db): P
   });
 }
 
+/** Personal entries alone do not mean a downloaded corpus is installed. */
+export async function dictionaryDownloads(database: LinguaDB = db): Promise<Array<{ lang: string; words: number }>> {
+  const langs = (await database.fullDict.orderBy('lang').uniqueKeys()).filter((lang): lang is string => typeof lang === 'string');
+  const versions = await database.fullDict.bulkGet(langs.map((lang) => [lang, VERSION_KEY]));
+  return Promise.all(versions.flatMap((row) => row ? [row.lang] : []).map(async (lang) => ({ lang, words: Math.max(0, await database.fullDict.where('lang').equals(lang).count() - 1) })));
+}
+
 /** 'none', 'old' (an earlier build: offered again) or 'ready', and how many words. */
 export function useDictionaryState(lang: string): { state: 'none' | 'old' | 'ready'; words: number } | undefined {
   return useLiveQuery(async () => {

@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.6.0-alpha.157** · 2026-11-02 · 6-25 S6: audited learning-content Undo and cancellable erase; record verification limits
 - **0.6.0-alpha.156** · 2026-11-02 · 6-25 S5: downloaded packs and voices with safe local Undo
 - **0.6.0-alpha.155** · 2026-10-31 · Claim remaining 6-25 storage and Undo verification work
 - **0.6.0-alpha.154** · 2026-10-31 · Verified dictionary/import repairs, safe media Undo and desktop review; preserve main merge and add PR checks

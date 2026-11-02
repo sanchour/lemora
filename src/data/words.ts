@@ -1,8 +1,10 @@
+import Dexie from 'dexie';
+import { undoableRemoval } from './removalUndo';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { getLanguage } from '@/core/lang/languages';
 import { bumpDaily } from './activity';
 import { defaultDeckConfig, newCard } from './decks';
-import { db } from './db';
+import { db, TABLE_NAMES } from './db';
 import { recordSighting } from './memory';
 import type { LinguaDB } from './db';
 import type { WordHistory } from '@/core/contracts/word';
@@ -73,6 +75,10 @@ export async function ensureMinedDeck(lang: string, database: LinguaDB = db): Pr
  * - Leaving Learning deletes a never-reviewed card; a reviewed card is suspended on Reset and kept on Known.
  */
 export async function setWordState(lang: string, norm: string, state: WordState, ctx: WordContext = {}, database: LinguaDB = db): Promise<void> {
+  if (state !== 2 && !Dexie.currentTransaction) return undoableRemoval(database, TABLE_NAMES, () => setWordState(lang, norm, state, ctx, database), async () => {
+    const restored = await database.words.get(wordId(lang, norm));
+    if (typeof document !== 'undefined') document.dispatchEvent(new CustomEvent('lingua:word', { detail: { lang, norm, state: restored?.state ?? 0 } }));
+  });
   const id = wordId(lang, norm);
   const previous = await database.transaction('rw', [database.words, database.notes, database.cards, database.decks, database.settings], async (): Promise<WordState> => {
     const now = Date.now();

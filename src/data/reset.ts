@@ -1,3 +1,4 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 // Starting over: one language's progress, or everything on this device.
 import { db } from './db';
 import type { LinguaDB } from './db';
@@ -13,6 +14,7 @@ export interface ResetCounts {
  * statistics, milestones, logged study and goals. Books, audio and journal entries stay.
  */
 export async function resetLanguageProgress(lang: string, database: LinguaDB = db): Promise<ResetCounts> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['words', 'decks', 'folders', 'notes', 'cards', 'reviewLogs', 'readingProgress', 'texts', 'sessions', 'dailyStats', 'journeyEvents', 'studyLogs', 'goals', 'languages', 'playbackProgress', 'media', 'grammarItems', 'grammarProgress', 'courseProgress', 'typing'], () => resetLanguageProgress(lang, database));
   return database.transaction(
     'rw',
     [database.words, database.decks, database.folders, database.notes, database.cards, database.reviewLogs, database.readingProgress, database.texts, database.sessions, database.dailyStats, database.journeyEvents, database.studyLogs, database.goals, database.languages, database.playbackProgress, database.media, database.grammarItems, database.grammarProgress, database.courseProgress, database.typing],
