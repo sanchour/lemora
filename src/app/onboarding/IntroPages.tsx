@@ -76,7 +76,7 @@ export function NamePage({ name, onName, onEnter }: { name: string; onName: (nam
   return (
     <div className="flex flex-col items-center py-6 text-center">
       <LogoMark size={48} />
-      <h1 className="mt-6 font-serif text-[40px] leading-[1.15] font-semibold tracking-tight"><UiText source={'First things first.'} /></h1>
+      <h1 className="mt-6 font-serif text-[40px] leading-[1.15] font-semibold tracking-tight"><span className="not-italic"><UiText source={'First things first.'} /></span></h1>
       <p className="mt-2 text-[16.5px] text-ink-soft"><UiText source={'What should we call you?'} /></p>
       <input
         ref={input}
