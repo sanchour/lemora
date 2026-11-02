@@ -79,6 +79,9 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const [room, setRoom] = useState(0);
   /** Which light the Lux and Nox page shows: 0 Lux (light), 1 Nox (dark); Continue goes from one to the other. */
   const [lightStage, setLightStage] = useState<0 | 1>(0);
+  /** The goal page's two stages (goal, then time a day), and whether a goal level was clicked. */
+  const [goalStage, setGoalStage] = useState<0 | 1>(0);
+  const [goalPicked, setGoalPicked] = useState(false);
   const page = pages[index];
   const steps = pages.filter((p) => !INTRO.has(p));
   const theme: ThemePref = settings?.theme ?? 'system';
@@ -90,7 +93,14 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const goalNow = goal && ORDER.indexOf(goal) > ORDER.indexOf(level) ? goal : defaultGoal(level);
   const languageName = getLanguage(target ?? '')?.name ?? 'this language';
 
-  const canContinue = page !== 'language' || target !== null;
+  // No page can be skipped: each one has to be answered before Continue lights up.
+  const canContinue =
+    page === 'name' ? nameNow.trim().length > 0
+    : page === 'language' ? target !== null
+    : page === 'speak' ? spoken.length > 0
+    : page === 'why' ? reasonsNow.length > 0
+    : page === 'goal' ? goalStage === 1 || goalPicked
+    : true;
 
   const go = (next: number) => {
     setDir(next > index ? 1 : -1);
@@ -135,19 +145,26 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const next = () => {
     if (!canContinue || busy) return;
     if (page === 'about' && room < ROOM_COUNT - 1) setRoom(room + 1);
+    else if (page === 'goal' && goalStage === 0) setGoalStage(1);
     else if (page === 'light' && lightStage === 0) setLightStage(1);
     else if (index < pages.length - 1) {
       // Past the lights the app follows the device: Lux by day, Nox at night.
       if (page === 'light') void setSetting('theme', 'system');
       if (page === 'goal') setLightStage(0);
+      if (page === 'level') {
+        setGoalStage(0);
+        setGoalPicked(false);
+      }
       go(index + 1);
     } else void finish();
   };
 
   const back = () => {
     if (page === 'about' && room > 0) setRoom(room - 1);
+    else if (page === 'goal' && goalStage === 1) setGoalStage(0);
     else if (page === 'light' && lightStage === 1) setLightStage(0);
     else {
+      if (page === 'light') setGoalStage(1);
       if (page === 'plans') setLightStage(1);
       go(index - 1);
     }
@@ -176,7 +193,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
     page === 'name'
       ? nameNow.trim()
         ? 'Continue'
-        : 'Skip for now'
+        : 'Continue'
       : page === 'welcome'
         ? 'Show me around'
         : page === 'about'
@@ -228,7 +245,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
               {page === 'level' && target && <LevelStep lang={target} level={level} seedKnown={seedKnown} onLevel={setLevel} onSeedKnown={setSeedKnown} />}
               {page === 'speak' && <SpeakStep spoken={spoken} target={target} level={level} onSpoken={setSpoken} />}
               {page === 'why' && <WhyStep language={languageName} reasons={reasonsNow} onReasons={setReasons} />}
-              {page === 'goal' && <GoalStep level={level} goal={goalNow} minutes={minutes} onGoal={setGoal} onMinutes={setMinutes} />}
+              {page === 'goal' && <GoalStep level={level} goal={goalNow} minutes={minutes} onGoal={setGoal} onMinutes={setMinutes} stage={goalStage} onPick={() => setGoalPicked(true)} />}
               {page === 'light' && settings && <AestheticStep stage={lightStage} palette={settings.palette} sample={getLanguage(target ?? 'en')?.sample || LANGUAGES[0].sample} lang={target ?? 'en'} />}
               {page === 'plans' && settings && <PlanPitch current={planOf(settings.meta)} onFree={() => void finish()} replay={replaying} />}
             </motion.section>

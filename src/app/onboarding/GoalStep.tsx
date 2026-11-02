@@ -1,12 +1,9 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 import type { KeyboardEvent } from 'react';
-import { ArrowRight } from 'lucide-react';
-import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import type { Level } from '@/core/lang/levels';
 import type { CefrLevel } from '@/data/types';
 import { spring } from '@/design/motion';
-import { Button } from '@/design/primitives';
 import { cx } from '@/lib/cx';
 import { LevelIcon } from './LevelStep';
 import { StepTitle } from './StepTitle';
@@ -56,10 +53,14 @@ interface GoalStepProps {
   minutes: number;
   onGoal: (goal: CefrLevel) => void;
   onMinutes: (minutes: number) => void;
+  /** 0: the goal to reach; 1: the time a day. The footer's Continue goes from one to the other. */
+  stage: 0 | 1;
+  /** A goal level was clicked: only then can Continue move on. */
+  onPick: () => void;
 }
 
 /** Set your own goal (5.1-2b): the level to reach, as milestones on a path, and minutes a day on a slider; then about how long. */
-export function GoalStep({ level, goal, minutes, onGoal, onMinutes }: GoalStepProps) {
+export function GoalStep({ level, goal, minutes, onGoal, onMinutes, stage, onPick }: GoalStepProps) {
   const translateUi = useUi();
   const ahead = ORDER.slice(ORDER.indexOf(level) + 1);
   const index = Math.max(0, DAILY_MINUTES.findIndex((d) => d.minutes === minutes));
@@ -71,9 +72,7 @@ export function GoalStep({ level, goal, minutes, onGoal, onMinutes }: GoalStepPr
     e.preventDefault();
     step(to);
   };
-  /** The goal comes first; once you have picked one a Next button appears, and it brings in the time a day. */
-  const [picked, setPicked] = useState(false);
-  const [timeShown, setTimeShown] = useState(false);
+  const timeShown = stage === 1;
   const stops: Level[] = [level, ...(ahead as Level[])];
   const lastStop = stops.length - 1;
   const goalAt = Math.max(1, stops.indexOf(goal as Level));
@@ -88,7 +87,7 @@ export function GoalStep({ level, goal, minutes, onGoal, onMinutes }: GoalStepPr
           <motion.div key="goal" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -14, filter: 'blur(4px)' }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
       {/* The trail: where you are, then each level ahead, one little drawing apiece; the goal has a flag planted in it. */}
       <h2 className="mb-2 text-center text-[12px] font-bold tracking-[0.08em] text-ink-faint uppercase"><UiText source={'Where do you want to get?'} /></h2>
-      <div role="radiogroup" aria-label={translateUi('The level to reach')} className="relative mx-auto mt-20 h-16 max-w-3xl">
+      <div role="radiogroup" aria-label={translateUi('The level to reach')} className="relative mx-auto mt-24 mb-16 h-16 max-w-3xl">
         <svg viewBox="0 0 600 20" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-1/2 h-5 -translate-y-1/2 overflow-visible text-line-strong" aria-hidden>
           <path d={WOBBLE} fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeDasharray="1 7" vectorEffect="non-scaling-stroke" />
         </svg>
@@ -109,7 +108,7 @@ export function GoalStep({ level, goal, minutes, onGoal, onMinutes }: GoalStepPr
               disabled={you}
               onClick={() => {
                 onGoal(l);
-                setPicked(true);
+                onPick();
               }}
               className="group absolute top-1/2 grid size-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-bg disabled:cursor-default"
               style={{ left: `${(i / lastStop) * 100}%` }}
@@ -128,16 +127,6 @@ export function GoalStep({ level, goal, minutes, onGoal, onMinutes }: GoalStepPr
             </button>
           );
         })}
-      </div>
-      {/* Next, once a goal is picked; it brings in the time a day. */}
-      <div className="mt-20 flex h-12 justify-center">
-        <AnimatePresence initial={false}>
-          {picked && (
-            <motion.div key="next" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={spring.snappy}>
-              <Button size="lg" className="!rounded-full px-8" iconRight={ArrowRight} onClick={() => setTimeShown(true)}><UiText source={'Next'} /></Button>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
           </motion.div>
         ) : (
