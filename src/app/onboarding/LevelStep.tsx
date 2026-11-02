@@ -112,7 +112,7 @@ function ExampleReveal({ lang, level }: { lang: string; level: Level }) {
   const rtl = getLanguage(lang)?.rtl;
   if (!sample || !word) return null;
   return (
-    <div className="mx-auto mt-5 flex min-h-[92px] max-w-2xl items-start justify-center">
+    <div className="mx-auto mt-5 flex min-h-[84px] max-w-2xl items-start justify-center">
       <AnimatePresence mode="wait" initial={false}>
         {!open ? (
           <motion.button
@@ -123,18 +123,14 @@ function ExampleReveal({ lang, level }: { lang: string; level: Level }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 1.08, filter: 'blur(6px)' }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.97 }}
-            className="group flex cursor-pointer flex-col items-center gap-2 rounded-2xl border-[1.5px] border-dashed border-accent/50 bg-accent/5 px-7 py-3 outline-none transition-colors hover:border-accent hover:bg-accent/10 focus-visible:ring-2 focus-visible:ring-accent/40"
+                        whileTap={{ scale: 0.97 }}
+            aria-label={`${word[0]}, ${word[1]}. ${translateUi('Tap to see it in a sentence')}`}
+            className="group flex cursor-pointer items-center gap-2.5 rounded-xl px-3 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
           >
-            <span className="flex items-baseline gap-3">
-              <span lang={lang} dir={rtl ? 'rtl' : undefined} className="font-serif text-[26px] leading-none font-semibold text-accent-text underline decoration-accent/50 decoration-wavy decoration-1 underline-offset-[7px]">{word[0]}</span>
-              <span className="text-[14px] text-ink-faint">{word[1]}</span>
-            </span>
-            <span className="flex items-center gap-1.5 text-[11.5px] font-semibold tracking-wide text-accent-text/80 uppercase">
-              <UiText source={'Tap to see it in a sentence'} />
-              <svg viewBox="0 0 16 16" className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <path d="M2 8.5C5 7.5 9 8.5 13 8M9 4l4 4-4 4" />
+            <span lang={lang} dir={rtl ? 'rtl' : undefined} className="font-serif text-[28px] leading-none font-semibold text-accent-text underline decoration-accent/60 decoration-wavy decoration-1 underline-offset-[8px] transition-[text-decoration-color] group-hover:decoration-accent">{word[0]}</span>
+            <span className="grid size-6 place-items-center rounded-full border border-accent/40 text-accent-text transition-[background-color,transform] duration-200 group-hover:translate-x-0.5 group-hover:bg-accent/10">
+              <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M2.5 8.5C5 7.5 9 8.5 12.5 8M9 4.5l3.5 3.5L9 11.5" />
               </svg>
             </span>
           </motion.button>
