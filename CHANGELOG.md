@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.6.0-alpha.169** · 2026-11-02 · resolve A2 transition cancellation blocker
 - **0.6.0-alpha.168** · 2026-11-02 · record A2 browser verification and transition-log blocker
 - **0.6.0-alpha.167** · 2026-11-02 · checkpoint A2.1 Russian schemes; browser acceptance pending
 - **0.6.0-alpha.166** · 2026-11-02 · claim 6-23 A2 transliteration as Codex
