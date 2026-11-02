@@ -1,6 +1,6 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { AnimatePresence, motion } from 'motion/react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import type { KeyboardEvent, PointerEvent } from 'react';
 import { getLanguage } from '@/core/lang/languages';
 import { LEVELS } from '@/core/lang/levels';
@@ -44,7 +44,7 @@ const ICONS: Record<Level, Part[]> = {
 /** A sentence in the language you are learning at each level, with what it says (for the six core languages). */
 const EXAMPLES: Record<string, Record<Level, [string, string]>> = {
   es: {
-    A0: ['Hola.', 'Hello.'],
+    A0: ['Hola, ¿cómo estás?', 'Hello, how are you?'],
     A1: ['Me llamo Ana y vivo en Madrid.', 'My name is Ana and I live in Madrid.'],
     A2: ['Ayer fui al mercado y compré pan y frutas.', 'Yesterday I went to the market and bought bread and fruit.'],
     B1: ['Aunque llovía, decidimos salir a caminar porque necesitábamos aire fresco.', 'Although it was raining, we decided to go for a walk because we needed fresh air.'],
@@ -52,7 +52,7 @@ const EXAMPLES: Record<string, Record<Level, [string, string]>> = {
     C1: ['Lejos de resolver el problema, la medida no hizo sino agravar la desconfianza que pretendía disipar.', 'Far from solving the problem, the measure only deepened the mistrust it was meant to dispel.'],
   },
   fr: {
-    A0: ['Bonjour.', 'Hello.'],
+    A0: ['Bonjour, comment ça va ?', 'Hello, how are you?'],
     A1: ['Je m’appelle Ana et j’habite à Paris.', 'My name is Ana and I live in Paris.'],
     A2: ['Hier, je suis allé au marché et j’ai acheté du pain et des fruits.', 'Yesterday I went to the market and bought bread and fruit.'],
     B1: ['Même s’il pleuvait, nous avons décidé de marcher un peu parce que nous avions besoin d’air.', 'Even though it was raining, we decided to walk a little because we needed some air.'],
@@ -60,7 +60,7 @@ const EXAMPLES: Record<string, Record<Level, [string, string]>> = {
     C1: ['Loin de résoudre le problème, cette mesure n’a fait qu’aggraver la méfiance qu’elle prétendait dissiper.', 'Far from solving the problem, this measure only deepened the mistrust it claimed to dispel.'],
   },
   de: {
-    A0: ['Hallo.', 'Hello.'],
+    A0: ['Hallo, wie geht’s?', 'Hello, how are you?'],
     A1: ['Ich heiße Ana und wohne in Berlin.', 'My name is Ana and I live in Berlin.'],
     A2: ['Gestern war ich auf dem Markt und habe Brot und Obst gekauft.', 'Yesterday I was at the market and bought bread and fruit.'],
     B1: ['Obwohl es regnete, gingen wir spazieren, weil wir frische Luft brauchten.', 'Although it was raining, we went for a walk because we needed fresh air.'],
@@ -68,7 +68,7 @@ const EXAMPLES: Record<string, Record<Level, [string, string]>> = {
     C1: ['Weit davon entfernt, das Problem zu lösen, verstärkte die Maßnahme nur das Misstrauen, das sie zerstreuen sollte.', 'Far from solving the problem, the measure only deepened the mistrust it was meant to dispel.'],
   },
   ru: {
-    A0: ['Привет.', 'Hello.'],
+    A0: ['Привет, как дела?', 'Hi, how are you?'],
     A1: ['Меня зовут Ана, я живу в Москве.', 'My name is Ana, I live in Moscow.'],
     A2: ['Вчера я ходил на рынок и купил хлеб и фрукты.', 'Yesterday I went to the market and bought bread and fruit.'],
     B1: ['Хотя шёл дождь, мы решили погулять, потому что нам нужен был свежий воздух.', 'Although it was raining, we decided to go for a walk because we needed fresh air.'],
@@ -76,7 +76,7 @@ const EXAMPLES: Record<string, Record<Level, [string, string]>> = {
     C1: ['Эта мера не только не решила проблему, но и усилила недоверие, которое должна была развеять.', 'This measure not only failed to solve the problem but deepened the mistrust it was meant to dispel.'],
   },
   ar: {
-    A0: ['مرحبا.', 'Hello.'],
+    A0: ['مرحبا، كيف حالك؟', 'Hello, how are you?'],
     A1: ['اسمي آنا وأسكن في القاهرة.', 'My name is Ana and I live in Cairo.'],
     A2: ['ذهبت أمس إلى السوق واشتريت خبزًا وفاكهة.', 'Yesterday I went to the market and bought bread and fruit.'],
     B1: ['رغم أن المطر كان ينهمر، قررنا أن نتمشى لأننا احتجنا إلى هواء نقي.', 'Although the rain was pouring, we decided to take a walk because we needed fresh air.'],
@@ -84,7 +84,7 @@ const EXAMPLES: Record<string, Record<Level, [string, string]>> = {
     C1: ['بدلًا من حلّ المشكلة، لم يزد القرار إلا تعميقًا لانعدام الثقة الذي كان يُراد تبديده.', 'Instead of solving the problem, the decision only deepened the mistrust it was meant to dispel.'],
   },
   zh: {
-    A0: ['你好。', 'Hello.'],
+    A0: ['你好，你好吗？', 'Hello, how are you?'],
     A1: ['我叫安娜，我住在北京。', 'My name is Ana and I live in Beijing.'],
     A2: ['昨天我去了市场，买了面包和水果。', 'Yesterday I went to the market and bought bread and fruit.'],
     B1: ['虽然下着雨，我们还是决定出去走走，因为需要新鲜空气。', 'Although it was raining, we still decided to go out for a walk because we needed fresh air.'],
@@ -92,6 +92,63 @@ const EXAMPLES: Record<string, Record<Level, [string, string]>> = {
     C1: ['这项措施非但没有解决问题，反而加深了它本想消除的不信任。', 'Far from solving the problem, the measure deepened the very mistrust it set out to remove.'],
   },
 };
+
+/** One word from each example sentence, with what it means: tap it to see it in the sentence. */
+const WORDS: Record<string, Record<Level, [string, string]>> = {
+  es: { A0: ['hola', 'hello'], A1: ['vivo', 'I live'], A2: ['compré', 'I bought'], B1: ['aunque', 'although'], B2: ['habría', 'would have'], C1: ['desconfianza', 'mistrust'] },
+  fr: { A0: ['bonjour', 'hello'], A1: ['habite', 'live'], A2: ['acheté', 'bought'], B1: ['pleuvait', 'was raining'], B2: ['probablement', 'probably'], C1: ['méfiance', 'mistrust'] },
+  de: { A0: ['hallo', 'hello'], A1: ['wohne', 'live'], A2: ['gekauft', 'bought'], B1: ['regnete', 'rained'], B2: ['schwierig', 'difficult'], C1: ['Misstrauen', 'mistrust'] },
+  ru: { A0: ['привет', 'hi'], A1: ['живу', 'I live'], A2: ['купил', 'bought'], B1: ['дождь', 'rain'], B2: ['трудно', 'hard'], C1: ['недоверие', 'mistrust'] },
+  ar: { A0: ['مرحبا', 'hello'], A1: ['أسكن', 'I live'], A2: ['اشتريت', 'I bought'], B1: ['المطر', 'the rain'], B2: ['صعبًا', 'hard'], C1: ['الثقة', 'trust'] },
+  zh: { A0: ['你好', 'hello'], A1: ['住', 'live'], A2: ['买', 'buy'], B1: ['决定', 'decide'], B2: ['难', 'hard'], C1: ['不信任', 'mistrust'] },
+};
+
+/** Under what a level is: first just one word, drawn like a button; tap it and it melts into a whole sentence. */
+function ExampleReveal({ lang, level }: { lang: string; level: Level }) {
+  const translateUi = useUi();
+  const [open, setOpen] = useState(false);
+  const sample = EXAMPLES[lang]?.[level];
+  const word = WORDS[lang]?.[level];
+  const rtl = getLanguage(lang)?.rtl;
+  if (!sample || !word) return null;
+  return (
+    <div className="mx-auto mt-5 flex min-h-[92px] max-w-2xl items-start justify-center">
+      <AnimatePresence mode="wait" initial={false}>
+        {!open ? (
+          <motion.button
+            key="word"
+            type="button"
+            onClick={() => setOpen(true)}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 1.08, filter: 'blur(6px)' }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.97 }}
+            className="group flex cursor-pointer flex-col items-center gap-2 rounded-2xl border-[1.5px] border-dashed border-accent/50 bg-accent/5 px-7 py-3 outline-none transition-colors hover:border-accent hover:bg-accent/10 focus-visible:ring-2 focus-visible:ring-accent/40"
+          >
+            <span className="flex items-baseline gap-3">
+              <span lang={lang} dir={rtl ? 'rtl' : undefined} className="font-serif text-[26px] leading-none font-semibold text-accent-text underline decoration-accent/50 decoration-wavy decoration-1 underline-offset-[7px]">{word[0]}</span>
+              <span className="text-[14px] text-ink-faint">{word[1]}</span>
+            </span>
+            <span className="flex items-center gap-1.5 text-[11.5px] font-semibold tracking-wide text-accent-text/80 uppercase">
+              <UiText source={'Tap to see it in a sentence'} />
+              <svg viewBox="0 0 16 16" className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M2 8.5C5 7.5 9 8.5 13 8M9 4l4 4-4 4" />
+              </svg>
+            </span>
+          </motion.button>
+        ) : (
+          <motion.div key="sentence" initial={{ opacity: 0, y: 8, filter: 'blur(6px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} aria-live="polite">
+            <p lang={lang} dir={rtl ? 'rtl' : undefined} className="font-serif text-[21px] leading-snug text-accent-text">{sample[0]}</p>
+            <p className="mt-1 text-[13.5px] text-ink-faint">{sample[1]}</p>
+            <span className="sr-only">{translateUi('Example sentence')}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 interface LevelStepProps {
   lang: string;
@@ -117,9 +174,6 @@ export function LevelStep({ lang, level, seedKnown, onLevel, onSeedKnown }: Leve
   const index = LEVELS.findIndex((l) => l.id === level);
   const info = LEVELS[index];
   const top = info.seedKnownTopN;
-  const sample = EXAMPLES[lang]?.[level];
-  const example = sample ? { text: sample[0], en: sample[1] } : null;
-  const rtl = getLanguage(lang)?.rtl;
   const pct = (i: number) => `${(i / last) * 100}%`;
 
   const fromPointer = (e: PointerEvent) => {
@@ -213,12 +267,7 @@ export function LevelStep({ lang, level, seedKnown, onLevel, onSeedKnown }: Leve
           <AnimatePresence mode="wait" initial={false}>
             <motion.div key={level} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}>
               <p className="mx-auto max-w-2xl font-serif text-[23px] leading-snug font-semibold tracking-tight"><UiText source={MEANS[level].know} /></p>
-              {example && (
-                <div className="mx-auto mt-5 max-w-2xl">
-                  <p lang={lang} dir={rtl ? 'rtl' : undefined} className="font-serif text-[21px] leading-snug text-accent-text">{example.text}</p>
-                  <p className="mt-1 text-[13.5px] text-ink-faint">{example.en}</p>
-                </div>
-              )}
+              <ExampleReveal lang={lang} level={level} />
             </motion.div>
           </AnimatePresence>
         </div>
