@@ -91,17 +91,17 @@ export function LookCard() {
             onChange={(theme) => void setSetting('theme', theme)}
             options={[
               { value: 'system', label: translateUi('Device') },
-              { value: 'paper', label: translateUi('Paper') },
-              { value: 'nocturne', label: translateUi('Nocturne') },
+              { value: 'paper', label: translateUi('Lux') },
+              { value: 'nocturne', label: translateUi('Nox') },
             ]}
           />
         </div>
         <div>
-          <p className="mb-1.5 text-[13px] font-semibold"><UiText source={'Paper palettes'} /></p>
+          <p className="mb-1.5 text-[13px] font-semibold"><UiText source={'Lux palettes'} /></p>
           <Swatches list={PAPER_PALETTES} chosen={settings.palette.paper} onChoose={(paper) => setPalette({ paper })} />
         </div>
         <div>
-          <p className="mb-1.5 text-[13px] font-semibold"><UiText source={'Nocturne palettes'} /></p>
+          <p className="mb-1.5 text-[13px] font-semibold"><UiText source={'Nox palettes'} /></p>
           <Swatches list={NOCTURNE_PALETTES} chosen={settings.palette.nocturne} onChoose={(nocturne) => setPalette({ nocturne })} />
         </div>
         <div>

@@ -1,5 +1,5 @@
 import { UiText, UiMessageText, useUi } from '@/design/i18n/UiText';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
@@ -10,7 +10,7 @@ import { codeForLanguage } from '@/core/parsers/notion';
 import { completeOnboarding, useActiveLanguage } from '@/data/languages';
 import { useDevLab } from '@/features/lab/devLab';
 import { planOf } from '@/data/plan';
-import { patchSetting, useSettings } from '@/data/settings';
+import { patchSetting, setSetting, useSettings } from '@/data/settings';
 import type { LearningReason, ThemePref } from '@/data/settings';
 import type { CefrLevel } from '@/data/types';
 import { useHotkeys } from '@/design/hooks/useHotkeys';
@@ -23,7 +23,7 @@ import { cx } from '@/lib/cx';
 import { AestheticStep } from './AestheticStep';
 import { enjoymentsFor } from './EnjoyStep';
 import { defaultGoal, GoalStep } from './GoalStep';
-import { AboutPage, NamePage, WelcomePage } from './IntroPages';
+import { AboutPage, NamePage, ROOM_COUNT, roomNextLabel, WelcomePage } from './IntroPages';
 import { LanguageStep } from './LanguageStep';
 import { LevelStep } from './LevelStep';
 import { FIRST } from './pages';
@@ -39,12 +39,6 @@ import { WhyStep } from './WhyStep';
 const ANOTHER: Page[] = ['language', 'level', 'goal'];
 const INTRO = new Set<Page>(['name', 'welcome', 'about']);
 const ORDER: CefrLevel[] = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-
-/** The device's language, as a code Lingua knows when it can (Norwegian is nb). */
-function deviceLanguage(): string {
-  const code = (navigator.language || 'en').split('-')[0].toLowerCase();
-  return code === 'no' ? 'nb' : code;
-}
 
 /** The language translations are given in: the first native language Lingua can gloss in, else English. */
 function nativeOf(spoken: Spoken[], target: string | null): string {
@@ -76,11 +70,18 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const [target, setTarget] = useState<string | null>(replaying ? (active?.id ?? null) : null);
   const [level, setLevel] = useState<Level>('A0');
   const [seedKnown, setSeedKnown] = useState(true);
-  const [spoken, setSpoken] = useState<Spoken[]>(() => [{ code: deviceLanguage(), level: 'native' }]);
+  const [spoken, setSpoken] = useState<Spoken[]>(() => [{ code: 'en', level: 'native' }]);
   const [reasons, setReasons] = useState<LearningReason[] | null>(null);
   const [goal, setGoal] = useState<CefrLevel | null>(null);
   const [minutes, setMinutes] = useState(15);
   const [busy, setBusy] = useState(false);
+  /** Which demo room the about page shows: Codex, Thesaurus, then Sonus & Visio; Next walks through them first. */
+  const [room, setRoom] = useState(0);
+  /** Which light the Lux and Nox page shows: 0 Lux (light), 1 Nox (dark); Continue goes from one to the other. */
+  const [lightStage, setLightStage] = useState<0 | 1>(0);
+  /** The goal page's two stages (goal, then time a day), and whether a goal level was clicked. */
+  const [goalStage, setGoalStage] = useState<0 | 1>(0);
+  const [goalPicked, setGoalPicked] = useState(false);
   const page = pages[index];
   const steps = pages.filter((p) => !INTRO.has(p));
   const theme: ThemePref = settings?.theme ?? 'system';
@@ -92,7 +93,14 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const goalNow = goal && ORDER.indexOf(goal) > ORDER.indexOf(level) ? goal : defaultGoal(level);
   const languageName = getLanguage(target ?? '')?.name ?? 'this language';
 
-  const canContinue = page !== 'language' || target !== null;
+  // No page can be skipped: each one has to be answered before Continue lights up.
+  const canContinue =
+    page === 'name' ? nameNow.trim().length > 0
+    : page === 'language' ? target !== null
+    : page === 'speak' ? spoken.length > 0
+    : page === 'why' ? reasonsNow.length > 0
+    : page === 'goal' ? goalStage === 1 || goalPicked
+    : true;
 
   const go = (next: number) => {
     setDir(next > index ? 1 : -1);
@@ -136,23 +144,60 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
 
   const next = () => {
     if (!canContinue || busy) return;
-    if (index < pages.length - 1) go(index + 1);
-    else void finish();
+    if (page === 'about' && room < ROOM_COUNT - 1) setRoom(room + 1);
+    else if (page === 'goal' && goalStage === 0) setGoalStage(1);
+    else if (page === 'light' && lightStage === 0) setLightStage(1);
+    else if (index < pages.length - 1) {
+      // Past the lights the app follows the device: Lux by day, Nox at night.
+      if (page === 'light') void setSetting('theme', 'system');
+      if (page === 'goal') setLightStage(0);
+      if (page === 'level') {
+        setGoalStage(0);
+        setGoalPicked(false);
+      }
+      go(index + 1);
+    } else void finish();
   };
+
+  const back = () => {
+    if (page === 'about' && room > 0) setRoom(room - 1);
+    else if (page === 'goal' && goalStage === 1) setGoalStage(0);
+    else if (page === 'light' && lightStage === 1) setLightStage(0);
+    else {
+      if (page === 'light') setGoalStage(1);
+      if (page === 'plans') setLightStage(1);
+      go(index - 1);
+    }
+  };
+
+  // Enter moves on, like the Next button, unless you are typing (or on the footer's own buttons, which answer Enter themselves).
+  const nextRef = useRef(next);
+  nextRef.current = next;
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Enter' || e.repeat || e.isComposing || e.metaKey || e.ctrlKey || e.altKey) return;
+      const el = e.target as HTMLElement | null;
+      if (el?.closest('input, textarea, select, footer, [contenteditable="true"], [role="combobox"]')) return;
+      e.preventDefault();
+      nextRef.current();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   const cancel = () => (replaying ? leaveReplay() : void patchSetting('meta', { onboardedAt: Date.now() }));
   useHotkeys({ escape: cancel }, canCancel || replaying);
 
-  const width = page === 'language' ? 'max-w-7xl' : page === 'about' || page === 'light' || page === 'plans' ? 'max-w-6xl' : 'max-w-3xl';
+  const width = page === 'language' ? 'max-w-7xl' : page === 'about' || page === 'light' || page === 'plans' ? 'max-w-6xl' : page === 'level' ? 'max-w-4xl' : 'max-w-3xl';
   const label =
     page === 'name'
       ? nameNow.trim()
         ? 'Continue'
-        : 'Skip for now'
+        : 'Continue'
       : page === 'welcome'
         ? 'Show me around'
         : page === 'about'
-          ? 'Choose a language'
+          ? (roomNextLabel(room) ?? 'Choose a language')
           : page === 'language' && target
             ? { source: 'Continue with {0}', values: [getLanguage(target)?.endonym ?? target] }
             : index === pages.length - 1
@@ -160,7 +205,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
               : 'Continue';
 
   return (
-    <div className="flex min-h-dvh flex-col overflow-x-clip">
+    <div className="onboarding-surface flex min-h-dvh flex-col overflow-x-clip">
       <header className={cx('mx-auto flex w-full items-center justify-between gap-4 px-8 pt-6', width)}>
         <Wordmark />
         {replaying ? (
@@ -195,13 +240,13 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
             <motion.section key={page} custom={dir} variants={turn} initial="enter" animate="center" exit="exit" transition={spring.gentle}>
               {page === 'name' && <NamePage name={nameNow} onName={setName} onEnter={next} />}
               {page === 'welcome' && <WelcomePage name={nameNow} />}
-              {page === 'about' && <AboutPage />}
+              {page === 'about' && <AboutPage room={room} onRoom={setRoom} />}
               {page === 'language' && <LanguageStep target={target} onTarget={setTarget} />}
               {page === 'level' && target && <LevelStep lang={target} level={level} seedKnown={seedKnown} onLevel={setLevel} onSeedKnown={setSeedKnown} />}
-              {page === 'speak' && <SpeakStep spoken={spoken} target={target} onSpoken={setSpoken} />}
+              {page === 'speak' && <SpeakStep spoken={spoken} target={target} level={level} onSpoken={setSpoken} />}
               {page === 'why' && <WhyStep language={languageName} reasons={reasonsNow} onReasons={setReasons} />}
-              {page === 'goal' && <GoalStep level={level} goal={goalNow} minutes={minutes} onGoal={setGoal} onMinutes={setMinutes} />}
-              {page === 'light' && settings && <AestheticStep pref={theme} palette={settings.palette} sample={getLanguage(target ?? 'en')?.sample || LANGUAGES[0].sample} lang={target ?? 'en'} />}
+              {page === 'goal' && <GoalStep level={level} goal={goalNow} minutes={minutes} onGoal={setGoal} onMinutes={setMinutes} stage={goalStage} onPick={() => setGoalPicked(true)} />}
+              {page === 'light' && settings && <AestheticStep stage={lightStage} palette={settings.palette} sample={getLanguage(target ?? 'en')?.sample || LANGUAGES[0].sample} lang={target ?? 'en'} />}
               {page === 'plans' && settings && <PlanPitch current={planOf(settings.meta)} onFree={() => void finish()} replay={replaying} />}
             </motion.section>
           </AnimatePresence>
@@ -209,11 +254,11 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
       </main>
 
       <footer className="sticky bottom-0 bg-gradient-to-t from-bg via-bg/95 to-bg/0 px-8 pt-3 pb-4">
-        <div className={cx('mx-auto flex gap-3', width, INTRO.has(page) && 'max-w-md')}>
+        <div className={cx('mx-auto flex flex-row flex-nowrap items-center gap-3', width, INTRO.has(page) && 'max-w-sm')}>
           {index > 0 && (
-            <Button variant="secondary" size="lg" onClick={() => go(index - 1)} disabled={busy}><UiText source={'Back'} /></Button>
+            <Button variant="secondary" size="lg" className="!rounded-full w-24 shrink-0 !px-0" onClick={back} disabled={busy}><UiText source={'Back'} /></Button>
           )}
-          <Button size="lg" className="flex-1" onClick={next} disabled={!canContinue} loading={busy} iconRight={ArrowRight}>
+          <Button size="lg" className="flex-1 !rounded-full" onClick={next} disabled={!canContinue} loading={busy} iconRight={ArrowRight}>
             <UiMessageText message={label} />
           </Button>
         </div>

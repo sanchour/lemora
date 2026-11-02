@@ -1,13 +1,15 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Plus, X } from 'lucide-react';
-import { getLanguage } from '@/core/lang/languages';
+import { X } from 'lucide-react';
+import { AVAILABLE_LANGUAGES, getLanguage } from '@/core/lang/languages';
 import type { CefrLevel } from '@/data/types';
+import type { Level } from '@/core/lang/levels';
 import { LanguageFlag } from '@/design/flags';
 import { spring } from '@/design/motion';
 import { SearchInput, searchKey } from '@/design/primitives';
 import { cx } from '@/lib/cx';
+import { LevelIcon } from './LevelStep';
 import { StepTitle } from './StepTitle';
 
 /** A language the learner already speaks: native, or a level. */
@@ -37,9 +39,6 @@ const HELLO: Record<string, string> = {
   vi: 'Xin chào', th: 'สวัสดี', id: 'Halo', ms: 'Helo', tl: 'Kumusta', sw: 'Jambo', af: 'Hallo', ca: 'Hola', eu: 'Kaixo', gl: 'Ola', ga: 'Dia duit', cy: 'Helo', lt: 'Labas', lv: 'Sveiki', et: 'Tere',
 };
 const RTL = new Set(['ar', 'he', 'fa', 'ur', 'yi', 'ps']);
-
-/** One click to add, for the languages people speak most. */
-const QUICK = ['en', 'es', 'fr', 'de', 'it', 'pt', 'nl', 'ru', 'zh', 'ar', 'hi', 'ja', 'tr', 'pl', 'sv', 'ko'];
 
 /** What a count of languages makes you. */
 function polyglot(n: number): string {
@@ -83,30 +82,41 @@ interface SpeakStepProps {
   spoken: Spoken[];
   /** The language being learned: not offered here. */
   target: string | null;
+  /** The level just chosen for it: shown as its own card, read only. */
+  level: Level;
   onSpoken: (spoken: Spoken[]) => void;
 }
 
 /**
  * Which languages do you already speak (5.1-2b), in one centred column: each language a card saying
  * hello in it, with its level as signal bars or native; the device's language is there first. Under
- * them, adding one: a search of every language or one-click flags, and straight away how well. They
- * go into Tabula, and the first native language Lingua knows becomes the language translations are
+ * them, adding one: a search that opens the list of languages the app teaches, and straight away how
+ * well. The language being learned is its own card at the level just chosen. The first native language Lingua knows becomes the language translations are
  * given in.
  */
-export function SpeakStep({ spoken, target, onSpoken }: SpeakStepProps) {
+export function SpeakStep({ spoken, target, level: targetLevel, onSpoken }: SpeakStepProps) {
   const translateUi = useUi();
   const [query, setQuery] = useState('');
   /** The language being added, waiting for its level. */
   const [pending, setPending] = useState<string | null>(null);
   const q = searchKey(query.trim());
   const taken = (code: string) => code === target || spoken.some((s) => s.code === code);
-  const found = useMemo(() => (q ? ALL.filter((l) => !taken(l.code) && searchKey(l.name).includes(q)).slice(0, 6) : []), [q, spoken, target]);
-  const quick = QUICK.filter((code) => !taken(code)).slice(0, 10);
+  const [open, setOpen] = useState(false);
+  /** The level just chosen as signal bars (A0 has none yet). */
+  const targetBars = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1'].indexOf(targetLevel);
+  /** What the search lists: the languages the app teaches first, then (when searching) any other. */
+  const found = useMemo(() => {
+    const own = AVAILABLE_LANGUAGES.filter((l) => !taken(l.code) && (!q || searchKey(l.name).includes(q))).map((l) => ({ code: l.code, name: l.name }));
+    if (!q) return own;
+    const ownIds = new Set(own.map((l) => l.code));
+    return [...own, ...ALL.filter((l) => !taken(l.code) && !ownIds.has(l.code) && !getLanguage(l.code) && searchKey(l.name).includes(q)).slice(0, 4)];
+  }, [q, spoken, target]);
 
   const setLevel = (code: string, level: Spoken['level']) => onSpoken(spoken.map((s) => (s.code === code ? { ...s, level } : s)));
   const remove = (code: string) => onSpoken(spoken.filter((s) => s.code !== code));
   const pick = (code: string) => {
     setPending(code);
+    setOpen(false);
     setQuery('');
   };
   const add = (level: Spoken['level']) => {
@@ -127,6 +137,32 @@ export function SpeakStep({ spoken, target, onSpoken }: SpeakStepProps) {
         </AnimatePresence>
       </div>
       <ul className="flex flex-wrap justify-center gap-3">
+        {target && getLanguage(target) && (
+          <li className="relative w-[calc(50%-0.375rem)] rounded-[22px] border border-accent/40 bg-raised p-4">
+            <div className="flex items-center gap-3">
+              <Mark code={target} width={34} />
+              <div className="min-w-0">
+                <p lang={target} dir={RTL.has(target) ? 'rtl' : undefined} className="truncate font-serif text-[22px] leading-tight font-semibold">
+                  {HELLO[target] ?? spokenName(target)}
+                  {HELLO[target] && <span className="text-accent-text">!</span>}
+                </p>
+                <p className="truncate text-[12.5px] text-ink-faint">{spokenName(target)} · <UiText source={'Learning'} /></p>
+              </div>
+            </div>
+            <div className="mt-3.5 flex items-end gap-3">
+              <div className="flex items-end gap-0.5" aria-hidden>
+                {BARS.map((level, i) => (
+                  <span key={level} className="p-0.5">
+                    <LevelIcon level={level} className="size-7" style={{ opacity: i < targetBars ? 1 : 0.28 }} />
+                  </span>
+                ))}
+              </div>
+              <p className="min-w-0 flex-1 truncate text-[12.5px] leading-tight">
+                <span className="font-semibold">{targetLevel}</span>
+              </p>
+            </div>
+          </li>
+        )}
         <AnimatePresence initial={false}>
           {spoken.map((s) => {
             const name = spokenName(s.code);
@@ -161,8 +197,8 @@ export function SpeakStep({ spoken, target, onSpoken }: SpeakStepProps) {
                   </div>
                 </div>
                 <div className="mt-3.5 flex items-end gap-3">
-                  {/* The level as signal bars, A1 to C2; native fills them all. */}
-                  <div role="radiogroup" aria-label={translateUi('How well you speak {0}', [name])} className="flex items-end gap-1">
+                  {/* The level as the growing sprig, A1 to C2; native has them all in full colour. */}
+                  <div role="radiogroup" aria-label={translateUi('How well you speak {0}', [name])} className="flex items-end gap-0.5">
                     {BARS.map((level, i) => (
                       <button
                         key={level}
@@ -172,9 +208,9 @@ export function SpeakStep({ spoken, target, onSpoken }: SpeakStepProps) {
                         aria-label={`${level}, ${LEVEL_NAME[level]}`}
                         title={`${level} · ${LEVEL_NAME[level]}`}
                         onClick={() => setLevel(s.code, level)}
-                        className="flex h-6 w-3.5 items-end"
+                        className="rounded-md p-0.5 transition-transform duration-150 hover:-translate-y-0.5"
                       >
-                        <span className={cx('block w-full rounded-[3px] transition-colors duration-200', i < at ? (native ? 'bg-sage' : 'bg-accent') : 'bg-line-strong/70 hover:bg-line-strong')} style={{ height: 8 + i * 3.2 }} />
+                        <LevelIcon level={level} className={cx('size-7 transition-opacity duration-200', s.level === level && 'scale-110')} style={{ opacity: i < at ? 1 : 0.28 }} />
                       </button>
                     ))}
                   </div>
@@ -215,6 +251,7 @@ export function SpeakStep({ spoken, target, onSpoken }: SpeakStepProps) {
                     onClick={() => add(level)}
                     className="no-callout flex flex-col items-center rounded-xl border border-line bg-raised px-1 py-2 transition-[transform,border-color,background-color] duration-150 hover:-translate-y-0.5 hover:border-accent hover:bg-accent-soft active:scale-[0.97]"
                   >
+                    <LevelIcon level={level === 'native' ? 'C2' : level} className="mb-1 size-8" />
                     <span className="text-[14px] font-bold">{level === 'native' ? translateUi('Native') : level}</span>
                     <span className="mt-0.5 truncate text-[11px] text-ink-faint">{level === 'native' ? translateUi('From birth') : LEVEL_NAME[level]}</span>
                   </button>
@@ -223,40 +260,33 @@ export function SpeakStep({ spoken, target, onSpoken }: SpeakStepProps) {
             </motion.div>
           ) : (
             <motion.div key="add" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={spring.snappy}>
-              <div className="relative">
-                <SearchInput value={query} onChange={setQuery} placeholder={translateUi('Add a language: any language in the world')} />
-                {found.length > 0 && (
-                  <ul className="absolute inset-x-0 top-full z-10 mt-1.5 overflow-hidden rounded-2xl border border-line bg-raised py-1 shadow-elev-2">
-                    {found.map((l) => (
-                      <li key={l.code}>
-                        <button type="button" onClick={() => pick(l.code)} className="flex w-full items-center gap-2.5 px-3.5 py-2 text-left text-[14.5px] hover:bg-surface">
-                          <Plus size={15} className="text-ink-faint" aria-hidden />
-                          {l.name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              <div className="mt-3 flex flex-wrap justify-center gap-1.5">
-                {quick.map((code) => (
-                  <button
-                    key={code}
-                    type="button"
-                    onClick={() => pick(code)}
-                    className="no-callout inline-flex h-8 items-center gap-1.5 rounded-full border border-line bg-raised pr-3 pl-1.5 text-[13px] transition-[transform,border-color] duration-150 hover:-translate-y-0.5 hover:border-line-strong active:scale-[0.97]"
-                  >
-                    <Mark code={code} width={20} />
-                    {spokenName(code)}
-                    <Plus size={13} className="text-ink-faint" aria-hidden />
-                  </button>
-                ))}
+              <div className="relative" onFocus={() => setOpen(true)} onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setOpen(false)}>
+                <SearchInput value={query} onChange={setQuery} onClose={() => setOpen(false)} placeholder={translateUi('Add a language')} />
+                <AnimatePresence>
+                  {open && found.length > 0 && (
+                    <motion.ul
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
+                      transition={{ duration: 0.16 }}
+                      className="absolute inset-x-0 top-full z-10 mt-1.5 max-h-64 overflow-y-auto rounded-2xl border border-line bg-raised py-1 shadow-elev-2"
+                    >
+                      {found.map((l) => (
+                        <li key={l.code}>
+                          <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => pick(l.code)} className="flex w-full items-center gap-3 px-3.5 py-2 text-left text-[14.5px] hover:bg-surface">
+                            <Mark code={l.code} width={20} />
+                            {l.name}
+                          </button>
+                        </li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-      <p className="mt-3 text-center text-[12.5px] text-ink-faint"><UiText source={'These go into Tabula, in Ratio, where you can add how you learned them and your certificates later.'} /></p>
     </div>
   );
 }

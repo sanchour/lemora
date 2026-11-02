@@ -12,6 +12,6 @@ export const PAGE_NAMES: Record<Page, string> = {
   speak: 'You speak',
   why: 'Why',
   goal: 'Goal',
-  light: 'Light',
+  light: 'Lux & Nox',
   plans: 'Plans',
 };

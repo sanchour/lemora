@@ -47,6 +47,8 @@ const BY_HAND: Record<string, Array<[string, Status]>> = {
     ['SE', 'h'],
   ],
   sa: [['NP', 'h']],
+  // Danish is widely spoken in Greenland, where Greenlandic is the official language.
+  da: [['GL', 'w']],
   // A national language under Mexico's 2003 language law; CLDR gives it no status.
   yua: [['MX', 'm']],
 };
