@@ -269,3 +269,17 @@ Final local checks: typecheck; 239 test files, 1,594 passing tests, one skipped;
 
 
 **6-25 completion, Codex 2026-11-02 (alpha.156–157):** remaining storage controls and learning-content deletion recovery are implemented and checked; the claim is closed. [Final inventory and verification limits](LINGUA-6-25-AUDIT.md). Typecheck, 1,607 tests/one skipped and production build pass. Real pack/voice/progress Undo was observed; further browser/native checks were blocked by automatic review’s usage limit. Device forgetting stays permanent after a separate security approval rejection. No next feature step claimed; publish by checked PR, never direct main push.
+
+## 2026-11-02 · Codex 6-23 T0 finished; stop before implementation
+
+- [x] T0 source-data audit only: [findings and limits](6-23-DATA.md), exact source manifest,
+  measured results and `scripts/script/audit-6-23.py`. Claim pushed alone as alpha.161; audit and
+  claim closure alpha.162. Deep plan corrected for full stroke size, OpenCC dependencies, old
+  JLPT levels, hanja membership, sparse dialect alignment, explicit roots and missing forward
+  style conversion. The 455 MB of approved public inputs stay in the ignored cache, not the app.
+- Verified: source SHA-256/byte counts, complete scans, lossless shard round trips, audit self-check,
+  report links; clean setup and final typecheck, 247 test files/1,607 passing tests/one skipped,
+  production-path build. Publish via checked PR; main remains protected.
+- Not verified: browser/UI acceptance, screen readers, real AI/microphone, device voices/playback,
+  human handwriting or native-speaker linguistic review. No runtime assets or feature ticks changed.
+- Next only on request: claim A1 from the deep plan. **Stop at T0 now; no active 6-23 claim.**

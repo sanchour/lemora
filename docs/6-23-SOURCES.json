@@ -1,0 +1,402 @@
+[
+  {
+    "name": "opencc-release.json",
+    "url": "https://api.github.com/repos/BYVoid/OpenCC/releases/latest",
+    "finalUrl": "https://api.github.com/repos/BYVoid/OpenCC/releases/latest",
+    "bytes": 30347,
+    "sha256": "80abff5950f5b87cd0838a117b3a878b815cee89a12a43b172cc9e49f1285025",
+    "retrieved": "2026-11-02T09:44:11.725Z",
+    "etag": "W/\"3f6e95970b999d7d34bdc9cabb47bbfbbe21ce1fc4d05dc5f1ddb5d5cdcf5404\"",
+    "lastModified": "Mon, 24 Aug 2026 02:13:44 GMT"
+  },
+  {
+    "name": "kanjivg-release.json",
+    "url": "https://api.github.com/repos/KanjiVG/kanjivg/releases/latest",
+    "finalUrl": "https://api.github.com/repos/KanjiVG/kanjivg/releases/latest",
+    "bytes": 9708,
+    "sha256": "765fac2f11eeb06e4e0eef29384ff45c3855f0c37594e36adeed9480e059ea5f",
+    "retrieved": "2026-11-02T09:44:12.058Z",
+    "etag": "W/\"4b98871971b455b623e5a30391a4f4e7bc683dd033778099f726d54961f319f0\"",
+    "lastModified": "Fri, 02 Oct 2026 07:06:13 GMT"
+  },
+  {
+    "name": "mmh-commit.json",
+    "url": "https://api.github.com/repos/skishore/makemeahanzi/commits/master",
+    "finalUrl": "https://api.github.com/repos/skishore/makemeahanzi/commits/master",
+    "bytes": 5324,
+    "sha256": "468d4e95101c9af2043e5b835981f4993296af9bc8f5616c8a42b0e82afb973e",
+    "retrieved": "2026-11-02T09:44:12.456Z",
+    "etag": "W/\"933866410c3f184f760e95c01b49c440797bc5c9a29ea6dc2d46e377a219f28c\"",
+    "lastModified": "Sun, 08 Mar 2026 18:32:20 GMT"
+  },
+  {
+    "name": "korean-page.html",
+    "url": "https://kaikki.org/dictionary/Korean/index.html",
+    "finalUrl": "https://kaikki.org/dictionary/Korean/index.html",
+    "bytes": 17465,
+    "sha256": "bad61425f24dfc7e9df109f90f7e1b6b6eaaa03bc9d4d032e344404dc34aeb71",
+    "retrieved": "2026-11-02T09:44:12.793Z",
+    "etag": "\"6ae52466-1505\"",
+    "lastModified": "Fri, 30 Oct 2026 23:12:38 GMT"
+  },
+  {
+    "name": "kanjidic-page.html",
+    "url": "https://www.edrdg.org/wiki/KANJIDIC_Project.html",
+    "finalUrl": "https://www.edrdg.org/wiki/KANJIDIC_Project.html",
+    "bytes": 58521,
+    "sha256": "d58b6d859772c5c2031911eb7604f2d55d50c4ac6abc8bfece17550899baaf7d",
+    "retrieved": "2026-11-02T09:44:13.949Z",
+    "etag": "\"e499-63b986f251440\"",
+    "lastModified": "Tue, 05 Aug 2025 06:35:46 GMT"
+  },
+  {
+    "name": "rawdata-page.html",
+    "url": "https://kaikki.org/dictionary/rawdata.html",
+    "finalUrl": "https://kaikki.org/dictionary/rawdata.html",
+    "bytes": 27252,
+    "sha256": "919f4b79486f1d437551adf158e0d8d62a0287bda27b3c8288b7441f894afeda",
+    "retrieved": "2026-11-02T09:45:28.285Z",
+    "etag": "\"6ae51f29-1ac1\"",
+    "lastModified": "Fri, 30 Oct 2026 22:50:17 GMT"
+  },
+  {
+    "name": "unicode-data.txt",
+    "url": "https://www.unicode.org/Public/17.0.0/ucd/UnicodeData.txt",
+    "finalUrl": "https://www.unicode.org/Public/17.0.0/ucd/UnicodeData.txt",
+    "bytes": 2198209,
+    "sha256": "2e1efc1dcb59c575eedf5ccae60f95229f706ee6d031835247d843c11d96470c",
+    "retrieved": "2026-11-02T09:45:29.238Z",
+    "etag": "\"218ac1-63c70d19d13c0-gzip\"",
+    "lastModified": "Sat, 16 Aug 2025 00:45:11 GMT"
+  },
+  {
+    "name": "blocks.txt",
+    "url": "https://www.unicode.org/Public/17.0.0/ucd/Blocks.txt",
+    "finalUrl": "https://www.unicode.org/Public/17.0.0/ucd/Blocks.txt",
+    "bytes": 11663,
+    "sha256": "c0edefaf1a19771e830a82735472716af6bf3c3975f6c2a23ffbe2580fbbcb15",
+    "retrieved": "2026-11-02T09:45:29.661Z",
+    "etag": "\"2d8f-63c70d19d13c0-gzip\"",
+    "lastModified": "Sat, 16 Aug 2025 00:45:11 GMT"
+  },
+  {
+    "name": "scripts.txt",
+    "url": "https://www.unicode.org/Public/17.0.0/ucd/Scripts.txt",
+    "finalUrl": "https://www.unicode.org/Public/17.0.0/ucd/Scripts.txt",
+    "bytes": 192460,
+    "sha256": "9f5e50d3abaee7d6ce09480f325c706f485ae3240912527e651954d2d6b035bf",
+    "retrieved": "2026-11-02T09:45:30.346Z",
+    "etag": "\"2efcc-63c70d19d13c0-gzip\"",
+    "lastModified": "Sat, 16 Aug 2025 00:45:11 GMT"
+  },
+  {
+    "name": "unihan.zip",
+    "url": "https://www.unicode.org/Public/17.0.0/ucd/Unihan.zip",
+    "finalUrl": "https://www.unicode.org/Public/17.0.0/ucd/Unihan.zip",
+    "bytes": 8518517,
+    "sha256": "f7a48b2b545acfaa77b2d607ae28747404ce02baefee16396c5d2d7a8ef34b5e",
+    "retrieved": "2026-11-02T09:45:33.640Z",
+    "etag": "\"81fb75-63ca5b596cd20\"",
+    "lastModified": "Mon, 18 Aug 2025 15:51:14 GMT"
+  },
+  {
+    "name": "opencc-resources.zip",
+    "url": "https://github.com/BYVoid/OpenCC/releases/download/ver.1.4.2/opencc-v1.4.2-resources.zip",
+    "finalUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/776621/92742324-bdc6-4f5e-8038-5516e5b3db29?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-11-02T10%3A39%3A40Z&rscd=attachment%3B+filename%3Dopencc-v1.4.2-resources.zip&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-11-02T09%3A39%3A02Z&ske=2026-11-02T10%3A39%3A40Z&sks=b&skv=2018-11-09&sig=EpaDuQenKxriJC%2F%2BdGX7SXPtN0i1c723h4xcV11Osfk%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MzYxMzAzMywibmJmIjoxNzkzNjEyNzMzLCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.b-Y4XRsYzCDPWX-gmo82HAlDPcdnurVwXzVcVdgBirI&response-content-disposition=attachment%3B%20filename%3Dopencc-v1.4.2-resources.zip&response-content-type=application%2Foctet-stream",
+    "bytes": 1237703,
+    "sha256": "9ea0d303219b34d014d5c116677b5d325043beafb2c8a62ee889ca67f4d054a5",
+    "retrieved": "2026-11-02T09:45:34.543Z",
+    "etag": "\"0x8DF007E019B6885\"",
+    "lastModified": "Sat, 22 Aug 2026 18:48:50 GMT"
+  },
+  {
+    "name": "opencc-source.tar.gz",
+    "url": "https://github.com/BYVoid/OpenCC/archive/refs/tags/ver.1.4.2.tar.gz",
+    "finalUrl": "https://codeload.github.com/BYVoid/OpenCC/tar.gz/refs/tags/ver.1.4.2",
+    "bytes": 11843082,
+    "sha256": "8e5f5cf7fe195bd9b9be851adc9738c1ef7dc5c24441dd5878a56db4087a9a70",
+    "retrieved": "2026-11-02T09:45:38.929Z",
+    "etag": "W/\"053fa429bd0a2bc1cd0e21dfd0d4430583287e96299002caedc936f346002181\"",
+    "lastModified": null
+  },
+  {
+    "name": "mmh-graphics.txt",
+    "url": "https://raw.githubusercontent.com/skishore/makemeahanzi/bddc96d41bef78427ed0e034e9f7e31d71fd1b92/graphics.txt",
+    "finalUrl": "https://raw.githubusercontent.com/skishore/makemeahanzi/bddc96d41bef78427ed0e034e9f7e31d71fd1b92/graphics.txt",
+    "bytes": 30778076,
+    "sha256": "a28c478b5178e98f67f510b2d52fde08a69dc664654ef43498253b9b764d46ee",
+    "retrieved": "2026-11-02T09:45:45.926Z",
+    "etag": "W/\"78f4e8087086de5f022a2d5194e1ddc4b58792ff494462a7ee8c7b017c4ab424\"",
+    "lastModified": null
+  },
+  {
+    "name": "mmh-dictionary.txt",
+    "url": "https://raw.githubusercontent.com/skishore/makemeahanzi/bddc96d41bef78427ed0e034e9f7e31d71fd1b92/dictionary.txt",
+    "finalUrl": "https://raw.githubusercontent.com/skishore/makemeahanzi/bddc96d41bef78427ed0e034e9f7e31d71fd1b92/dictionary.txt",
+    "bytes": 2570140,
+    "sha256": "744bb05d5b0742e9ee35c37791f94d56a173349b3367569e7ca11e510364d203",
+    "retrieved": "2026-11-02T09:45:46.465Z",
+    "etag": "W/\"422b3b3d95806407a53cdf3ce42ab0ddc38120a96cd96d797aa7bd911f0a46ba\"",
+    "lastModified": null
+  },
+  {
+    "name": "kanjivg-main.zip",
+    "url": "https://github.com/KanjiVG/kanjivg/releases/download/r20260714/kanjivg-20260714-main.zip",
+    "finalUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/2060612/e0724480-514a-491a-b30a-10fc0a7ea54b?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-11-02T10%3A39%3A04Z&rscd=attachment%3B+filename%3Dkanjivg-20260714-main.zip&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-11-02T09%3A38%3A43Z&ske=2026-11-02T10%3A39%3A04Z&sks=b&skv=2018-11-09&sig=mH0DnJCjRFnypIhmKPZd%2B4ee8W%2FAxg2H8xncj6MT0Pc%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MzYxNDU0NiwibmJmIjoxNzkzNjEyNzQ2LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.QUl5fba5XEwFXt8hKSR6PhGzBYAdUfGqyFScb3og6k8&response-content-disposition=attachment%3B%20filename%3Dkanjivg-20260714-main.zip&response-content-type=application%2Foctet-stream",
+    "bytes": 12650667,
+    "sha256": "b5df6cd2bc249dd49b8041eb99e38ba9f8dc6b9ea57962a80084b4a315d1a7fc",
+    "retrieved": "2026-11-02T09:45:48.363Z",
+    "etag": "\"0x8DEE14A4A8F51C4\"",
+    "lastModified": "Tue, 14 Jul 2026 01:50:32 GMT"
+  },
+  {
+    "name": "kanjidic2.xml.gz",
+    "url": "https://www.edrdg.org/kanjidic/kanjidic2.xml.gz",
+    "finalUrl": "https://www.edrdg.org/kanjidic/kanjidic2.xml.gz",
+    "bytes": 1488570,
+    "sha256": "af0a499d62ac4413c614adcca360e2306490c3f64fccb3510fc7caa15f901bed",
+    "retrieved": "2026-11-02T09:45:51.013Z",
+    "etag": "\"16b6ba-65f41fe5e3d4b\"",
+    "lastModified": "Mon, 02 Nov 2026 02:35:05 GMT"
+  },
+  {
+    "name": "cedict.txt.gz",
+    "url": "https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz",
+    "finalUrl": "https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz",
+    "bytes": 3983033,
+    "sha256": "e203bbf4a28c2ab54762e9b1fb813e53aa9112939704e71a5117f3b3555a46cb",
+    "retrieved": "2026-11-02T09:45:52.450Z",
+    "etag": "\"3cc6b9-65f479868d15d\"",
+    "lastModified": "Mon, 02 Nov 2026 09:16:04 GMT"
+  },
+  {
+    "name": "confusables.txt",
+    "url": "https://www.unicode.org/Public/17.0.0/security/confusables.txt",
+    "finalUrl": "https://www.unicode.org/Public/17.0.0/security/confusables.txt",
+    "bytes": 745683,
+    "sha256": "091c7f82fc39ef208faf8f94d29c244de99254675e09de163160c810d13ef22a",
+    "retrieved": "2026-11-02T09:46:55.802Z",
+    "etag": "\"b60d3-63c70d1ac5600-gzip\"",
+    "lastModified": "Sat, 16 Aug 2025 00:45:12 GMT"
+  },
+  {
+    "name": "opencc-portable.zip",
+    "url": "https://github.com/BYVoid/OpenCC/releases/download/ver.1.4.2/OpenCC-1.4.2-windows-x64-portable.zip",
+    "finalUrl": "https://release-assets.githubusercontent.com/github-production-release-asset/776621/84384d49-0763-46d0-a48e-f64929fc8948?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-11-02T10%3A41%3A39Z&rscd=attachment%3B+filename%3DOpenCC-1.4.2-windows-x64-portable.zip&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-11-02T09%3A40%3A53Z&ske=2026-11-02T10%3A41%3A39Z&sks=b&skv=2018-11-09&sig=JJV4Ep3XNJgrq6U27sLz1KvQeNm78Wt5ISWbMKsMO5w%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MzYxMzExNiwibmJmIjoxNzkzNjEyODE2LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ._alL-5x7tuMZUr61OPIvNCcMpsnsYmbEhFSzpbAltuE&response-content-disposition=attachment%3B%20filename%3DOpenCC-1.4.2-windows-x64-portable.zip&response-content-type=application%2Foctet-stream",
+    "bytes": 5714827,
+    "sha256": "dab0142ff6401219a5e556cee215323753eeac38752dde4cfddf8035746605f1",
+    "retrieved": "2026-11-02T09:46:56.974Z",
+    "etag": "\"0x8DF007E534307A7\"",
+    "lastModified": "Sat, 22 Aug 2026 18:51:07 GMT"
+  },
+  {
+    "name": "korean-native.jsonl.gz",
+    "url": "https://kaikki.org/dictionary/downloads/ko/ko-extract.jsonl.gz",
+    "finalUrl": "https://kaikki.org/dictionary/downloads/ko/ko-extract.jsonl.gz",
+    "bytes": 26869664,
+    "sha256": "7ce75eec9ac9d198a510eb9db57e1831810bba941099d3580ae59a7b026aaec1",
+    "retrieved": "2026-11-02T09:47:08.836Z",
+    "etag": "\"6ae50335-199ffa0\"",
+    "lastModified": "Fri, 30 Oct 2026 20:51:01 GMT"
+  },
+  {
+    "name": "kaikki-index.html",
+    "url": "https://kaikki.org/dictionary/index.html",
+    "finalUrl": "https://kaikki.org/dictionary/index.html",
+    "bytes": 47529,
+    "sha256": "cf9de3055d71ac51596e43a998724fc8ee192177fc7720f7227b02205e4b9e67",
+    "retrieved": "2026-11-02T09:47:11.930Z",
+    "etag": "\"6ae57966-2e37\"",
+    "lastModified": "Sat, 31 Oct 2026 05:15:18 GMT"
+  },
+  {
+    "name": "korean.jsonl.gz",
+    "url": "https://kaikki.org/dictionary/Korean/kaikki.org-dictionary-Korean.jsonl.gz",
+    "finalUrl": "https://kaikki.org/dictionary/Korean/kaikki.org-dictionary-Korean.jsonl.gz",
+    "bytes": 21576381,
+    "sha256": "2bf0aeac466458f2621e0ecfdd72b7b5b00a90c0e775443d55d369d6dab5ea83",
+    "retrieved": "2026-11-02T09:47:19.377Z",
+    "etag": "\"6ae52434-1493abd\"",
+    "lastModified": "Fri, 30 Oct 2026 23:11:48 GMT"
+  },
+  {
+    "name": "chinese.jsonl.gz",
+    "url": "https://kaikki.org/dictionary/Chinese/kaikki.org-dictionary-Chinese.jsonl.gz",
+    "finalUrl": "https://kaikki.org/dictionary/Chinese/kaikki.org-dictionary-Chinese.jsonl.gz",
+    "bytes": 155996429,
+    "sha256": "9663c01322014cea417fbe4812cc073ca2d6a6998946edb244bf4f26853819c9",
+    "retrieved": "2026-11-02T09:48:21.684Z",
+    "etag": "\"6ae525fe-94c510d\"",
+    "lastModified": "Fri, 30 Oct 2026 23:19:26 GMT"
+  },
+  {
+    "name": "arabic.jsonl.gz",
+    "url": "https://kaikki.org/dictionary/Arabic/kaikki.org-dictionary-Arabic.jsonl.gz",
+    "finalUrl": "https://kaikki.org/dictionary/Arabic/kaikki.org-dictionary-Arabic.jsonl.gz",
+    "bytes": 72370936,
+    "sha256": "b833fc5017d51a7ef1edf428272067b112281d9a79150d1f2ac7646b178065a3",
+    "retrieved": "2026-11-02T09:48:45.494Z",
+    "etag": "\"6ae52a92-4504af8\"",
+    "lastModified": "Fri, 30 Oct 2026 23:38:58 GMT"
+  },
+  {
+    "name": "russian.jsonl.gz",
+    "url": "https://kaikki.org/dictionary/Russian/kaikki.org-dictionary-Russian.jsonl.gz",
+    "finalUrl": "https://kaikki.org/dictionary/Russian/kaikki.org-dictionary-Russian.jsonl.gz",
+    "bytes": 90794686,
+    "sha256": "86a781a5685d614efd439e326eed0bf0ad9cda9f67b854f8b6c93212c5345b3e",
+    "retrieved": "2026-11-02T09:49:20.138Z",
+    "etag": "\"6ae522ba-5696abe\"",
+    "lastModified": "Fri, 30 Oct 2026 23:05:30 GMT"
+  },
+  {
+    "name": "egyptian.jsonl.gz",
+    "url": "https://kaikki.org/dictionary/Egyptian%20Arabic/kaikki.org-dictionary-EgyptianArabic.jsonl.gz",
+    "finalUrl": "https://kaikki.org/dictionary/Egyptian%20Arabic/kaikki.org-dictionary-EgyptianArabic.jsonl.gz",
+    "bytes": 817965,
+    "sha256": "0dc1678bb6445d2863abda19862580046c7d35d2c3c37be4183ccd1b1acde759",
+    "retrieved": "2026-11-02T09:50:12.483Z",
+    "etag": "\"6ae523b9-c7b2d\"",
+    "lastModified": "Fri, 30 Oct 2026 23:09:45 GMT"
+  },
+  {
+    "name": "north-levantine.jsonl.gz",
+    "url": "https://kaikki.org/dictionary/North%20Levantine%20Arabic/kaikki.org-dictionary-NorthLevantineArabic.jsonl.gz",
+    "finalUrl": "https://kaikki.org/dictionary/North%20Levantine%20Arabic/kaikki.org-dictionary-NorthLevantineArabic.jsonl.gz",
+    "bytes": 506693,
+    "sha256": "898e96735af530cd63f9975f329c3cd4f392f49e053c2ccb03575531bd33fdc2",
+    "retrieved": "2026-11-02T09:50:12.962Z",
+    "etag": "\"6ae5278a-7bb45\"",
+    "lastModified": "Fri, 30 Oct 2026 23:26:02 GMT"
+  },
+  {
+    "name": "south-levantine.jsonl.gz",
+    "url": "https://kaikki.org/dictionary/South%20Levantine%20Arabic/kaikki.org-dictionary-SouthLevantineArabic.jsonl.gz",
+    "finalUrl": "https://kaikki.org/dictionary/South%20Levantine%20Arabic/kaikki.org-dictionary-SouthLevantineArabic.jsonl.gz",
+    "bytes": 2270387,
+    "sha256": "8d76444364b82dec118b278c3ce432a7bd1692424b1a0ef47cc120ee3fd35141",
+    "retrieved": "2026-11-02T09:50:14.061Z",
+    "etag": "\"6ae524ac-22a4b3\"",
+    "lastModified": "Fri, 30 Oct 2026 23:13:48 GMT"
+  },
+  {
+    "name": "gulf.jsonl.gz",
+    "url": "https://kaikki.org/dictionary/Gulf%20Arabic/kaikki.org-dictionary-GulfArabic.jsonl.gz",
+    "finalUrl": "https://kaikki.org/dictionary/Gulf%20Arabic/kaikki.org-dictionary-GulfArabic.jsonl.gz",
+    "bytes": 293479,
+    "sha256": "de294301cb47aa9dd8e427435ffa126eb853de468f0611630484ed63234ec63a",
+    "retrieved": "2026-11-02T09:50:14.480Z",
+    "etag": "\"6ae520cc-47a67\"",
+    "lastModified": "Fri, 30 Oct 2026 22:57:16 GMT"
+  },
+  {
+    "name": "moroccan.jsonl.gz",
+    "url": "https://kaikki.org/dictionary/Moroccan%20Arabic/kaikki.org-dictionary-MoroccanArabic.jsonl.gz",
+    "finalUrl": "https://kaikki.org/dictionary/Moroccan%20Arabic/kaikki.org-dictionary-MoroccanArabic.jsonl.gz",
+    "bytes": 908032,
+    "sha256": "7a7795353f444e9bfa51742f689094aee018837ce1bd542129072aee339651de",
+    "retrieved": "2026-11-02T09:50:15.076Z",
+    "etag": "\"6ae52856-ddb00\"",
+    "lastModified": "Fri, 30 Oct 2026 23:29:26 GMT"
+  },
+  {
+    "name": "mmh-copying.txt",
+    "url": "https://raw.githubusercontent.com/skishore/makemeahanzi/bddc96d41bef78427ed0e034e9f7e31d71fd1b92/COPYING",
+    "finalUrl": "https://raw.githubusercontent.com/skishore/makemeahanzi/bddc96d41bef78427ed0e034e9f7e31d71fd1b92/COPYING",
+    "bytes": 1016,
+    "sha256": "26fa6b699b32401de4b75a4af574c2e0a99b3df6cb12df9313d257ee4634359c",
+    "retrieved": "2026-11-02T09:50:15.404Z",
+    "etag": "W/\"e41ff6d8570bad6ec5f00347dcf343d4ff3a2e8a307fb9d852a59d36444d6271\"",
+    "lastModified": null
+  },
+  {
+    "name": "unicode-license.txt",
+    "url": "https://www.unicode.org/license.txt",
+    "finalUrl": "https://www.unicode.org/license.txt",
+    "bytes": 1995,
+    "sha256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96",
+    "retrieved": "2026-11-02T09:50:15.809Z",
+    "etag": "\"7cb-647a58e573329-gzip\"",
+    "lastModified": "Mon, 05 Jan 2026 15:17:23 GMT"
+  },
+  {
+    "name": "cldr-transforms.json",
+    "url": "https://api.github.com/repos/unicode-org/cldr/contents/common/transforms?ref=release-48",
+    "finalUrl": "https://api.github.com/repos/unicode-org/cldr/contents/common/transforms?ref=release-48",
+    "bytes": 348272,
+    "sha256": "b09c9f022f79a87710dec5c213e7bc5a3e21a84984fe9a89c78298eb48e7203a",
+    "retrieved": "2026-11-02T09:53:46.659Z",
+    "etag": "\"bafae8fc919257506cb84327781ce4912b9b0c0b\"",
+    "lastModified": "Sat, 31 Oct 2026 13:12:23 GMT"
+  },
+  {
+    "name": "cldr-kazakh.xml",
+    "url": "https://raw.githubusercontent.com/unicode-org/cldr/release-48/common/transforms/Kazakh-Latin-BGN.xml",
+    "finalUrl": "https://raw.githubusercontent.com/unicode-org/cldr/release-48/common/transforms/Kazakh-Latin-BGN.xml",
+    "bytes": 11657,
+    "sha256": "a911bd6bca0614411daac6938c893758380cc8da65fd7fd054ce5a8af1a5509e",
+    "retrieved": "2026-11-02T09:54:55.707Z",
+    "etag": "W/\"35ffde85efede6f3bde6a76241f0022505148db6bbe0346b6adf0d24e775a81f\"",
+    "lastModified": null
+  },
+  {
+    "name": "cldr-mongolian.xml",
+    "url": "https://raw.githubusercontent.com/unicode-org/cldr/release-48/common/transforms/Mongolian-Latin-BGN.xml",
+    "finalUrl": "https://raw.githubusercontent.com/unicode-org/cldr/release-48/common/transforms/Mongolian-Latin-BGN.xml",
+    "bytes": 7278,
+    "sha256": "9f93cc7a3451cad8e8f0fc23071538bc295952107ef68237d0f32075205da21a",
+    "retrieved": "2026-11-02T09:54:56.073Z",
+    "etag": "W/\"5b8d803b3d288446be54ca6c91cd67cdb40f832ec7972f8bca3e5aa7fbc9f210\"",
+    "lastModified": null
+  },
+  {
+    "name": "cldr-license.txt",
+    "url": "https://raw.githubusercontent.com/unicode-org/cldr/release-48/LICENSE",
+    "finalUrl": "https://raw.githubusercontent.com/unicode-org/cldr/release-48/LICENSE",
+    "bytes": 2033,
+    "sha256": "b4c0ae8ef04f7059f96ce5bbe0467f9fe6f6d81bbe13517701dfeb961fb4d0b6",
+    "retrieved": "2026-11-02T09:54:56.418Z",
+    "etag": "W/\"fe1d23b7aa0da41d7f454e52fb1c0b564b6d8ca6805e5424dfcf0dbc28c129aa\"",
+    "lastModified": null
+  },
+  {
+    "name": "mmh-lgpl.txt",
+    "url": "https://raw.githubusercontent.com/skishore/makemeahanzi/bddc96d41bef78427ed0e034e9f7e31d71fd1b92/LGPL",
+    "finalUrl": "https://raw.githubusercontent.com/skishore/makemeahanzi/bddc96d41bef78427ed0e034e9f7e31d71fd1b92/LGPL",
+    "bytes": 9767,
+    "sha256": "eeb6fd06beac4a94a12ffb66876ecd6af68d5b6f38650d5f11aa90125933098b",
+    "retrieved": "2026-11-02T09:54:56.763Z",
+    "etag": "W/\"0e6bef9f1fb56522e92453296ce5d248eabfdb9113008df74f43f0c551863765\"",
+    "lastModified": null
+  },
+  {
+    "name": "mmh-apl-index.json",
+    "url": "https://api.github.com/repos/skishore/makemeahanzi/contents/APL?ref=bddc96d41bef78427ed0e034e9f7e31d71fd1b92",
+    "finalUrl": "https://api.github.com/repos/skishore/makemeahanzi/contents/APL?ref=bddc96d41bef78427ed0e034e9f7e31d71fd1b92",
+    "bytes": 4186,
+    "sha256": "066469874c17f79e5ba7c6a854f41f2694bbbeb227f9ee5d4f20653c6478b7ad",
+    "retrieved": "2026-11-02T09:56:46.214Z",
+    "etag": "\"637f52912295b55343033085ffa8948a3a38845f\"",
+    "lastModified": "Mon, 02 Nov 2026 05:27:21 GMT"
+  },
+  {
+    "name": "mmh-apl-english-index.json",
+    "url": "https://api.github.com/repos/skishore/makemeahanzi/contents/APL/english?ref=bddc96d41bef78427ed0e034e9f7e31d71fd1b92",
+    "finalUrl": "https://api.github.com/repos/skishore/makemeahanzi/contents/APL/english?ref=bddc96d41bef78427ed0e034e9f7e31d71fd1b92",
+    "bytes": 1031,
+    "sha256": "586a4ec1f5a1d10890cc2f6aec071e29a6a2f8cf335c8afd317217e7ada48fe4",
+    "retrieved": "2026-11-02T09:57:55.926Z",
+    "etag": "\"637f52912295b55343033085ffa8948a3a38845f\"",
+    "lastModified": "Mon, 02 Nov 2026 05:27:21 GMT"
+  },
+  {
+    "name": "mmh-apl.txt",
+    "url": "https://raw.githubusercontent.com/skishore/makemeahanzi/bddc96d41bef78427ed0e034e9f7e31d71fd1b92/APL/english/ARPHICPL.TXT",
+    "finalUrl": "https://raw.githubusercontent.com/skishore/makemeahanzi/bddc96d41bef78427ed0e034e9f7e31d71fd1b92/APL/english/ARPHICPL.TXT",
+    "bytes": 6901,
+    "sha256": "3a5e90c0957524a89e48203febcd4492ca4393678abaa7e5b4d70f3ff32b386d",
+    "retrieved": "2026-11-02T09:58:36.069Z",
+    "etag": "W/\"d70da5473739a58e121e99403fd8638ab06f58d942cb280b74d06e3fe3ac2169\"",
+    "lastModified": null
+  }
+]
