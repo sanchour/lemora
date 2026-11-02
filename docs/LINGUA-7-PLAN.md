@@ -19,6 +19,10 @@ For work with Stitch, [the root design brief](../design.md) distils the handbook
 desktop design context, current tokens and navigation, room patterns, states and a focused task
 prompt. Written 2026-11-02; this documentation does not start or complete any Lingua 7 implementation step.
 
+The user's follow-up on 2026-11-02 also requests [an iOS design brief](../design-ios.md), with
+selective Liquid Glass and a new task-based phone structure. This authorises a separate design
+proposal, not mobile implementation or a change to the desktop steps below.
+
 Read first: [CLAUDE.md](../CLAUDE.md), then [HANDOVER.md](HANDOVER.md) for the queue. Lingua 5
 (LINGUA-5.1-PLAN.md, LINGUA-5.2-PLAN.md) stays as planned. **Lingua 7 comes after Lingua 6 · Features**
 (the user, 2026-10-26: "Do Lingua Features first, then Lingua Design"): after 5.2's check (handover step 21), then Lingua 6 (step 23), then this plan (step 24).

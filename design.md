@@ -10,6 +10,9 @@ design system with Stitch. Read it once, then pair it with a screenshot and one 
 It distils the [Lingua Handbook](docs/handbook/Lingua-Design-Handbook.pdf), third edition,
 updated 28 October 2026, with current source details checked on 2 November 2026.
 
+For the user's separate iPhone redesign proposal, use [design-ios.md](design-ios.md): it replaces
+this brief's desktop layout constraints with a phone-specific structure and selective Liquid Glass.
+
 ## 1. What you are designing
 
 Lingua is a local-first language-learning desktop PWA. Adults use it to read, listen, watch,

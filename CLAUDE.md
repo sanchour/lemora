@@ -59,6 +59,9 @@ Commit as `sanchour <255895307+sanchour@users.noreply.github.com>`
   toolbars, hover states, keyboard shortcuts, and right-click or drag where it helps. **The phone
   isn't needed anymore** (the user: "Phone is not needed anymore"): don't design, build or check
   for it; what exists for it stays as it is.
+  **Scoped update, 2026-11-02:** the user requested [an iOS design brief for Stitch](design-ios.md),
+  rethinking phone navigation and using Liquid Glass where appropriate. Phone design exploration
+  is authorised for that proposal; iOS implementation has not been requested.
 
 - **Sonus+ song streaming and sharing (the user, 2026-10-30):** When listening to music in **YouTube Music,
   Amazon Music, Spotify, or Apple Music**, the learner can easily stream or share the song straight to Sonus+;

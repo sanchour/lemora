@@ -4,6 +4,25 @@ A working plan for the next prompts. Each prompt is planned here first, then bui
 stopping, then committed and pushed. A push redeploys GitHub Pages, and installed apps update
 themselves. Ticks show what is done.
 
+## 2026-11-02 · iOS design brief for Stitch
+
+The user now asks for a separate iOS app brief with appropriate Liquid Glass controls and a
+fundamental reorganisation for easy phone use. This explicitly authorises an iPhone design
+proposal alongside the desktop brief; it does not start mobile implementation.
+
+- [x] Check current Apple guidance for Liquid Glass, navigation, controls and accessibility.
+- [x] Create root `design-ios.md` with a task-based phone architecture, a complete mapping from
+  existing rooms, touch-first screen flows and a selective Liquid Glass component specification.
+- [x] Link both briefs, record the new design scope and its limits, check the document and project,
+  and prepare the versioned protected-main PR for publication.
+
+**Validation:** local references, complete room mapping, prompt/section structure and content colours
+checked; platform guidance linked beside its use. After rebasing the incoming 6-25 publication:
+typecheck, all 247 test files (1,607 passing tests, one skipped; one worker), and production build
+pass. No app UI changes in this task; phone layouts, native Liquid Glass, VoiceOver, service
+integrations and generated Stitch output are not device-tested or implemented. Next: use
+`design-ios.md` in Stitch, prototype the seven connected screens and test the proposed navigation.
+
 ## 2026-11-02 · Stitch design brief
 
 The user asked for a `design.md` that gives Stitch the context to redesign individual elements and,
