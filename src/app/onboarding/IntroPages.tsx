@@ -197,25 +197,18 @@ export function WelcomePage({ name }: { name: string }) {
   // The book starts drawing only once the greeting and the quip have settled.
   const [bookIn, setBookIn] = useState(false);
   useEffect(() => {
-    const t = setTimeout(() => setBookIn(true), 450);
+    const t = setTimeout(() => setBookIn(true), 350);
     return () => clearTimeout(t);
   }, []);
   const translateUi = useUi();
   const who = name.trim() || translateUi('friend');
   const full = translateUi('Welcome, {0}.', [who]);
-  // Split around the name: "Welcome" (without its comma) leads, and ", name." follows.
-  const [before = '', after = ''] = translateUi('Welcome, {0}.', ['\u0000']).split('\u0000');
-  const lead = before.replace(/[\s,，、:：]+$/, '') || full;
-  const rest = before.slice(lead.length) + who + after;
   const quip = QUIPS[[...name].reduce((sum, c) => sum + c.charCodeAt(0), 0) % QUIPS.length];
   return (
     <div className="flex flex-col items-center py-6 text-center">
-      <h1 className="flex max-w-2xl items-baseline justify-center font-serif text-[44px] leading-[1.12] font-semibold tracking-tight whitespace-nowrap" aria-label={full}>
-        {/* "Welcome" arrives alone and centred; then the name opens up beside it and the two re-centre together. */}
-        <motion.span aria-hidden initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0, ease: [0.22, 1, 0.36, 1] }}>{lead}</motion.span>
-        <motion.span aria-hidden className="-my-1 overflow-hidden py-1 whitespace-pre" initial={{ width: 0, opacity: 0 }} animate={{ width: 'auto', opacity: 1 }} transition={{ width: { duration: 0.55, delay: 0.45, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.45, delay: 0.55, ease: 'easeOut' } }}>{rest}</motion.span>
-      </h1>
-      <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.9, ease: [0.22, 1, 0.36, 1] }} className="mt-3 max-w-md text-[16.5px] leading-relaxed text-ink-soft italic">
+      {/* The whole greeting, name included, arrives in one smooth fade. */}
+      <motion.h1 initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="max-w-2xl font-serif text-[44px] leading-[1.12] font-semibold tracking-tight text-balance">{full}</motion.h1>
+      <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }} className="mt-3 max-w-md text-[16.5px] leading-relaxed text-ink-soft italic">
         {quip}
       </motion.p>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, ease: 'easeOut' }} className="mt-10 h-[200px]">
