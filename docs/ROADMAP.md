@@ -2483,3 +2483,18 @@ Final local checks: typecheck; 239 test files, 1,594 passing tests, one skipped;
 
 
 **6-25 completion, Codex 2026-11-02 (alpha.156–157):** remaining storage controls and learning-content deletion recovery are implemented and checked; the claim is closed. [Final inventory and verification limits](LINGUA-6-25-AUDIT.md). Typecheck, 1,607 tests/one skipped and production build pass. Real pack/voice/progress Undo was observed; further browser/native checks were blocked by automatic review’s usage limit. Device forgetting stays permanent after a separate security approval rejection. No next feature step claimed; publish by checked PR, never direct main push.
+
+## 2026-11-02 · 6-23 T0 source-data audit (Codex)
+
+User scope: finish T0 only, then stop; no implementation track is claimed.
+
+- [x] Run the clean setup checks and push the T0-only claim as alpha.161.
+- [x] Measure the approved public datasets with reproducible scripts, source versions, hashes,
+  licences and coverage; record findings in `6-23-DATA.md` and correct the deep plan's assumptions.
+- [x] Run the audit self-check and project checks, release the claim, version the Codex push and
+  publish through a checked protected-main PR. No learner-facing audit entries are completed by T0.
+
+**Validation:** source byte counts/SHA-256, complete corpus scans, lossless shard round trips,
+audit self-check and report links pass. Typecheck, 247 test files (1,607 passed, one skipped;
+one worker) and production-path build pass. No browser, device/audio, real AI or native-speaker
+verification; no runtime feature changes. T0 claim closed; stop here, no implementation track claimed.
