@@ -1,6 +1,7 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
+import { BookOpen, Check, Gamepad2, Headphones, Layers, Pause, Play } from 'lucide-react';
 import { tokenize } from '@/core/text/tokenizer';
 import { patchSetting, setSetting } from '@/data/settings';
 import type { Settings, Theme } from '@/data/settings';
@@ -43,6 +44,66 @@ function LightMark({ theme }: { theme: Theme }) {
   );
 }
 
+/** The menu of the sample page: where you could go, each one a real button. */
+const NAV = [
+  { name: 'Codex', icon: BookOpen },
+  { name: 'Thesaurus', icon: Layers },
+  { name: 'Sonus', icon: Headphones },
+  { name: 'Ludus', icon: Gamepad2 },
+] as const;
+
+/**
+ * A working sample of the reader in the light on show: click a word to mark it as learning (or to clear it), pick a place in the
+ * menu, add the page to Thesaurus, press listen. It is the real colours on real text, so you see what studying in it feels like.
+ */
+function LivePage({ theme, palette, tokens, lang, start }: { theme: Theme; palette: string; tokens: Array<{ text: string; isWord: boolean }>; lang: string; start: number }) {
+  const [nav, setNav] = useState(0);
+  const [learning, setLearning] = useState<number[]>(start >= 0 ? [start] : []);
+  const [saved, setSaved] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const toggle = (i: number) => setLearning((l) => (l.includes(i) ? l.filter((x) => x !== i) : [...l, i]));
+  return (
+    <div data-theme={theme} data-palette={palette} className="mt-6 flex min-h-[250px] overflow-hidden rounded-[24px] border border-line bg-bg text-left text-ink shadow-elev-2 transition-colors duration-500">
+      <nav className="flex w-16 shrink-0 flex-col items-center gap-2 border-r border-line bg-surface py-4" aria-label="Menu">
+        <span className="mb-2 font-serif text-[18px] leading-none font-semibold">l<span className="text-accent">.</span></span>
+        {NAV.map(({ name, icon: Icon }, i) => (
+          <button key={name} type="button" aria-label={name} aria-current={nav === i} onClick={() => setNav(i)} className={cx('grid size-10 place-items-center rounded-xl transition-colors', nav === i ? 'bg-accent-soft text-accent-text' : 'text-ink-faint hover:bg-sunken hover:text-ink')}>
+            <Icon size={18} strokeWidth={1.7} aria-hidden />
+          </button>
+        ))}
+      </nav>
+      <div className="flex min-w-0 flex-1 flex-col px-7 py-5">
+        <div className="flex items-center justify-between">
+          <p className="text-[12px] font-bold tracking-[0.08em] text-ink-faint uppercase">{NAV[nav].name}</p>
+          <span className="h-1.5 w-24 overflow-hidden rounded-full bg-line"><motion.span className="block h-full rounded-full bg-accent" animate={{ width: `${Math.min(100, 20 + learning.length * 16)}%` }} /></span>
+        </div>
+        <p lang={lang} className="mt-4 flex-1 font-serif text-[21px] leading-[1.75]">
+          {tokens.map((t, i) =>
+            t.isWord ? (
+              <button key={i} type="button" onClick={() => toggle(i)} className={cx('cursor-pointer rounded-[4px] px-px transition-colors', learning.includes(i) ? 'bg-[var(--learning-bg)] underline decoration-[var(--learning-line)] decoration-[1.5px] underline-offset-[4px]' : 'hover:bg-sunken')}>
+                {t.text}
+              </button>
+            ) : (
+              <span key={i}>{t.text}</span>
+            ),
+          )}
+        </p>
+        <div className="mt-4 flex items-center gap-2.5">
+          <button type="button" onClick={() => setSaved((v) => !v)} aria-pressed={saved} className={cx('inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-[13.5px] font-semibold transition-colors', saved ? 'bg-sage text-on-accent' : 'bg-accent-fill text-on-accent hover:opacity-90')}>
+            {saved && <Check size={14} strokeWidth={3} aria-hidden />}
+            <UiText source={saved ? 'Added' : 'Add to Thesaurus'} />
+          </button>
+          <button type="button" onClick={() => setPlaying((v) => !v)} aria-pressed={playing} className="inline-flex h-9 items-center gap-1.5 rounded-full border border-line-strong px-4 text-[13.5px] font-semibold transition-colors hover:bg-sunken">
+            {playing ? <Pause size={14} aria-hidden /> : <Play size={14} aria-hidden />}
+            <UiText source={'Listen'} />
+          </button>
+          <span className="ml-auto text-[12.5px] text-ink-faint tabular-nums"><UiText source={'{0} words learning'} values={[learning.length]} /></span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /**
  * Choose your study light (5.1-2b): two stages, each one page of the app drawn in its own light: Lux (light) first, centred,
  * with its colours under it; Continue brings Nox (dark) with its colours. The whole screen takes the light on show, so a
@@ -64,7 +125,7 @@ export function AestheticStep({ stage, palette, sample, lang }: AestheticStepPro
       <StepTitle center title={translateUi('Choose your study light')} body="We have a fine selection of cute colour themes to choose from. Change it any time in Settings." />
 
       <AnimatePresence mode="wait" initial={false}>
-        <motion.div key={theme} initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, y: -10, filter: 'blur(4px)' }} transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} className="mx-auto max-w-xl">
+        <motion.div key={theme} initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, y: -10, filter: 'blur(4px)' }} transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} className="mx-auto max-w-2xl">
           <div className="flex items-center justify-center gap-3">
             <LightMark theme={theme} />
             <div>
@@ -73,33 +134,8 @@ export function AestheticStep({ stage, palette, sample, lang }: AestheticStepPro
             </div>
           </div>
 
-          {/* The page, drawn in its own light and palette. */}
-          <div data-theme={theme} data-palette={palette[theme]} className="mt-6 flex h-[210px] overflow-hidden rounded-[24px] border border-line bg-bg text-ink shadow-elev-2">
-            <div className="w-14 shrink-0 space-y-3 border-r border-line bg-surface px-3.5 pt-4">
-              <span className="block size-7 rounded-lg bg-accent-fill" />
-              {[0, 1, 2, 3].map((i) => (
-                <span key={i} className={cx('block size-7 rounded-lg', i === 0 ? 'bg-accent-soft' : 'bg-line/70')} />
-              ))}
-            </div>
-            <div className="min-w-0 flex-1 px-6 pt-5">
-              <span className="block h-2 w-28 rounded-full bg-line-strong" />
-              <p lang={lang} className="mt-4 line-clamp-3 font-serif text-[19px] leading-relaxed">
-                {tokens.map((t, i) =>
-                  i === learning ? (
-                    <span key={i} className="rounded-[3px] bg-[var(--learning-bg)] underline decoration-[var(--learning-line)] decoration-[1.5px] underline-offset-[3px]">
-                      {t.text}
-                    </span>
-                  ) : (
-                    <span key={i}>{t.text}</span>
-                  ),
-                )}
-              </p>
-              <div className="mt-5 flex gap-2.5">
-                <span className="h-8 w-24 rounded-full bg-accent-fill" />
-                <span className="h-8 w-16 rounded-full border border-line-strong" />
-              </div>
-            </div>
-          </div>
+          {/* A real page of the app, drawn in its own light and palette: the words, menu and buttons all work. */}
+          <LivePage theme={theme} palette={palette[theme]} tokens={tokens} lang={lang} start={learning} />
 
           {/* The colours to try, under the page. */}
           <div role="radiogroup" aria-label={translateUi('{0} palettes', [name])} className="mt-6 grid grid-cols-6 gap-3">
