@@ -94,14 +94,14 @@ export function NamePage({ name, onName, onEnter }: { name: string; onName: (nam
       <p className="mt-2 text-[16.5px] text-ink-soft"><UiText source={'What should we call you?'} /></p>
       <div className="group relative mt-10 inline-grid max-w-full">
         {/* Mirror of the typed text: it sizes the box (and so the line) to the name, and carries the pencil, which rides at the end of what you type. */}
-        <span aria-hidden className="invisible col-start-1 row-start-1 min-w-[11rem] px-2 pb-3 text-center font-serif text-[32px] whitespace-pre">
+        <span aria-hidden className="invisible col-start-1 row-start-1 min-w-[11rem] px-2 pb-3 text-center font-serif text-[32px] leading-[1.15] whitespace-pre">
           <span className="relative">
             {name}
             <svg
               viewBox="0 0 24 24"
               width={26}
               height={26}
-              className="pointer-events-none visible absolute bottom-0.5 left-full ml-2 text-ink-soft transition-opacity duration-300"
+              className="pointer-events-none visible absolute top-1/2 left-full ml-2 -translate-y-[40%] text-ink-soft transition-opacity duration-300"
               style={{ opacity: !name || typing ? 1 : 0 }}
             >
               <g {...LINE} strokeWidth={1.5}>
@@ -125,7 +125,7 @@ export function NamePage({ name, onName, onEnter }: { name: string; onName: (nam
           maxLength={40}
           autoComplete="given-name"
           aria-label={translateUi('Your name')}
-          className="col-start-1 row-start-1 w-full min-w-0 bg-transparent px-2 pb-3 text-center font-serif text-[32px] outline-none"
+          className="col-start-1 row-start-1 w-full min-w-0 bg-transparent px-2 pb-3 text-center font-serif text-[32px] leading-[1.15] outline-none"
         />
         {/* A pen-drawn line: a little wobble, a loose tail, and a second thin pass that appears on focus. */}
         <svg viewBox="0 0 384 14" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-0 h-3.5 w-full text-line-strong transition-colors duration-200 group-focus-within:text-accent" aria-hidden>
