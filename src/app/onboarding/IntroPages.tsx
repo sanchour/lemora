@@ -97,6 +97,8 @@ export function NamePage({ name, onName, onEnter }: { name: string; onName: (nam
         <span aria-hidden className="invisible col-start-1 row-start-1 min-w-[11rem] px-2 pb-3 text-center font-serif text-[32px] leading-[1.15] whitespace-pre">
           <span className="relative">
             {name}
+            {/* Zero-width space: keeps the span's height the same when the field is empty, so the pencil never jumps. */}
+            {'\u200b'}
             <svg
               viewBox="0 0 24 24"
               width={26}
