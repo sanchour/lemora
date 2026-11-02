@@ -11,6 +11,7 @@ import {
   CommutePage,
   CourseLessonPage,
   CursusPage,
+  CharactersPage,
   DeckPage,
   ExploraPage,
   GrammarLessonPage,
@@ -82,6 +83,7 @@ export const router = createBrowserRouter(
         { index: true, element: <HomePage /> },
         // Cursus: the course, Grammatica, alphabets and typing as tabs; lessons and topics as pages of their own.
         { path: 'cursus', element: <CursusPage /> },
+        { path: 'cursus/characters', element: <CharactersPage /> },
         { path: 'cursus/:tab', element: <CursusPage /> },
         { path: 'cursus/course/:unit/:lesson', element: course(<CourseLessonPage />) },
         { path: 'cursus/grammatica/review', element: grammar(<GrammarLessonPage review />) },

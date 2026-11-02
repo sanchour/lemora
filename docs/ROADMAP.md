@@ -2498,3 +2498,22 @@ User scope: finish T0 only, then stop; no implementation track is claimed.
 audit self-check and report links pass. Typecheck, 247 test files (1,607 passed, one skipped;
 one worker) and production-path build pass. No browser, device/audio, real AI or native-speaker
 verification; no runtime feature changes. T0 claim closed; stop here, no implementation track claimed.
+
+## 2026-11-02 · 6-23 A1 Unicode character reference (Codex)
+
+Scope: A1 only, then stop. Reuse the pinned T0 Unicode cache; no new source download or database table.
+
+- [x] Clean setup checks; publish the A1-only claim as alpha.163.
+- [x] Build reproducible Unicode 17 character data by script, names/block/script search and a
+  desktop inspector for pasted text, category, case, NFC/NFD, UTF-8 and lookalikes; reuse CJK readings.
+- [x] Link `/cursus/characters` from Marks and the letter sheet, add typing links and explicit offline
+  status, cache data on first use; preserve Unicode licence/source attribution.
+- [x] Check every alphabet character against the pinned source, edge cases and fetch failures;
+  run typecheck/tests/build and browser checks at 1280, 1440, 1366×768, light/dark and Arabic.
+- [ ] Record visible acceptance and limits, release the A1 claim, version/push through a checked PR;
+  verify deployment and stop without claiming A2.
+
+**Stopped at alpha.164 checkpoint:** [A1 evidence](6-23-A1.md). Typecheck, 1,616 tests/one skipped
+and production build pass; six desktop size/theme views inspected. Offline reload failed, and the
+browser blocked inspection of its error page. No workaround, merge or deployment; final acceptance
+and F1306 remain open, Codex retains A1. No A2 work.

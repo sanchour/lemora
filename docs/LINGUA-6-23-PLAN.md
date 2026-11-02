@@ -3,7 +3,7 @@
 **Written 2026-10-30 (Claude Sonnet 5.5), after the user reopened the step: "I want all done deeply."** Step 6-23 was first built in
 seven light pushes (0.6.0-alpha.120 to .129). They are real and they stay, but most of them are short hand-written item sets and
 small tools. This plan is what "done deeply" means, entry by entry. All 51 entries of 6-23 are open again in
-[LINGUA-6-FEATURES.md](LINGUA-6-FEATURES.md) until their own "done when" below is met. Nothing here is built yet.
+[LINGUA-6-FEATURES.md](LINGUA-6-FEATURES.md) until their own "done when" below is met. T0 is audited; A1 has an implementation checkpoint with an unresolved offline browser check. Later tracks are not built.
 
 ## 0 · What the light version left, in one list
 
@@ -78,6 +78,11 @@ Each track is a list of pushes. "Done when" is what makes its entries tickable. 
   Search by character, by name or by code point. For CJK, the Unihan data already in `public/chars`. Data: `public/chars/unicode/<script>.json`, built by
   `scripts/script/unicode.ts`. **Done when:** a learner can paste any text and see every character in it explained, and a test
   checks the names against `UnicodeData.txt` for all characters of the alphabets.
+**A1 checkpoint, Codex 2026-11-02 (alpha.164):** the reference, generated data and source-backed tests
+are implemented; online browser checks passed at the required sizes/themes, with Arabic. An offline
+reload failed and the browser blocked error-page inspection. [Exact evidence and stop point](6-23-A1.md).
+Acceptance/F1306 remain open; A1 claim retained, A2 not started.
+
 - **A2 · Transliteration schemes and controls (F1298, F1300, F1301, F1371).** One engine, `core/script/translit/<script>.ts`, with
   named schemes: Russian (BGN/PCGN, ISO 9, ALA-LC, a passport scheme), Greek (ELOT 743, ISO 843), Arabic (DIN 31635, ALA-LC, IJMES,
   Buckwalter, plain, "chat Arabic"), Japanese (Hepburn, Kunrei-shiki, Nihon-shiki, with long vowels as macrons, doubled or `ou`), Korean (Revised

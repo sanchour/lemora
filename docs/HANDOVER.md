@@ -283,3 +283,18 @@ Final local checks: typecheck; 239 test files, 1,594 passing tests, one skipped;
 - Not verified: browser/UI acceptance, screen readers, real AI/microphone, device voices/playback,
   human handwriting or native-speaker linguistic review. No runtime assets or feature ticks changed.
 - Next only on request: claim A1 from the deep plan. **Stop at T0 now; no active 6-23 claim.**
+
+## 2026-11-02 · Codex 6-23 A1 checkpoint, offline check blocked
+
+A1 was claimed alone in alpha.163. Alpha.164 contains the reachable Unicode reference, generated
+script data, source-based tests, offline-cache loader and six-language interface additions.
+[Evidence, screenshots and stop point](6-23-A1.md). Typecheck, 249 files/1,616 passing tests/one skipped
+and production build pass. Online checks: name/code/character inspection, CJK readings, Marks and
+letter-sheet links; 1280, 1366×768 and 1440 in Paper and Nocturne with Arabic text.
+
+**Stop:** offline production-preview reload failed after stopping the server; browser policy then
+blocked inspection of the internal error page. App versus browser cause is undetermined. No workaround
+or shared-shell fix attempted. Branch checkpoint only, not merged or deployed; F1306 remains open,
+Codex retains the A1 claim, A2 is not claimed. Resume only when requested to resolve this check.
+Screen readers, installed-PWA offline launch, native-speaker locale review, clipboard, real AI/audio/
+microphone and rare-font coverage remain unverified. No phone work.

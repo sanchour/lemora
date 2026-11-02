@@ -1,7 +1,7 @@
 import { interpolate } from '@/core/i18n/messages';
 import { useUi } from '@/design/i18n/UiText';
 import { useEffect } from 'react';
-import { Navigate, useParams } from 'react-router';
+import { Link, Navigate, useParams } from 'react-router';
 import { AudioLines, BookA, Keyboard, Languages, Route, Type } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { PageHeader } from '@/app/PageHeader';
@@ -66,7 +66,7 @@ export default function CursusPage() {
 
   return (
     <>
-      <PageHeader title={translateUi('Cursus')} englishTitle={'Cursus'} eyebrow={translateUi('Learn {0} step by step', [translateUi(name)])} englishEyebrow={interpolate('Learn {0} step by step', [name])} />
+      <PageHeader title={translateUi('Cursus')} englishTitle={'Cursus'} eyebrow={translateUi('Learn {0} step by step', [translateUi(name)])} englishEyebrow={interpolate('Learn {0} step by step', [name])} actions={<Link to="/cursus/characters" className="text-[14px] font-semibold text-accent-text hover:underline">{translateUi('Character reference')}</Link>} />
       <RoomTabs label={translateUi('Cursus')} tabs={tabs} active={tab} />
       <InRoom.Provider value>
         {tab === 'course' && (

@@ -1680,7 +1680,7 @@ feature checkbox changes in this audit. Tracks A–G remain open.
 - [ ] `F1303` Accent-mark exercises · **6-23** · partly there (light version, 6-23 reopened)
 - [ ] `F1304` Ligature recognition · **6-23** · partly there (light version, 6-23 reopened)
 - [ ] `F1305` Cursive recognition · **6-23** · partly there (light version, 6-23 reopened)
-- [ ] `F1306` Unicode character reference · **6-23** · partly there (light version, 6-23 reopened)
+- [ ] `F1306` Unicode character reference · **6-23** · A1 implemented and online browser-checked; offline reload failed/inspection blocked, final acceptance open ([checkpoint](6-23-A1.md))
 
 #### Russian and other Slavic languages
 

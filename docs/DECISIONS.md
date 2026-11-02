@@ -2112,3 +2112,16 @@ native capability, deployment channel or minimum OS decision is introduced by th
 - Iraqi sourcing and five-dialect alignment are not established. Forward Japanese/Korean style
   conversion still needs an engine and retained speech-level tags. CLDR Kazakh/Mongolian BGN rules
   are forward-only; do not promise reversible or current-official-orthography conversion from them.
+
+## 2026-11-02 · 6-23 A1 character reference checkpoint
+
+- Reuse the pinned T0 Unicode 17 inputs, with script shards and compact algorithmic ranges;
+  3,690,085 JSON bytes / 599,962 gzip bytes, excluding small provenance/notice files. No new downloads.
+  Preserve Unicode-3.0 and the original source fixture for alphabet-wide CI comparisons.
+- Keep the page free, linked from Cursus, Marks and the letter sheet; text stays local. Explain
+  unsupported names, surrogate encoding, device normalization and simple-case limits explicitly.
+  Lazy cache-first assets report storage failures; no generated Unicode JSON is precached.
+- [Verification](6-23-A1.md): typecheck, 1,616 tests/one skipped and production build pass; all three
+  desktop sizes in Paper/Nocturne and Arabic text inspected. Offline reload failed and browser
+  policy blocked error-page inspection. Stop with a branch checkpoint, retain A1, leave F1306 open;
+  do not alter the shared app shell or claim an unrelated root cause without evidence.
