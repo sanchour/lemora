@@ -1,3 +1,4 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 // What the learner can see and change about the memory (6-3b): the due calendar, how long today takes, a card put on another day or
 // forgotten, and the words that are hard or have gone rusty.
 import Dexie from 'dexie';
@@ -49,6 +50,7 @@ export async function rescheduleCard(cardId: string, due: number, database: Ling
 
 /** Forgets a card: it is as if it had never been studied (its history of reviews stays in the log). */
 export async function forgetCard(cardId: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['cards'], () => forgetCard(cardId, database));
   const card = await database.cards.get(cardId);
   if (!card) return;
   const now = Date.now();

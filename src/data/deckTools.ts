@@ -1,3 +1,4 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 // The deck workshop (6-2): putting a deck away, pinning it, copying it, folding one into another.
 import { db } from './db';
 import type { LinguaDB } from './db';
@@ -52,6 +53,7 @@ export async function duplicateDeck(id: string, database: LinguaDB = db): Promis
 
 /** Moves the notes and cards of some decks into one, and puts the emptied decks away (deleted, as a deck deleted by hand). */
 export async function mergeDecks(intoId: string, fromIds: readonly string[], database: LinguaDB = db): Promise<number> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['decks', 'notes', 'cards'], () => mergeDecks(intoId, fromIds, database));
   const target = await database.decks.get(intoId);
   if (!target || target.deletedAt) throw new Error('This deck no longer exists.');
   let moved = 0;
@@ -79,6 +81,7 @@ export async function moveNotes(ids: readonly string[], deckId: string, database
 }
 
 export async function deleteNotes(ids: readonly string[], database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['notes', 'cards', 'words'], () => deleteNotes(ids, database));
   for (const id of ids) await deleteNote(id, database);
 }
 

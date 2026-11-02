@@ -4,7 +4,7 @@ import type { Ref } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { ArrowRight, CalendarDays, Check, ChevronLeft, ChevronRight, Ellipsis, List, TextCursorInput, Trash2 } from 'lucide-react';
 import { toPlain } from '@/core/journal/markdown';
-import { deleteEntry, restoreEntry, updateEntry } from '@/data/journal';
+import { deleteEntry, updateEntry } from '@/data/journal';
 import type { JournalEntry } from '@/data/types';
 import { gradeColor, Ring } from '@/design/charts/Ring';
 import { Kbd, MenuItem, Popover, SearchInput, searchKey, Segmented, SortMenu } from '@/design/primitives';
@@ -127,8 +127,7 @@ function assign<T>(ref: Ref<T> | undefined, value: T | null) {
 
 /** Deletes with a few seconds to take it back. */
 export function deleteWithUndo(entry: JournalEntry) {
-  void deleteEntry(entry.id);
-  toast('Entry deleted.', { action: { label: 'Undo', onClick: () => void restoreEntry(entry.id) } });
+  void deleteEntry(entry.id).catch((error: unknown) => toast(error instanceof Error ? error.message : 'Could not restore this content.', { tone: 'error' }));
 }
 
 function EntryRow({ entry, lang, compact }: { entry: JournalEntry; lang: string; compact?: boolean }) {

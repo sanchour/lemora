@@ -1,3 +1,4 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 // Diarium entries: writing, saving as you type, and keeping each AI review with the text it read.
 import { useLiveQuery } from 'dexie-react-hooks';
 import { mergeCorrected, toPlain } from '@/core/journal/markdown';
@@ -76,6 +77,7 @@ export async function acceptCorrections(id: string, lang: string, database: Ling
 }
 
 export async function deleteEntry(id: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['journalEntries'], () => deleteEntry(id, database));
   await database.journalEntries.update(id, { deletedAt: Date.now(), updatedAt: Date.now() });
 }
 

@@ -145,7 +145,7 @@ export function LanguageSection({ active }: { active: LanguageProfile }) {
           </>
         }
       >
-        <p className="text-[15px] text-ink-soft"><UiText source={'Its texts, words, decks and cards, audio and audiobooks, songs, journal, progress and offline dictionary are deleted from this device, and the room they took is freed. Your other languages stay. This can’t be undone; add the language again any time to start afresh.'} /></p>
+        <p className="text-[15px] text-ink-soft"><UiText source={'Its saved content and progress are removed from this device. Your other languages stay. Use Undo in the message before your next removal, dismissing it or reloading.'} /></p>
       </Dialog>
 
       {(target?.flags.length ?? 0) > 1 && (

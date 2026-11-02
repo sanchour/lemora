@@ -10,7 +10,7 @@ export interface ToastItem {
   id: number;
   message: ToastMessage;
   tone: ToastTone;
-  action?: { label: string; onClick: () => void };
+  action?: { label: string; onClick: () => unknown };
   /** ms; 0 keeps the toast until dismissed. */
   duration: number;
 }
@@ -70,7 +70,7 @@ export const useUI = create<UIState>((set) => ({
   setGlobalSearchOpen: (globalSearchOpen) => set({ globalSearchOpen }),
   pushToast: (toast) => {
     const id = nextToastId++;
-    set((s) => ({ toasts: [...s.toasts.slice(-2), { ...toast, id }] }));
+    set((s) => ({ toasts: [...s.toasts.filter((t) => t.duration === 0 && toast.duration !== 0), ...s.toasts.filter((t) => t.duration !== 0).slice(-1), { ...toast, id }] }));
     return id;
   },
   dismissToast: (id) => set((s) => ({ toasts: s.toasts.filter((t) => t.id !== id) })),

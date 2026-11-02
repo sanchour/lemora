@@ -1,3 +1,4 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 // Visio data: videos (files or links), their two subtitle tracks, and lines saved as flashcards.
 import { useLiveQuery } from 'dexie-react-hooks';
 import { getLanguage } from '@/core/lang/languages';
@@ -88,6 +89,7 @@ export async function saveTrack(mediaId: string, lang: string, role: TrackRole, 
 }
 
 export async function removeTrack(mediaId: string, role: TrackRole, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['transcripts'], () => removeTrack(mediaId, role, database));
   await database.transcripts.update(trackId(mediaId, role), { deletedAt: Date.now(), updatedAt: Date.now() });
 }
 
@@ -105,6 +107,7 @@ export async function shiftTrack(mediaId: string, role: TrackRole, deltaMs: numb
 
 /** Frees the space of a video file but keeps its subtitles and the cards made from it. */
 export async function keepSubtitlesOnly(mediaId: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['media', 'blobs'], () => keepSubtitlesOnly(mediaId, database));
   const media = await database.media.get(mediaId);
   if (!media?.blobId) return;
   await database.blobs.delete(media.blobId);

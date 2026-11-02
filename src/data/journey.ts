@@ -1,3 +1,4 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 // Iter and Tabula: the journey's milestones (found in the history, recorded once), your own
 // moments, goals, study done outside Lingua, and the polyglot table.
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -137,6 +138,7 @@ export async function addMoment(input: Pick<JourneyEvent, 'lang' | 'at' | 'title
 }
 
 export async function removeMoment(id: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['journeyEvents'], () => removeMoment(id, database));
   await database.journeyEvents.update(id, { deletedAt: Date.now(), updatedAt: Date.now() });
 }
 
@@ -158,6 +160,7 @@ export async function logStudy(input: Pick<StudyLog, 'lang' | 'at' | 'minutes' |
 }
 
 export async function removeStudyLog(id: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['studyLogs'], () => removeStudyLog(id, database));
   await database.studyLogs.update(id, { deletedAt: Date.now(), updatedAt: Date.now() });
 }
 
@@ -178,6 +181,7 @@ export async function saveGoal(goal: Omit<Goal, 'createdAt' | 'updatedAt' | 'id'
 }
 
 export async function removeGoal(id: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['goals'], () => removeGoal(id, database));
   await database.goals.update(id, { deletedAt: Date.now(), updatedAt: Date.now() });
 }
 
@@ -356,6 +360,7 @@ export async function addCapability(name: string, id: string, database: LinguaDB
 }
 
 export async function removeCapability(id: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['capabilities'], () => removeCapability(id, database));
   await database.capabilities.update(id, { deletedAt: Date.now(), updatedAt: Date.now() });
 }
 

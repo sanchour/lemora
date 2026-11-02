@@ -12,7 +12,7 @@ import { WRITING_TASKS } from '@/core/journal/tasks';
 import { emptyPage, salutation } from '@/core/journal/salutations';
 import { getLanguage } from '@/core/lang/languages';
 import { bumpDaily, recordSession } from '@/data/activity';
-import { acceptCorrections, deleteEntry, entryWords, restoreEntry, saveEntryText, saveReview, updateEntry, useJournalEntry } from '@/data/journal';
+import { acceptCorrections, deleteEntry, entryWords, saveEntryText, saveReview, updateEntry, useJournalEntry } from '@/data/journal';
 import type { JournalEntry } from '@/data/types';
 import { useLayout } from '@/design/hooks/useLayout';
 import { getReaderFont, readerFontStack } from '@/design/fonts';
@@ -163,9 +163,7 @@ function Entry({ entry }: { entry: JournalEntry }) {
   };
 
   const remove = () => {
-    void deleteEntry(entry.id);
-    navigate('/mentis/diarium', { replace: true });
-    toast('Entry deleted.', { action: { label: 'Undo', onClick: () => void restoreEntry(entry.id).then(() => navigate(`/mentis/diarium/${entry.id}`)) } });
+    void deleteEntry(entry.id).then(() => navigate('/mentis/diarium', { replace: true })).catch((error: unknown) => toast(error instanceof Error ? error.message : 'Could not restore this content.', { tone: 'error' }));
   };
 
   const date = new Date(`${entry.date}T12:00:00`);

@@ -2068,6 +2068,12 @@ Final local checks: typecheck; 239 test files, 1,594 passing tests, one skipped;
 
 **Publication:** push the checked integrated Codex history and main together with the next unused version; then verify GitHub Checks/Pages. The user explicitly chose protected main with PRs and passing checks, no second reviewer. Added Checks/verify on PRs and main/Codex pushes (typecheck/tests/build), so the required check actually runs before future merges. Main protection is applied after this authorized publication; do not bypass it for future work. No new feature step is claimed; remaining 6-25 items stay visible above.
 
+
+**2026-11-02 · 6-25 storage recovery:** Keep removed rows/model responses only for the latest in-session Undo, without redownloading or adding a database table. Restore atomically and stop on newer conflicting data. Preserve personal dictionary entries and voice preferences. Explicit recovery lifetime avoids claiming persistence across app reloads.
+
+
+**2026-11-02 · 6-25 deletion recovery:** share one transaction and Undo across deletion cascades, reject stale restores atomically, compare binary contents, and keep failed async Undo actions available. Manual backup replacement participates; automatic synchronization does not create deletion messages. Erase-all offers 30 seconds to cancel before the existing permanent wipe; no credential snapshot is retained after that wipe. Device forgetting remains permanent after automatic approval review rejected restoring revoked access. Detailed scope and unverified manual checks: [final audit](LINGUA-6-25-AUDIT.md).
+
 ## 2026-11-02 · A handbook-based brief for Stitch
 
 The user requested root `design.md` as reusable context for redesigning elements and eventually

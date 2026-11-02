@@ -4,6 +4,7 @@
 import { floatToPcm16, piperModelUrl, piperVoice, piperVoicesFor } from '@/core/audio/piper';
 import type { PiperConfig, PiperVoice } from '@/core/audio/piper';
 import { db } from '@/data/db';
+import { offerRemovalUndo } from '@/data/removalUndo';
 import { putSpeech } from '@/data/speechCache';
 import type { PiperWorkerMessage } from '@/workers/piper.worker';
 import PiperWorker from '@/workers/piper.worker?worker';
@@ -54,15 +55,51 @@ export async function downloadPiperVoice(id: string, onProgress?: (pct: number) 
   await cache.put(modelUrl, new Response(new Blob(chunks as BlobPart[]), { headers: { 'content-type': 'application/octet-stream' } }));
 }
 
-export async function removePiperVoice(id: string): Promise<void> {
+/** Exact stored bytes, including each downloaded model's configuration. */
+export async function storedPiperVoices(): Promise<Array<{ id: string; bytes: number }>> {
   const cache = await openCache();
-  await cache?.delete(piperModelUrl(id, 'onnx'));
-  await cache?.delete(piperModelUrl(id, 'onnx.json'));
-  if (loadedVoice === id) {
-    worker?.terminate();
-    worker = null;
-    loadedVoice = null;
+  if (!cache) return [];
+  const result = [];
+  for (const id of await installedPiperVoices()) {
+    let bytes = 0;
+    for (const file of ['onnx', 'onnx.json'] as const) {
+      const response = await cache.match(piperModelUrl(id, file));
+      if (response) bytes += Number(response.headers.get('content-length')) || (await response.blob()).size;
+    }
+    result.push({ id, bytes });
   }
+  return result;
+}
+
+export async function removePiperVoice(id: string): Promise<void> {
+  const job = busy.then(async () => {
+    const cache = await openCache();
+    if (!cache) throw new Error('This browser can’t keep a voice.');
+    const entries = await Promise.all((['onnx', 'onnx.json'] as const).map(async (file) => {
+      const url = piperModelUrl(id, file);
+      return { url, response: await cache.match(url) };
+    }));
+    const restore = async () => {
+      for (const entry of entries) if (entry.response && !(await cache.match(entry.url))) await cache.put(entry.url, entry.response.clone());
+    };
+    try { for (const entry of entries) await cache.delete(entry.url); }
+    catch (error) { await restore(); throw error; }
+    if (loadedVoice === id) { worker?.terminate(); worker = null; loadedVoice = null; }
+    const changed = async () => {
+      (await import('./voice')).resetSpeakers();
+      if (typeof window !== 'undefined') window.dispatchEvent(new Event('lingua:voices-changed'));
+    };
+    await changed();
+    if (entries.some((e) => e.response)) offerRemovalUndo(async () => {
+      for (const entry of entries) if (await cache.match(entry.url)) throw new Error('Undo stopped because this content changed again. Your newer changes were kept.');
+      const written: string[] = [];
+      try {
+        for (const entry of entries) if (entry.response) { await cache.put(entry.url, entry.response.clone()); written.push(entry.url); }
+      } catch (error) { for (const url of written) await cache.delete(url); throw error; }
+    }, changed);
+  });
+  busy = job.catch(() => undefined);
+  await job;
 }
 
 let worker: Worker | null = null;

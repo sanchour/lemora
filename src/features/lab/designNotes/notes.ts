@@ -1,3 +1,4 @@
+import { offerRemovalUndo } from '@/data/removalUndo';
 // Design notes (7-0b): notes pinned to elements while reviewing the design, kept on this device only
 // (localStorage, never synced or backed up; Reset clears them), and written out as Markdown for Claude.
 import { create } from 'zustand';
@@ -104,6 +105,15 @@ export const useDesignNotes = create<DesignNotesStore>((set, get) => {
     set({ notes });
     save(notes);
   };
+  const removeMatching = (matches: (note: DesignNote) => boolean) => {
+    const removed = get().notes.filter(matches);
+    commit(get().notes.filter((n) => !matches(n)));
+    if (removed.length) offerRemovalUndo(async () => {
+      const current = get().notes;
+      if (removed.some((n) => current.some((c) => c.id === n.id))) throw new Error('Undo stopped because this content changed again. Your newer changes were kept.');
+      commit([...current, ...removed].sort((a, b) => a.createdAt - b.createdAt));
+    });
+  };
   return {
     notes: typeof localStorage === 'undefined' ? [] : load(),
     add: (draft) => {
@@ -113,9 +123,9 @@ export const useDesignNotes = create<DesignNotesStore>((set, get) => {
       return note;
     },
     update: (id, patch) => commit(get().notes.map((n) => (n.id === id ? { ...n, ...patch, updatedAt: Date.now() } : n))),
-    remove: (id) => commit(get().notes.filter((n) => n.id !== id)),
-    clearDone: () => commit(get().notes.filter((n) => !n.done)),
-    clearAll: () => commit([]),
+    remove: (id) => removeMatching((n) => n.id === id),
+    clearDone: () => removeMatching((n) => n.done),
+    clearAll: () => removeMatching(() => true),
   };
 });
 

@@ -1,0 +1,21 @@
+import { afterAll, expect, it, vi } from 'vitest';
+import { createDb } from '@/data/db';
+import { useUI } from '@/state/ui';
+vi.mock('@/workers/dict.worker?worker', () => ({ default: vi.fn() }));
+vi.mock('@/workers/dictionarySearch.worker?worker', () => ({ default: vi.fn() }));
+import { dictionaryDownloads, removeDictionary } from './fullDict';
+const database = createDb('dictionary-removal-' + Math.random());
+afterAll(() => database.delete());
+it('removes only downloaded entries, keeps personal entries searchable and undoes without a network request', async () => {
+  const row = { lang: 'es', key: 'casa', fold: 'casa', word: 'casa', entries: [] };
+  await database.fullDict.bulkPut([row, { ...row, lang: 'fr' }]);
+  await database.settings.put({ key: 'customDict:es', value: [{ id: 'own', lang: 'es', key: 'casa', word: 'casa', pos: 'noun', definitions: ['my home'], examples: [], createdAt: 1, updatedAt: 1 }], updatedAt: 1 });
+  await database.fullDict.put({ ...row, key: '#version', fold: '#version' });
+  expect(await dictionaryDownloads(database)).toEqual([{ lang: 'es', words: 1 }]);
+  await removeDictionary('es', database);
+  expect(await dictionaryDownloads(database)).toEqual([]);
+  expect((await database.fullDict.get(['es', 'casa']))?.entries[0].senses[0].g).toContain('my home');
+  expect(await database.fullDict.get(['fr', 'casa'])).toEqual({ ...row, lang: 'fr' });
+  await useUI.getState().toasts.find((t) => t.duration === 0)?.action?.onClick();
+  expect(await database.fullDict.get(['es', 'casa'])).toEqual(row);
+});

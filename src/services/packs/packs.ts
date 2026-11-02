@@ -3,6 +3,8 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import Dexie from 'dexie';
 import { packFileName, packId, PACK_VERSION } from '@/core/packs/format';
 import { db } from '@/data/db';
+import { undoableRemoval } from '@/data/removalUndo';
+import type { LinguaDB } from '@/data/db';
 import type { DictPack } from '@/data/types';
 import { applyKnownSeed } from '@/data/words';
 import { ensureLexicon, resetLexicon } from './lexicon';
@@ -78,16 +80,19 @@ export async function packMissing(lang: string): Promise<boolean> {
   return !installed || installed.version < PACK_VERSION;
 }
 
-export async function removePack(lang: string): Promise<void> {
-  const id = packId(lang);
-  await db.dictForms.where('[pack+form]').between([id, Dexie.minKey], [id, Dexie.maxKey]).delete();
-  await db.dictEntries.where('[pack+lemma]').between([id, Dexie.minKey], [id, Dexie.maxKey]).delete();
-  await db.frequency.where('[lang+rank]').between([lang, Dexie.minKey], [lang, Dexie.maxKey]).delete();
-  await db.dictExamples.where('[pack+lemma]').between([id, Dexie.minKey], [id, Dexie.maxKey]).delete();
-  await db.dictParadigms.where('[pack+lemma]').between([id, Dexie.minKey], [id, Dexie.maxKey]).delete();
-  await db.starterLists.delete(lang);
-  await db.dictPacks.delete(id);
-  resetLexicon(lang);
+export async function removePack(lang: string, database: LinguaDB = db): Promise<void> {
+  if (running.has(lang)) throw new Error('Wait for the language pack to finish installing.');
+  return undoableRemoval(database, ['dictForms', 'dictEntries', 'frequency', 'dictExamples', 'dictParadigms', 'starterLists', 'dictPacks'], async () => {
+    const id = packId(lang);
+    await database.dictForms.where('[pack+form]').between([id, Dexie.minKey], [id, Dexie.maxKey]).delete();
+    await database.dictEntries.where('[pack+lemma]').between([id, Dexie.minKey], [id, Dexie.maxKey]).delete();
+    await database.frequency.where('[lang+rank]').between([lang, Dexie.minKey], [lang, Dexie.maxKey]).delete();
+    await database.dictExamples.where('[pack+lemma]').between([id, Dexie.minKey], [id, Dexie.maxKey]).delete();
+    await database.dictParadigms.where('[pack+lemma]').between([id, Dexie.minKey], [id, Dexie.maxKey]).delete();
+    await database.starterLists.delete(lang);
+    await database.dictPacks.delete(id);
+    resetLexicon(lang);
+  }, () => { resetLexicon(lang); return ensureLexicon(lang); });
 }
 
 export function useInstalledPacks(): DictPack[] | undefined {

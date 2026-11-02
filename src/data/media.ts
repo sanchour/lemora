@@ -1,3 +1,4 @@
+import { removalInProgress, undoableRemoval } from './removalUndo';
 // Sonus data: audio items (files, podcast episodes, Spotify links), podcast feeds, transcripts and
 // playback positions. Audio bytes live in `blobs`, so list queries never load them.
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -132,6 +133,7 @@ export async function updateMedia(id: string, patch: Partial<Omit<Media, 'id' | 
 
 /** Removes an item with its audio, transcript and position. Words you marked stay. */
 export async function deleteMedia(id: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['media', 'blobs', 'transcripts', 'playbackProgress'], () => deleteMedia(id, database));
   await database.transaction('rw', [database.media, database.blobs, database.transcripts, database.playbackProgress], async () => {
     const media = await database.media.get(id);
     if (!media) return;
@@ -168,6 +170,7 @@ export async function saveFeed(lang: string, url: string, parsed: ParsedFeed, da
 }
 
 export async function unsubscribe(feedId: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['feeds'], () => unsubscribe(feedId, database));
   await database.feeds.update(feedId, { deletedAt: Date.now(), updatedAt: Date.now() });
 }
 
@@ -212,6 +215,7 @@ export async function attachDownload(mediaId: string, blob: Blob, mime: string, 
 
 /** Frees the space a download uses; the episode keeps streaming from the web. */
 export async function removeDownload(mediaId: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['media', 'blobs'], () => removeDownload(mediaId, database));
   await database.transaction('rw', database.media, database.blobs, async () => {
     const media = await database.media.get(mediaId);
     if (!media?.blobId || !media.remoteUrl) return;
@@ -280,6 +284,7 @@ export async function saveSpeakers(mediaId: string, labelled: readonly Cue[], da
 }
 
 export async function deleteTranscript(mediaId: string, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['transcripts'], () => deleteTranscript(mediaId, database));
   await database.transcripts.update(transcriptId(mediaId), { deletedAt: Date.now(), updatedAt: Date.now() });
 }
 
@@ -316,6 +321,7 @@ export async function addBookmark(mediaId: string, at: number, extra: { note?: s
 }
 
 export async function removeBookmark(mediaId: string, at: number, database: LinguaDB = db): Promise<void> {
+  if (!removalInProgress(database)) return undoableRemoval(database, ['media'], () => removeBookmark(mediaId, at, database));
   const media = await database.media.get(mediaId);
   if (media) await database.media.update(mediaId, { bookmarks: (media.bookmarks ?? []).filter((b) => b.at !== at), updatedAt: Date.now() });
 }

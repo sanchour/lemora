@@ -10,6 +10,7 @@ import { Badge, Button, Card, Dialog } from '@/design/primitives';
 import { getStorageInfo, requestPersistence } from '@/services/storage/persist';
 import type { StorageInfo } from '@/services/storage/persist';
 import { toast } from '@/state/ui';
+import { StoredResources } from './StoredResources';
 import { SettingsSection } from '../SettingsSection';
 
 export function StorageSection() {
@@ -130,6 +131,8 @@ export function StorageSection() {
               <p><UiText source={'These are saved files, not a cache. Deleting removes attachments across languages. Undo is available until you leave this page.'} /></p>
             </Dialog>
           </div>
+
+          <StoredResources onChange={refresh} />
 
           {/* Privacy & Destination Disclosures (6-25, F1544) */}
           <div className="mt-6 rounded-2xl border border-line bg-surface p-4.5">
