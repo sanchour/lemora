@@ -28,6 +28,19 @@ const SHORT: Record<Tier, string> = {
 const TIER_ORDER: Tier[] = [1, 2, 3, 4, 'x'];
 /** How each core language says hello: the first thing its card says to you. */
 const HELLO: Record<string, string> = { es: 'Hola', fr: 'Bonjour', de: 'Hallo', ru: 'Привет', ar: 'مرحبا', zh: '你好' };
+/** The order the postcards come in: the most-asked-for first, and the scripts alternate so the row never looks the same twice. */
+const CORE_ORDER = ['es', 'fr', 'zh', 'de', 'ru', 'ar'];
+/** A tiny pen drawing for each postcard's corner (32 x 32). */
+const DOODLE: Record<string, string> = {
+  es: 'M10 16a6 6 0 1 0 12 0a6 6 0 1 0 -12 0M16 3V6.5M16 25.5V29M3 16H6.5M25.5 16H29M7 7L9.5 9.5M22.5 22.5L25 25M25 7L22.5 9.5M9.5 22.5L7 25',
+  fr: 'M16 3V8M13 29L15 8H17L19 29M14 20H18M12 29H20M14.5 14H17.5',
+  zh: 'M16 3V7M10 11C10 8 22 8 22 11V21C22 24 10 24 10 21ZM13 9C12 14 12 18 13 23M19 9C20 14 20 18 19 23M16 24V29M14 29H18',
+  de: 'M16 24C8 24 5 16 10 12C14 9 18 12 16 16C14 12 18 9 22 12C27 16 24 24 16 24ZM12 25L10 28M20 25L22 28',
+  ru: 'M16 3V7M16 7C10 12 9 15 12 17H20C23 15 22 12 16 7ZM11 17H21V28H11ZM14 28V22H18V28',
+  ar: 'M22 6C14 6 8 11 8 17C8 23 13 28 20 27C14 25 12 18 15 13C17 10 19 8 22 6ZM24 11L25 13.5L27.5 14L25.5 15.5L26 18L24 16.5L22 18L22.5 15.5L20.5 14L23 13.5Z',
+};
+/** A hand-drawn, slightly uneven rounded rectangle for the postcards' outline (100 x 100, stretched to fit). */
+const CARD_PATH = 'M7 3C30 1 70 4 93 2C97.5 2 98 5 98 9C99 35 97 65 98 91C98 96 95 98 91 98C65 99 35 96 9 98C4 98 2 95 2 91C1 65 3 35 2 9C2 5 3 3.5 7 3Z';
 /** The panel's width, and how much of the map it covers with its margin. */
 const PANEL = 340;
 const COVER = PANEL + 12;
@@ -49,7 +62,7 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
 
   const q = searchKey(query.trim());
   const matches = (l: LanguageInfo) => !q || searchKey(`${l.name} ${l.endonym}`).includes(q);
-  const core = LANGUAGES.filter((l) => l.tier === 1);
+  const core = CORE_ORDER.flatMap((code) => LANGUAGES.filter((l) => l.code === code));
   const chosen = target ? getLanguage(target) : undefined;
   const open = panel !== null;
 
@@ -248,7 +261,12 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
 
       {/* The six core languages as little postcards: each says hello, tips towards you on hover and shows a sentence from its world. */}
       <div className="mt-4 flex items-center gap-3">
-        <h2 className="font-serif text-[18px] font-semibold"><UiText source={'Start with a postcard'} /></h2>
+        <h2 className="relative font-serif text-[18px] font-semibold">
+          <UiText source={'Start with a postcard'} />
+          <svg viewBox="0 0 120 8" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 -bottom-1.5 h-2 w-full text-accent" aria-hidden>
+            <motion.path d="M2 5C25 2 50 7 72 4C92 2 108 5 118 3" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" vectorEffect="non-scaling-stroke" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }} />
+          </svg>
+        </h2>
         <span className="text-[12.5px] text-ink-soft" title={translateUi(TIERS[1].includes)}><UiText source={'Six languages with the full course: grammar, alphabet, dictionary and natural voices.'} /></span>
         <button
           type="button"
@@ -272,23 +290,29 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
               whileHover={{ y: -6, rotate: i % 2 ? 1.2 : -1.2 }}
               whileTap={{ scale: 0.97 }}
               transition={{ ...spring.soft, delay: 0.05 * i }}
-              className={cx(
-                'no-callout group relative flex min-h-[158px] flex-col items-start overflow-hidden rounded-[18px] border p-3.5 text-left outline-none',
-                on ? 'border-accent bg-accent-soft shadow-elev-2' : 'border-line bg-raised shadow-elev-1 hover:border-line-strong hover:shadow-elev-2',
-              )}
+              className="no-callout group relative flex min-h-[164px] flex-col items-start p-4 text-left outline-none"
             >
-              {/* A stamp in the corner, like a postmark, when this is the one. */}
-              <span className={cx('absolute top-2.5 right-2.5 grid size-6 place-items-center rounded-full transition-all duration-300', on ? 'scale-100 bg-accent-fill text-on-accent' : 'scale-50 opacity-0')}>
-                <Check size={14} strokeWidth={3.2} aria-hidden />
+              {/* The card itself: a wobbly pen outline over a soft fill, orange when chosen. */}
+              <svg viewBox="0 0 100 100" preserveAspectRatio="none" className={cx('pointer-events-none absolute inset-0 size-full transition-colors duration-300', on ? 'text-accent' : 'text-line-strong group-hover:text-ink-faint')} aria-hidden>
+                <path d={CARD_PATH} className={cx('transition-colors duration-300', on ? 'fill-accent-soft' : 'fill-raised')} stroke="currentColor" strokeWidth={on ? 2.2 : 1.5} strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+              </svg>
+              {/* A little doodle in the corner draws itself in; the check stamp takes its place when chosen. */}
+              <svg viewBox="0 0 32 32" className="absolute top-3 right-3 size-8 text-accent" aria-hidden>
+                <g fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" style={{ opacity: on ? 0.25 : 0.9, transition: 'opacity 0.3s' }}>
+                  <motion.path d={DOODLE[l.code]} initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.9, delay: 0.3 + 0.1 * i, ease: 'easeInOut' }} />
+                </g>
+              </svg>
+              <span className={cx('absolute top-3 right-3 grid size-8 place-items-center rounded-full bg-accent-fill text-on-accent transition-all duration-300', on ? 'scale-100' : 'scale-50 opacity-0')}>
+                <Check size={16} strokeWidth={3} aria-hidden />
               </span>
-              <LanguageFlag lang={l.code} width={30} />
-              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-3 font-serif text-[26px] leading-none font-semibold text-accent-text">{HELLO[l.code]}</span>
-              <span className="mt-1.5 flex items-baseline gap-1.5">
+              <span className="relative"><LanguageFlag lang={l.code} width={30} /></span>
+              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="relative mt-3 font-serif text-[26px] leading-none font-semibold text-accent-text">{HELLO[l.code]}</span>
+              <span className="relative mt-1.5 flex items-baseline gap-1.5">
                 <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="font-serif text-[15px] font-semibold">{l.endonym}</span>
                 <span className="text-[11.5px] text-ink-faint"><UiText source={l.name} /></span>
               </span>
               {/* A line from its world fades in on hover, in its own script. */}
-              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-2 line-clamp-3 text-[12px] leading-snug text-ink-soft opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">{l.sample}</span>
+              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="relative mt-2 line-clamp-3 text-[12px] leading-snug text-ink-soft opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">{l.sample}</span>
             </motion.button>
           );
         })}
