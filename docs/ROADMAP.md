@@ -2561,3 +2561,14 @@ from its callers; the existing test remains intact and a selected-scheme/source-
 was added. Russian browser acceptance is pending the requested 2.6 MB local test-pack approval.
 Arabic Settings was opened after rebuild; this is not certification of the new Russian controls.
 No A2 audit ticks, acceptance, main merge or deployment. A2 claim remains; A1 offline gap remains.
+
+### A2.1 verification follow-up · Codex · 2026-11-02
+
+Russian pack approval received; installation, both scheme selections, reload/language-switch
+persistence, actual reader data and the three desktop sizes in Paper/Nocturne observed. Arabic
+interface/RTL text also inspected. [Evidence, screenshots and exact stop](6-23-A2-VERIFICATION.md).
+No runtime code changed. Setup: typecheck, 1,637 tests/one skipped and production build pass.
+**Stop:** two ViewTransition AbortErrors appeared in browser logs. Existing theme/language transition
+files are unchanged from main; the exact caller is not established. Follow the user's stop rule;
+no shared transition fix, motion workaround, clean-console claim or A2.2 implementation. Keep A2
+claimed and its audit entries open. A1's offline acceptance remains unresolved separately.

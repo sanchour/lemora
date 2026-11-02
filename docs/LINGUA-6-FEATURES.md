@@ -2155,3 +2155,8 @@ and ISO 9:1995 engines, Settings selector/preview and reader/transcript wiring a
 source-backed and integration tests; Russian browser acceptance is pending test-pack approval.
 Other named schemes, per-surface choices, position/reveal controls and lesson-based fading remain.
 [Source/review scope](review/6-23-ru.md). This does not close A1's offline verification gap.
+
+**A2.1 browser follow-up:** the approved Russian pack, both new schemes/persistence, actual reader
+and all three desktop sizes/themes were observed; Arabic interface/RTL text was also inspected.
+Two shared-transition AbortErrors stopped further implementation; [exact scope/evidence](6-23-A2-VERIFICATION.md).
+F1298/F1300/F1301/F1371 stay unticked. No full-A2 or clean-console acceptance.

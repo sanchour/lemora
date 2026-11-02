@@ -2137,3 +2137,11 @@ stored words stay intact. Do not drop ISO/BGN marks through the Arabic-only plai
 Refuse unmapped Cyrillic; do not infer an unwritten ё. Primary-source fixtures are distinguished
 from synthetic edge tests and human language review. A2's full acceptance is still open; this
 checkpoint does not claim the remaining schemes or five independent surface settings.
+
+## 2026-11-02 · A2 verification stops at shared transition errors
+
+Preserve successful Russian scheme/reader observations separately from clean-console acceptance.
+The browser logged two skipped ViewTransition AbortErrors; theme.ts/languageSwitch.ts are unchanged
+from main and the exact caller is not established. Under the user's explicit stop rule, record the
+log and leave A2 claimed, without changing shared transition code or disabling motion to hide it.
+The approved pack/download and desktop checks are recorded in 6-23-A2-VERIFICATION.md.

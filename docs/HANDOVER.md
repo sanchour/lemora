@@ -315,3 +315,17 @@ live transcript playback certification. No new A2 audit tick, acceptance, merge 
 Next: finish Russian browser acceptance, then ALA-LC/passport and the other seven languages,
 shared per-surface controls, reveal and lesson fading. A2 claim stays with Codex; A1's offline
 acceptance remains open. Main stays protected; Codex checkpoint only.
+
+## 2026-11-02 · A2.1 browser follow-up, stopped at transition logs
+
+The user approved the Russian 2.6 MB test pack; installed storage showed 12 MB unpacked. Both new
+Russian schemes worked in Settings and the real reader, survived reload/language switching, and
+preserved source word text. Russian reader and Arabic interface/RTL text inspected at 1280×800,
+1366×768 and 1440×900, Paper/Nocturne. [Evidence and exact stop](6-23-A2-VERIFICATION.md).
+Typecheck, 250 test files/1,637 tests passing/one skipped and production build pass; no runtime code
+changed. Two skipped ViewTransition AbortErrors were logged; shared transition files are unchanged
+from main, exact caller not established. Stop per the user's rule: no shared fix or workaround,
+no clean-console/full-A2 acceptance, no audit ticks or A2.2 implementation. Three approved reference
+files now cached successfully, within 25 MB; source hashes updated. Codex retains A2; A1 offline gap
+remains open. Next only after this blocker is resolved/authorized: remaining schemes and controls.
+No main merge/deployment. No screen reader/native review, live playback or real AI/microphone.

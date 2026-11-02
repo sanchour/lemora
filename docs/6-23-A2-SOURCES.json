@@ -13,6 +13,24 @@
       "url": "https://cdn.standards.iteh.ai/samples/3589/3b8e97e9a40c4e668f22b30a0735fd4a/ISO-9-1995.pdf",
       "bytes": 1813466,
       "sha256": "b1fcdea74f90ca0cac56973db3280fcc5039bc149a51c10654b8c45ab8830d6e"
+    },
+    {
+      "file": "russian-alalc-2012.doc",
+      "url": "https://www.loc.gov/catdir/cpso/romanization/russian.doc",
+      "bytes": 72704,
+      "sha256": "ea8519fb7e9345bb7d3a9f8006428e02972285f2103c911fe9114c6adacb96e5"
+    },
+    {
+      "file": "russian-alalc-2012.pdf",
+      "url": "https://www.loc.gov/catdir/cpso/romanization/russian.pdf",
+      "bytes": 282217,
+      "sha256": "61f967959c90048690d3a5fd1fc2a58ff1ee33454b82cb12f9c83aeebe162453"
+    },
+    {
+      "file": "icao-9303-3.pdf",
+      "url": "https://www.icao.int/sites/default/files/publications/DocSeries/9303_p3_cons_en.pdf",
+      "bytes": 2278826,
+      "sha256": "55543aca6740140f1db0fb129f7f4815d1cf85dcfd49118cdb602f646c8a5553"
     }
   ]
 }

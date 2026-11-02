@@ -99,6 +99,13 @@ requested local test-pack approval. No other named scheme, per-surface setting, 
 fading mode or A2 acceptance is claimed. The original A2 “done when” and all its feature entries
 remain open; Codex retains the A2 claim. A1's offline gap remains open separately.
 
+**A2.1 browser follow-up, Codex 2026-11-02:** the user approved the Russian test pack; both schemes,
+persistence, the actual reader and all three desktop sizes/themes were observed, plus Arabic
+interface/RTL text. [Evidence and stop](6-23-A2-VERIFICATION.md). Two ViewTransition AbortErrors
+appeared in browser logs, with no established A2 cause; shared transition files are unchanged from
+main. Stop under the user's rule, no workaround or A2.2 implementation. A2 remains claimed/open;
+this supersedes the pending approval above, not the original full acceptance criteria.
+
 - **A3 · Script conversion (F1299).** Chinese: OpenCC's phrase dictionaries (s2t, t2s, s2tw, s2twp, s2hk, tw2s, hk2s) compiled to a
   compact trie, lazy; conversion of text, of a whole book in the reader ("show in Traditional / Simplified / Taiwan"), of a card's
   fields on export; the many-to-one traps (发, 后, 干, 面) handled by phrases and listed. Serbian: Cyrillic ⇄ Latin with the
