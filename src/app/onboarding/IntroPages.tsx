@@ -528,6 +528,9 @@ export function AboutPage({ room: roomIndex, onRoom }: { room: number; onRoom: (
   const pre = hasName ? title.slice(0, at) : title;
   const post = hasName ? title.slice(at + 'Lingua'.length) : '';
   const room = ROOMS[roomIndex]?.id ?? 'read';
+  // Only the rooms you have reached are on show: Codex alone at first, each Next bringing in the one after.
+  const [reached, setReached] = useState(roomIndex);
+  if (roomIndex > reached) setReached(roomIndex);
   const [kept, setKept] = useState<string[]>([]);
   const keep = (key: string) => setKept((k) => (k.includes(key) ? k.filter((x) => x !== key) : [...k, key]));
   return (
@@ -547,10 +550,10 @@ export function AboutPage({ room: roomIndex, onRoom }: { room: number; onRoom: (
       </h1>
       {/* The three rooms, as tabs with a hand-drawn line under the one you are in. */}
       <div role="tablist" aria-label={translateUi('What Lingua can do')} className="mt-10 flex justify-center gap-3">
-        {ROOMS.map((r) => {
+        {ROOMS.slice(0, reached + 1).map((r) => {
           const on = room === r.id;
           return (
-            <button key={r.id} type="button" role="tab" aria-selected={on} onClick={() => onRoom(ROOMS.findIndex((x) => x.id === r.id))} className={cx('relative flex items-center gap-3 rounded-2xl px-4 py-2.5 text-left transition-colors', on ? 'text-ink' : 'text-ink-faint hover:text-ink-soft')}>
+            <motion.button key={r.id} layout initial={{ opacity: 0, x: -14, scale: 0.92 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ type: 'spring', stiffness: 320, damping: 28 }} type="button" role="tab" aria-selected={on} onClick={() => onRoom(ROOMS.findIndex((x) => x.id === r.id))} className={cx('relative flex items-center gap-3 rounded-2xl px-4 py-2.5 text-left transition-colors', on ? 'text-ink' : 'text-ink-faint hover:text-ink-soft')}>
               <svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 {r.icon}
               </svg>
@@ -563,7 +566,7 @@ export function AboutPage({ room: roomIndex, onRoom }: { room: number; onRoom: (
                   <path d="M2 5C30 2 60 7 90 4C100 3 110 5 118 4" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
                 </motion.svg>
               )}
-            </button>
+            </motion.button>
           );
         })}
       </div>
