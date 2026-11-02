@@ -2,6 +2,7 @@ import { UiText, useUi } from '@/design/i18n/UiText';
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { HandMark } from './HandMark';
+import { cx } from '@/lib/cx';
 import { spring } from '@/design/motion';
 
 /** The fine line drawings' shared stroke. */
@@ -11,6 +12,16 @@ const LINE = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.3, strokeLin
 function Pen({ d, delay, duration = 0.4, fade = 1, strokeWidth }: { d: string; delay: number; duration?: number; fade?: number; strokeWidth?: number }) {
   return <motion.path {...LINE} strokeWidth={strokeWidth ?? LINE.strokeWidth} d={d} initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: fade }} transition={{ duration, delay, ease: 'easeInOut' }} />;
 }
+
+/** The words that get written on the book: left page, then right page. */
+const WORDS = [
+  { text: 'hola', x: 48, y: 66 },
+  { text: 'こんにちは', x: 148, y: 66, accent: true },
+  { text: '你好', x: 48, y: 88, accent: true },
+  { text: 'bonjour', x: 148, y: 88 },
+  { text: 'مرحبا', x: 112, y: 110, rtl: true },
+  { text: '안녕', x: 148, y: 110, accent: true },
+];
 
 /** An open book, drawn in fine line that draws itself in: stacked pages, text lines, a highlighted word, a sprig, a ribbon and a few sparks of language. */
 function OpenBook() {
@@ -25,37 +36,15 @@ function OpenBook() {
       <Pen d="M130 42V134" delay={0.35} duration={0.28} />
       <Pen d="M126 46V130" delay={0.4} duration={0.28} fade={0.35} />
       {/* A highlighted word on the left page. */}
-      <motion.rect x={64} y={54} width={26} height={8} rx={3} className="fill-accent/25" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.3, delay: 0.85, ease: 'easeOut' }} style={{ transformOrigin: '64px 58px' }} />
-      {/* Two plain lines of text on each page, then the book fills with other scripts, written one after the other. */}
-      {[
-        { l: 'M46 58C62 55 88 56 114 60', r: 'M146 60C170 56 196 55 214 58' },
-        { l: 'M46 70C60 67 80 68 114 72', r: 'M146 72C168 68 190 68 214 70' },
-      ].map((row, i) => (
-        <g key={i}>
-          <Pen d={row.l} delay={0.5 + i * 0.06} duration={0.28} strokeWidth={1} fade={0.5} />
-          <Pen d={row.r} delay={0.53 + i * 0.06} duration={0.28} strokeWidth={1} fade={0.5} />
-        </g>
+      {/* Greetings in other languages, typed onto the pages one letter at a time. */}
+      {WORDS.map((w, i) => (
+        <text key={w.text} x={w.x} y={w.y} fontSize={13} className={cx('font-serif', w.accent ? 'fill-accent' : 'fill-current')} direction={w.rtl ? 'rtl' : undefined} textAnchor={w.rtl ? 'end' : 'start'} opacity={0.9}>
+          {/* Arabic letters join, so that word fades in whole rather than letter by letter. */}
+          {(w.rtl ? [w.text] : [...w.text]).map((ch, j) => (
+            <motion.tspan key={j} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.2, delay: 0.5 + i * 0.6 + j * 0.09 }}>{ch}</motion.tspan>
+          ))}
+        </text>
       ))}
-      {/* Left page: cursive Latin, Chinese, Arabic. */}
-      <g strokeWidth={1.2}>
-        <Pen d="M46 90C48 82 50 80 51 86C52 92 54 90 56 84C58 80 62 82 62 88C62 94 56 94 56 88C56 82 66 80 66 88C66 92 70 92 72 86C74 80 78 84 74 90C72 92 78 94 82 88" delay={0.8} duration={0.7} />
-        <g className="text-accent">
-          <Pen d="M48 96L52 104M51 98V110M55 99H60M58 99V110M55 104H60" delay={1.4} duration={0.5} />
-          <Pen d="M66 98H78M72 98V110M66 103H78M66 109H78" delay={1.6} duration={0.5} />
-        </g>
-        <Pen d="M112 108C104 114 96 102 88 108C82 112 78 104 72 108M92 101h.1M80 101h.1M98 114h.1" delay={1.9} duration={0.7} />
-      </g>
-      {/* Right page: Chinese, Japanese and Latin, then Korean, Cyrillic and Spanish. */}
-      <g className="text-accent">
-        <Pen d="M158 76V79M151 81H165M154 83Q157 90 164 93M162 83Q159 90 152 93" delay={1.0} duration={0.5} strokeWidth={1.2} />
-        <Pen d="M176 80H186M181 76Q180 88 180 90M176 86Q184 82 186 90Q184 96 178 92" delay={1.2} duration={0.5} strokeWidth={1.2} />
-        <Pen d="M194 93L201 76L208 93M197 87H205" delay={1.4} duration={0.5} strokeWidth={1.2} />
-      </g>
-      <g strokeWidth={1.2}>
-        <Pen d="M150 100H158M154 100V104M148 106H160V112H148Z" delay={2.2} duration={0.5} />
-        <Pen d="M170 100V112M164 100L170 106L176 100M164 112L170 106L176 112" delay={2.4} duration={0.5} />
-        <Pen d="M190 100C186 100 186 104 190 105V107M190 111h.1M198 112C200 106 204 104 207 106M202 100C203 101 204 101 206 100" delay={2.6} duration={0.6} />
-      </g>
       {/* A sage sprig tucked into the right page. */}
       <g stroke="#6b8e78">
         <Pen d="M206 122C204 112 208 102 216 96" delay={0.9} duration={0.33} />
