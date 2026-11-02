@@ -2,6 +2,7 @@ import { UiText, useUi } from '@/design/i18n/UiText';
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { HandMark } from './HandMark';
+import { LevelIcon } from './LevelStep';
 import { cx } from '@/lib/cx';
 
 /** The fine line drawings' shared stroke. */
@@ -263,6 +264,95 @@ function ListenDemo() {
   );
 }
 
+const PAIRS: Array<[string, string]> = [['hola', 'hello'], ['casa', 'house'], ['pan', 'bread'], ['café', 'coffee']];
+/** The English column in a fixed, mixed-up order. */
+const MIXED = [2, 3, 0, 1];
+const GROWN = ['A0', 'A1', 'A2', 'B1'] as const;
+
+/** Ludus: a tiny matching game. Pick a Spanish word, then its English; each right pair grows a seed in the row above. */
+function PlayDemo() {
+  const [round, setRound] = useState(0);
+  const [pick, setPick] = useState<number | null>(null);
+  const [done, setDone] = useState<number[]>([]);
+  const [wrong, setWrong] = useState<number | null>(null);
+  const order = round % 2 ? [...MIXED].reverse() : MIXED;
+  const finished = done.length === PAIRS.length;
+  const answer = (i: number) => {
+    if (pick === null || done.includes(i)) return;
+    if (i === pick) {
+      setDone((d) => [...d, i]);
+      setPick(null);
+    } else {
+      setWrong(i);
+      window.setTimeout(() => setWrong(null), 420);
+    }
+  };
+  const again = () => {
+    setRound((r) => r + 1);
+    setDone([]);
+    setPick(null);
+  };
+  return (
+    <div className="flex flex-col items-center">
+      {/* A seed for each pair, growing as you match them. */}
+      <div className="flex items-end gap-3" aria-hidden>
+        {GROWN.map((l, i) => (
+          <motion.span key={l} animate={{ opacity: done.length > i ? 1 : 0.25, scale: done.length > i ? 1 : 0.85, y: done.length > i ? 0 : 4 }} transition={{ type: 'spring', stiffness: 320, damping: 22 }}>
+            <LevelIcon level={l} className="size-9" />
+          </motion.span>
+        ))}
+      </div>
+      <div className="mt-6 grid grid-cols-[auto_auto_auto] items-center gap-x-8 gap-y-3">
+        <div className="flex flex-col gap-3">
+          {PAIRS.map(([es], i) => {
+            const on = pick === i;
+            const ok = done.includes(i);
+            return (
+              <button key={es} type="button" lang="es" disabled={ok} onClick={() => setPick(on ? null : i)} className={cx('relative flex h-12 w-40 items-center justify-center rounded-2xl border font-serif text-[21px] transition-[transform,background-color,border-color] duration-200', ok ? 'border-sage/60 bg-sage/20 text-ink-soft' : on ? '-translate-y-0.5 border-accent bg-accent/10 text-accent-text shadow-elev-1' : 'border-line bg-raised hover:-translate-y-0.5 hover:border-line-strong')}>
+                {es}
+                {ok && <Tick />}
+              </button>
+            );
+          })}
+        </div>
+        <svg viewBox="0 0 40 120" className="h-28 w-8 text-line-strong" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeDasharray="1 6" aria-hidden>
+          <path d="M20 4C14 28 26 44 20 62C14 80 26 96 20 116" />
+        </svg>
+        <div className="flex flex-col gap-3">
+          {order.map((i) => {
+            const ok = done.includes(i);
+            return (
+              <motion.button key={PAIRS[i][1]} type="button" disabled={ok || pick === null} onClick={() => answer(i)} animate={wrong === i ? { x: [0, -6, 6, -4, 4, 0] } : { x: 0 }} transition={{ duration: 0.4 }} className={cx('relative flex h-12 w-40 items-center justify-center rounded-2xl border text-[16px] transition-[transform,background-color,border-color] duration-200', ok ? 'border-sage/60 bg-sage/20 text-ink-soft' : wrong === i ? 'border-accent-text/60 bg-accent/10' : 'border-line bg-raised enabled:hover:-translate-y-0.5 enabled:hover:border-accent/60')}>
+                {PAIRS[i][1]}
+                {ok && <Tick />}
+              </motion.button>
+            );
+          })}
+        </div>
+      </div>
+      <div className="mt-6 flex h-9 items-center">
+        <AnimatePresence mode="wait" initial={false}>
+          {finished && (
+            <motion.div key="well" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex items-center gap-4">
+              <span className="font-serif text-[20px] text-accent-text italic"><UiText source={'Well done.'} /></span>
+              <button type="button" onClick={again} className="rounded-full border border-line px-3.5 py-1 text-[13px] font-semibold text-ink-soft transition-colors hover:border-line-strong hover:text-ink"><UiText source={'Play again'} /></button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
+/** A pen-drawn tick that draws itself in the corner of a matched tile. */
+function Tick() {
+  return (
+    <svg viewBox="0 0 20 20" className="absolute top-1/2 right-3 size-4 -translate-y-1/2 text-sage" fill="none" aria-hidden>
+      <motion.path d="M3.5 10.5L8 15L16.5 5" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.35 }} />
+    </svg>
+  );
+}
+
 /** The three rooms in the demo, each with a small pen-drawn icon (24 x 24). */
 const ROOMS = [
   {
@@ -299,6 +389,19 @@ const ROOMS = [
         <rect x={3} y={14.5} width={4} height={6} rx={1.6} fill="#f6bd8a" />
         <rect x={17} y={14.5} width={4} height={6} rx={1.6} fill="#f6bd8a" />
         <path d="M10.5 10.5v4.2l3.6-2.1z" fill="var(--accent)" stroke="var(--accent)" />
+      </>
+    ),
+  },
+  {
+    id: 'play',
+    name: 'Ludus',
+    role: 'Play and practise',
+    icon: (
+      <>
+        <rect x={2.5} y={8} width={19} height={11} rx={5.5} fill="#a9c7dd" />
+        <path d="M8 11v5M5.5 13.5h5" />
+        <circle cx={15.5} cy={12} r={1.2} fill="var(--accent)" stroke="var(--accent)" />
+        <circle cx={18.5} cy={15} r={1.2} fill="#ee8b48" stroke="var(--accent)" />
       </>
     ),
   },
@@ -471,6 +574,7 @@ export function AboutPage({ room: roomIndex, onRoom }: { room: number; onRoom: (
             {room === 'read' && <ReadDemo kept={kept} onKeep={keep} />}
             {room === 'words' && <WordsDemo kept={kept} />}
             {room === 'listen' && <ListenDemo />}
+            {room === 'play' && <PlayDemo />}
           </motion.div>
         </AnimatePresence>
       </div>
