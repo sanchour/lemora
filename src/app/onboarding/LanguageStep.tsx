@@ -1,7 +1,7 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowDown, Check, MousePointerClick, X } from 'lucide-react';
+import { ArrowDown, Check, ChevronDown, MousePointerClick, X } from 'lucide-react';
 import { getLanguage, LANGUAGES } from '@/core/lang/languages';
 import type { LanguageInfo } from '@/core/lang/languages';
 import { languagesIn, STATUS_NAME } from '@/data/territories';
@@ -46,6 +46,7 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
   const [place, setPlace] = useState<string | null>(null);
   const [panel, setPanel] = useState<'place' | 'all' | null>(null);
   const [query, setQuery] = useState('');
+  const [libraryOpen, setLibraryOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -250,11 +251,14 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
 
       {/* The six core languages as little postcards: each says hello, tips towards you on hover and shows a sentence from its world. */}
       <div className="mt-4 flex items-center gap-3">
-        <h2 className="font-serif text-[18px] font-semibold"><UiText source={'Our core languages'} /></h2>
+        <h2 className="font-serif text-[28px] leading-none font-semibold tracking-tight"><UiText source={'Our core languages'} /></h2>
         <span className="text-[12.5px] text-ink-soft" title={translateUi(GROUPS[0].blurb)}><UiText source={'Six languages with the full course: grammar, alphabet, dictionary and natural voices.'} /></span>
         <button
           type="button"
-          onClick={() => listRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+          onClick={() => {
+            setLibraryOpen(true);
+            setTimeout(() => listRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+          }}
           className="ml-auto inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[13.5px] font-semibold text-accent-text hover:bg-accent-soft"
         ><UiText source={'All {0} languages {1}'} values={[LANGUAGES.length, <ArrowDown size={15} aria-hidden />]} /></button>
       </div>
@@ -275,22 +279,19 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
               whileTap={{ scale: 0.97 }}
               transition={{ ...spring.soft, delay: 0.05 * i }}
               className={cx(
-                'no-callout group relative flex min-h-[158px] flex-col items-start overflow-hidden rounded-[18px] border p-3.5 text-left outline-none',
+                'no-callout group relative flex min-h-[132px] flex-col items-start overflow-hidden rounded-[18px] border p-4 text-left outline-none',
                 on ? 'border-accent bg-accent-soft shadow-elev-2' : 'border-line bg-raised shadow-elev-1 hover:border-line-strong hover:shadow-elev-2',
               )}
             >
-              {/* A stamp in the corner, like a postmark, when this is the one. */}
-              <span className={cx('absolute top-2.5 right-2.5 grid size-6 place-items-center rounded-full transition-all duration-300', on ? 'scale-100 bg-accent-fill text-on-accent' : 'scale-50 opacity-0')}>
+              <LanguageFlag lang={l.code} width={32} />
+              {/* "Hello" pops in, small and quiet, in the language itself. */}
+              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="absolute top-3.5 right-3.5 origin-top-right scale-75 rounded-full bg-accent-soft px-2.5 py-0.5 font-serif text-[13px] font-semibold text-accent-text opacity-0 transition-[opacity,transform] duration-200 ease-out group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100">{HELLO[l.code]}</span>
+              {/* Its name in itself, and in yours. */}
+              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-auto pt-4 font-serif text-[26px] leading-none font-semibold">{l.endonym}</span>
+              <span className="mt-1.5 text-[13px] text-ink-soft"><UiText source={l.name} /></span>
+              <span className={cx('absolute right-3 bottom-3 grid size-6 place-items-center rounded-full bg-accent-fill text-on-accent transition-all duration-300', on ? 'scale-100' : 'scale-50 opacity-0')}>
                 <Check size={14} strokeWidth={3.2} aria-hidden />
               </span>
-              <LanguageFlag lang={l.code} width={30} />
-              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-3 font-serif text-[26px] leading-none font-semibold text-accent-text">{HELLO[l.code]}</span>
-              <span className="mt-1.5 flex items-baseline gap-1.5">
-                <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="font-serif text-[15px] font-semibold">{l.endonym}</span>
-                <span className="text-[11.5px] text-ink-faint"><UiText source={l.name} /></span>
-              </span>
-              {/* A line from its world fades in on hover, in its own script. */}
-              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-2 line-clamp-3 text-[12px] leading-snug text-ink-soft opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">{l.sample}</span>
             </motion.button>
           );
         })}
@@ -298,29 +299,38 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
 
       {/* The library: every other language on two shelves, the ones you can read in today and the ones still to come. */}
       <div ref={listRef} className="mt-9 scroll-mt-6 pb-6">
-        <div className="flex items-baseline gap-3">
+        <button type="button" onClick={() => setLibraryOpen((o) => !o)} aria-expanded={libraryOpen} className="group flex w-full items-center gap-3 rounded-2xl py-1 text-left">
           <h2 className="font-serif text-[22px] font-semibold"><UiText source={'The library'} /></h2>
           <span className="text-[13px] text-ink-soft"><UiText source={'Every other language, shelved by how much Lingua has for it.'} /></span>
-        </div>
-        <div className="mt-3 grid gap-4">
-          {GROUPS.slice(1).map((g) => {
-            const langs = LANGUAGES.filter((l) => g.has(l));
-            return (
-              <section key={g.key} role="radiogroup" aria-label={translateUi('{0} languages', [translateUi(g.name)])} className="rounded-3xl border border-line bg-raised px-5 pt-4 pb-3 shadow-elev-1">
-                <header className="flex items-center gap-3">
-                  <span className={cx('rounded-full px-3 py-1 text-[11.5px] font-bold tracking-[0.08em] uppercase', g.key === 'beta' ? 'bg-accent-soft text-accent-text' : 'bg-sunken text-ink-soft')}><UiText source={g.name} /></span>
-                  <span className="text-[12.5px] text-ink-soft"><UiText source={g.blurb} /></span>
-                  <span className="ml-auto text-[12px] text-ink-faint tabular-nums">{langs.length}</span>
-                </header>
-                <div className="mt-3 flex flex-wrap content-start gap-1.5">{langs.map((l) => chip(l))}</div>
-                {/* The shelf: one uneven pen line under the row. */}
-                <svg viewBox="0 0 400 8" preserveAspectRatio="none" className="mt-3 h-2 w-full text-line-strong" aria-hidden>
-                  <path d="M2 4C60 2 120 6 200 4C270 2 340 6 398 3" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-                </svg>
-              </section>
-            );
-          })}
-        </div>
+          <span className="ml-auto grid size-8 place-items-center rounded-full border border-line bg-raised text-ink-soft transition-colors group-hover:border-line-strong group-hover:text-ink">
+            <ChevronDown size={17} aria-hidden className={cx('transition-transform duration-300', libraryOpen && 'rotate-180')} />
+          </span>
+        </button>
+        <AnimatePresence initial={false}>
+          {libraryOpen && (
+            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} className="overflow-hidden">
+              <div className="mt-3 grid gap-4">
+              {GROUPS.slice(1).map((g) => {
+                const langs = LANGUAGES.filter((l) => g.has(l));
+                return (
+                  <section key={g.key} role="radiogroup" aria-label={translateUi('{0} languages', [translateUi(g.name)])} className="rounded-3xl border border-line bg-raised px-5 pt-4 pb-3 shadow-elev-1">
+                    <header className="flex items-center gap-3">
+                      <span className={cx('rounded-full px-3 py-1 text-[11.5px] font-bold tracking-[0.08em] uppercase', g.key === 'beta' ? 'bg-accent-soft text-accent-text' : 'bg-sunken text-ink-soft')}><UiText source={g.name} /></span>
+                      <span className="text-[12.5px] text-ink-soft"><UiText source={g.blurb} /></span>
+                      <span className="ml-auto text-[12px] text-ink-faint tabular-nums">{langs.length}</span>
+                    </header>
+                    <div className="mt-3 flex flex-wrap content-start gap-1.5">{langs.map((l) => chip(l))}</div>
+                    {/* The shelf: one uneven pen line under the row. */}
+                    <svg viewBox="0 0 400 8" preserveAspectRatio="none" className="mt-3 h-2 w-full text-line-strong" aria-hidden>
+                      <path d="M2 4C60 2 120 6 200 4C270 2 340 6 398 3" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+                    </svg>
+                  </section>
+                );
+              })}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
