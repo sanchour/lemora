@@ -26,6 +26,8 @@ const SHORT: Record<Tier, string> = {
   x: 'Machine translation where it exists.',
 };
 const TIER_ORDER: Tier[] = [1, 2, 3, 4, 'x'];
+/** How each core language says hello: the first thing its card says to you. */
+const HELLO: Record<string, string> = { es: 'Hola', fr: 'Bonjour', de: 'Hallo', ru: 'Привет', ar: 'مرحبا', zh: '你好' };
 /** The panel's width, and how much of the map it covers with its margin. */
 const PANEL = 340;
 const COVER = PANEL + 12;
@@ -148,7 +150,7 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
       <div className="mb-3 flex items-end gap-4">
         <div className="min-w-0 flex-1">
           <h1 className="font-serif text-[30px] leading-tight font-semibold tracking-tight"><UiText source={'What language will it be?'} /></h1>
-          <p className="mt-1 text-[14.5px] text-ink-soft"><UiText source={'Click a country to see what’s spoken there, or scroll down for all of them. Commitment issues welcome: you can add more later.'} /></p>
+          <p className="mt-1 text-[14.5px] text-ink-soft"><UiText source={'Click a country to see what’s spoken there, or pick one of the six below.'} /></p>
         </div>
         <SearchInput
           value={query}
@@ -161,7 +163,7 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
         />
       </div>
 
-      <div className="relative overflow-hidden rounded-3xl shadow-elev-2" style={{ height: 'clamp(320px, calc(100dvh - 340px), 640px)' }}>
+      <div className="relative overflow-hidden rounded-3xl shadow-elev-2" style={{ height: 'clamp(300px, calc(100dvh - 480px), 600px)' }}>
         <LanguageMap highlight={hovered ?? target} selected={target} place={place} onPlace={pickPlace} inset={open ? COVER : 0} />
 
         {/* Top of the map: how to begin, then which language was chosen. */}
@@ -244,21 +246,56 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
         </AnimatePresence>
       </div>
 
-      {/* The six core languages, one click away, and the way down to every language. */}
-      <div role="radiogroup" aria-label={translateUi('Core languages')} className="mt-3 flex items-center gap-2">
-        <span className="mr-1 text-[11.5px] font-bold tracking-[0.08em] text-ink-faint uppercase" title={translateUi(TIERS[1].includes)}>
-          <UiText source={TIERS[1].name} />
-        </span>
-        {core.map((l) => chip(l, true))}
+      {/* The six core languages as little postcards: each says hello, tips towards you on hover and shows a sentence from its world. */}
+      <div className="mt-4 flex items-center gap-3">
+        <h2 className="font-serif text-[18px] font-semibold"><UiText source={'Start with a postcard'} /></h2>
+        <span className="text-[12.5px] text-ink-soft" title={translateUi(TIERS[1].includes)}><UiText source={'Six languages with the full course: grammar, alphabet, dictionary and natural voices.'} /></span>
         <button
           type="button"
           onClick={() => listRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
           className="ml-auto inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[13.5px] font-semibold text-accent-text hover:bg-accent-soft"
         ><UiText source={'All {0} languages {1}'} values={[LANGUAGES.length, <ArrowDown size={15} aria-hidden />]} /></button>
       </div>
+      <div role="radiogroup" aria-label={translateUi('Core languages')} className="mt-3 grid grid-cols-6 gap-3">
+        {core.map((l, i) => {
+          const on = target === l.code;
+          return (
+            <motion.button
+              key={l.code}
+              type="button"
+              role="radio"
+              aria-checked={on}
+              onClick={() => onTarget(l.code)}
+              {...hoverProps(l)}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -6, rotate: i % 2 ? 1.2 : -1.2 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ ...spring.soft, delay: 0.05 * i }}
+              className={cx(
+                'no-callout group relative flex min-h-[158px] flex-col items-start overflow-hidden rounded-[18px] border p-3.5 text-left outline-none',
+                on ? 'border-accent bg-accent-soft shadow-elev-2' : 'border-line bg-raised shadow-elev-1 hover:border-line-strong hover:shadow-elev-2',
+              )}
+            >
+              {/* A stamp in the corner, like a postmark, when this is the one. */}
+              <span className={cx('absolute top-2.5 right-2.5 grid size-6 place-items-center rounded-full transition-all duration-300', on ? 'scale-100 bg-accent-fill text-on-accent' : 'scale-50 opacity-0')}>
+                <Check size={14} strokeWidth={3.2} aria-hidden />
+              </span>
+              <LanguageFlag lang={l.code} width={30} />
+              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-3 font-serif text-[26px] leading-none font-semibold text-accent-text">{HELLO[l.code]}</span>
+              <span className="mt-1.5 flex items-baseline gap-1.5">
+                <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="font-serif text-[15px] font-semibold">{l.endonym}</span>
+                <span className="text-[11.5px] text-ink-faint"><UiText source={l.name} /></span>
+              </span>
+              {/* A line from its world fades in on hover, in its own script. */}
+              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-2 line-clamp-3 text-[12px] leading-snug text-ink-soft opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">{l.sample}</span>
+            </motion.button>
+          );
+        })}
+      </div>
 
       {/* Every language by tier, peeking in at the bottom of the screen. */}
-      <div ref={listRef} className="mt-7 scroll-mt-6 divide-y divide-line/70 border-t border-line/70 pb-6">
+      <div ref={listRef} className="mt-8 scroll-mt-6 divide-y divide-line/70 border-t border-line/70 pb-6">
         {TIER_ORDER.slice(1).map((tier) => (
           <div key={tier} role="radiogroup" aria-label={translateUi('{0} languages', [translateUi(TIERS[tier].name)])} className="grid grid-cols-[190px_minmax(0,1fr)] gap-5 py-4">
             <div title={translateUi(TIERS[tier].includes)}>
