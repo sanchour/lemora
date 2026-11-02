@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { HandMark } from './HandMark';
 import { cx } from '@/lib/cx';
-import { spring } from '@/design/motion';
 
 /** The fine line drawings' shared stroke. */
 const LINE = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.3, strokeLinecap: 'round', strokeLinejoin: 'round' } as const;
@@ -218,21 +217,85 @@ export function WelcomePage({ name }: { name: string }) {
 
 /** See what Lingua can do (5.1-2b): three things it does, in one fine line each. */
 export function AboutPage() {
+  // How many of the three things have been shown so far: each click brings in the next one.
+  const [shown, setShown] = useState(0);
+  const last = VIGNETTES.length;
+  const advance = () => setShown((n) => Math.min(last, n + 1));
+  const current = shown - 1; // the one you are on
+  const upcoming = shown < last ? shown : -1; // and the one that comes next
   return (
     <div className="py-6">
       <h1 className="text-center font-serif text-[36px] leading-tight font-semibold tracking-tight"><UiText source={'See what Lingua can do'} /></h1>
       <p className="mt-2 text-center text-[16px] text-ink-soft"><UiText source={'Learn a language by living in it. Three things, done well.'} /></p>
-      <div className="mt-12 grid grid-cols-3 gap-10">
+      <div className="mt-12 grid grid-cols-3 gap-8">
+        {VIGNETTES.map((v, i) => {
+          const on = i < shown;
+          const isNext = i === upcoming;
+          return (
+            <button
+              key={v.title}
+              type="button"
+              onClick={() => (on ? setShown(i + 1) : isNext && advance())}
+              disabled={!on && !isNext}
+              aria-label={v.title}
+              className="group relative flex cursor-pointer flex-col items-center rounded-[28px] px-4 pt-6 pb-5 text-center outline-none disabled:cursor-default"
+            >
+              {/* The stage the drawing lands on: a quiet dashed ring until its turn, then a soft disc. */}
+              <span className="relative grid size-[168px] place-items-center">
+                <motion.span
+                  aria-hidden
+                  className="absolute inset-0 rounded-full border-2 border-dashed border-line-strong"
+                  animate={{ opacity: on ? 0 : isNext ? 1 : 0.45, scale: on ? 1.08 : 1 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                />
+                <motion.span
+                  aria-hidden
+                  className={cx('absolute inset-0 rounded-full bg-raised shadow-elev-1 transition-colors duration-500', i === current ? 'ring-2 ring-accent/40' : 'ring-1 ring-line')}
+                  initial={false}
+                  animate={{ opacity: on ? 1 : 0, scale: on ? 1 : 0.7 }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                />
+                <motion.svg
+                  viewBox="0 0 72 68"
+                  className="relative h-auto w-[116px] text-ink-soft"
+                  aria-hidden
+                  initial={false}
+                  animate={{ opacity: on ? 1 : 0, scale: on ? 1 : 0.8, y: on ? 0 : 10, rotate: on ? 0 : -4 }}
+                  transition={{ duration: 0.8, delay: on ? 0.15 : 0, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  {v.draw}
+                </motion.svg>
+                {isNext && (
+                  <motion.span aria-hidden className="absolute grid size-9 place-items-center rounded-full bg-accent-fill text-on-accent shadow-elev-1" initial={{ scale: 0 }} animate={{ scale: [1, 1.1, 1] }} transition={{ scale: { duration: 2, repeat: Infinity, ease: 'easeInOut' } }}>
+                    <span className="text-[18px] leading-none font-semibold">{i + 1}</span>
+                  </motion.span>
+                )}
+              </span>
+              <motion.h2 className="mt-5 font-serif text-[20px] font-semibold" initial={false} animate={{ opacity: on ? 1 : 0.35 }} transition={{ duration: 0.6 }}>{v.title}</motion.h2>
+              {/* The subtitle waits until you point at the drawing. */}
+              <p className="mt-1.5 h-[3.4rem] max-w-[15rem] text-[14px] leading-relaxed text-ink-soft opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">{on ? v.text : ''}</p>
+            </button>
+          );
+        })}
+      </div>
+      {/* Which one you are on, and which comes next: the current dot stretches into a pill, the next one is ringed. */}
+      <div className="mt-6 flex items-center justify-center gap-2.5" role="tablist" aria-label="Progress">
         {VIGNETTES.map((v, i) => (
-          <motion.div key={v.title} className="flex flex-col items-center text-center" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ ...spring.soft, delay: 0.08 * i }}>
-            <svg viewBox="0 0 72 68" className="h-auto w-[120px] text-ink-soft" aria-hidden>
-              {v.draw}
-            </svg>
-            <h2 className="mt-5 font-serif text-[20px] font-semibold">{v.title}</h2>
-            <p className="mt-1.5 max-w-[15rem] text-[14px] leading-relaxed text-ink-soft">{v.text}</p>
-          </motion.div>
+          <motion.button
+            key={v.title}
+            type="button"
+            role="tab"
+            aria-selected={i === current}
+            aria-label={v.title}
+            layout
+            onClick={() => i < shown && setShown(i + 1)}
+            className={cx('h-2.5 rounded-full', i === current ? 'bg-accent' : i < shown ? 'bg-sage' : i === upcoming ? 'border-2 border-accent/60 bg-transparent' : 'bg-line-strong')}
+            animate={{ width: i === current ? 30 : 10 }}
+            transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+          />
         ))}
       </div>
+      <p className="mt-4 text-center text-[13px] text-ink-faint">{shown === 0 ? 'Click to begin' : shown < last ? 'Click for the next one' : 'That is all of it'}</p>
     </div>
   );
 }
