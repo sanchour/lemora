@@ -226,6 +226,9 @@ export function WelcomePage({ name }: { name: string }) {
 }
 
 /** See what Lingua can do (5.1-2b): three things it does, in one fine line each. */
+/** Hand-drawn 1, 2 and 3 for the sticker on the next drawing. */
+const NUMERALS = ['M16 15L21 11.5V28M16.5 28H25', 'M14.5 16C14.5 9.5 25.5 10 25.5 16C25.5 21 15 25 14.5 28.5H26', 'M14.5 14C17 9.5 25.5 11 25 16C24.5 20 20 20 20 20C26.5 20 26.5 28.5 20 28.5C17 28.5 14.5 27 13.5 24'];
+
 export function AboutPage() {
   // How many of the three things have been shown so far: each click brings in the next one.
   const [shown, setShown] = useState(0);
@@ -276,9 +279,12 @@ export function AboutPage() {
                   {v.draw}
                 </motion.svg>
                 {isNext && (
-                  <motion.span aria-hidden className="absolute grid size-9 place-items-center rounded-full bg-accent-fill text-on-accent shadow-elev-1" initial={{ scale: 0 }} animate={{ scale: [1, 1.1, 1] }} transition={{ scale: { duration: 2, repeat: Infinity, ease: 'easeInOut' } }}>
-                    <span className="text-[18px] leading-none font-semibold">{i + 1}</span>
-                  </motion.span>
+                  <motion.svg aria-hidden viewBox="0 0 40 40" className="absolute size-11 text-ink" initial={{ scale: 0, rotate: -12 }} animate={{ scale: [1, 1.07, 1], rotate: [-3, 3, -3] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}>
+                    {/* A hand-inked sticker: a wobbly orange blob, its pen line nudged off-register, and a pen-drawn numeral. */}
+                    <path d="M20 4C30 3 37 10 36 20C35 31 28 37 19 36C9 35 3 29 4 19C5 10 11 5 20 4Z" fill="var(--accent-fill)" />
+                    <path d="M20 4C30 3 37 10 36 20C35 31 28 37 19 36C9 35 3 29 4 19C5 10 11 5 20 4Z" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" transform="translate(-1 1)" />
+                    <path d={NUMERALS[i]} fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
+                  </motion.svg>
                 )}
               </span>
               <motion.h2 className="mt-5 font-serif text-[20px] font-semibold" initial={false} animate={{ opacity: on ? 1 : 0.35 }} transition={{ duration: 0.6 }}>{v.title}</motion.h2>
