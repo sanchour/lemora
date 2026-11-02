@@ -415,3 +415,9 @@ html[data-motion='reduced'] .plan-max-in {
 .diary-prose li::marker { color: var(--ink-faint); }
 .diary-prose blockquote { border-inline-start: 3px solid var(--sage); padding-inline-start: 1em; color: var(--ink-soft); font-style: italic; }
 .diary-prose p.is-editor-empty:first-child::before { content: attr(data-placeholder); float: inline-start; height: 0; color: var(--ink-faint); pointer-events: none; }
+
+/* Onboarding sits on a slightly warmer cream in Paper mode (#fcf1e1); the sticky footer fade follows via --bg. */
+[data-theme='paper'] .onboarding-surface {
+  --bg: #fcf1e1;
+  background-color: var(--bg);
+}

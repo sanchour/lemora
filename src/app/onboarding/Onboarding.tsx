@@ -160,7 +160,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
               : 'Continue';
 
   return (
-    <div className="flex min-h-dvh flex-col overflow-x-clip">
+    <div className="onboarding-surface flex min-h-dvh flex-col overflow-x-clip">
       <header className={cx('mx-auto flex w-full items-center justify-between gap-4 px-8 pt-6', width)}>
         <Wordmark />
         {replaying ? (
