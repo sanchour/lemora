@@ -44,8 +44,8 @@ function OpenBook() {
           fontSize={13}
           textAnchor="middle"
           className={cx('font-serif', w.accent ? 'fill-accent' : 'fill-current')}
-          initial={{ y: w.y + 5 }}
-          animate={{ y: w.y }}
+          initial={{ y: 5 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.9, delay: 0.6 + i * 0.85, ease: [0.22, 1, 0.36, 1] }}
         >
           {/* Arabic letters join, so that word fades in whole rather than letter by letter. */}
