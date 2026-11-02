@@ -29,7 +29,7 @@ const GROUPS: { key: GroupKey; name: string; blurb: string; has: (l: LanguageInf
 ];
 const groupOf = (l: LanguageInfo) => GROUPS.find((g) => g.has(l))!;
 /** The panel's width, and how much of the map it covers with its margin. */
-const PANEL = 460;
+const PANEL = 340;
 const COVER = PANEL + 12;
 
 /**
@@ -237,7 +237,7 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
                       <section key={g.key} className="mb-2">
                         <h2 className="px-2 pt-1.5 text-[11px] font-bold tracking-[0.08em] text-ink-faint uppercase"><UiText source={g.name} /></h2>
                         <p className="px-2 pb-1 text-[11px] leading-snug text-ink-soft"><UiText source={g.blurb} /></p>
-                        <div className="grid grid-cols-2 gap-x-1">{langs.map((l) => row(l, undefined, true))}</div>
+                        <div className="grid grid-cols-1">{langs.map((l) => row(l, undefined, true))}</div>
                       </section>
                     );
                   })}
