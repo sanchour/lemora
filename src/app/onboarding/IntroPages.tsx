@@ -26,26 +26,36 @@ function OpenBook() {
       <Pen d="M126 46V130" delay={0.4} duration={0.28} fade={0.35} />
       {/* A highlighted word on the left page. */}
       <motion.rect x={64} y={54} width={26} height={8} rx={3} className="fill-accent/25" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.3, delay: 0.85, ease: 'easeOut' }} style={{ transformOrigin: '64px 58px' }} />
-      {/* Lines of text, each one a little different. */}
+      {/* Two plain lines of text on each page, then the book fills with other scripts, written one after the other. */}
       {[
-        { y: 58, l: 'M46 58C62 55 88 56 114 60', r: 'M146 60C170 56 196 55 214 58' },
-        { y: 70, l: 'M46 70C60 67 80 68 114 72', r: 'M146 72C168 68 190 68 214 70' },
-        { y: 82, l: 'M46 82C66 79 90 80 100 82', r: '' },
-        { y: 94, l: 'M46 94C62 91 90 92 114 96', r: '' },
-        { y: 106, l: 'M46 106C60 103 76 104 92 106', r: 'M146 108C170 104 196 104 202 106' },
+        { l: 'M46 58C62 55 88 56 114 60', r: 'M146 60C170 56 196 55 214 58' },
+        { l: 'M46 70C60 67 80 68 114 72', r: 'M146 72C168 68 190 68 214 70' },
       ].map((row, i) => (
-        <g key={row.y}>
+        <g key={i}>
           <Pen d={row.l} delay={0.5 + i * 0.06} duration={0.28} strokeWidth={1} fade={0.5} />
-          {row.r && <Pen d={row.r} delay={0.53 + i * 0.06} duration={0.28} strokeWidth={1} fade={0.5} />}
+          <Pen d={row.r} delay={0.53 + i * 0.06} duration={0.28} strokeWidth={1} fade={0.5} />
         </g>
       ))}
-      {/* The same word in other scripts on the right page: Chinese, Japanese, Latin. */}
-      <g className="text-accent">
-        <Pen d="M158 76V79M151 81H165M154 83Q157 90 164 93M162 83Q159 90 152 93" delay={0.7} duration={0.5} strokeWidth={1.2} />
-        <Pen d="M176 80H186M181 76Q180 88 180 90M176 86Q184 82 186 90Q184 96 178 92" delay={0.8} duration={0.5} strokeWidth={1.2} />
-        <Pen d="M194 93L201 76L208 93M197 87H205" delay={0.9} duration={0.5} strokeWidth={1.2} />
+      {/* Left page: cursive Latin, Chinese, Arabic. */}
+      <g strokeWidth={1.2}>
+        <Pen d="M46 90C48 82 50 80 51 86C52 92 54 90 56 84C58 80 62 82 62 88C62 94 56 94 56 88C56 82 66 80 66 88C66 92 70 92 72 86C74 80 78 84 74 90C72 92 78 94 82 88" delay={0.8} duration={0.7} />
+        <g className="text-accent">
+          <Pen d="M48 96L52 104M51 98V110M55 99H60M58 99V110M55 104H60" delay={1.4} duration={0.5} />
+          <Pen d="M66 98H78M72 98V110M66 103H78M66 109H78" delay={1.6} duration={0.5} />
+        </g>
+        <Pen d="M112 108C104 114 96 102 88 108C82 112 78 104 72 108M92 101h.1M80 101h.1M98 114h.1" delay={1.9} duration={0.7} />
       </g>
-      <Pen d="M46 82C60 80 76 80 100 83M46 94C62 92 78 92 100 95" delay={0.65} duration={0.4} strokeWidth={1} fade={0.5} />
+      {/* Right page: Chinese, Japanese and Latin, then Korean, Cyrillic and Spanish. */}
+      <g className="text-accent">
+        <Pen d="M158 76V79M151 81H165M154 83Q157 90 164 93M162 83Q159 90 152 93" delay={1.0} duration={0.5} strokeWidth={1.2} />
+        <Pen d="M176 80H186M181 76Q180 88 180 90M176 86Q184 82 186 90Q184 96 178 92" delay={1.2} duration={0.5} strokeWidth={1.2} />
+        <Pen d="M194 93L201 76L208 93M197 87H205" delay={1.4} duration={0.5} strokeWidth={1.2} />
+      </g>
+      <g strokeWidth={1.2}>
+        <Pen d="M150 100H158M154 100V104M148 106H160V112H148Z" delay={2.2} duration={0.5} />
+        <Pen d="M170 100V112M164 100L170 106L176 100M164 112L170 106L176 112" delay={2.4} duration={0.5} />
+        <Pen d="M190 100C186 100 186 104 190 105V107M190 111h.1M198 112C200 106 204 104 207 106M202 100C203 101 204 101 206 100" delay={2.6} duration={0.6} />
+      </g>
       {/* A sage sprig tucked into the right page. */}
       <g stroke="#6b8e78">
         <Pen d="M206 122C204 112 208 102 216 96" delay={0.9} duration={0.33} />
@@ -54,17 +64,6 @@ function OpenBook() {
       </g>
       {/* The bookmark ribbon drops from the top. */}
       <motion.path {...LINE} className="text-accent" d="M170 8V46L178 40L186 46V10" initial={{ pathLength: 0, y: -8, opacity: 0 }} animate={{ pathLength: 1, y: 0, opacity: 1 }} transition={{ duration: 0.4, delay: 0.75, ease: 'easeOut' }} />
-      {/* Sparks of language rising from the spine, gently floating. */}
-      {[
-        { x: 112, y: 18, d: 'M104 22L108 14M108 22L116 18', delay: 1.1 },
-        { x: 148, y: 14, d: 'M140 18C144 12 150 12 152 18C154 12 160 12 162 18', delay: 1.2 },
-        { x: 40, y: 20, d: 'M30 20Q30 12 38 12H56Q64 12 64 20V26Q64 34 56 34H46L38 40V34Q30 33 30 26ZM40 23h.1M47 23h.1M54 23h.1', delay: 1.3, t: 'translate(0 -10)' },
-        { x: 200, y: 20, d: 'M196 30Q196 22 204 22H220Q228 22 228 30V34Q228 42 220 42H214L208 48V42Q196 42 196 34ZM204 32L208 28L212 32M216 30H222', delay: 1.4, t: 'translate(0 -22)' },
-      ].map((spark, i) => (
-        <motion.g key={i} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 0.8, y: [0, -3, 0] }} transition={{ opacity: { duration: 0.5, delay: spark.delay }, y: { duration: 3.2, delay: spark.delay + i * 0.3, repeat: Infinity, ease: 'easeInOut' } }}>
-          <path {...LINE} className="text-accent" strokeWidth={1.2} d={spark.d} transform={spark.t} />
-        </motion.g>
-      ))}
     </svg>
   );
 }
@@ -197,6 +196,12 @@ const QUIPS = [
 
 /** Welcome, by name (5.1-2b): one funny line and the open book. */
 export function WelcomePage({ name }: { name: string }) {
+  // The book starts drawing only once the greeting and the quip have settled.
+  const [bookIn, setBookIn] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setBookIn(true), 3000);
+    return () => clearTimeout(t);
+  }, []);
   const translateUi = useUi();
   const who = name.trim() || translateUi('friend');
   const full = translateUi('Welcome, {0}.', [who]);
@@ -209,14 +214,14 @@ export function WelcomePage({ name }: { name: string }) {
     <div className="flex flex-col items-center py-6 text-center">
       <h1 className="flex max-w-2xl items-baseline justify-center font-serif text-[44px] leading-[1.12] font-semibold tracking-tight whitespace-nowrap" aria-label={full}>
         {/* "Welcome" arrives alone and centred; then the name opens up beside it and the two re-centre together. */}
-        <motion.span aria-hidden initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ ...spring.soft, delay: 0.05 }}>{lead}</motion.span>
-        <motion.span aria-hidden className="-my-1 overflow-hidden py-1 whitespace-pre" initial={{ width: 0, opacity: 0 }} animate={{ width: 'auto', opacity: 1 }} transition={{ width: { duration: 0.55, delay: 0.7, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.4, delay: 0.8 } }}>{rest}</motion.span>
+        <motion.span aria-hidden initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}>{lead}</motion.span>
+        <motion.span aria-hidden className="-my-1 overflow-hidden py-1 whitespace-pre" initial={{ width: 0, opacity: 0 }} animate={{ width: 'auto', opacity: 1 }} transition={{ width: { duration: 1.3, delay: 1.5, ease: [0.45, 0, 0.2, 1] }, opacity: { duration: 1.1, delay: 1.7, ease: 'easeOut' } }}>{rest}</motion.span>
       </h1>
-      <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ ...spring.soft, delay: 1.1 }} className="mt-3 max-w-md text-[16.5px] leading-relaxed text-ink-soft italic">
+      <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 2.8, ease: [0.22, 1, 0.36, 1] }} className="mt-3 max-w-md text-[16.5px] leading-relaxed text-ink-soft italic">
         {quip}
       </motion.p>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.55 }} className="mt-10">
-        <OpenBook />
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, ease: 'easeOut' }} className="mt-10 h-[200px]">
+        {bookIn && <OpenBook />}
       </motion.div>
     </div>
   );
