@@ -2517,3 +2517,19 @@ Scope: A1 only, then stop. Reuse the pinned T0 Unicode cache; no new source down
 and production build pass; six desktop size/theme views inspected. Offline reload failed, and the
 browser blocked inspection of its error page. No workaround, merge or deployment; final acceptance
 and F1306 remain open, Codex retains A1. No A2 work.
+
+### A1 completion follow-up · 2026-11-02
+
+The user explicitly asks to diagnose the offline reload and finish A1; the existing Codex A1 claim continues.
+
+- [x] Repeat the clean setup checks on alpha.164 before changes.
+- [ ] Diagnose registration/control using the existing device-lab UI and browser logs before an
+  offline attempt; distinguish a worker failure from the browser's navigation/error-page behavior.
+- [ ] Fix the established cause with a regression check, verify cached A1 data and reload behavior,
+  then update acceptance, release the claim and publish through the protected-main PR. Stop after A1.
+
+**Follow-up outcome:** the existing device lab showed “Offline support Active” on alpha.164, including
+an online reload. The subsequent server-off reload still failed. No service-worker defect was
+established and no runtime code was changed. Safari comparison could not run: native Computer Use
+permissions were not granted. A1 acceptance/F1306 remain open. The user's next request explicitly
+switches to A2; preserve this gap rather than mark A1 complete.
