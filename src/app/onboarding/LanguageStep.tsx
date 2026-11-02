@@ -28,8 +28,6 @@ const GROUPS: { key: GroupKey; name: string; blurb: string; has: (l: LanguageInf
   { key: 'soon', name: 'Coming soon', blurb: 'On their way. Not ready to learn yet.', has: (l) => l.tier !== 1 && !!l.soon },
 ];
 const groupOf = (l: LanguageInfo) => GROUPS.find((g) => g.has(l))!;
-/** How each core language says hello: the first thing its card says to you. */
-const HELLO: Record<string, string> = { es: 'Hola', fr: 'Bonjour', de: 'Hallo', ru: 'Привет', ar: 'مرحبا', zh: '你好' };
 /** The panel's width, and how much of the map it covers with its margin. */
 const PANEL = 460;
 const COVER = PANEL + 12;
@@ -127,10 +125,10 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
         onClick={() => !l.soon && onTarget(l.code)}
         {...hoverProps(l)}
         className={cx(
-          'no-callout inline-flex items-center rounded-full border transition-[transform,background-color,border-color,color] duration-150',
+          'no-callout inline-flex items-center rounded-full border',
           big ? 'h-9 gap-2 pr-3.5 pl-2' : 'h-8 gap-1.5 pr-3 pl-1.5 text-[13px]',
           on ? 'border-accent-fill bg-accent-fill font-semibold text-on-accent shadow-elev-1' : 'border-line bg-raised',
-          l.soon ? 'cursor-default opacity-45' : !on && 'hover:-translate-y-0.5 hover:border-line-strong active:scale-[0.97]',
+          l.soon && 'cursor-default opacity-45',
         )}
       >
         <LanguageFlag lang={l.code} width={big ? 22 : 20} />
@@ -279,20 +277,16 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
               {...hoverProps(l)}
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -6, rotate: i % 2 ? 1.2 : -1.2 }}
-              whileTap={{ scale: 0.97 }}
               transition={{ ...spring.soft, delay: 0.05 * i }}
               className={cx(
                 'no-callout group relative flex min-h-[140px] min-w-0 flex-col items-start overflow-hidden rounded-[20px] border p-4 text-left outline-none',
-                on ? 'border-accent bg-accent-soft shadow-elev-2' : 'border-line bg-raised shadow-elev-1 hover:border-line-strong hover:shadow-elev-2',
+                on ? 'border-accent bg-accent-soft' : 'border-line bg-raised',
               )}
             >
               <span className="flex h-8 items-center"><LanguageFlag lang={l.code} width={34} /></span>
-              {/* "Hello" pops in, small and quiet, in the language itself. */}
-              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="absolute top-3.5 right-3.5 origin-top-right scale-75 rounded-full bg-accent-soft px-2.5 py-0.5 font-serif text-[13px] font-semibold text-accent-text opacity-0 transition-[opacity,transform] duration-200 ease-out group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100">{HELLO[l.code]}</span>
               {/* Its name in itself, and in yours. */}
-              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-auto w-full truncate pt-5 font-serif text-[26px] leading-tight font-semibold">{l.endonym}</span>
-              <span className="mt-0.5 w-full truncate text-[13px] text-ink-soft"><UiText source={l.name} /></span>
+              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-auto w-full pt-5 font-serif text-[24px] leading-tight font-semibold break-words">{l.endonym}</span>
+              <span className="mt-0.5 w-full text-[13px] leading-snug text-ink-soft"><UiText source={l.name} /></span>
               <span className={cx('absolute right-3 bottom-3 grid size-6 place-items-center rounded-full bg-accent-fill text-on-accent transition-all duration-300', on ? 'scale-100' : 'scale-50 opacity-0')}>
                 <Check size={14} strokeWidth={3.2} aria-hidden />
               </span>
@@ -303,12 +297,12 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
 
       {/* The library: every other language on two shelves, the ones you can read in today and the ones still to come. */}
       <div ref={listRef} className="mt-9 scroll-mt-6 pb-6">
-        <button type="button" onClick={() => setLibraryOpen((o) => !o)} aria-expanded={libraryOpen} className="group flex w-full items-center gap-3 rounded-2xl py-1 text-left">
-          <h2 className="font-serif text-[24px] leading-none font-semibold tracking-tight whitespace-nowrap"><UiText source={'The library'} /></h2>
-          <span className="min-w-0 truncate text-[13px] text-ink-soft"><UiText source={'Every other language, shelved by how much Lingua has for it.'} /></span>
-          <span className="ml-auto grid size-8 place-items-center rounded-full border border-line bg-raised text-ink-soft transition-colors group-hover:border-line-strong group-hover:text-ink">
-            <ChevronDown size={17} aria-hidden className={cx('transition-transform duration-300', libraryOpen && 'rotate-180')} />
+        <button type="button" onClick={() => setLibraryOpen((o) => !o)} aria-expanded={libraryOpen} className="group grid w-full grid-cols-[auto_minmax(0,1fr)] items-center gap-x-3.5 gap-y-1 rounded-2xl py-1 text-left">
+          <span className="row-span-2 grid size-9 place-items-center rounded-full border border-line bg-raised text-ink-soft">
+            <ChevronDown size={18} aria-hidden className={cx('transition-transform duration-300', libraryOpen && 'rotate-180')} />
           </span>
+          <h2 className="self-end font-serif text-[24px] leading-none font-semibold tracking-tight whitespace-nowrap"><UiText source={'The library'} /></h2>
+          <span className="self-start text-[13px] text-ink-soft"><UiText source={'Every other language, shelved by how much Lingua has for it.'} /></span>
         </button>
         <AnimatePresence initial={false}>
           {libraryOpen && (
