@@ -159,7 +159,7 @@ interface LevelStepProps {
 }
 
 /** One uneven pen line for the track (and, drawn again on top, for how far you have come). */
-const LINE = 'M2 10C60 6 110 14 170 9C230 5 280 13 340 9C400 5 450 13 510 9C550 7 580 11 598 9';
+const LINE = 'M0 10C60 6 110 14 170 9C230 5 280 13 340 9C400 5 450 13 510 9C550 7 580 11 600 9';
 
 /**
  * How much do you already know (5.1-2b): a quiet slider from A0 to C1, drawn by hand. A sprig grows along one
@@ -218,8 +218,13 @@ export function LevelStep({ lang, level, seedKnown, onLevel, onSeedKnown }: Leve
             {/* The pen line, and the part of it you have travelled in orange. */}
             <svg viewBox="0 0 600 20" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-1/2 h-5 -translate-y-1/2 overflow-visible text-line-strong" aria-hidden>
               <path d={LINE} fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-              <motion.path d={LINE} fill="none" stroke="var(--accent)" strokeWidth={2.4} strokeLinecap="round" vectorEffect="non-scaling-stroke" initial={false} animate={{ pathLength: index / last }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} />
-            </svg>
+              <defs>
+                <clipPath id="level-travelled">
+                  <motion.rect x={-4} y={-10} height={40} initial={false} animate={{ width: 4 + (600 * index) / last }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} />
+                </clipPath>
+              </defs>
+              <path d={LINE} fill="none" stroke="var(--accent)" strokeWidth={2.4} strokeLinecap="round" vectorEffect="non-scaling-stroke" clipPath="url(#level-travelled)" />
+              </svg>
 
             {/* A small drawing on the line for each level. */}
             {LEVELS.map((l, i) => {
