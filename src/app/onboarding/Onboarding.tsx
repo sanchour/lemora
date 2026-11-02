@@ -40,12 +40,6 @@ const ANOTHER: Page[] = ['language', 'level', 'goal'];
 const INTRO = new Set<Page>(['name', 'welcome', 'about']);
 const ORDER: CefrLevel[] = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
-/** The device's language, as a code Lingua knows when it can (Norwegian is nb). */
-function deviceLanguage(): string {
-  const code = (navigator.language || 'en').split('-')[0].toLowerCase();
-  return code === 'no' ? 'nb' : code;
-}
-
 /** The language translations are given in: the first native language Lingua can gloss in, else English. */
 function nativeOf(spoken: Spoken[], target: string | null): string {
   const native = spoken.find((s) => s.level === 'native' && s.code !== target && getLanguage(s.code) && !getLanguage(s.code)?.soon);
@@ -76,7 +70,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const [target, setTarget] = useState<string | null>(replaying ? (active?.id ?? null) : null);
   const [level, setLevel] = useState<Level>('A0');
   const [seedKnown, setSeedKnown] = useState(true);
-  const [spoken, setSpoken] = useState<Spoken[]>(() => [{ code: deviceLanguage(), level: 'native' }]);
+  const [spoken, setSpoken] = useState<Spoken[]>(() => [{ code: 'en', level: 'native' }]);
   const [reasons, setReasons] = useState<LearningReason[] | null>(null);
   const [goal, setGoal] = useState<CefrLevel | null>(null);
   const [minutes, setMinutes] = useState(15);
@@ -198,7 +192,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
               {page === 'about' && <AboutPage />}
               {page === 'language' && <LanguageStep target={target} onTarget={setTarget} />}
               {page === 'level' && target && <LevelStep lang={target} level={level} seedKnown={seedKnown} onLevel={setLevel} onSeedKnown={setSeedKnown} />}
-              {page === 'speak' && <SpeakStep spoken={spoken} target={target} onSpoken={setSpoken} />}
+              {page === 'speak' && <SpeakStep spoken={spoken} target={target} level={level} onSpoken={setSpoken} />}
               {page === 'why' && <WhyStep language={languageName} reasons={reasonsNow} onReasons={setReasons} />}
               {page === 'goal' && <GoalStep level={level} goal={goalNow} minutes={minutes} onGoal={setGoal} onMinutes={setMinutes} />}
               {page === 'light' && settings && <AestheticStep pref={theme} palette={settings.palette} sample={getLanguage(target ?? 'en')?.sample || LANGUAGES[0].sample} lang={target ?? 'en'} />}
