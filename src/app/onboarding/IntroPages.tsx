@@ -1,6 +1,6 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { HandMark } from './HandMark';
 import { cx } from '@/lib/cx';
 
@@ -66,49 +66,208 @@ function OpenBook() {
   );
 }
 
-/** Three small vignettes in the same line: a page you can tap, a deck of cards, headphones and a frame. */
-const VIGNETTES = [
-  {
-    title: 'Read anything',
-    text: 'Books, articles and comics, with every word a tap away.',
-    draw: (
-      <>
-        <rect {...LINE} x={14} y={6} width={44} height={56} rx={4} />
-        {[18, 26, 34, 42, 50].map((y) => (
-          <path key={y} {...LINE} strokeWidth={1} opacity={0.5} d={`M22 ${y}H${y === 34 ? 32 : 50}`} />
-        ))}
-        <rect x={34} y={31} width={16} height={6} rx={2} className="fill-accent/25" />
-        <path {...LINE} className="text-accent" d="M44 40l3 9 2.5-3.5 4.5 4" />
-      </>
-    ),
-  },
-  {
-    title: 'Keep every word',
-    text: 'Your words become cards that come back just in time.',
-    draw: (
-      <>
-        <rect {...LINE} x={22} y={10} width={36} height={48} rx={5} transform="rotate(10 40 34)" opacity={0.45} />
-        <rect {...LINE} x={18} y={10} width={36} height={48} rx={5} transform="rotate(-4 36 34)" />
-        <path {...LINE} strokeWidth={1} d="M26 30H46M28 38H44" opacity={0.55} transform="rotate(-4 36 34)" />
-        <path {...LINE} className="text-accent" d="M30 22l3 3 6-6" transform="rotate(-4 36 34)" />
-      </>
-    ),
-  },
-  {
-    title: 'Listen and watch',
-    text: 'Podcasts, radio, films and shows, with text that follows.',
-    draw: (
-      <>
-        <rect {...LINE} x={30} y={14} width={34} height={26} rx={3} opacity={0.6} />
-        <path {...LINE} strokeWidth={1} d="M43 22v10l8-5z" opacity={0.6} />
-        <path {...LINE} d="M10 48V40C10 28 18 20 28 20S46 28 46 40V48" />
-        <rect {...LINE} x={7} y={44} width={9} height={14} rx={3} />
-        <rect {...LINE} x={40} y={44} width={9} height={14} rx={3} />
-        <path {...LINE} className="text-accent" d="M54 50c3-2 3-6 0-8M58 53c6-4 6-12 0-16" />
-      </>
-    ),
-  },
+/** What the demo words mean (Spanish), looked up by their lower-case form. */
+const GLOSS: Record<string, string> = {
+  el: 'the', café: 'café', de: 'of', la: 'the', esquina: 'corner', abre: 'opens', temprano: 'early', cada: 'every', mañana: 'morning', lucía: 'Lucía (a name)', pide: 'orders',
+  un: 'a', cortado: 'espresso with a dash of milk', y: 'and', lee: 'reads', periódico: 'newspaper', junto: 'next', a: 'to', ventana: 'window',
+  vamos: 'shall we go', al: 'to the', cine: 'cinema', esta: 'this', noche: 'night', sí: 'yes', pero: 'but', primero: 'first', cenamos: 'we have dinner', algo: 'something',
+};
+const PASSAGE = 'El café de la esquina abre temprano. Cada mañana, Lucía pide un cortado y lee el periódico junto a la ventana.';
+const CLIP = [
+  { es: '¿Vamos al cine esta noche?', en: 'Shall we go to the cinema tonight?' },
+  { es: 'Sí, pero primero cenamos algo.', en: 'Yes, but let’s have some dinner first.' },
 ];
+/** The cards already in the demo Thesaurus, before you keep any of your own. */
+const DECK = ['esquina', 'temprano'];
+
+/** A sentence as words (with their punctuation kept beside them) and the spaces between. */
+function tokens(text: string) {
+  return text.split(' ').map((t) => {
+    const m = t.match(/^([¿¡]*)(.+?)([.,!?;:]*)$/u)!;
+    return { pre: m[1], word: m[2], post: m[3], key: m[2].toLowerCase() };
+  });
+}
+
+/** One word you can point at for its meaning, and click to keep. */
+function Word({ word, gloss, kept, spoken, onKeep }: { word: string; gloss?: string; kept?: boolean; spoken?: boolean; onKeep?: () => void }) {
+  return (
+    <span className="group/word relative inline-block">
+      <button
+        type="button"
+        onClick={onKeep}
+        className={cx(
+          '-mx-0.5 cursor-pointer rounded-[5px] px-0.5 transition-colors duration-150',
+          kept ? 'bg-accent/15 text-accent-text' : 'decoration-accent/60 decoration-dotted underline-offset-[6px] hover:bg-sunken hover:underline',
+          spoken === false && 'text-ink-faint',
+        )}
+      >
+        {word}
+      </button>
+      {gloss && (
+        <span role="tooltip" className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 translate-y-1 rounded-lg bg-ink px-2.5 py-1 font-sans text-[12.5px] whitespace-nowrap text-bg opacity-0 shadow-elev-2 transition-[opacity,transform] duration-150 group-hover/word:translate-y-0 group-hover/word:opacity-100">
+          {gloss}
+        </span>
+      )}
+    </span>
+  );
+}
+
+/** Codex: a short text where every word gives its meaning when you point at it; clicking keeps it for Thesaurus. */
+function ReadDemo({ kept, onKeep }: { kept: string[]; onKeep: (key: string) => void }) {
+  return (
+    <div className="mx-auto max-w-2xl text-center">
+      <p lang="es" className="font-serif text-[25px] leading-[1.9]">
+        {tokens(PASSAGE).map((t, i) => (
+          <span key={i}>
+            {t.pre}
+            <Word word={t.word} gloss={GLOSS[t.key]} kept={kept.includes(t.key)} onKeep={() => onKeep(t.key)} />
+            {t.post}{' '}
+          </span>
+        ))}
+      </p>
+      <p className="mt-6 text-[13px] text-ink-faint"><UiText source={'Point at any word for its meaning. Click one to keep it.'} /></p>
+    </div>
+  );
+}
+
+/** Thesaurus: the words you keep become cards; turn one over for its meaning. */
+function WordsDemo({ kept }: { kept: string[] }) {
+  const deck = [...kept.slice().reverse(), ...DECK.filter((k) => !kept.includes(k))].slice(0, 5);
+  const [turned, setTurned] = useState<string | null>(null);
+  return (
+    <div className="text-center">
+      <div className="flex flex-wrap justify-center gap-4" style={{ perspective: 900 }}>
+        {deck.map((k, i) => (
+          <motion.button
+            key={k}
+            type="button"
+            onClick={() => setTurned(turned === k ? null : k)}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0, rotateY: turned === k ? 180 : 0 }}
+            transition={{ duration: 0.5, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -3 }}
+            className="relative h-[132px] w-[150px] cursor-pointer"
+            style={{ transformStyle: 'preserve-3d' }}
+            aria-label={`${k}: ${GLOSS[k]}`}
+          >
+            <span className="absolute inset-0 grid place-items-center rounded-[18px] border border-line bg-raised shadow-elev-1" style={{ backfaceVisibility: 'hidden' }}>
+              <span lang="es" className="font-serif text-[22px] font-semibold">{k}</span>
+              <span className="absolute bottom-3 text-[11px] text-ink-faint">{i < kept.length ? translateDue(0) : translateDue(i + 1)}</span>
+            </span>
+            <span className="absolute inset-0 grid place-items-center rounded-[18px] border border-accent/40 bg-accent/10 px-3" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+              <span className="text-[15px] leading-snug font-semibold text-accent-text">{GLOSS[k]}</span>
+            </span>
+          </motion.button>
+        ))}
+      </div>
+      <p className="mt-6 text-[13px] text-ink-faint"><UiText source={'Click a card to turn it over. Each one comes back just before you would forget it.'} /></p>
+    </div>
+  );
+}
+const translateDue = (days: number) => (days === 0 ? 'New today' : days === 1 ? 'Back tomorrow' : `Back in ${days} days`);
+
+/** Sonus and Visio: a little clip whose subtitles follow along, word by word; every word still gives its meaning. */
+function ListenDemo() {
+  const lines = CLIP.map((l) => ({ ...l, words: tokens(l.es) }));
+  const total = lines.reduce((n, l) => n + l.words.length, 0);
+  const [playing, setPlaying] = useState(false);
+  const [at, setAt] = useState(-1);
+  useEffect(() => {
+    if (!playing) return;
+    const id = setInterval(() => setAt((n) => (n + 1 >= total ? (setPlaying(false), n) : n + 1)), 460);
+    return () => clearInterval(id);
+  }, [playing, total]);
+  let start = 0;
+  const lineIndex = Math.max(0, lines.findIndex((l) => ((start += l.words.length), at < start)));
+  const before = lines.slice(0, lineIndex).reduce((n, l) => n + l.words.length, 0);
+  const line = lines[lineIndex];
+  const play = () => {
+    if (at + 1 >= total) setAt(-1);
+    setPlaying((p) => !p);
+  };
+  return (
+    <div className="flex items-center justify-center gap-10">
+      {/* The screen: a night street, drawn in pen, with a play button. */}
+      <button type="button" onClick={play} aria-label={playing ? 'Pause' : 'Play'} className="group relative aspect-[16/10] w-[300px] shrink-0 cursor-pointer overflow-hidden rounded-[20px] border border-line bg-sunken">
+        <svg viewBox="0 0 160 100" className="absolute inset-0 size-full text-ink-soft" aria-hidden>
+          <path d="M120 22a9 9 0 1 0 8 13a7 7 0 1 1 -8 -13Z" fill="#f6bd8a" stroke="currentColor" strokeWidth={1} />
+          <path {...LINE} d="M0 78H18V58L28 50L38 58V78H50V46H70V78H84V62L96 54L108 62V78H122V52H140V78H160" />
+          <path {...LINE} strokeWidth={1} opacity={0.5} d="M56 54H64M56 62H64M128 60H134M28 64v6" />
+          <path {...LINE} strokeWidth={1} opacity={0.4} d="M0 90C40 86 120 94 160 88" />
+        </svg>
+        <span className="absolute inset-0 grid place-items-center">
+          <span className="grid size-12 place-items-center rounded-full bg-raised/90 text-accent-text shadow-elev-1 transition-transform duration-200 group-hover:scale-105">
+            <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" stroke="currentColor" strokeWidth={1.4} strokeLinejoin="round" aria-hidden>
+              {playing ? <path d="M8 6.5V17.5M16 6.5V17.5" fill="none" strokeWidth={2.4} strokeLinecap="round" /> : <path d="M8.5 6.2C8.5 5.6 9.1 5.2 9.7 5.6L18 11.3C18.5 11.6 18.5 12.4 18 12.7L9.7 18.4C9.1 18.8 8.5 18.4 8.5 17.8Z" />}
+            </svg>
+          </span>
+        </span>
+        <span className="absolute inset-x-0 bottom-0 h-1 bg-line">
+          <motion.span className="block h-full bg-accent" animate={{ width: `${((at + 1) / total) * 100}%` }} transition={{ duration: 0.4, ease: 'linear' }} />
+        </span>
+      </button>
+      {/* The subtitles, filling in as they are spoken, with the English underneath. */}
+      <div className="w-[340px]">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div key={lineIndex} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.25 }}>
+            <p lang="es" className="font-serif text-[24px] leading-snug">
+              {line.words.map((t, i) => (
+                <span key={i} className={cx('transition-colors duration-200', before + i > at && 'text-ink-faint')}>
+                  {t.pre}
+                  <Word word={t.word} gloss={GLOSS[t.key]} />
+                  {t.post}{' '}
+                </span>
+              ))}
+            </p>
+            <p className="mt-2 text-[14px] text-ink-soft">{line.en}</p>
+          </motion.div>
+        </AnimatePresence>
+        <p className="mt-6 text-[13px] text-ink-faint"><UiText source={'Press play. Podcasts, radio, films and shows, with text that follows.'} /></p>
+      </div>
+    </div>
+  );
+}
+
+/** The three rooms in the demo, each with a small pen-drawn icon (24 x 24). */
+const ROOMS = [
+  {
+    id: 'read',
+    name: 'Codex',
+    role: 'Read anything',
+    icon: (
+      <>
+        <path d="M12 6.5C9.5 5 6 4.8 3 5.6V18.6C6 17.8 9.5 18 12 19.5C14.5 18 18 17.8 21 18.6V5.6C18 4.8 14.5 5 12 6.5Z" fill="var(--raised)" />
+        <path d="M12 6.5V19.5" />
+        <path d="M14.5 9.5H18.5M14.5 12.5H17" stroke="var(--accent)" />
+      </>
+    ),
+  },
+  {
+    id: 'words',
+    name: 'Thesaurus',
+    role: 'Keep every word',
+    icon: (
+      <>
+        <rect x={7} y={4} width={12} height={15} rx={2.2} transform="rotate(10 13 11.5)" opacity={0.5} />
+        <rect x={5} y={5} width={12} height={15} rx={2.2} transform="rotate(-5 11 12.5)" fill="var(--raised)" />
+        <path d="M8.5 12.5l2 2 3.5-4" stroke="var(--accent)" transform="rotate(-5 11 12.5)" />
+      </>
+    ),
+  },
+  {
+    id: 'listen',
+    name: 'Sonus & Visio',
+    role: 'Listen and watch',
+    icon: (
+      <>
+        <path d="M4 17V12.5C4 8 7.6 4.5 12 4.5S20 8 20 12.5V17" />
+        <rect x={3} y={14.5} width={4} height={6} rx={1.6} fill="#f6bd8a" />
+        <rect x={17} y={14.5} width={4} height={6} rx={1.6} fill="#f6bd8a" />
+        <path d="M10.5 10.5v4.2l3.6-2.1z" fill="var(--accent)" stroke="var(--accent)" />
+      </>
+    ),
+  },
+] as const;
 
 /** What to call you (5.1-2b): one line, bookish and minimal. Enter moves on. */
 export function NamePage({ name, onName, onEnter }: { name: string; onName: (name: string) => void; onEnter: () => void }) {
@@ -218,7 +377,7 @@ export function WelcomePage({ name }: { name: string }) {
   );
 }
 
-/** See what Lingua can do (5.1-2b): three things it does, in one fine line each. */
+/** See what Lingua can do (5.1-2b): a small demo of three rooms, Codex, Thesaurus and Sonus & Visio, to try right here. */
 export function AboutPage() {
   const translateUi = useUi();
   // "See what Lingua can do": the name becomes the wordmark, in the sentence at the same size.
@@ -227,12 +386,9 @@ export function AboutPage() {
   const hasName = at >= 0;
   const pre = hasName ? title.slice(0, at) : title;
   const post = hasName ? title.slice(at + 'Lingua'.length) : '';
-  // How many of the three things have been shown so far: each click brings in the next one.
-  const [shown, setShown] = useState(0);
-  const last = VIGNETTES.length;
-  const advance = () => setShown((n) => Math.min(last, n + 1));
-  const current = shown - 1; // the one you are on
-  const upcoming = shown < last ? shown : -1; // and the one that comes next
+  const [room, setRoom] = useState<(typeof ROOMS)[number]['id']>('read');
+  const [kept, setKept] = useState<string[]>([]);
+  const keep = (key: string) => setKept((k) => (k.includes(key) ? k.filter((x) => x !== key) : [...k, key]));
   return (
     <div className="py-6">
       <h1 className="text-center font-serif text-[36px] leading-tight font-semibold tracking-tight">
@@ -248,78 +404,40 @@ export function AboutPage() {
         ) : null}
         {post}
       </h1>
-      <p className="mt-2 text-center text-[16px] text-ink-soft"><UiText source={'Learn a language by living in it. Three things, done well.'} /></p>
-      <div className="mt-12 grid grid-cols-3 gap-8">
-        {VIGNETTES.map((v, i) => {
-          const on = i < shown;
-          const isNext = i === upcoming;
+      <p className="mt-2 text-center text-[16px] text-ink-soft"><UiText source={'Learn a language by living in it. Try it here, in Spanish.'} /></p>
+      {/* The three rooms, as tabs with a hand-drawn line under the one you are in. */}
+      <div role="tablist" aria-label={translateUi('What Lingua can do')} className="mt-10 flex justify-center gap-3">
+        {ROOMS.map((r) => {
+          const on = room === r.id;
           return (
-            <button
-              key={v.title}
-              type="button"
-              onClick={() => (on ? setShown(i + 1) : isNext && advance())}
-              disabled={!on && !isNext}
-              aria-label={v.title}
-              className="group relative flex cursor-pointer flex-col items-center rounded-[28px] px-4 pt-6 pb-5 text-center outline-none disabled:cursor-default"
-            >
-              {/* The stage the drawing lands on: a quiet dashed ring until its turn, then a soft disc. */}
-              <span className="relative grid size-[168px] place-items-center">
-                <motion.span
-                  aria-hidden
-                  className="absolute inset-0 rounded-full border-2 border-dashed border-line-strong"
-                  animate={{ opacity: on ? 0 : isNext ? 1 : 0.45, scale: on ? 1.08 : 1 }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                />
-                <motion.span
-                  aria-hidden
-                  className={cx('absolute inset-0 rounded-full bg-raised shadow-elev-1 transition-colors duration-500', i === current ? 'ring-2 ring-accent/40' : 'ring-1 ring-line')}
-                  initial={false}
-                  animate={{ opacity: on ? 1 : 0, scale: on ? 1 : 0.7 }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                />
-                <motion.svg
-                  viewBox="0 0 72 68"
-                  className="relative h-auto w-[116px] text-ink-soft"
-                  aria-hidden
-                  initial={false}
-                  animate={{ opacity: on ? 1 : 0, scale: on ? 1 : 0.8, y: on ? 0 : 10, rotate: on ? 0 : -4 }}
-                  transition={{ duration: 0.8, delay: on ? 0.15 : 0, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  {v.draw}
-                </motion.svg>
-                {isNext && (
-                  <motion.svg aria-hidden viewBox="0 0 32 32" className="absolute size-9 text-ink-soft" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: 'easeOut' }}>
-                    {/* A small pen-drawn pointing hand with a tap mark, still until you use it. */}
-                    <path d="M13 16V8.2C13 6.4 16 6.4 16 8.2V14.5C16 13 19 13 19 14.6C19 13.6 22 13.6 22 15.2C22 14.4 24.6 14.6 24.6 16.4V20.4C24.6 24 22 26.5 18.8 26.5H16.4C14.6 26.5 13.6 25.6 12.2 24L8.4 19.6C7.6 18.6 8.8 17.4 10 18.2L13 20.4" fill="var(--raised)" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M10.2 5.2C11.8 3.2 17.2 3.2 18.8 5.2" fill="none" stroke="var(--accent)" strokeWidth={1.4} strokeLinecap="round" />
-                  </motion.svg>
-                )}
+            <button key={r.id} type="button" role="tab" aria-selected={on} onClick={() => setRoom(r.id)} className={cx('relative flex items-center gap-3 rounded-2xl px-4 py-2.5 text-left transition-colors', on ? 'text-ink' : 'text-ink-faint hover:text-ink-soft')}>
+              <svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                {r.icon}
+              </svg>
+              <span>
+                <span className="block font-serif text-[17px] leading-tight font-semibold">{r.name}</span>
+                <span className="block text-[12.5px]"><UiText source={r.role} /></span>
               </span>
-              <motion.h2 className="mt-5 font-serif text-[20px] font-semibold" initial={false} animate={{ opacity: on ? 1 : 0.35 }} transition={{ duration: 0.6 }}>{v.title}</motion.h2>
-              {/* The subtitle waits until you point at the drawing. */}
-              <p className="mt-1.5 h-[3.4rem] max-w-[15rem] text-[14px] leading-relaxed text-ink-soft opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">{on ? v.text : ''}</p>
+              {on && (
+                <motion.svg layoutId="room-line" viewBox="0 0 120 8" preserveAspectRatio="none" className="absolute inset-x-4 -bottom-1 h-2 text-accent" aria-hidden transition={{ type: 'spring', stiffness: 380, damping: 34 }}>
+                  <path d="M2 5C30 2 60 7 90 4C100 3 110 5 118 4" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+                </motion.svg>
+              )}
             </button>
           );
         })}
       </div>
-      {/* Which one you are on, and which comes next: the current dot stretches into a pill, the next one is ringed. */}
-      <div className="mt-6 flex items-center justify-center gap-2.5" role="tablist" aria-label="Progress">
-        {VIGNETTES.map((v, i) => (
-          <motion.button
-            key={v.title}
-            type="button"
-            role="tab"
-            aria-selected={i === current}
-            aria-label={v.title}
-            layout
-            onClick={() => i < shown && setShown(i + 1)}
-            className={cx('h-2.5 rounded-full', i === current ? 'bg-accent' : i < shown ? 'bg-sage' : i === upcoming ? 'border-2 border-accent/60 bg-transparent' : 'bg-line-strong')}
-            animate={{ width: i === current ? 30 : 10 }}
-            transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-          />
-        ))}
+      {/* The demo itself. */}
+      <div className="mt-6 grid min-h-[300px] place-items-center rounded-[28px] border border-line bg-raised/60 px-10 py-12">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div key={room} className="w-full" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}>
+            {room === 'read' && <ReadDemo kept={kept} onKeep={keep} />}
+            {room === 'words' && <WordsDemo kept={kept} />}
+            {room === 'listen' && <ListenDemo />}
+          </motion.div>
+        </AnimatePresence>
       </div>
-      <p className="mt-4 text-center text-[13px] text-ink-faint">{shown === 0 ? 'Click to begin' : shown < last ? 'Click for the next one' : 'That is all of it'}</p>
+      <p className="mt-4 text-center text-[13px] text-ink-faint"><UiText source={'Just a taste: the real rooms work in your language, with your own books, shows and songs.'} /></p>
     </div>
   );
 }
