@@ -68,17 +68,17 @@ function OpenBook() {
 
 /** What the demo words mean (Spanish), looked up by their lower-case form. */
 const GLOSS: Record<string, string> = {
-  el: 'the', café: 'café', de: 'of', la: 'the', esquina: 'corner', abre: 'opens', temprano: 'early', cada: 'every', mañana: 'morning', lucía: 'Lucía (a name)', pide: 'orders',
-  un: 'a', cortado: 'espresso with a dash of milk', y: 'and', lee: 'reads', periódico: 'newspaper', junto: 'next', a: 'to', ventana: 'window',
+  hola: 'hello', me: 'myself', llamo: 'I am called', lucía: 'Lucía (a name)', vivo: 'I live', en: 'in', una: 'a', casa: 'house', pequeña: 'small', y: 'and', tomo: 'I have, I drink',
+  café: 'coffee', con: 'with', pan: 'bread', cada: 'every', mañana: 'morning',
   vamos: 'shall we go', al: 'to the', cine: 'cinema', esta: 'this', noche: 'night', sí: 'yes', pero: 'but', primero: 'first', cenamos: 'we have dinner', algo: 'something',
 };
-const PASSAGE = 'El café de la esquina abre temprano. Cada mañana, Lucía pide un cortado y lee el periódico junto a la ventana.';
+const PASSAGE = 'Hola, me llamo Lucía. Vivo en una casa pequeña y tomo café con pan cada mañana.';
 const CLIP = [
   { es: '¿Vamos al cine esta noche?', en: 'Shall we go to the cinema tonight?' },
   { es: 'Sí, pero primero cenamos algo.', en: 'Yes, but let’s have some dinner first.' },
 ];
 /** The cards already in the demo Thesaurus, before you keep any of your own. */
-const DECK = ['esquina', 'temprano', 'ventana', 'periódico', 'cortado'];
+const DECK = ['hola', 'casa', 'café', 'pan', 'mañana'];
 
 /** A sentence as words (with their punctuation kept beside them) and the spaces between. */
 function tokens(text: string) {
@@ -304,6 +304,8 @@ const ROOMS = [
   },
 ] as const;
 export const ROOM_COUNT = ROOMS.length;
+/** What the Next button promises after the room you are in: the next room's name, then the next page. */
+export const roomNextLabel = (room: number) => ROOMS[room + 1]?.role ?? null;
 
 /** What to call you (5.1-2b): one line, bookish and minimal. Enter moves on. */
 export function NamePage({ name, onName, onEnter }: { name: string; onName: (name: string) => void; onEnter: () => void }) {

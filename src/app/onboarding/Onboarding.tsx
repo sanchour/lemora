@@ -23,7 +23,7 @@ import { cx } from '@/lib/cx';
 import { AestheticStep } from './AestheticStep';
 import { enjoymentsFor } from './EnjoyStep';
 import { defaultGoal, GoalStep } from './GoalStep';
-import { AboutPage, NamePage, ROOM_COUNT, WelcomePage } from './IntroPages';
+import { AboutPage, NamePage, ROOM_COUNT, roomNextLabel, WelcomePage } from './IntroPages';
 import { LanguageStep } from './LanguageStep';
 import { LevelStep } from './LevelStep';
 import { FIRST } from './pages';
@@ -166,7 +166,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
       : page === 'welcome'
         ? 'Show me around'
         : page === 'about'
-          ? 'Choose a language'
+          ? (roomNextLabel(room) ?? 'Choose a language')
           : page === 'language' && target
             ? { source: 'Continue with {0}', values: [getLanguage(target)?.endonym ?? target] }
             : index === pages.length - 1
