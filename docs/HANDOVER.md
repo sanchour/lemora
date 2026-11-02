@@ -329,3 +329,10 @@ no clean-console/full-A2 acceptance, no audit ticks or A2.2 implementation. Thre
 files now cached successfully, within 25 MB; source hashes updated. Codex retains A2; A1 offline gap
 remains open. Next only after this blocker is resolved/authorized: remaining schemes and controls.
 No main merge/deployment. No screen reader/native review, live playback or real AI/microphone.
+
+**Codex A2 transition stop resolved after the user's continuation, 2026-11-02:** observe the native
+ready promise at both existing theme/language transition callers. Expected AbortError cancellation
+is handled locally; other failures remain reported. Typecheck, 1,640 tests/one skipped and build
+pass; ordinary rebuilt-browser theme and Russian/Arabic switches completed with an empty warn/error
+log in that tab. [Evidence and scope](6-23-A2-VERIFICATION.md). No A2 audit ticks; continue remaining
+named schemes and per-surface controls under the existing Codex claim. A1 offline gap remains.

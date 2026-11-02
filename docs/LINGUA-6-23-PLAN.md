@@ -237,3 +237,10 @@ become generated drills, move into Grammatica topics, or are deleted when a deep
 
 Everything hand-written goes into `docs/review/6-23-<language>.md` the day it is written (the item, the claim, the source). Nothing is marked
 "checked" in the app until a reviewer has marked it. The existing Marks items are moved into those files first, as the plan's first content push.
+
+**Codex A2 transition stop resolved after the user's continuation, 2026-11-02:** observe the native
+ready promise at both existing theme/language transition callers. Expected AbortError cancellation
+is handled locally; other failures remain reported. Typecheck, 1,640 tests/one skipped and build
+pass; ordinary rebuilt-browser theme and Russian/Arabic switches completed with an empty warn/error
+log in that tab. [Evidence and scope](6-23-A2-VERIFICATION.md). No A2 audit ticks; continue remaining
+named schemes and per-surface controls under the existing Codex claim. A1 offline gap remains.

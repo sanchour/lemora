@@ -1,3 +1,4 @@
+import { startVisualTransition } from '@/design/viewTransition';
 import { switchLanguage } from '@/data/languages';
 import { motionIsReduced } from '@/design/motionPref';
 
@@ -36,7 +37,7 @@ export async function switchLanguageSmoothly(id: string, beforeSwitch?: () => vo
   }
   root.dataset.transition = 'language';
   try {
-    await document.startViewTransition(apply).finished;
+    await startVisualTransition(apply).finished;
   } catch {
     // A skipped transition still switched the language.
   } finally {

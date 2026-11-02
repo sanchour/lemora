@@ -2145,3 +2145,11 @@ The browser logged two skipped ViewTransition AbortErrors; theme.ts/languageSwit
 from main and the exact caller is not established. Under the user's explicit stop rule, record the
 log and leave A2 claimed, without changing shared transition code or disabling motion to hide it.
 The approved pack/download and desktop checks are recorded in 6-23-A2-VERIFICATION.md.
+
+## 2026-11-02 · Expected View Transition cancellation belongs at its API boundary
+
+Both callers now share startVisualTransition. Attach ready's rejection handler immediately, accepting
+only DOMException AbortError; report unexpected animation failures and preserve the native transition
+and callback promises. This follows CSS View Transitions §6.2, avoids a global suppression handler,
+and retains the user's motion preference. Forced-cancellation/update-error regressions and ordinary
+browser theme/language changes pass; A2 can continue without claiming A1's offline gap was fixed.

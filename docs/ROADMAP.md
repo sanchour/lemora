@@ -2572,3 +2572,25 @@ No runtime code changed. Setup: typecheck, 1,637 tests/one skipped and productio
 files are unchanged from main; the exact caller is not established. Follow the user's stop rule;
 no shared transition fix, motion workaround, clean-console claim or A2.2 implementation. Keep A2
 claimed and its audit entries open. A1's offline acceptance remains unresolved separately.
+
+### A2 continuation · resolve transition cancellation first · Codex · 2026-11-02
+
+The user asked to continue after the alpha.168 stop. Diagnose and repair the local transition
+promise handling, not global error handling or motion settings; retain A1's separate offline gap.
+The clean implementation baseline passed typecheck, 1,637 tests and build in the immediately
+preceding follow-up; alpha.168 added only docs/version metadata and GitHub Checks passed.
+
+- [x] Handle expected ready-promise cancellation once at the two existing transition call sites;
+  retain visible unexpected errors and the original update callback/transition object.
+- [x] Regression-check cancellation, genuine failure reporting and callback completion; run all
+  required checks, then repeat ordinary theme/language switches in a fresh browser tab.
+- [x] Publish the checked repair alone; continue A2's remaining named schemes in checked slices.
+
+**Transition repair outcome:** both existing callers now use startVisualTransition, which attaches a
+handler to ready immediately. Only DOMException AbortError (replaced/skipped animation) is accepted;
+unexpected animation failures still reach console.error, and the native callback/finished object
+is preserved. Typecheck, 251 files/1,640 tests passing/one skipped and production build pass. Rebuilt
+main asset confirmed in a fresh tab; theme changes and Russian→Arabic→Russian switching completed,
+with preserved Russian settings and no warn/error log entries in that tab. Existing full desktop
+A2.1 render checks remain recorded at alpha.168; no new UI layout or motion preference was changed.
+The previous transition stop is resolved for continuing A2, not A1's separate offline gap.

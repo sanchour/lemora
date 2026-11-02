@@ -1,3 +1,4 @@
+import { startVisualTransition } from '@/design/viewTransition';
 import { useLayoutEffect } from 'react';
 import { useMediaQuery } from '@/design/hooks/useMediaQuery';
 import type { Settings, Theme, ThemePref } from '@/data/settings';
@@ -44,7 +45,7 @@ export function useThemeController(pref: ThemePref | undefined, palettes?: Setti
     if (root.dataset.theme === theme && root.dataset.palette === palette) return;
     const reduceMotion = motionIsReduced();
     if (typeof document.startViewTransition === 'function' && !reduceMotion && document.visibilityState === 'visible') {
-      document.startViewTransition(() => applyTheme(theme, palette));
+      startVisualTransition(() => applyTheme(theme, palette));
     } else {
       applyTheme(theme, palette);
     }

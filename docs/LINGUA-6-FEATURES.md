@@ -2160,3 +2160,10 @@ Other named schemes, per-surface choices, position/reveal controls and lesson-ba
 and all three desktop sizes/themes were observed; Arabic interface/RTL text was also inspected.
 Two shared-transition AbortErrors stopped further implementation; [exact scope/evidence](6-23-A2-VERIFICATION.md).
 F1298/F1300/F1301/F1371 stay unticked. No full-A2 or clean-console acceptance.
+
+**Codex A2 transition stop resolved after the user's continuation, 2026-11-02:** observe the native
+ready promise at both existing theme/language transition callers. Expected AbortError cancellation
+is handled locally; other failures remain reported. Typecheck, 1,640 tests/one skipped and build
+pass; ordinary rebuilt-browser theme and Russian/Arabic switches completed with an empty warn/error
+log in that tab. [Evidence and scope](6-23-A2-VERIFICATION.md). No A2 audit ticks; continue remaining
+named schemes and per-surface controls under the existing Codex claim. A1 offline gap remains.

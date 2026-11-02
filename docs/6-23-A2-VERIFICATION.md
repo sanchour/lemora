@@ -61,3 +61,22 @@ Not verified: screen readers, native linguistic/standards review, clipboard roun
 playback, real AI/microphone, installed-PWA offline launch, or A1's offline reload gap. No main merge,
 deployment or new step claim. Next: resolve/authorize the shared transition-log blocker, then continue
 A2; preserve the claim and all stated gaps.
+
+## Transition repair after explicit continuation · 2026-11-02
+
+The user asked to continue after this stop. Both startViewTransition callers left ready unhandled;
+CSS View Transitions §6.2 states that ready is created immediately and a skipped transition rejects
+it, even when the update succeeds. [Primary API contract](https://www.w3.org/TR/css-view-transitions-1/#viewtransition).
+Both call sites now use a small local startVisualTransition helper which observes ready immediately:
+only a DOMException named AbortError is accepted; other ready failures are reported. The callback,
+returned native transition and updateCallbackDone/finished promises remain unchanged. No global
+error handler, motion disablement, state rewrite or data deletion was introduced.
+
+Typecheck, 251 files/1,640 tests passing/one skipped and production build pass. Tests force the
+pre-update cancellation which ordinary sequential clicks did not reproduce reliably, preserve the
+single update/result and assert unexpected failures are reported and failed updates still reject.
+In a fresh local browser tab with the rebuilt main asset, ordinary Paper/Nocturne changes and
+Russian→Arabic→Russian navigation completed; the Russian scheme persisted, and its warn/error log
+was empty. [Repair browser screenshot](verification/6-23-a2-transition-repair.png). This is a scoped
+browser recheck, not a second full layout matrix. Continue A2; retain A1's separate offline gap and
+the remaining scheme/surface/review limits above.
