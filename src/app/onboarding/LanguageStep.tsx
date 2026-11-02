@@ -287,7 +287,7 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
             >
               <span className="flex h-8 items-center"><LanguageFlag lang={l.code} width={34} /></span>
               {/* Its name in itself, and in yours. */}
-              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-auto w-full pt-5 font-serif text-[24px] leading-tight font-semibold break-words">{l.endonym}</span>
+              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-auto w-full pt-5 font-serif text-[clamp(18px,1.7vw,23px)] leading-tight font-semibold break-words">{l.endonym}</span>
               <span className="mt-0.5 w-full text-[13px] leading-snug text-ink-soft"><UiText source={l.name} /></span>
               <span className={cx('absolute right-3 bottom-3 grid size-6 place-items-center rounded-full bg-accent-fill text-on-accent transition-all duration-300', on ? 'scale-100' : 'scale-50 opacity-0')}>
                 <Check size={14} strokeWidth={3.2} aria-hidden />
@@ -299,13 +299,13 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
 
       {/* The library: every other language on two shelves, the ones you can read in today and the ones still to come. */}
       <div ref={listRef} className="mt-9 scroll-mt-6 pb-6">
-        <button type="button" onClick={() => setLibraryOpen((o) => !o)} aria-expanded={libraryOpen} className="group grid w-full grid-cols-[auto_minmax(0,1fr)] items-center gap-x-3.5 gap-y-1 rounded-2xl py-1 text-left">
-          <span className="row-span-2 grid size-9 place-items-center rounded-full border border-line bg-raised text-ink-soft">
-            <ChevronDown size={18} aria-hidden className={cx('transition-transform duration-300', libraryOpen && 'rotate-180')} />
-          </span>
-          <h2 className="self-end font-serif text-[24px] leading-none font-semibold tracking-tight whitespace-nowrap"><UiText source={'The library'} /></h2>
-          <span className="self-start text-[13px] text-ink-soft"><UiText source={'Every other language, shelved by how much Lingua has for it.'} /></span>
-        </button>
+        <div className="flex items-center gap-3">
+          <button type="button" onClick={() => setLibraryOpen((o) => !o)} aria-expanded={libraryOpen} className="group flex shrink-0 items-center gap-1.5 rounded-lg text-left">
+            <h2 className="font-serif text-[28px] leading-none font-semibold tracking-tight whitespace-nowrap"><UiText source={'Language library'} /></h2>
+            <ChevronDown size={22} aria-hidden className={cx('mt-1 text-ink-faint transition-[transform,color] duration-300 group-hover:text-ink', libraryOpen && 'rotate-180')} />
+          </button>
+          <span className="min-w-0 flex-1 truncate text-[13px] text-ink-soft"><UiText source={'Every other language, shelved by how much Lingua has for it.'} /></span>
+        </div>
         <AnimatePresence initial={false}>
           {libraryOpen && (
             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} className="overflow-hidden">
