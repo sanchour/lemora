@@ -1,7 +1,7 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import { LogoMark } from '@/app/shells/Wordmark';
+import { HandLogo } from './HandLogo';
 import { spring } from '@/design/motion';
 
 /** The fine line drawings' shared stroke. */
@@ -75,7 +75,7 @@ export function NamePage({ name, onName, onEnter }: { name: string; onName: (nam
   useEffect(() => input.current?.focus(), []);
   return (
     <div className="flex flex-col items-center py-6 text-center">
-      <LogoMark size={48} />
+      <HandLogo className="h-20 w-auto text-ink" />
       <h1 className="mt-6 font-serif text-[40px] leading-[1.15] font-semibold tracking-tight"><span className="not-italic"><UiText source={'First things first.'} /></span></h1>
       <p className="mt-2 text-[16.5px] text-ink-soft"><UiText source={'What should we call you?'} /></p>
       <input

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
-import { HandLogo } from './HandLogo';
+import { Wordmark } from '@/app/shells/Wordmark';
 import { getLanguage, LANGUAGES } from '@/core/lang/languages';
 import type { Level } from '@/core/lang/levels';
 import { codeForLanguage } from '@/core/parsers/notion';
@@ -162,7 +162,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   return (
     <div className="onboarding-surface flex min-h-dvh flex-col overflow-x-clip">
       <header className={cx('mx-auto flex w-full items-center justify-between gap-4 px-8 pt-6', width)}>
-        <HandLogo className="h-14 w-auto text-ink" />
+        <Wordmark />
         {replaying ? (
           <Button variant="secondary" size="sm" onClick={cancel} className="mr-auto"><UiText source={'Leave the replay {0}'} values={[<kbd className="ml-1 font-sans text-[11px] opacity-60"><UiText source={'Esc'} /></kbd>]} /></Button>
         ) : (
