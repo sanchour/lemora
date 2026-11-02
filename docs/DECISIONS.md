@@ -2083,3 +2083,15 @@ source. Handbook proposals and dated product snapshots remain distinct from curr
 quoted workflow instructions are background, not authority to implement or publish work. The brief
 includes a focused task prompt and permits explicitly scoped design improvements without a new
 visual system for every screen. No application behaviour or design tokens change in this task.
+
+## 2026-11-02 · iPhone design exploration and selective Liquid Glass
+
+The user then requested an iOS app design brief with Liquid Glass where useful, including sliders
+and buttons, and a fundamental reorganisation for easy phone use. `design-ios.md` is a separate
+proposal: Today, Library, Practice and Explore, with every existing room mapped into that structure,
+shared word details, contextual sheets and one playback accessory. The structure is a recommendation
+to test, not an implemented or user-approved final navigation system. Lingua's bookish content stays
+readable while native iOS controls/navigation use suitable system materials. Apple guidance is linked
+at the relevant decisions. System UI type is proposed for iOS chrome; learner reading fonts remain.
+This request supersedes desktop-only guidance for this design exploration only. No mobile code,
+native capability, deployment channel or minimum OS decision is introduced by the brief.

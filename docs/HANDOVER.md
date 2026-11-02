@@ -11,6 +11,17 @@ Last updated 2026-10-27 (Lingua 6 · Features is step 23, next after 21; Lingua 
 
 ## Stitch design context · 2026-11-02
 
+- [x] Created [design-ios.md](../design-ios.md) after the user explicitly requested a phone-specific
+  iOS app proposal, appropriate Liquid Glass buttons/sliders and a new organisation. It proposes
+  Today, Library, Practice and Explore; maps all current rooms; specifies touch flows, sheets,
+  keyboard/interruption handling, adaptive materials and accessibility; and includes a Stitch
+  prompt with seven connected screen targets. The phone proposal is authorised separately from
+  the desktop-only implementation rule. No native app or proposed capability is claimed built.
+  Apple guidance and local links/colour values were checked; after merging current main, typecheck,
+  1,607 tests (one skipped; one worker) and production build pass. Version: `0.6.0-alpha.160` through a
+  protected-main PR. Next: prototype the brief in Stitch and validate the navigation and native
+  controls on an iPhone. No iOS implementation, device test or generated Stitch output evaluated.
+
 - [x] Created [root design.md](../design.md) for the user's work with Stitch: the handbook's design
   principles, current tokens and desktop navigation, typography, patterns, room guidance, states,
   accessibility and a reusable task prompt. Linked from the design plan and feature specifications.

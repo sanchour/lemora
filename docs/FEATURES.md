@@ -6,6 +6,8 @@ popovers and drawers; every motion a transform/opacity spring (see `PERFORMANCE.
 
 For visual redesigns with Stitch, [design.md](../design.md) is the handbook-based design brief:
 desktop layout, tokens, typography, room patterns and states. It is design context, not a new learner feature.
+The separate [iOS brief](../design-ios.md) proposes phone navigation and appropriate Liquid Glass
+controls; its layouts and native capabilities are design proposals, not implemented features.
 
 ---
 
