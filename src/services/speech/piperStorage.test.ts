@@ -1,0 +1,23 @@
+import { afterEach, expect, it, vi } from 'vitest';
+import { useUI } from '@/state/ui';
+import { piperModelUrl } from '@/core/audio/piper';
+vi.mock('@/workers/piper.worker?worker', () => ({ default: vi.fn() }));
+vi.mock('./voice', () => ({ resetSpeakers: vi.fn() }));
+import { removePiperVoice, storedPiperVoices } from './piper';
+afterEach(() => { vi.unstubAllGlobals(); useUI.setState({ toasts: [] }); });
+it('counts exact cached bytes and restores both voice files without a request or replacing newer data', async () => {
+  const id = 'es_ES-davefx-medium';
+  const model = piperModelUrl(id, 'onnx'), config = piperModelUrl(id, 'onnx.json');
+  const rows = new Map([[model, new Response('model')], [config, new Response('{}')]]);
+  const cache = { keys: async () => [...rows.keys()].map((url) => new Request(url)), match: async (url: string) => rows.get(url)?.clone(), put: async (url: string, response: Response) => { rows.set(url, response); }, delete: async (url: string) => rows.delete(url) };
+  vi.stubGlobal('caches', { open: async () => cache });
+  const network = vi.fn(); vi.stubGlobal('fetch', network);
+  expect(await storedPiperVoices()).toEqual([{ id, bytes: 7 }]);
+  await removePiperVoice(id); expect(rows.size).toBe(0);
+  rows.set(model, new Response('new model'));
+  useUI.getState().toasts.find((t) => t.action)?.action?.onClick();
+  await vi.waitFor(() => expect(rows.size).toBe(2));
+  expect(await rows.get(model)?.clone().text()).toBe('new model');
+  expect(await rows.get(config)?.clone().text()).toBe('{}');
+  expect(network).not.toHaveBeenCalled();
+});

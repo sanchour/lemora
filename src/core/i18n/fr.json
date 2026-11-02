@@ -7363,5 +7363,21 @@
   "Opacity": "Opacité",
   "All Corners": "Tous les coins",
   "Shadow": "Ombre",
-  "Custom": "Personnalisé"
+  "Custom": "Personnalisé",
+  "Dismiss recovery message": "Fermer le message de récupération",
+  "Language pack: {0}": "Pack de langue : {0}",
+  "Full dictionary: {0}": "Dictionnaire complet : {0}",
+  "{0} offline words": "{0} mots hors ligne",
+  "Downloaded voice: {0}": "Voix téléchargée : {0}",
+  "Downloaded resources": "Ressources téléchargées",
+  "Remove only downloaded packs, dictionaries or voices. Your words, cards and progress stay. Undo does not download anything.": "Supprimez uniquement les packs, dictionnaires ou voix téléchargés. Vos mots, cartes et progrès restent. Annuler ne télécharge rien.",
+  "Some downloaded resources could not be listed. Try opening this page again.": "Certaines ressources téléchargées ne peuvent pas être affichées. Rouvrez cette page.",
+  "No downloaded packs, dictionaries or voices on this device.": "Aucun pack, dictionnaire ou voix téléchargé sur cet appareil.",
+  "The download goes; your learning stays. Use Undo in the message before dismissing it or reloading the app.": "Le téléchargement est supprimé ; votre apprentissage reste. Utilisez Annuler dans le message avant de le fermer ou de recharger l’application.",
+  "Removed. Undo lasts until your next removal, dismissal or app reload.": "Supprimé. Annuler reste disponible jusqu’à la prochaine suppression, la fermeture du message ou le rechargement de l’application.",
+  "Restored.": "Restauré.",
+  "Could not restore this content.": "Impossible de restaurer ce contenu.",
+  "Undo stopped because this content changed again. Your newer changes were kept.": "Annulation interrompue car ce contenu a encore changé. Vos modifications récentes ont été conservées.",
+  "Wait for the language pack to finish installing.": "Attendez la fin de l’installation du pack de langue.",
+  "Wait for the dictionary to finish installing.": "Attendez la fin de l’installation du dictionnaire."
 }

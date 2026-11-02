@@ -1,12 +1,12 @@
-import { UiText, UiMessageText } from '@/design/i18n/UiText';
-import { useEffect } from 'react';
+import { UiText, UiMessageText, useUi } from '@/design/i18n/UiText';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'motion/react';
-import { CircleCheck, TriangleAlert } from 'lucide-react';
+import { CircleCheck, TriangleAlert, X } from 'lucide-react';
 import { useLayout } from '@/design/hooks/useLayout';
 import { usePortalRoot } from '@/design/hooks/usePortalRoot';
 import { spring } from '@/design/motion';
-import { useUI } from '@/state/ui';
+import { toast as notify, useUI } from '@/state/ui';
 import type { ToastItem } from '@/state/ui';
 
 export function Toaster() {
@@ -31,6 +31,8 @@ export function Toaster() {
 
 function Toast({ toast }: { toast: ToastItem }) {
   const dismiss = useUI((s) => s.dismissToast);
+  const [acting, setActing] = useState(false);
+  const t = useUi();
 
   useEffect(() => {
     if (!toast.duration) return;
@@ -56,14 +58,19 @@ function Toast({ toast }: { toast: ToastItem }) {
         <button
           type="button"
           className="rounded-lg px-2.5 py-1 font-bold underline-offset-2 hover:underline"
-          onClick={() => {
-            toast.action?.onClick();
-            dismiss(toast.id);
+          disabled={acting}
+          aria-busy={acting}
+          onClick={async () => {
+            setActing(true);
+            try { await toast.action?.onClick(); dismiss(toast.id); }
+            catch (error) { notify(error instanceof Error ? error.message : 'Could not restore this content.', { tone: 'error' }); }
+            finally { setActing(false); }
           }}
         >
           <UiText source={toast.action.label} />
         </button>
       )}
+      {!toast.duration && <button type="button" disabled={acting} aria-label={t('Dismiss recovery message')} onClick={() => dismiss(toast.id)} className="grid size-7 shrink-0 place-items-center rounded-lg hover:bg-white/10"><X size={14} aria-hidden /></button>}
     </motion.div>
   );
 }

@@ -1953,7 +1953,7 @@ Different languages require different learning interfaces. This could become a m
 - [x] `F1543` Account deletion
 - [x] `F1544` Privacy controls · **6-25** · S1 repaired provider disclosure; online destinations are conditional, no retention guarantee
 - [x] `F1545` Synchronization status
-- [ ] `F1546` Storage management · **6-25** · S1 replaces blanket clear with scoped saved-media deletion and page Undo; packs/voices follow-up pending
+- [x] `F1546` Storage management · **6-25** · S5 adds pack/dictionary/voice controls and local recovery; media remains scoped with page Undo. Verification limits in LINGUA-6-VERIFICATION.md.
 - [x] `F1547` Battery-efficient audio · **6-25** · S4 adds hidden-page transcription cancellation/restart; fake visibility/worker tests pass, real model unverified
 - [x] `F1548` Local data caching
 - [x] `F1549` Clear error messages · **6-25**

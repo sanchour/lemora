@@ -14772,5 +14772,69 @@
   "Custom": [
     "src/features/lab/designNotes/StyleInspector.tsx",
     "src/features/lab/designNotes/NoteCard.tsx"
+  ],
+  "Dismiss recovery message": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Language pack: {0}": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Full dictionary: {0}": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "{0} offline words": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Downloaded voice: {0}": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Downloaded resources": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Remove only downloaded packs, dictionaries or voices. Your words, cards and progress stay. Undo does not download anything.": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Some downloaded resources could not be listed. Try opening this page again.": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "No downloaded packs, dictionaries or voices on this device.": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "The download goes; your learning stays. Use Undo in the message before dismissing it or reloading the app.": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Removed. Undo lasts until your next removal, dismissal or app reload.": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Restored.": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Could not restore this content.": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Undo stopped because this content changed again. Your newer changes were kept.": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Wait for the language pack to finish installing.": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
+  ],
+  "Wait for the dictionary to finish installing.": [
+    "src/features/ordo/sections/StoredResources.tsx",
+    "src/data/removalUndo.ts"
   ]
 }

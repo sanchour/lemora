@@ -7363,5 +7363,21 @@
   "Opacity": "Deckkraft",
   "All Corners": "Alle Ecken",
   "Shadow": "Schatten",
-  "Custom": "Benutzerdefiniert"
+  "Custom": "Benutzerdefiniert",
+  "Dismiss recovery message": "Wiederherstellungsnachricht schließen",
+  "Language pack: {0}": "Sprachpaket: {0}",
+  "Full dictionary: {0}": "Vollständiges Wörterbuch: {0}",
+  "{0} offline words": "{0} Wörter offline",
+  "Downloaded voice: {0}": "Heruntergeladene Stimme: {0}",
+  "Downloaded resources": "Heruntergeladene Inhalte",
+  "Remove only downloaded packs, dictionaries or voices. Your words, cards and progress stay. Undo does not download anything.": "Entferne nur heruntergeladene Pakete, Wörterbücher oder Stimmen. Wörter, Karten und Fortschritt bleiben erhalten. Rückgängig lädt nichts herunter.",
+  "Some downloaded resources could not be listed. Try opening this page again.": "Einige heruntergeladene Inhalte konnten nicht angezeigt werden. Öffne diese Seite erneut.",
+  "No downloaded packs, dictionaries or voices on this device.": "Keine heruntergeladenen Pakete, Wörterbücher oder Stimmen auf diesem Gerät.",
+  "The download goes; your learning stays. Use Undo in the message before dismissing it or reloading the app.": "Der Download wird entfernt; dein Lernstand bleibt. Nutze Rückgängig in der Nachricht, bevor du sie schließt oder die App neu lädst.",
+  "Removed. Undo lasts until your next removal, dismissal or app reload.": "Entfernt. Rückgängig bleibt bis zur nächsten Entfernung, zum Schließen der Nachricht oder Neuladen der App verfügbar.",
+  "Restored.": "Wiederhergestellt.",
+  "Could not restore this content.": "Dieser Inhalt konnte nicht wiederhergestellt werden.",
+  "Undo stopped because this content changed again. Your newer changes were kept.": "Rückgängig wurde gestoppt, weil dieser Inhalt erneut geändert wurde. Die neueren Änderungen bleiben erhalten.",
+  "Wait for the language pack to finish installing.": "Warte, bis das Sprachpaket fertig installiert ist.",
+  "Wait for the dictionary to finish installing.": "Warte, bis das Wörterbuch fertig installiert ist."
 }

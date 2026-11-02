@@ -9,6 +9,10 @@ import DictionarySearchWorker from '@/workers/dictionarySearch.worker?worker';
 import type { DictSearchOptions, ScoredDictRow } from '@/core/dictionary/searchTools';
 import { foldKey, normalizeWord } from '@/core/text/normalize';
 import { db } from '@/data/db';
+import type { LinguaDB } from '@/data/db';
+import { toFullDictRow } from '@/core/dictionary/userDictionary';
+import type { CustomDictEntry } from '@/core/dictionary/userDictionary';
+import { undoableRemoval } from '@/data/removalUndo';
 import type { DictWorkerMessage } from '@/workers/dict.worker';
 import DictWorker from '@/workers/dict.worker?worker';
 
@@ -53,8 +57,14 @@ export function installDictionary(lang: string): Promise<number> {
   return job;
 }
 
-export async function removeDictionary(lang: string): Promise<void> {
-  await db.fullDict.where('lang').equals(lang).delete();
+export async function removeDictionary(lang: string, database: LinguaDB = db): Promise<void> {
+  if (running.has(lang)) throw new Error('Wait for the dictionary to finish installing.');
+  await undoableRemoval(database, ['fullDict', 'settings'], async () => {
+    const own = await database.settings.get(`customDict:${lang}`);
+    const entries = Array.isArray(own?.value) ? own.value as CustomDictEntry[] : [];
+    await database.fullDict.where('lang').equals(lang).delete();
+    await database.fullDict.bulkPut(entries.map((entry) => toFullDictRow(entry)));
+  });
 }
 
 /** 'none', 'old' (an earlier build: offered again) or 'ready', and how many words. */

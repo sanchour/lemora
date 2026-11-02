@@ -245,7 +245,7 @@ function PiperVoices({ lang, locale, voice, sample, current }: { lang: string; l
   const [progress, setProgress] = useState<Record<string, number>>({});
   const [trying, setTrying] = useState<string | null>(null);
   const refresh = () => void installedPiperVoices().then(setInstalled);
-  useEffect(refresh, []);
+  useEffect(() => { refresh(); window.addEventListener('lingua:voices-changed', refresh); return () => window.removeEventListener('lingua:voices-changed', refresh); }, []);
 
   /** Writing the setting (a new object each time) makes every speaker button look again. */
   const use = (id: string | null) => {
@@ -272,7 +272,7 @@ function PiperVoices({ lang, locale, voice, sample, current }: { lang: string; l
 
   const remove = async (v: PiperVoice) => {
     await removePiperVoice(v.id);
-    await use(voice.device?.[locale] === PIPER + v.id ? null : (voice.device?.[locale]?.slice(PIPER.length) ?? null));
+    resetSpeakers();
     refresh();
   };
 
@@ -314,7 +314,7 @@ function PiperVoices({ lang, locale, voice, sample, current }: { lang: string; l
                 <span className="w-24 shrink-0 text-right text-[13px] font-semibold tabular-nums text-ink-soft">{Math.round(pct * 100)}%</span>
               ) : have ? (
                 <>
-                  <button type="button" onClick={() => void remove(v)} aria-label={translateUi('Remove {0} from this device', [v.name])} title={translateUi('Remove from this device')} className="grid size-9 shrink-0 place-items-center rounded-full text-ink-soft hover:bg-sunken hover:text-ink">
+                  <button type="button" onClick={() => void remove(v).catch(fail)} aria-label={translateUi('Remove {0} from this device', [v.name])} title={translateUi('Remove from this device')} className="grid size-9 shrink-0 place-items-center rounded-full text-ink-soft hover:bg-sunken hover:text-ink">
                     <Trash2 size={15} aria-hidden />
                   </button>
                   <button
