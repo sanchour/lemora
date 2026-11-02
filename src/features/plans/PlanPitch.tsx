@@ -60,21 +60,21 @@ function Spine({ fill, ink, height, open }: { fill: string; ink: string; height:
   );
 }
 
-function Perks({ perks }: { perks: Perk[] }) {
-  return (
-    <ul className="grid grid-cols-3 gap-x-8 gap-y-4">
-      {perks.map(({ icon: Icon, name, text }) => (
-        <li key={name} className="flex gap-2.5">
-          <Icon size={17} strokeWidth={1.6} className="mt-0.5 shrink-0 text-accent-text" aria-hidden />
-          <span className="min-w-0">
-            <span className="block text-[14px] leading-tight font-semibold">{name}</span>
-            <span className="block text-[12.5px] leading-snug text-ink-soft">{text}</span>
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
-}
+const ROMAN = ['i', 'ii', 'iii', 'iv', 'v', 'vi'];
+const FREE: Array<{ name: string; text?: string }> = [
+  { name: 'Every book and article', text: 'Read anything, a tap from every meaning' },
+  { name: 'Your decks', text: 'Cards that come back just in time' },
+  { name: 'Radio and audiobooks', text: 'Listen while you read along' },
+  { name: 'Alphabets', text: 'Learn to read and write new scripts' },
+  { name: 'Mundus', text: 'Films and shows worth watching' },
+  { name: 'Diarium', text: 'A diary in the language you learn' },
+];
+/** What each open book says: its plant, a line under the name, and its contents. */
+const DETAIL: Record<Plan, { level: 'A1' | 'B2' | 'C2'; line: string; items: Array<{ name: string; text?: string }> }> = {
+  free: { level: 'A1', line: 'Free stays free, for good.', items: FREE },
+  plus: { level: 'B2', line: 'Pay once, keep it for life.', items: PLUS },
+  max: { level: 'C2', line: 'Bring AI along for the reading.', items: MAX },
+};
 
 function Yours({ children }: { children: ReactNode }) {
   return (
@@ -132,15 +132,15 @@ export function PlanPitch({ current, onFree, replay = false }: { current: PlanKi
               aria-expanded={on}
               onClick={() => setOpen(on ? null : b.id)}
               initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: on ? -14 : 0 }}
-              whileHover={{ y: on ? -14 : -6 }}
+              animate={{ opacity: 1, y: on ? -10 : 0, height: open ? Math.round(b.height * 0.56) : b.height }}
+              whileHover={{ y: on ? -10 : -5 }}
               transition={{ ...spring.soft, delay: on ? 0 : 0.1 + i * 0.1 }}
               className="relative w-[128px] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
-              style={{ height: b.height, color: b.ink }}
+              style={{ color: b.ink }}
             >
               <Spine fill={b.fill} ink={b.ink} height={b.height} open={on} />
-              <span className="relative flex h-full flex-col items-center justify-between px-3 pt-8 pb-9 text-center">
-                <LevelIcon level={b.level} className="size-11" style={{ color: b.ink }} />
+              <span className="relative flex h-full flex-col items-center justify-center gap-4 px-3 text-center" style={{ paddingTop: open ? 22 : 32, paddingBottom: open ? 22 : 36 }}>
+                {!open && <LevelIcon level={b.level} className="size-11" style={{ color: b.ink }} />}
                 <span>
                   <span className="block font-serif text-[22px] leading-none font-semibold">{names[b.id]}</span>
                   <span className="mt-1.5 block text-[12.5px] tabular-nums opacity-75">{price[b.id]}</span>
@@ -169,60 +169,81 @@ export function PlanPitch({ current, onFree, replay = false }: { current: PlanKi
       <AnimatePresence initial={false}>
         {open && (
           <motion.div key="page" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }} className="overflow-hidden">
-            <div className="mx-auto mt-6 max-w-4xl">
+            <div className="mx-auto mt-5 max-w-4xl">
               <AnimatePresence mode="wait" initial={false}>
-                <motion.div key={open} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.25 }} className="rounded-[26px] border border-line bg-raised px-8 py-6 shadow-elev-2">
-                  {open === 'free' && (
-                    <div className="flex items-center gap-8">
-                      <p className="min-w-0 flex-1 font-serif text-[18px] leading-relaxed text-ink-soft"><UiText source={'{0} every book and article, your decks, the radio and audiobooks, alphabets, Mundus and Diarium.'} values={[<span className="font-semibold text-ink"><UiText source={'Free, for good:'} /></span>]} /></p>
-                      <Button size="lg" className="shrink-0 !rounded-full" onClick={onFree} iconRight={ArrowRight}><UiText source={'Continue free'} /></Button>
+                <motion.div key={open} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.28 }} className="relative grid grid-cols-2 overflow-hidden rounded-[26px] border border-line bg-raised shadow-elev-2">
+                  {/* The gutter of the open book, and a soft shade toward it on both pages. */}
+                  <span className="pointer-events-none absolute inset-y-0 left-1/2 w-px bg-line-strong/60" aria-hidden />
+                  <span className="pointer-events-none absolute inset-y-0 left-[calc(50%-36px)] w-9 bg-gradient-to-r from-transparent to-ink/[0.045]" aria-hidden />
+                  <span className="pointer-events-none absolute inset-y-0 left-1/2 w-9 bg-gradient-to-l from-transparent to-ink/[0.045]" aria-hidden />
+
+                  {/* Left page: whose book this is, its price, and the one button. */}
+                  <section className="flex flex-col px-9 py-7">
+                    <p className="flex items-center gap-3">
+                      <LevelIcon level={DETAIL[open].level} className="size-12" />
+                      <span className="font-serif text-[34px] leading-none font-semibold">{names[open]}</span>
+                    </p>
+                    <p className="mt-3 font-serif text-[16px] text-ink-soft italic">{DETAIL[open].line}</p>
+                    <div className="mt-5 flex-1">
+                      {open === 'free' && (
+                        <p className="font-serif text-[46px] leading-none font-semibold">{translateUi('Free')}</p>
+                      )}
+                      {open === 'plus' && (
+                        <>
+                          <p className="font-serif text-[46px] leading-none font-semibold tabular-nums">{PRICES.plus}</p>
+                          <p className="mt-1.5 text-[13.5px] text-ink-soft"><UiText source={'once, every update included'} /></p>
+                        </>
+                      )}
+                      {open === 'max' && (
+                        <>
+                          <p className="font-serif text-[46px] leading-none font-semibold tabular-nums">{period === 'month' ? PRICES.maxMonth : PRICES.maxYear}</p>
+                          <p className="mt-1.5 text-[13.5px] text-ink-soft">{period === 'month' ? translateUi('a month, cancel any time') : translateUi('a year: about {0} a month, save {1}%', [PER_MONTH, SAVING])}</p>
+                          <div className="mt-3">
+                            <Segmented<'month' | 'year'>
+                              label={translateUi('Billing')}
+                              value={period}
+                              onChange={setPeriod}
+                              options={[
+                                { value: 'month', label: translateUi('Monthly') },
+                                { value: 'year', label: translateUi('Yearly') },
+                              ]}
+                            />
+                          </div>
+                        </>
+                      )}
                     </div>
-                  )}
-                  {open === 'plus' && (
-                    <div>
-                      <div className="mb-5 flex items-baseline justify-between gap-4">
-                        <p className="flex items-baseline gap-3">
-                          <span className="font-serif text-[34px] leading-none font-semibold tabular-nums">{PRICES.plus}</span>
-                          <span className="text-[13.5px] text-ink-soft"><UiText source={'once, every update included'} /></span>
-                        </p>
-                      </div>
-                      <Perks perks={PLUS} />
-                      <div className="mt-6">
-                        {current === 'free' ? (
+                    <div className="mt-6">
+                      {open === 'free' && <Button size="lg" block className="!rounded-full" onClick={onFree} iconRight={ArrowRight}><UiText source={'Continue free'} /></Button>}
+                      {open === 'plus' &&
+                        (current === 'free' ? (
                           <Button size="lg" block className="!rounded-full" loading={busy === 'plus'} onClick={() => void get('plus')} iconRight={ArrowRight}><UiText source={'Get Lingua+ for {0}'} values={[PRICES.plus]} /></Button>
                         ) : (
                           <Yours>{current === 'plus' ? translateUi('Lingua+ is yours') : translateUi('Included in your Max')}</Yours>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                  {open === 'max' && (
-                    <div>
-                      <div className="mb-5 flex items-center justify-between gap-4">
-                        <p className="flex items-baseline gap-3">
-                          <span className="font-serif text-[34px] leading-none font-semibold tabular-nums">{period === 'month' ? PRICES.maxMonth : PRICES.maxYear}</span>
-                          <span className="text-[13.5px] text-ink-soft">{period === 'month' ? translateUi('a month, cancel any time') : translateUi('a year: about {0} a month, save {1}%', [PER_MONTH, SAVING])}</span>
-                        </p>
-                        <Segmented<'month' | 'year'>
-                          label={translateUi('Billing')}
-                          value={period}
-                          onChange={setPeriod}
-                          options={[
-                            { value: 'month', label: translateUi('Monthly') },
-                            { value: 'year', label: translateUi('Yearly') },
-                          ]}
-                        />
-                      </div>
-                      <Perks perks={MAX} />
-                      <div className="mt-6">
-                        {current === 'max' ? (
+                        ))}
+                      {open === 'max' &&
+                        (current === 'max' ? (
                           <Yours><UiText source={'Max is yours'} /></Yours>
                         ) : (
                           <Button size="lg" block className="!rounded-full" loading={busy === 'maxMonth' || busy === 'maxYear'} onClick={() => void get(period === 'month' ? 'maxMonth' : 'maxYear')} iconRight={ArrowRight}><UiText source={'Get Max{0}'} values={[current === 'free' ? <UiText source={', with everything in Lingua+'} /> : '']} /></Button>
-                        )}
-                      </div>
+                        ))}
                     </div>
-                  )}
+                  </section>
+
+                  {/* Right page: the contents, numbered like a book's. */}
+                  <section className="px-9 py-7">
+                    <p className="font-serif text-[13px] tracking-[0.18em] text-ink-faint uppercase italic"><UiText source={'What’s inside'} /></p>
+                    <ol className="mt-3">
+                      {DETAIL[open].items.map((p, i) => (
+                        <motion.li key={p.name} initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.12 + i * 0.05, duration: 0.3 }} className="flex gap-4 border-b border-dotted border-line-strong/70 py-2.5 last:border-b-0">
+                          <span className="w-6 shrink-0 pt-px text-right font-serif text-[15px] text-accent-text italic">{ROMAN[i]}</span>
+                          <span className="min-w-0">
+                            <span className="block font-serif text-[17px] leading-tight font-semibold">{p.name}</span>
+                            {p.text && <span className="mt-0.5 block text-[12.5px] leading-snug text-ink-soft">{p.text}</span>}
+                          </span>
+                        </motion.li>
+                      ))}
+                    </ol>
+                  </section>
                 </motion.div>
               </AnimatePresence>
             </div>
