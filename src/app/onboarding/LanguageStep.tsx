@@ -2,8 +2,8 @@ import { UiText, useUi } from '@/design/i18n/UiText';
 import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowDown, Check, MousePointerClick, X } from 'lucide-react';
-import { getLanguage, LANGUAGES, TIERS } from '@/core/lang/languages';
-import type { LanguageInfo, Tier } from '@/core/lang/languages';
+import { getLanguage, LANGUAGES } from '@/core/lang/languages';
+import type { LanguageInfo } from '@/core/lang/languages';
 import { languagesIn, STATUS_NAME } from '@/data/territories';
 import type { PlaceStatus } from '@/data/territories';
 import { Flag, LanguageFlag } from '@/design/flags';
@@ -17,30 +17,19 @@ interface LanguageStepProps {
   onTarget: (code: string) => void;
 }
 
-/** What each tier includes, short enough for a line; the full sentence is the hover title. */
-const SHORT: Record<Tier, string> = {
-  1: 'Everything: grammar, the alphabet, a full dictionary, natural voices.',
-  2: 'Every room, grammar and the alphabet. No course.',
-  3: 'Reading, word packs, podcasts and music. No grammar yet.',
-  4: 'Reading, your own words, radio and podcasts.',
-  x: 'Machine translation where it exists.',
-};
-const TIER_ORDER: Tier[] = [1, 2, 3, 4, 'x'];
+/**
+ * How the languages are grouped for choosing: the core six, then beta (reading, word packs, podcasts and music, but no course,
+ * grammar or alphabet), then the ones that are still to come. Display only: the tiers underneath stay as they are.
+ */
+type GroupKey = 'core' | 'beta' | 'soon';
+const GROUPS: { key: GroupKey; name: string; blurb: string; has: (l: LanguageInfo) => boolean }[] = [
+  { key: 'core', name: 'Core', blurb: 'Everything: grammar, the alphabet, a full dictionary, natural voices.', has: (l) => l.tier === 1 },
+  { key: 'beta', name: 'Beta', blurb: 'Reading, word packs, podcasts and music. No course, grammar or alphabet.', has: (l) => l.tier !== 1 && !l.soon },
+  { key: 'soon', name: 'Coming soon', blurb: 'On their way. Not ready to learn yet.', has: (l) => l.tier !== 1 && !!l.soon },
+];
+const groupOf = (l: LanguageInfo) => GROUPS.find((g) => g.has(l))!;
 /** How each core language says hello: the first thing its card says to you. */
 const HELLO: Record<string, string> = { es: 'Hola', fr: 'Bonjour', de: 'Hallo', ru: 'Привет', ar: 'مرحبا', zh: '你好' };
-/** The order the postcards come in: the most-asked-for first, and the scripts alternate so the row never looks the same twice. */
-const CORE_ORDER = ['es', 'fr', 'zh', 'de', 'ru', 'ar'];
-/** A tiny pen drawing for each postcard's corner (32 x 32). */
-const DOODLE: Record<string, string> = {
-  es: 'M10 16a6 6 0 1 0 12 0a6 6 0 1 0 -12 0M16 3V6.5M16 25.5V29M3 16H6.5M25.5 16H29M7 7L9.5 9.5M22.5 22.5L25 25M25 7L22.5 9.5M9.5 22.5L7 25',
-  fr: 'M16 3V8M13 29L15 8H17L19 29M14 20H18M12 29H20M14.5 14H17.5',
-  zh: 'M16 3V7M10 11C10 8 22 8 22 11V21C22 24 10 24 10 21ZM13 9C12 14 12 18 13 23M19 9C20 14 20 18 19 23M16 24V29M14 29H18',
-  de: 'M16 24C8 24 5 16 10 12C14 9 18 12 16 16C14 12 18 9 22 12C27 16 24 24 16 24ZM12 25L10 28M20 25L22 28',
-  ru: 'M16 3V7M16 7C10 12 9 15 12 17H20C23 15 22 12 16 7ZM11 17H21V28H11ZM14 28V22H18V28',
-  ar: 'M22 6C14 6 8 11 8 17C8 23 13 28 20 27C14 25 12 18 15 13C17 10 19 8 22 6ZM24 11L25 13.5L27.5 14L25.5 15.5L26 18L24 16.5L22 18L22.5 15.5L20.5 14L23 13.5Z',
-};
-/** A hand-drawn, slightly uneven rounded rectangle for the postcards' outline (100 x 100, stretched to fit). */
-const CARD_PATH = 'M7 3C30 1 70 4 93 2C97.5 2 98 5 98 9C99 35 97 65 98 91C98 96 95 98 91 98C65 99 35 96 9 98C4 98 2 95 2 91C1 65 3 35 2 9C2 5 3 3.5 7 3Z';
 /** The panel's width, and how much of the map it covers with its margin. */
 const PANEL = 340;
 const COVER = PANEL + 12;
@@ -62,7 +51,7 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
 
   const q = searchKey(query.trim());
   const matches = (l: LanguageInfo) => !q || searchKey(`${l.name} ${l.endonym}`).includes(q);
-  const core = CORE_ORDER.flatMap((code) => LANGUAGES.filter((l) => l.code === code));
+  const core = LANGUAGES.filter((l) => l.tier === 1);
   const chosen = target ? getLanguage(target) : undefined;
   const open = panel !== null;
 
@@ -90,7 +79,7 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
       role="radio"
       aria-checked={target === l.code}
       aria-disabled={l.soon || undefined}
-      title={l.soon ? translateUi('{0} is coming. Pick another language for now.', [l.name]) : translateUi(TIERS[l.tier].includes)}
+      title={l.soon ? translateUi('{0} is coming. Pick another language for now.', [l.name]) : translateUi(groupOf(l).blurb)}
       onClick={() => !l.soon && onTarget(l.code)}
       {...hoverProps(l)}
       className={cx(
@@ -109,7 +98,7 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
         </span>
         <span className="block truncate text-[11.5px] text-ink-soft">
           {status ? `${translateUi(STATUS_NAME[status])} · ` : ''}
-          {l.soon ? translateUi('Coming') : translateUi(TIERS[l.tier].name)}
+          {l.soon ? translateUi('Coming') : translateUi(groupOf(l).name)}
         </span>
       </span>
       {target === l.code ? (
@@ -162,7 +151,7 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
     <div>
       <div className="mb-3 flex items-end gap-4">
         <div className="min-w-0 flex-1">
-          <h1 className="font-serif text-[30px] leading-tight font-semibold tracking-tight"><UiText source={'What language will it be?'} /></h1>
+          <h1 className="font-serif text-[38px] leading-tight font-semibold tracking-tight"><UiText source={'What language will it be?'} /></h1>
           <p className="mt-1 text-[14.5px] text-ink-soft"><UiText source={'Click a country to see what’s spoken there, or pick one of the six below.'} /></p>
         </div>
         <SearchInput
@@ -241,13 +230,13 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
                   </>
                 )}
                 {panel === 'all' &&
-                  TIER_ORDER.map((tier) => {
-                    const langs = LANGUAGES.filter((l) => l.tier === tier && matches(l));
+                  GROUPS.map((g) => {
+                    const langs = LANGUAGES.filter((l) => g.has(l) && matches(l));
                     if (!langs.length) return null;
                     return (
-                      <section key={tier} className="mb-2">
-                        <h2 className="px-2 pt-2 text-[11.5px] font-bold tracking-[0.08em] text-ink-faint uppercase"><UiText source={TIERS[tier].name} /></h2>
-                        <p className="px-2 pb-1 text-[11.5px] text-ink-soft"><UiText source={SHORT[tier]} /></p>
+                      <section key={g.key} className="mb-2">
+                        <h2 className="px-2 pt-2 text-[11.5px] font-bold tracking-[0.08em] text-ink-faint uppercase"><UiText source={g.name} /></h2>
+                        <p className="px-2 pb-1 text-[11.5px] text-ink-soft"><UiText source={g.blurb} /></p>
                         {langs.map((l) => row(l))}
                       </section>
                     );
@@ -261,13 +250,8 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
 
       {/* The six core languages as little postcards: each says hello, tips towards you on hover and shows a sentence from its world. */}
       <div className="mt-4 flex items-center gap-3">
-        <h2 className="relative font-serif text-[18px] font-semibold">
-          <UiText source={'Start with a postcard'} />
-          <svg viewBox="0 0 120 8" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 -bottom-1.5 h-2 w-full text-accent" aria-hidden>
-            <motion.path d="M2 5C25 2 50 7 72 4C92 2 108 5 118 3" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" vectorEffect="non-scaling-stroke" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }} />
-          </svg>
-        </h2>
-        <span className="text-[12.5px] text-ink-soft" title={translateUi(TIERS[1].includes)}><UiText source={'Six languages with the full course: grammar, alphabet, dictionary and natural voices.'} /></span>
+        <h2 className="font-serif text-[18px] font-semibold"><UiText source={'Our core languages'} /></h2>
+        <span className="text-[12.5px] text-ink-soft" title={translateUi(GROUPS[0].blurb)}><UiText source={'Six languages with the full course: grammar, alphabet, dictionary and natural voices.'} /></span>
         <button
           type="button"
           onClick={() => listRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
@@ -290,45 +274,53 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
               whileHover={{ y: -6, rotate: i % 2 ? 1.2 : -1.2 }}
               whileTap={{ scale: 0.97 }}
               transition={{ ...spring.soft, delay: 0.05 * i }}
-              className="no-callout group relative flex min-h-[164px] flex-col items-start p-4 text-left outline-none"
+              className={cx(
+                'no-callout group relative flex min-h-[158px] flex-col items-start overflow-hidden rounded-[18px] border p-3.5 text-left outline-none',
+                on ? 'border-accent bg-accent-soft shadow-elev-2' : 'border-line bg-raised shadow-elev-1 hover:border-line-strong hover:shadow-elev-2',
+              )}
             >
-              {/* The card itself: a wobbly pen outline over a soft fill, orange when chosen. */}
-              <svg viewBox="0 0 100 100" preserveAspectRatio="none" className={cx('pointer-events-none absolute inset-0 size-full transition-colors duration-300', on ? 'text-accent' : 'text-line-strong group-hover:text-ink-faint')} aria-hidden>
-                <path d={CARD_PATH} className={cx('transition-colors duration-300', on ? 'fill-accent-soft' : 'fill-raised')} stroke="currentColor" strokeWidth={on ? 2.2 : 1.5} strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
-              </svg>
-              {/* A little doodle in the corner draws itself in; the check stamp takes its place when chosen. */}
-              <svg viewBox="0 0 32 32" className="absolute top-3 right-3 size-8 text-accent" aria-hidden>
-                <g fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" style={{ opacity: on ? 0.25 : 0.9, transition: 'opacity 0.3s' }}>
-                  <motion.path d={DOODLE[l.code]} initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.9, delay: 0.3 + 0.1 * i, ease: 'easeInOut' }} />
-                </g>
-              </svg>
-              <span className={cx('absolute top-3 right-3 grid size-8 place-items-center rounded-full bg-accent-fill text-on-accent transition-all duration-300', on ? 'scale-100' : 'scale-50 opacity-0')}>
-                <Check size={16} strokeWidth={3} aria-hidden />
+              {/* A stamp in the corner, like a postmark, when this is the one. */}
+              <span className={cx('absolute top-2.5 right-2.5 grid size-6 place-items-center rounded-full transition-all duration-300', on ? 'scale-100 bg-accent-fill text-on-accent' : 'scale-50 opacity-0')}>
+                <Check size={14} strokeWidth={3.2} aria-hidden />
               </span>
-              <span className="relative"><LanguageFlag lang={l.code} width={30} /></span>
-              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="relative mt-3 font-serif text-[26px] leading-none font-semibold text-accent-text">{HELLO[l.code]}</span>
-              <span className="relative mt-1.5 flex items-baseline gap-1.5">
+              <LanguageFlag lang={l.code} width={30} />
+              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-3 font-serif text-[26px] leading-none font-semibold text-accent-text">{HELLO[l.code]}</span>
+              <span className="mt-1.5 flex items-baseline gap-1.5">
                 <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="font-serif text-[15px] font-semibold">{l.endonym}</span>
                 <span className="text-[11.5px] text-ink-faint"><UiText source={l.name} /></span>
               </span>
               {/* A line from its world fades in on hover, in its own script. */}
-              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="relative mt-2 line-clamp-3 text-[12px] leading-snug text-ink-soft opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">{l.sample}</span>
+              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-2 line-clamp-3 text-[12px] leading-snug text-ink-soft opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">{l.sample}</span>
             </motion.button>
           );
         })}
       </div>
 
-      {/* Every language by tier, peeking in at the bottom of the screen. */}
-      <div ref={listRef} className="mt-8 scroll-mt-6 divide-y divide-line/70 border-t border-line/70 pb-6">
-        {TIER_ORDER.slice(1).map((tier) => (
-          <div key={tier} role="radiogroup" aria-label={translateUi('{0} languages', [translateUi(TIERS[tier].name)])} className="grid grid-cols-[190px_minmax(0,1fr)] gap-5 py-4">
-            <div title={translateUi(TIERS[tier].includes)}>
-              <h2 className="text-[12px] font-bold tracking-[0.08em] text-ink-faint uppercase"><UiText source={TIERS[tier].name} /></h2>
-              <p className="mt-1 text-[12px] leading-snug text-ink-soft"><UiText source={SHORT[tier]} /></p>
-            </div>
-            <div className="flex flex-wrap content-start gap-1.5">{LANGUAGES.filter((l) => l.tier === tier).map((l) => chip(l))}</div>
-          </div>
-        ))}
+      {/* The library: every other language on two shelves, the ones you can read in today and the ones still to come. */}
+      <div ref={listRef} className="mt-9 scroll-mt-6 pb-6">
+        <div className="flex items-baseline gap-3">
+          <h2 className="font-serif text-[22px] font-semibold"><UiText source={'The library'} /></h2>
+          <span className="text-[13px] text-ink-soft"><UiText source={'Every other language, shelved by how much Lingua has for it.'} /></span>
+        </div>
+        <div className="mt-3 grid gap-4">
+          {GROUPS.slice(1).map((g) => {
+            const langs = LANGUAGES.filter((l) => g.has(l));
+            return (
+              <section key={g.key} role="radiogroup" aria-label={translateUi('{0} languages', [translateUi(g.name)])} className="rounded-3xl border border-line bg-raised px-5 pt-4 pb-3 shadow-elev-1">
+                <header className="flex items-center gap-3">
+                  <span className={cx('rounded-full px-3 py-1 text-[11.5px] font-bold tracking-[0.08em] uppercase', g.key === 'beta' ? 'bg-accent-soft text-accent-text' : 'bg-sunken text-ink-soft')}><UiText source={g.name} /></span>
+                  <span className="text-[12.5px] text-ink-soft"><UiText source={g.blurb} /></span>
+                  <span className="ml-auto text-[12px] text-ink-faint tabular-nums">{langs.length}</span>
+                </header>
+                <div className="mt-3 flex flex-wrap content-start gap-1.5">{langs.map((l) => chip(l))}</div>
+                {/* The shelf: one uneven pen line under the row. */}
+                <svg viewBox="0 0 400 8" preserveAspectRatio="none" className="mt-3 h-2 w-full text-line-strong" aria-hidden>
+                  <path d="M2 4C60 2 120 6 200 4C270 2 340 6 398 3" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+                </svg>
+              </section>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
