@@ -2,6 +2,7 @@ import { UiText, useUi } from '@/design/i18n/UiText';
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { HandMark } from './HandMark';
+import { Wordmark } from '@/app/shells/Wordmark';
 import { cx } from '@/lib/cx';
 
 /** The fine line drawings' shared stroke. */
@@ -46,11 +47,11 @@ function OpenBook() {
           className={cx('font-serif', w.accent ? 'fill-accent' : 'fill-current')}
           initial={{ y: 5 }}
           animate={{ y: 0 }}
-          transition={{ duration: 0.9, delay: 0.6 + i * 0.85, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.6, delay: 0.4 + i * 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
           {/* Arabic letters join, so that word fades in whole rather than letter by letter. */}
           {(w.rtl ? [w.text] : [...w.text]).map((ch, j) => (
-            <motion.tspan key={j} initial={{ opacity: 0 }} animate={{ opacity: 0.92 }} transition={{ duration: 0.5, ease: 'easeOut', delay: 0.6 + i * 0.85 + j * 0.08 }}>{ch}</motion.tspan>
+            <motion.tspan key={j} initial={{ opacity: 0 }} animate={{ opacity: 0.92 }} transition={{ duration: 0.35, ease: 'easeOut', delay: 0.4 + i * 0.55 + j * 0.055 }}>{ch}</motion.tspan>
           ))}
         </motion.text>
       ))}
@@ -197,7 +198,7 @@ export function WelcomePage({ name }: { name: string }) {
   // The book starts drawing only once the greeting and the quip have settled.
   const [bookIn, setBookIn] = useState(false);
   useEffect(() => {
-    const t = setTimeout(() => setBookIn(true), 2100);
+    const t = setTimeout(() => setBookIn(true), 1300);
     return () => clearTimeout(t);
   }, []);
   const translateUi = useUi();
@@ -212,10 +213,10 @@ export function WelcomePage({ name }: { name: string }) {
     <div className="flex flex-col items-center py-6 text-center">
       <h1 className="flex max-w-2xl items-baseline justify-center font-serif text-[44px] leading-[1.12] font-semibold tracking-tight whitespace-nowrap" aria-label={full}>
         {/* "Welcome" arrives alone and centred; then the name opens up beside it and the two re-centre together. */}
-        <motion.span aria-hidden initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}>{lead}</motion.span>
-        <motion.span aria-hidden className="-my-1 overflow-hidden py-1 whitespace-pre" initial={{ width: 0, opacity: 0 }} animate={{ width: 'auto', opacity: 1 }} transition={{ width: { duration: 0.9, delay: 1, ease: [0.45, 0, 0.2, 1] }, opacity: { duration: 0.7, delay: 1.15, ease: 'easeOut' } }}>{rest}</motion.span>
+        <motion.span aria-hidden initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}>{lead}</motion.span>
+        <motion.span aria-hidden className="-my-1 overflow-hidden py-1 whitespace-pre" initial={{ width: 0, opacity: 0 }} animate={{ width: 'auto', opacity: 1 }} transition={{ width: { duration: 0.6, delay: 0.55, ease: [0.45, 0, 0.2, 1] }, opacity: { duration: 0.5, delay: 0.65, ease: 'easeOut' } }}>{rest}</motion.span>
       </h1>
-      <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.9, ease: [0.22, 1, 0.36, 1] }} className="mt-3 max-w-md text-[16.5px] leading-relaxed text-ink-soft italic">
+      <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 1.1, ease: [0.22, 1, 0.36, 1] }} className="mt-3 max-w-md text-[16.5px] leading-relaxed text-ink-soft italic">
         {quip}
       </motion.p>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, ease: 'easeOut' }} className="mt-10 h-[200px]">
@@ -226,9 +227,6 @@ export function WelcomePage({ name }: { name: string }) {
 }
 
 /** See what Lingua can do (5.1-2b): three things it does, in one fine line each. */
-/** Hand-drawn 1, 2 and 3 for the sticker on the next drawing. */
-const NUMERALS = ['M16 15L21 11.5V28M16.5 28H25', 'M14.5 16C14.5 9.5 25.5 10 25.5 16C25.5 21 15 25 14.5 28.5H26', 'M14.5 14C17 9.5 25.5 11 25 16C24.5 20 20 20 20 20C26.5 20 26.5 28.5 20 28.5C17 28.5 14.5 27 13.5 24'];
-
 export function AboutPage() {
   // How many of the three things have been shown so far: each click brings in the next one.
   const [shown, setShown] = useState(0);
@@ -238,7 +236,13 @@ export function AboutPage() {
   const upcoming = shown < last ? shown : -1; // and the one that comes next
   return (
     <div className="py-6">
-      <h1 className="text-center font-serif text-[36px] leading-tight font-semibold tracking-tight"><UiText source={'See what Lingua can do'} /></h1>
+      <h1 className="flex flex-col items-center" aria-label="Lingua">
+        <Wordmark className="!text-[52px]" />
+        {/* A smooth orange line that draws itself in under the name. */}
+        <svg viewBox="0 0 220 14" className="mt-1 h-3.5 w-[200px] text-accent" aria-hidden>
+          <motion.path d="M4 8C40 3 78 12 112 7C150 2 186 10 216 6" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ pathLength: { duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.6, delay: 0.2 } }} />
+        </svg>
+      </h1>
       <p className="mt-2 text-center text-[16px] text-ink-soft"><UiText source={'Learn a language by living in it. Three things, done well.'} /></p>
       <div className="mt-12 grid grid-cols-3 gap-8">
         {VIGNETTES.map((v, i) => {
@@ -283,7 +287,9 @@ export function AboutPage() {
                     {/* A hand-inked sticker: a wobbly orange blob, its pen line nudged off-register, and a pen-drawn numeral. */}
                     <path d="M20 4C30 3 37 10 36 20C35 31 28 37 19 36C9 35 3 29 4 19C5 10 11 5 20 4Z" fill="var(--accent-fill)" />
                     <path d="M20 4C30 3 37 10 36 20C35 31 28 37 19 36C9 35 3 29 4 19C5 10 11 5 20 4Z" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" transform="translate(-1 1)" />
-                    <path d={NUMERALS[i]} fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
+                    {/* A pen-drawn pointing hand with two little click marks. */}
+                    <path d="M17 29V14.5C17 12.5 20 12.5 20 14.5V21C20 19.5 23 19.5 23 21.2C23 20 26 20 26 21.8C26 20.8 28.5 21 28.5 22.8V27.5C28.5 30.5 26.5 33 23.5 33H21C19 33 18 32 16.5 30.5L13 26.5C12 25.3 13.6 24 14.8 25L17 27" fill="var(--raised)" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M12.5 12C11.3 10.8 11.3 9 12.5 7.8M25 12C26.2 10.8 26.2 9 25 7.8M18.5 9.5V6.5" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" />
                   </motion.svg>
                 )}
               </span>
