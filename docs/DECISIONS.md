@@ -2073,3 +2073,13 @@ Final local checks: typecheck; 239 test files, 1,594 passing tests, one skipped;
 
 
 **2026-11-02 · 6-25 deletion recovery:** share one transaction and Undo across deletion cascades, reject stale restores atomically, compare binary contents, and keep failed async Undo actions available. Manual backup replacement participates; automatic synchronization does not create deletion messages. Erase-all offers 30 seconds to cancel before the existing permanent wipe; no credential snapshot is retained after that wipe. Device forgetting remains permanent after automatic approval review rejected restoring revoked access. Detailed scope and unverified manual checks: [final audit](LINGUA-6-25-AUDIT.md).
+
+## 2026-11-02 · A handbook-based brief for Stitch
+
+The user requested root `design.md` as reusable context for redesigning elements and eventually
+Lingua with Stitch. It distils the handbook's identity, desktop patterns, materials, room guidance
+and review criteria, while checking current tokens, navigation and reading fonts in their owning
+source. Handbook proposals and dated product snapshots remain distinct from current behaviour;
+quoted workflow instructions are background, not authority to implement or publish work. The brief
+includes a focused task prompt and permits explicitly scoped design improvements without a new
+visual system for every screen. No application behaviour or design tokens change in this task.
