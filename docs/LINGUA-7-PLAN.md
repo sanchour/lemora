@@ -15,6 +15,10 @@ a small book on how to design or improve each page in Lingua's own spirit. Read 
 before any Lingua 7 step, and the room's chapter before working on that room. Its source is
 [handbook/handbook.html](handbook/handbook.html); `node scripts/handbook-pdf.ts` prints it again.
 
+For work with Stitch, [the root design brief](../design.md) distils the handbook into reusable
+desktop design context, current tokens and navigation, room patterns, states and a focused task
+prompt. Written 2026-11-02; this documentation does not start or complete any Lingua 7 implementation step.
+
 Read first: [CLAUDE.md](../CLAUDE.md), then [HANDOVER.md](HANDOVER.md) for the queue. Lingua 5
 (LINGUA-5.1-PLAN.md, LINGUA-5.2-PLAN.md) stays as planned. **Lingua 7 comes after Lingua 6 · Features**
 (the user, 2026-10-26: "Do Lingua Features first, then Lingua Design"): after 5.2's check (handover step 21), then Lingua 6 (step 23), then this plan (step 24).

@@ -4,6 +4,9 @@ Specs for features added after Phase 1 (Statistics, Tabula, Iter and Diarium are
 that builds it. Visual language for all of them: minimal, bookish, calm; details tucked into
 popovers and drawers; every motion a transform/opacity spring (see `PERFORMANCE.md`).
 
+For visual redesigns with Stitch, [design.md](../design.md) is the handbook-based design brief:
+desktop layout, tokens, typography, room patterns and states. It is design context, not a new learner feature.
+
 ---
 
 ## Additions from the original-vision check (2026-10-15)
