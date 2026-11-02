@@ -7,19 +7,56 @@ import { spring } from '@/design/motion';
 /** The fine line drawings' shared stroke. */
 const LINE = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.3, strokeLinecap: 'round', strokeLinejoin: 'round' } as const;
 
-/** An open book, drawn in one fine line. */
+/** One pen stroke that draws itself in after `delay` seconds. */
+function Pen({ d, delay, duration = 0.7, fade = 1, strokeWidth }: { d: string; delay: number; duration?: number; fade?: number; strokeWidth?: number }) {
+  return <motion.path {...LINE} strokeWidth={strokeWidth ?? LINE.strokeWidth} d={d} initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: fade }} transition={{ duration, delay, ease: 'easeInOut' }} />;
+}
+
+/** An open book, drawn in fine line that draws itself in: stacked pages, text lines, a highlighted word, a sprig, a ribbon and a few sparks of language. */
 function OpenBook() {
   return (
-    <svg viewBox="0 0 240 130" className="h-auto w-[300px] text-ink-soft" aria-hidden>
-      <path {...LINE} d="M120 30C96 16 58 14 22 22V114C58 106 96 108 120 122C144 108 182 106 218 114V22C182 14 144 16 120 30Z" />
-      <path {...LINE} d="M120 30V122" />
-      {[44, 56, 68, 80, 92].map((y, i) => (
-        <g key={y} opacity={0.55}>
-          <path {...LINE} strokeWidth={1} d={`M38 ${y - 6}C${60} ${y - 10} ${84} ${y - 9} ${104} ${y - 2 - i * 0.2}`} />
-          <path {...LINE} strokeWidth={1} d={`M136 ${y - 2 - i * 0.2}C${156} ${y - 9} ${180} ${y - 10} ${202} ${y - 6}`} />
+    <svg viewBox="0 0 260 150" className="h-auto w-[340px] text-ink-soft" aria-hidden>
+      {/* Pages: a soft fill that fades in under the lines. */}
+      <motion.path d="M130 42C106 28 66 26 30 34V126C66 118 106 120 130 134C154 120 194 118 230 126V34C194 26 154 28 130 42Z" fill="var(--raised)" stroke="none" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.1 }} />
+      {/* Stacked page edges, then the cover lines. */}
+      <Pen d="M30 130C66 122 106 124 130 138C154 124 194 122 230 130" delay={0.1} fade={0.45} />
+      <Pen d="M30 134C66 126 106 128 130 142C154 128 194 126 230 134" delay={0.2} fade={0.3} />
+      <Pen d="M130 42C106 28 66 26 30 34V126C66 118 106 120 130 134C154 120 194 118 230 126V34C194 26 154 28 130 42Z" delay={0.2} duration={1.1} />
+      <Pen d="M130 42V134" delay={0.7} duration={0.5} />
+      <Pen d="M126 46V130" delay={0.8} duration={0.5} fade={0.35} />
+      {/* A highlighted word on the left page. */}
+      <motion.rect x={64} y={54} width={26} height={8} rx={3} className="fill-accent/25" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.5, delay: 1.7, ease: 'easeOut' }} style={{ transformOrigin: '64px 58px' }} />
+      {/* Lines of text, each one a little different. */}
+      {[
+        { y: 58, l: 'M46 58C62 55 88 56 114 60', r: 'M146 60C170 56 196 55 214 58' },
+        { y: 70, l: 'M46 70C60 67 80 68 114 72', r: 'M146 72C168 68 190 68 214 70' },
+        { y: 82, l: 'M46 82C66 79 90 80 100 82', r: 'M146 84C170 80 192 80 206 82' },
+        { y: 94, l: 'M46 94C62 91 90 92 114 96', r: 'M146 96C166 92 186 92 214 94' },
+        { y: 106, l: 'M46 106C60 103 76 104 92 106', r: 'M146 108C170 104 196 104 202 106' },
+      ].map((row, i) => (
+        <g key={row.y}>
+          <Pen d={row.l} delay={1 + i * 0.12} duration={0.5} strokeWidth={1} fade={0.5} />
+          <Pen d={row.r} delay={1.06 + i * 0.12} duration={0.5} strokeWidth={1} fade={0.5} />
         </g>
       ))}
-      <path {...LINE} className="text-accent" stroke="currentColor" d="M170 4V40L178 34L186 40V6" />
+      {/* A sage sprig tucked into the right page. */}
+      <g stroke="#6b8e78">
+        <Pen d="M206 122C204 112 208 102 216 96" delay={1.8} duration={0.6} />
+        <Pen d="M216 96C224 96 228 90 228 84C220 84 216 90 216 96Z" delay={2.2} duration={0.4} />
+        <Pen d="M208 110C200 110 196 104 196 100C204 100 208 104 208 110Z" delay={2.4} duration={0.4} />
+      </g>
+      {/* The bookmark ribbon drops from the top. */}
+      <motion.path {...LINE} className="text-accent" d="M170 8V46L178 40L186 46V10" initial={{ pathLength: 0, y: -8, opacity: 0 }} animate={{ pathLength: 1, y: 0, opacity: 1 }} transition={{ duration: 0.7, delay: 1.5, ease: 'easeOut' }} />
+      {/* Sparks of language rising from the spine, gently floating. */}
+      {[
+        { x: 112, y: 18, d: 'M104 22L108 14M108 22L116 18', delay: 2.3 },
+        { x: 148, y: 14, d: 'M140 18C144 12 150 12 152 18C154 12 160 12 162 18', delay: 2.5 },
+        { x: 92, y: 36, d: 'M88 34H96M92 30V38', delay: 2.7 },
+      ].map((spark, i) => (
+        <motion.g key={i} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 0.8, y: [0, -3, 0] }} transition={{ opacity: { duration: 0.5, delay: spark.delay }, y: { duration: 3.2, delay: spark.delay + i * 0.4, repeat: Infinity, ease: 'easeInOut' } }}>
+          <path {...LINE} className="text-accent" strokeWidth={1.2} d={spark.d} />
+        </motion.g>
+      ))}
     </svg>
   );
 }
