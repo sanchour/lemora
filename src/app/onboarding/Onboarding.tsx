@@ -209,11 +209,11 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
       </main>
 
       <footer className="sticky bottom-0 bg-gradient-to-t from-bg via-bg/95 to-bg/0 px-8 pt-3 pb-4">
-        <div className={cx('mx-auto flex gap-3', width, INTRO.has(page) && 'max-w-md')}>
+        <div className={cx('mx-auto flex gap-3', width, INTRO.has(page) && 'max-w-sm')}>
           {index > 0 && (
-            <Button variant="secondary" size="lg" onClick={() => go(index - 1)} disabled={busy}><UiText source={'Back'} /></Button>
+            <Button variant="secondary" size="lg" className="!rounded-full px-7" onClick={() => go(index - 1)} disabled={busy}><UiText source={'Back'} /></Button>
           )}
-          <Button size="lg" className="flex-1" onClick={next} disabled={!canContinue} loading={busy} iconRight={ArrowRight}>
+          <Button size="lg" className="flex-1 !rounded-full" onClick={next} disabled={!canContinue} loading={busy} iconRight={ArrowRight}>
             <UiMessageText message={label} />
           </Button>
         </div>

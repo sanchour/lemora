@@ -18,7 +18,7 @@ export function PackProgress() {
 
   return (
     <div
-      className="pointer-events-none fixed z-[75] flex justify-center"
+      className="pointer-events-none fixed z-[75] flex flex-col justify-center"
       style={layout === 'wide' ? { right: 24, bottom: 24 } : { left: 0, right: 0, bottom: 'calc(env(safe-area-inset-bottom) + 96px)' }}
     >
       <AnimatePresence>
