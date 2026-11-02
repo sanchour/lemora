@@ -268,6 +268,7 @@ const ROOMS = [
     ),
   },
 ] as const;
+export const ROOM_COUNT = ROOMS.length;
 
 /** What to call you (5.1-2b): one line, bookish and minimal. Enter moves on. */
 export function NamePage({ name, onName, onEnter }: { name: string; onName: (name: string) => void; onEnter: () => void }) {
@@ -378,7 +379,7 @@ export function WelcomePage({ name }: { name: string }) {
 }
 
 /** See what Lingua can do (5.1-2b): a small demo of three rooms, Codex, Thesaurus and Sonus & Visio, to try right here. */
-export function AboutPage() {
+export function AboutPage({ room: roomIndex, onRoom }: { room: number; onRoom: (room: number) => void }) {
   const translateUi = useUi();
   // "See what Lingua can do": the name becomes the wordmark, in the sentence at the same size.
   const title = translateUi('See what Lingua can do');
@@ -386,7 +387,7 @@ export function AboutPage() {
   const hasName = at >= 0;
   const pre = hasName ? title.slice(0, at) : title;
   const post = hasName ? title.slice(at + 'Lingua'.length) : '';
-  const [room, setRoom] = useState<(typeof ROOMS)[number]['id']>('read');
+  const room = ROOMS[roomIndex]?.id ?? 'read';
   const [kept, setKept] = useState<string[]>([]);
   const keep = (key: string) => setKept((k) => (k.includes(key) ? k.filter((x) => x !== key) : [...k, key]));
   return (
@@ -404,13 +405,12 @@ export function AboutPage() {
         ) : null}
         {post}
       </h1>
-      <p className="mt-2 text-center text-[16px] text-ink-soft"><UiText source={'Learn a language by living in it. Try it here, in Spanish.'} /></p>
       {/* The three rooms, as tabs with a hand-drawn line under the one you are in. */}
       <div role="tablist" aria-label={translateUi('What Lingua can do')} className="mt-10 flex justify-center gap-3">
         {ROOMS.map((r) => {
           const on = room === r.id;
           return (
-            <button key={r.id} type="button" role="tab" aria-selected={on} onClick={() => setRoom(r.id)} className={cx('relative flex items-center gap-3 rounded-2xl px-4 py-2.5 text-left transition-colors', on ? 'text-ink' : 'text-ink-faint hover:text-ink-soft')}>
+            <button key={r.id} type="button" role="tab" aria-selected={on} onClick={() => onRoom(ROOMS.findIndex((x) => x.id === r.id))} className={cx('relative flex items-center gap-3 rounded-2xl px-4 py-2.5 text-left transition-colors', on ? 'text-ink' : 'text-ink-faint hover:text-ink-soft')}>
               <svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 {r.icon}
               </svg>
@@ -437,7 +437,6 @@ export function AboutPage() {
           </motion.div>
         </AnimatePresence>
       </div>
-      <p className="mt-4 text-center text-[13px] text-ink-faint"><UiText source={'Just a taste: the real rooms work in your language, with your own books, shows and songs.'} /></p>
     </div>
   );
 }

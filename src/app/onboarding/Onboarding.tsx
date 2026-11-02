@@ -1,5 +1,5 @@
 import { UiText, UiMessageText, useUi } from '@/design/i18n/UiText';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
@@ -23,7 +23,7 @@ import { cx } from '@/lib/cx';
 import { AestheticStep } from './AestheticStep';
 import { enjoymentsFor } from './EnjoyStep';
 import { defaultGoal, GoalStep } from './GoalStep';
-import { AboutPage, NamePage, WelcomePage } from './IntroPages';
+import { AboutPage, NamePage, ROOM_COUNT, WelcomePage } from './IntroPages';
 import { LanguageStep } from './LanguageStep';
 import { LevelStep } from './LevelStep';
 import { FIRST } from './pages';
@@ -75,6 +75,8 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const [goal, setGoal] = useState<CefrLevel | null>(null);
   const [minutes, setMinutes] = useState(15);
   const [busy, setBusy] = useState(false);
+  /** Which demo room the about page shows: Codex, Thesaurus, then Sonus & Visio; Next walks through them first. */
+  const [room, setRoom] = useState(0);
   const page = pages[index];
   const steps = pages.filter((p) => !INTRO.has(p));
   const theme: ThemePref = settings?.theme ?? 'system';
@@ -130,9 +132,27 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
 
   const next = () => {
     if (!canContinue || busy) return;
-    if (index < pages.length - 1) go(index + 1);
+    if (page === 'about' && room < ROOM_COUNT - 1) setRoom(room + 1);
+    else if (index < pages.length - 1) go(index + 1);
     else void finish();
   };
+
+  const back = () => (page === 'about' && room > 0 ? setRoom(room - 1) : go(index - 1));
+
+  // Enter moves on, like the Next button, unless you are typing (or on the footer's own buttons, which answer Enter themselves).
+  const nextRef = useRef(next);
+  nextRef.current = next;
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Enter' || e.repeat || e.isComposing || e.metaKey || e.ctrlKey || e.altKey) return;
+      const el = e.target as HTMLElement | null;
+      if (el?.closest('input, textarea, select, footer, [contenteditable="true"], [role="combobox"]')) return;
+      e.preventDefault();
+      nextRef.current();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   const cancel = () => (replaying ? leaveReplay() : void patchSetting('meta', { onboardedAt: Date.now() }));
   useHotkeys({ escape: cancel }, canCancel || replaying);
@@ -189,7 +209,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
             <motion.section key={page} custom={dir} variants={turn} initial="enter" animate="center" exit="exit" transition={spring.gentle}>
               {page === 'name' && <NamePage name={nameNow} onName={setName} onEnter={next} />}
               {page === 'welcome' && <WelcomePage name={nameNow} />}
-              {page === 'about' && <AboutPage />}
+              {page === 'about' && <AboutPage room={room} onRoom={setRoom} />}
               {page === 'language' && <LanguageStep target={target} onTarget={setTarget} />}
               {page === 'level' && target && <LevelStep lang={target} level={level} seedKnown={seedKnown} onLevel={setLevel} onSeedKnown={setSeedKnown} />}
               {page === 'speak' && <SpeakStep spoken={spoken} target={target} level={level} onSpoken={setSpoken} />}
@@ -205,7 +225,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
       <footer className="sticky bottom-0 bg-gradient-to-t from-bg via-bg/95 to-bg/0 px-8 pt-3 pb-4">
         <div className={cx('mx-auto flex flex-row flex-nowrap items-center gap-3', width, INTRO.has(page) && 'max-w-sm')}>
           {index > 0 && (
-            <Button variant="secondary" size="lg" className="!rounded-full w-24 shrink-0 !px-0" onClick={() => go(index - 1)} disabled={busy}><UiText source={'Back'} /></Button>
+            <Button variant="secondary" size="lg" className="!rounded-full w-24 shrink-0 !px-0" onClick={back} disabled={busy}><UiText source={'Back'} /></Button>
           )}
           <Button size="lg" className="flex-1 !rounded-full" onClick={next} disabled={!canContinue} loading={busy} iconRight={ArrowRight}>
             <UiMessageText message={label} />
