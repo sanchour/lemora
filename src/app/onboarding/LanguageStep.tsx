@@ -251,19 +251,22 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
       </div>
 
       {/* The six core languages as little postcards: each says hello, tips towards you on hover and shows a sentence from its world. */}
-      <div className="mt-4 flex items-center gap-3">
-        <h2 className="font-serif text-[28px] leading-none font-semibold tracking-tight"><UiText source={'Our core languages'} /></h2>
-        <span className="text-[12.5px] text-ink-soft" title={translateUi(GROUPS[0].blurb)}><UiText source={'Six languages with the full course: grammar, alphabet, dictionary and natural voices.'} /></span>
+      <div className="mt-5 flex items-center gap-4">
+        <h2 className="shrink-0 font-serif text-[28px] leading-none font-semibold tracking-tight whitespace-nowrap"><UiText source={'Our core languages'} /></h2>
+        <span className="min-w-0 flex-1 truncate text-[13px] text-ink-soft" title={translateUi(GROUPS[0].blurb)}><UiText source={'Six languages with the full course: grammar, alphabet, dictionary and natural voices.'} /></span>
         <button
           type="button"
           onClick={() => {
             setLibraryOpen(true);
             setTimeout(() => listRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
           }}
-          className="ml-auto inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[13.5px] font-semibold text-accent-text hover:bg-accent-soft"
-        ><UiText source={'All {0} languages {1}'} values={[LANGUAGES.length, <ArrowDown size={15} aria-hidden />]} /></button>
+          className="group inline-flex shrink-0 items-center gap-2.5 rounded-full border border-line bg-raised py-1.5 pr-1.5 pl-4 text-[13.5px] font-semibold whitespace-nowrap shadow-elev-1 transition-[border-color,background-color] hover:border-accent hover:bg-accent-soft"
+        >
+          <span className="tabular-nums"><UiText source={'All {0} languages'} values={[LANGUAGES.length]} /></span>
+          <span className="grid size-7 place-items-center rounded-full bg-accent-fill text-on-accent transition-transform duration-200 group-hover:translate-y-0.5"><ArrowDown size={15} aria-hidden /></span>
+        </button>
       </div>
-      <div role="radiogroup" aria-label={translateUi('Core languages')} className="mt-3 grid grid-cols-6 gap-3">
+      <div role="radiogroup" aria-label={translateUi('Core languages')} className="mt-4 grid grid-cols-6 gap-3">
         {core.map((l, i) => {
           const on = target === l.code;
           return (
@@ -280,16 +283,16 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
               whileTap={{ scale: 0.97 }}
               transition={{ ...spring.soft, delay: 0.05 * i }}
               className={cx(
-                'no-callout group relative flex min-h-[132px] flex-col items-start overflow-hidden rounded-[18px] border p-4 text-left outline-none',
+                'no-callout group relative flex min-h-[140px] min-w-0 flex-col items-start overflow-hidden rounded-[20px] border p-4 text-left outline-none',
                 on ? 'border-accent bg-accent-soft shadow-elev-2' : 'border-line bg-raised shadow-elev-1 hover:border-line-strong hover:shadow-elev-2',
               )}
             >
-              <LanguageFlag lang={l.code} width={32} />
+              <span className="flex h-8 items-center"><LanguageFlag lang={l.code} width={34} /></span>
               {/* "Hello" pops in, small and quiet, in the language itself. */}
               <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="absolute top-3.5 right-3.5 origin-top-right scale-75 rounded-full bg-accent-soft px-2.5 py-0.5 font-serif text-[13px] font-semibold text-accent-text opacity-0 transition-[opacity,transform] duration-200 ease-out group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100">{HELLO[l.code]}</span>
               {/* Its name in itself, and in yours. */}
-              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-auto pt-4 font-serif text-[26px] leading-none font-semibold">{l.endonym}</span>
-              <span className="mt-1.5 text-[13px] text-ink-soft"><UiText source={l.name} /></span>
+              <span lang={l.code} dir={l.rtl ? 'rtl' : undefined} className="mt-auto w-full truncate pt-5 font-serif text-[26px] leading-tight font-semibold">{l.endonym}</span>
+              <span className="mt-0.5 w-full truncate text-[13px] text-ink-soft"><UiText source={l.name} /></span>
               <span className={cx('absolute right-3 bottom-3 grid size-6 place-items-center rounded-full bg-accent-fill text-on-accent transition-all duration-300', on ? 'scale-100' : 'scale-50 opacity-0')}>
                 <Check size={14} strokeWidth={3.2} aria-hidden />
               </span>
@@ -301,8 +304,8 @@ export function LanguageStep({ target, onTarget }: LanguageStepProps) {
       {/* The library: every other language on two shelves, the ones you can read in today and the ones still to come. */}
       <div ref={listRef} className="mt-9 scroll-mt-6 pb-6">
         <button type="button" onClick={() => setLibraryOpen((o) => !o)} aria-expanded={libraryOpen} className="group flex w-full items-center gap-3 rounded-2xl py-1 text-left">
-          <h2 className="font-serif text-[22px] font-semibold"><UiText source={'The library'} /></h2>
-          <span className="text-[13px] text-ink-soft"><UiText source={'Every other language, shelved by how much Lingua has for it.'} /></span>
+          <h2 className="font-serif text-[24px] leading-none font-semibold tracking-tight whitespace-nowrap"><UiText source={'The library'} /></h2>
+          <span className="min-w-0 truncate text-[13px] text-ink-soft"><UiText source={'Every other language, shelved by how much Lingua has for it.'} /></span>
           <span className="ml-auto grid size-8 place-items-center rounded-full border border-line bg-raised text-ink-soft transition-colors group-hover:border-line-strong group-hover:text-ink">
             <ChevronDown size={17} aria-hidden className={cx('transition-transform duration-300', libraryOpen && 'rotate-180')} />
           </span>
