@@ -228,6 +228,13 @@ export function WelcomePage({ name }: { name: string }) {
 
 /** See what Lingua can do (5.1-2b): three things it does, in one fine line each. */
 export function AboutPage() {
+  const translateUi = useUi();
+  // "See what Lingua can do": the name becomes the wordmark, in the sentence at the same size.
+  const title = translateUi('See what Lingua can do');
+  const at = title.indexOf('Lingua');
+  const hasName = at >= 0;
+  const pre = hasName ? title.slice(0, at) : title;
+  const post = hasName ? title.slice(at + 'Lingua'.length) : '';
   // How many of the three things have been shown so far: each click brings in the next one.
   const [shown, setShown] = useState(0);
   const last = VIGNETTES.length;
@@ -236,14 +243,19 @@ export function AboutPage() {
   const upcoming = shown < last ? shown : -1; // and the one that comes next
   return (
     <div className="py-6">
-      <div className="flex flex-col items-center">
-        <Wordmark className="!text-[44px]" />
-        {/* A smooth orange line that fades and draws itself in under the name. */}
-        <svg viewBox="0 0 220 14" className="mt-1 h-3.5 w-[180px] text-accent" aria-hidden>
-          <motion.path d="M4 8C40 3 78 12 112 7C150 2 186 10 216 6" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ pathLength: { duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.6, delay: 0.2 } }} />
-        </svg>
-      </div>
-      <h1 className="mt-8 text-center font-serif text-[36px] leading-tight font-semibold tracking-tight"><UiText source={'See what Lingua can do'} /></h1>
+      <h1 className="text-center font-serif text-[36px] leading-tight font-semibold tracking-tight">
+        {pre}
+        {hasName ? (
+          <span className="relative inline-block">
+            lingua<span className="text-accent">.</span>
+            {/* A smooth orange line that fades and draws itself in under the name. */}
+            <svg viewBox="0 0 120 10" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 -bottom-1.5 h-2.5 w-full text-accent" aria-hidden>
+              <motion.path d="M3 6C25 2 50 9 70 5C90 2 105 7 117 4" fill="none" stroke="currentColor" strokeWidth={2.6} strokeLinecap="round" vectorEffect="non-scaling-stroke" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ pathLength: { duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.6, delay: 0.3 } }} />
+            </svg>
+          </span>
+        ) : null}
+        {post}
+      </h1>
       <p className="mt-2 text-center text-[16px] text-ink-soft"><UiText source={'Learn a language by living in it. Three things, done well.'} /></p>
       <div className="mt-12 grid grid-cols-3 gap-8">
         {VIGNETTES.map((v, i) => {
@@ -285,9 +297,9 @@ export function AboutPage() {
                 </motion.svg>
                 {isNext && (
                   <motion.svg aria-hidden viewBox="0 0 32 32" className="absolute size-9 text-ink-soft" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, ease: 'easeOut' }}>
-                    {/* A small pen-drawn pointer with one click mark, still until you use it. */}
-                    <path d="M11 6L11.6 23L15.8 19.2L19 26.4L22 25L18.8 18L24.6 17.6Z" fill="var(--raised)" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M7.5 10C6.2 8.6 6.2 6.4 7.5 5M5 12.5C2.6 10 2.6 6 5 3.5" fill="none" stroke="var(--accent)" strokeWidth={1.4} strokeLinecap="round" />
+                    {/* A small pen-drawn pointing hand with a tap mark, still until you use it. */}
+                    <path d="M13 16V8.2C13 6.4 16 6.4 16 8.2V14.5C16 13 19 13 19 14.6C19 13.6 22 13.6 22 15.2C22 14.4 24.6 14.6 24.6 16.4V20.4C24.6 24 22 26.5 18.8 26.5H16.4C14.6 26.5 13.6 25.6 12.2 24L8.4 19.6C7.6 18.6 8.8 17.4 10 18.2L13 20.4" fill="var(--raised)" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M10.2 5.2C11.8 3.2 17.2 3.2 18.8 5.2" fill="none" stroke="var(--accent)" strokeWidth={1.4} strokeLinecap="round" />
                   </motion.svg>
                 )}
               </span>
