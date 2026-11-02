@@ -4,6 +4,26 @@ A working plan for the next prompts. Each prompt is planned here first, then bui
 stopping, then committed and pushed. A push redeploys GitHub Pages, and installed apps update
 themselves. Ticks show what is done.
 
+## 2026-11-02 · Stitch design brief
+
+The user asked for a `design.md` that gives Stitch the context to redesign individual elements and,
+eventually, improve Lingua's design. This is a documentation task alongside Lingua 7, without
+starting its implementation steps.
+
+- [x] Read the handbook's design foundations, desktop patterns, room guidance, states and review
+  criteria; inspect its visual examples and check current tokens/navigation for stale details.
+- [x] Create root `design.md`: a self-contained brief with Lingua's identity, exact design values,
+  desktop constraints, room patterns, accessibility, and a reusable prompt for focused Stitch work.
+- [x] Cross-link the brief in the design plan and handover, record its source/authority, verify the
+  document and required project checks, and prepare the versioned protected-main PR.
+
+**Validation:** 22 local links and all documented base colour tokens checked against their sources;
+typecheck and production build pass. Full suite: 1,594 passed, one skipped with `--maxWorkers=1`;
+two earlier parallel runs timed out in existing coverage/dictionary tests at the unchanged 5-second
+limit. Browser reference review: Home at 1280×800, 1366×768 and 1440×900 in Paper and Nocturne;
+original Device theme restored. This is documentation, not a redesign implementation or a complete
+accessibility/room audit. Next: use the brief with a specific screen and the user's redesign notes.
+
 ## Prompt 1: iPhone icon · Diarium (Phase 5) · Phase 6 · reset ✅
 
 Visio and Whisper are skipped here and come in prompt 2.

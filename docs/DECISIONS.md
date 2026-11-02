@@ -2067,3 +2067,13 @@ Final local checks: typecheck; 239 test files, 1,594 passing tests, one skipped;
 **Status:** 6-22 and 6-24 repair requirements are complete with the external-app/performance limits below. **6-25 remains partial:** dedicated pack/voice storage management and a comprehensive app-wide destructive-action/Undo audit are still outstanding; do not certify the whole step. The concrete unsafe media clear and broken quick review are repaired. Unverified: real VoiceOver/NVDA/Narrator, real AI/microphone/Whisper hardware, notification scheduling, full floating-window interaction, external Anki/Obsidian/Notion/calendar clients, all language/state combinations, cold search latency/other dictionaries, and a fresh browser reimport of the final timestamp-rendering change. The original generic Markdown/parser and Anki media/scheduling round-trip tests pass. No real key/account content was submitted to a provider.
 
 **Publication:** push the checked integrated Codex history and main together with the next unused version; then verify GitHub Checks/Pages. The user explicitly chose protected main with PRs and passing checks, no second reviewer. Added Checks/verify on PRs and main/Codex pushes (typecheck/tests/build), so the required check actually runs before future merges. Main protection is applied after this authorized publication; do not bypass it for future work. No new feature step is claimed; remaining 6-25 items stay visible above.
+
+## 2026-11-02 · A handbook-based brief for Stitch
+
+The user requested root `design.md` as reusable context for redesigning elements and eventually
+Lingua with Stitch. It distils the handbook's identity, desktop patterns, materials, room guidance
+and review criteria, while checking current tokens, navigation and reading fonts in their owning
+source. Handbook proposals and dated product snapshots remain distinct from current behaviour;
+quoted workflow instructions are background, not authority to implement or publish work. The brief
+includes a focused task prompt and permits explicitly scoped design improvements without a new
+visual system for every screen. No application behaviour or design tokens change in this task.

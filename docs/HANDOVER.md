@@ -9,6 +9,18 @@ Last updated 2026-10-27 (Lingua 6 · Features is step 23, next after 21; Lingua 
 
 ---
 
+## Stitch design context · 2026-11-02
+
+- [x] Created [root design.md](../design.md) for the user's work with Stitch: the handbook's design
+  principles, current tokens and desktop navigation, typography, patterns, room guidance, states,
+  accessibility and a reusable task prompt. Linked from the design plan and feature specifications.
+  The brief distinguishes current implementation from handbook proposals; Lingua 7's implementation
+  steps stay as they were. No application code or tokens changed. Typecheck/build pass; full suite
+  passes with one worker (1,594 tests, one skipped), after unrelated parallel-test timeouts. Home
+  reference reviewed at all three desktop sizes in Paper/Nocturne. Version: `0.6.0-alpha.158`, via
+  the protected-main PR workflow. Next: give Stitch this file, a screenshot and a focused redesign
+  request. No further queue step claimed; no Stitch output or full accessibility audit evaluated.
+
 ## 1. The prompt to paste
 
 **On a computer that already has the `lingua` folder** (open it in the Code tab):
