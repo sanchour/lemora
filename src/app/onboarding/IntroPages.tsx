@@ -2,7 +2,6 @@ import { UiText, useUi } from '@/design/i18n/UiText';
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { HandMark } from './HandMark';
-import { Wordmark } from '@/app/shells/Wordmark';
 import { cx } from '@/lib/cx';
 
 /** The fine line drawings' shared stroke. */
