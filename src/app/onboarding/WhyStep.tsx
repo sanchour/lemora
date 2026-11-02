@@ -37,7 +37,7 @@ export function WhyStep({ language, reasons, onReasons }: WhyStepProps) {
 
   return (
     <div>
-      <StepTitle title={translateUi('Why do you want to learn {0}?', [language])} body="Be honest, we won’t tell. Pick as many as you like." />
+      <StepTitle title={translateUi('Why do you want to learn {0}?', [language])} />
 
       <div role="group" aria-label={translateUi('Why you\'re learning')} className="grid grid-cols-3 gap-3">
         {REASONS.map((r) => {

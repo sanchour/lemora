@@ -1,7 +1,7 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { AnimatePresence, motion } from 'motion/react';
 import { useRef, useState } from 'react';
-import type { KeyboardEvent, PointerEvent } from 'react';
+import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react';
 import { getLanguage } from '@/core/lang/languages';
 import { LEVELS } from '@/core/lang/levels';
 import type { Level } from '@/core/lang/levels';
@@ -26,7 +26,7 @@ const leaf = (d: string): Part => ({ d, fill: COLOUR.leaf });
 const petal = (x: number, y: number): Part => ({ d: `M${x - 2.8} ${y}a2.8 2.8 0 1 0 5.6 0a2.8 2.8 0 1 0 -5.6 0`, fill: COLOUR.petal });
 
 /** A growing sprig, one little pen drawing for each level, filled in soft colour: seed, sprout, plant, bud, flower, tree (32 x 32). */
-const ICONS: Record<Level, Part[]> = {
+const ICONS: Record<Level | 'C2', Part[]> = {
   A0: [{ d: 'M16 9C20.5 13.5 20.5 20 16 23.5C11.5 20 11.5 13.5 16 9Z', fill: COLOUR.seed }, stem('M16 12V20.5')],
   A1: [stem('M16 27V17'), leaf('M16 19C12 19 10 16.5 10 13.5C14 13.5 16 15.5 16 19Z'), leaf('M16 16C19.5 16 22 14 22 10.5C18 10.5 16 12.5 16 16Z')],
   A2: [stem('M16 27V10'), leaf('M16 23C12 23 9 21 9 18C13 18 16 20 16 23Z'), leaf('M16 19C20 19 23 17 23 14C19 14 16 16 16 19Z'), { d: 'M16 10C14 8 14 5 16 3C18 5 18 8 16 10Z', fill: COLOUR.orange }],
@@ -38,6 +38,16 @@ const ICONS: Record<Level, Part[]> = {
     { d: 'M9 16C6 16 6 11 10 11C10 7 15 6 17 9C20 7 24 10 22 13C26 14 24 19 20 18H10C9 18 9 17 9 16Z', fill: COLOUR.leaf },
     { d: 'M12 13.2a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0', fill: COLOUR.orange },
     { d: 'M18 12.2a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0', fill: COLOUR.orange },
+  ],
+  C2: [
+    { d: 'M14.5 27L15 18H17L17.5 27Z', fill: COLOUR.trunk },
+    stem('M16 22L12 18M16 20L20 16'),
+    { d: 'M9 16C6 16 6 11 10 11C10 7 15 6 17 9C20 7 24 10 22 13C26 14 24 19 20 18H10C9 18 9 17 9 16Z', fill: COLOUR.leaf },
+    { d: 'M12 13.2a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0', fill: COLOUR.orange },
+    { d: 'M18 12.2a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0', fill: COLOUR.orange },
+  
+    { d: 'M14.5 15.2a1.2 1.2 0 1 0 2.4 0a1.2 1.2 0 1 0 -2.4 0', fill: COLOUR.orange },
+    { d: 'M23.5 5a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0', fill: COLOUR.petal },
   ],
 };
 
@@ -143,6 +153,17 @@ function ExampleReveal({ lang, level }: { lang: string; level: Level }) {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+/** A level's little pen drawing, filled in soft colour: the sprig that grows from seed to tree. */
+export function LevelIcon({ level, className, style }: { level: Level | 'C2'; className?: string; style?: CSSProperties }) {
+  return (
+    <svg viewBox="0 0 32 32" className={cx('text-ink', className)} style={style} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      {ICONS[level].map((p, k) => (
+        <path key={k} d={p.d} fill={p.fill ?? 'none'} stroke="currentColor" />
+      ))}
+    </svg>
   );
 }
 

@@ -9,6 +9,7 @@ import { LanguageFlag } from '@/design/flags';
 import { spring } from '@/design/motion';
 import { SearchInput, searchKey } from '@/design/primitives';
 import { cx } from '@/lib/cx';
+import { LevelIcon } from './LevelStep';
 import { StepTitle } from './StepTitle';
 
 /** A language the learner already speaks: native, or a level. */
@@ -149,10 +150,10 @@ export function SpeakStep({ spoken, target, level: targetLevel, onSpoken }: Spea
               </div>
             </div>
             <div className="mt-3.5 flex items-end gap-3">
-              <div className="flex items-end gap-1" aria-hidden>
-                {BARS.map((_, i) => (
-                  <span key={i} className="flex h-6 w-3.5 items-end">
-                    <span className={cx('block w-full rounded-[3px]', i < targetBars ? 'bg-accent' : 'bg-line-strong/70')} style={{ height: 8 + i * 3.2 }} />
+              <div className="flex items-end gap-0.5" aria-hidden>
+                {BARS.map((level, i) => (
+                  <span key={level} className="p-0.5">
+                    <LevelIcon level={level} className="size-7" style={{ opacity: i < targetBars ? 1 : 0.28 }} />
                   </span>
                 ))}
               </div>
@@ -196,8 +197,8 @@ export function SpeakStep({ spoken, target, level: targetLevel, onSpoken }: Spea
                   </div>
                 </div>
                 <div className="mt-3.5 flex items-end gap-3">
-                  {/* The level as signal bars, A1 to C2; native fills them all. */}
-                  <div role="radiogroup" aria-label={translateUi('How well you speak {0}', [name])} className="flex items-end gap-1">
+                  {/* The level as the growing sprig, A1 to C2; native has them all in full colour. */}
+                  <div role="radiogroup" aria-label={translateUi('How well you speak {0}', [name])} className="flex items-end gap-0.5">
                     {BARS.map((level, i) => (
                       <button
                         key={level}
@@ -207,9 +208,9 @@ export function SpeakStep({ spoken, target, level: targetLevel, onSpoken }: Spea
                         aria-label={`${level}, ${LEVEL_NAME[level]}`}
                         title={`${level} · ${LEVEL_NAME[level]}`}
                         onClick={() => setLevel(s.code, level)}
-                        className="flex h-6 w-3.5 items-end"
+                        className="rounded-md p-0.5 transition-transform duration-150 hover:-translate-y-0.5"
                       >
-                        <span className={cx('block w-full rounded-[3px] transition-colors duration-200', i < at ? (native ? 'bg-sage' : 'bg-accent') : 'bg-line-strong/70 hover:bg-line-strong')} style={{ height: 8 + i * 3.2 }} />
+                        <LevelIcon level={level} className={cx('size-7 transition-opacity duration-200', s.level === level && 'scale-110')} style={{ opacity: i < at ? 1 : 0.28 }} />
                       </button>
                     ))}
                   </div>
@@ -250,11 +251,7 @@ export function SpeakStep({ spoken, target, level: targetLevel, onSpoken }: Spea
                     onClick={() => add(level)}
                     className="no-callout flex flex-col items-center rounded-xl border border-line bg-raised px-1 py-2 transition-[transform,border-color,background-color] duration-150 hover:-translate-y-0.5 hover:border-accent hover:bg-accent-soft active:scale-[0.97]"
                   >
-                    <span className="mb-1.5 flex items-end gap-0.5" aria-hidden>
-                      {BARS.map((_, i) => (
-                        <span key={i} className={cx('block w-1.5 rounded-[2px]', i <= BARS.indexOf(level === 'native' ? 'C2' : level) ? (level === 'native' ? 'bg-sage' : 'bg-accent') : 'bg-line-strong/70')} style={{ height: 6 + i * 2.6 }} />
-                      ))}
-                    </span>
+                    <LevelIcon level={level === 'native' ? 'C2' : level} className="mb-1 size-8" />
                     <span className="text-[14px] font-bold">{level === 'native' ? translateUi('Native') : level}</span>
                     <span className="mt-0.5 truncate text-[11px] text-ink-faint">{level === 'native' ? translateUi('From birth') : LEVEL_NAME[level]}</span>
                   </button>

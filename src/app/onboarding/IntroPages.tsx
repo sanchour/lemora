@@ -78,7 +78,7 @@ const CLIP = [
   { es: 'Sí, pero primero cenamos algo.', en: 'Yes, but let’s have some dinner first.' },
 ];
 /** The cards already in the demo Thesaurus, before you keep any of your own. */
-const DECK = ['esquina', 'temprano'];
+const DECK = ['esquina', 'temprano', 'ventana', 'periódico', 'cortado'];
 
 /** A sentence as words (with their punctuation kept beside them) and the spaces between. */
 function tokens(text: string) {
@@ -130,41 +130,78 @@ function ReadDemo({ kept, onKeep }: { kept: string[]; onKeep: (key: string) => v
   );
 }
 
-/** Thesaurus: the words you keep become cards; turn one over for its meaning. */
+const STOPS = ['Today', 'Tomorrow', '3 days', '1 week', '1 month'];
+
+/**
+ * Thesaurus: your words come back on a widening schedule. The card on top shows a word; click to turn it over, click again to say
+ * you knew it, and it hops along the pen line to a later day. Words you kept in Codex are the first in the stack.
+ */
 function WordsDemo({ kept }: { kept: string[] }) {
-  const deck = [...kept.slice().reverse(), ...DECK.filter((k) => !kept.includes(k))].slice(0, 5);
-  const [turned, setTurned] = useState<string | null>(null);
+  const [deck] = useState(() => [...new Set([...kept.slice().reverse(), ...DECK])].slice(0, 5));
+  const [queue, setQueue] = useState(deck);
+  const [stage, setStage] = useState<Record<string, number>>({});
+  const [turned, setTurned] = useState(false);
+  const cur = queue[0];
+  const press = () => {
+    if (!turned) return setTurned(true);
+    setStage((st) => ({ ...st, [cur]: Math.min(STOPS.length - 1, (st[cur] ?? 0) + 1) }));
+    setQueue((q) => [...q.slice(1), q[0]]);
+    setTurned(false);
+  };
   return (
-    <div className="text-center">
-      <div className="flex flex-wrap justify-center gap-4" style={{ perspective: 900 }}>
-        {deck.map((k, i) => (
+    <div className="flex flex-col items-center">
+      <div className="relative h-[124px] w-[210px]" style={{ perspective: 900 }}>
+        {/* The cards waiting behind, fanned like a hand-held deck. */}
+        {[2, 1].map((n) => (
+          <span key={n} className="absolute inset-0 rounded-[20px] border border-line bg-raised shadow-elev-1" style={{ transform: `translate(${n * 7}px, ${n * 6}px) rotate(${n * 2.5}deg)`, opacity: 0.9 - n * 0.25 }} />
+        ))}
+        <AnimatePresence mode="popLayout" initial={false}>
           <motion.button
-            key={k}
+            key={cur + (stage[cur] ?? 0)}
             type="button"
-            onClick={() => setTurned(turned === k ? null : k)}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0, rotateY: turned === k ? 180 : 0 }}
-            transition={{ duration: 0.5, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-            whileHover={{ y: -3 }}
-            className="relative h-[132px] w-[150px] cursor-pointer"
+            onClick={press}
+            initial={{ opacity: 0, x: 40, rotate: 4 }}
+            animate={{ opacity: 1, x: 0, rotate: 0, rotateY: turned ? 180 : 0 }}
+            exit={{ opacity: 0, y: 60, scale: 0.8 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0 cursor-pointer"
             style={{ transformStyle: 'preserve-3d' }}
-            aria-label={`${k}: ${GLOSS[k]}`}
+            aria-label={turned ? `${cur}: ${GLOSS[cur]}` : cur}
           >
-            <span className="absolute inset-0 grid place-items-center rounded-[18px] border border-line bg-raised shadow-elev-1" style={{ backfaceVisibility: 'hidden' }}>
-              <span lang="es" className="font-serif text-[22px] font-semibold">{k}</span>
-              <span className="absolute bottom-3 text-[11px] text-ink-faint">{i < kept.length ? translateDue(0) : translateDue(i + 1)}</span>
+            <span className="absolute inset-0 grid place-items-center rounded-[20px] border border-line bg-raised shadow-elev-2" style={{ backfaceVisibility: 'hidden' }}>
+              <span lang="es" className="font-serif text-[30px] font-semibold">{cur}</span>
+              <span className="absolute bottom-3 text-[11.5px] font-semibold tracking-wide text-accent-text uppercase">Turn over</span>
             </span>
-            <span className="absolute inset-0 grid place-items-center rounded-[18px] border border-accent/40 bg-accent/10 px-3" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-              <span className="text-[15px] leading-snug font-semibold text-accent-text">{GLOSS[k]}</span>
+            <span className="absolute inset-0 grid place-items-center rounded-[20px] border border-accent/40 bg-accent/10 px-4" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+              <span className="text-center text-[17px] leading-snug font-semibold text-accent-text">{GLOSS[cur]}</span>
+              <span className="absolute bottom-3 text-[11.5px] font-semibold tracking-wide text-accent-text/80 uppercase">I knew it</span>
             </span>
           </motion.button>
+        </AnimatePresence>
+      </div>
+
+      {/* The schedule: a pen line with five days on it; each word sits at the day it comes back. */}
+      <div className="relative mt-9 grid w-full max-w-xl grid-cols-5">
+        <svg viewBox="0 0 500 12" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-[10%] top-[78px] h-3 w-[80%] text-line-strong" aria-hidden>
+          <path d="M0 6C60 2 110 10 170 6C230 2 280 10 340 6C400 2 450 9 500 5" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+        </svg>
+        {STOPS.map((label, i) => (
+          <div key={label} className="relative flex flex-col items-center">
+            <div className="flex h-[72px] flex-col-reverse items-center gap-1">
+              {deck.filter((k) => (stage[k] ?? 0) === i).map((k) => (
+                <motion.span key={k} layoutId={`chip-${k}`} transition={{ type: 'spring', stiffness: 320, damping: 30 }} lang="es" className={cx('rounded-full border px-2.5 py-0.5 font-serif text-[13px]', k === cur ? 'border-accent bg-accent/10 text-accent-text' : 'border-line bg-raised')}>
+                  {k}
+                </motion.span>
+              ))}
+            </div>
+            <span className={cx('relative z-[1] mt-1.5 size-3 rounded-full border-2 bg-bg', deck.some((k) => (stage[k] ?? 0) === i) ? 'border-accent' : 'border-line-strong')} />
+            <span className="mt-2 text-[12px] text-ink-faint"><UiText source={label} /></span>
+          </div>
         ))}
       </div>
-      <p className="mt-6 text-[13px] text-ink-faint"><UiText source={'Click a card to turn it over. Each one comes back just before you would forget it.'} /></p>
     </div>
   );
 }
-const translateDue = (days: number) => (days === 0 ? 'New today' : days === 1 ? 'Back tomorrow' : `Back in ${days} days`);
 
 /** Sonus and Visio: a little clip whose subtitles follow along, word by word; every word still gives its meaning. */
 function ListenDemo() {
@@ -222,7 +259,6 @@ function ListenDemo() {
             <p className="mt-2 text-[14px] text-ink-soft">{line.en}</p>
           </motion.div>
         </AnimatePresence>
-        <p className="mt-6 text-[13px] text-ink-faint"><UiText source={'Press play. Podcasts, radio, films and shows, with text that follows.'} /></p>
       </div>
     </div>
   );
