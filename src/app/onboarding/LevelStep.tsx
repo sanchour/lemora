@@ -124,10 +124,10 @@ function ExampleReveal({ lang, level }: { lang: string; level: Level }) {
             exit={{ opacity: 0, scale: 1.08, filter: 'blur(6px)' }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                         whileTap={{ scale: 0.97 }}
-            aria-label={`${word[0]}, ${word[1]}. ${translateUi('Tap to see it in a sentence')}`}
+            aria-label={translateUi('See example')}
             className="group flex cursor-pointer items-center gap-2.5 rounded-xl px-3 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
           >
-            <span lang={lang} dir={rtl ? 'rtl' : undefined} className="font-serif text-[28px] leading-none font-semibold text-accent-text underline decoration-accent/60 decoration-wavy decoration-1 underline-offset-[8px] transition-[text-decoration-color] group-hover:decoration-accent">{word[0]}</span>
+            <span className="font-serif text-[26px] leading-none font-semibold text-accent-text underline decoration-accent/60 decoration-wavy decoration-1 underline-offset-[8px] transition-[text-decoration-color] group-hover:decoration-accent"><UiText source={'See example'} /></span>
             <span className="grid size-6 place-items-center rounded-full border border-accent/40 text-accent-text transition-[background-color,transform] duration-200 group-hover:translate-x-0.5 group-hover:bg-accent/10">
               <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M2.5 8.5C5 7.5 9 8.5 12.5 8M9 4.5l3.5 3.5L9 11.5" />
@@ -214,13 +214,11 @@ export function LevelStep({ lang, level, seedKnown, onLevel, onSeedKnown }: Leve
             {/* The pen line, and the part of it you have travelled in orange. */}
             <svg viewBox="0 0 600 20" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-1/2 h-5 -translate-y-1/2 overflow-visible text-line-strong" aria-hidden>
               <path d={LINE} fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-              <defs>
-                <clipPath id="level-travelled">
-                  <motion.rect x={-4} y={-10} height={40} initial={false} animate={{ width: 4 + (600 * index) / last }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} />
-                </clipPath>
-              </defs>
-              <path d={LINE} fill="none" stroke="var(--accent)" strokeWidth={2.4} strokeLinecap="round" vectorEffect="non-scaling-stroke" clipPath="url(#level-travelled)" />
-              </svg>
+            </svg>
+            {/* The travelled part: the same line again, cropped at exactly the chosen level's position. */}
+            <motion.svg viewBox="0 0 600 20" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-1/2 h-5 -translate-y-1/2 overflow-visible" aria-hidden initial={false} animate={{ clipPath: `inset(-10px ${100 - (100 * index) / last}% -10px -10px)` }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
+              <path d={LINE} fill="none" stroke="var(--accent)" strokeWidth={2.4} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+            </motion.svg>
 
             {/* A small drawing on the line for each level. */}
             {LEVELS.map((l, i) => {
