@@ -78,17 +78,25 @@ export function NamePage({ name, onName, onEnter }: { name: string; onName: (nam
       <HandMark size={72} className="text-ink" />
       <h1 className="mt-6 font-serif text-[40px] leading-[1.15] font-semibold tracking-tight"><span className="not-italic"><UiText source={'First things first.'} /></span></h1>
       <p className="mt-2 text-[16.5px] text-ink-soft"><UiText source={'What should we call you?'} /></p>
-      <input
-        ref={input}
-        value={name}
-        onChange={(e) => onName(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && onEnter()}
-        maxLength={40}
-        autoComplete="given-name"
-        aria-label={translateUi('Your name')}
-        placeholder={translateUi('Your name')}
-        className="mt-10 w-full max-w-sm border-b-2 border-line-strong bg-transparent pb-2 text-center font-serif text-[32px] transition-colors outline-none placeholder:text-ink-faint/50 focus:border-accent"
-      />
+      <div className="group relative mt-10 w-full max-w-sm">
+        <input
+          ref={input}
+          value={name}
+          onChange={(e) => onName(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && onEnter()}
+          maxLength={40}
+          autoComplete="given-name"
+          aria-label={translateUi('Your name')}
+          className="w-full bg-transparent pb-3 text-center font-serif text-[32px] outline-none"
+        />
+        {/* A pen-drawn line: a little wobble, a loose tail, and a second thin pass that appears on focus. */}
+        <svg viewBox="0 0 384 14" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-0 h-3.5 w-full text-line-strong transition-colors duration-200 group-focus-within:text-accent" aria-hidden>
+          <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+            <path strokeWidth={2.4} d="M3 8C40 5 74 10 118 7C170 4 214 10 262 7C306 5 344 9 378 6" vectorEffect="non-scaling-stroke" />
+            <path strokeWidth={1.2} opacity={0} className="transition-opacity duration-200 group-focus-within:opacity-70" d="M20 11C80 9 150 12 210 10C270 8 330 11 360 9" vectorEffect="non-scaling-stroke" />
+          </g>
+        </svg>
+      </div>
       <p className="mt-3 text-[12.5px] text-ink-faint"><UiText source={'It stays on this device. We just like to be polite.'} /></p>
     </div>
   );
