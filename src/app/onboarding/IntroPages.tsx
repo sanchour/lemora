@@ -46,19 +46,19 @@ function OpenBook() {
           className={cx('font-serif', w.accent ? 'fill-accent' : 'fill-current')}
           initial={{ y: 5 }}
           animate={{ y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 + i * 0.55, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.5, delay: 0.5 + i * 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
           {/* Arabic letters join, so that word fades in whole rather than letter by letter. */}
           {(w.rtl ? [w.text] : [...w.text]).map((ch, j) => (
-            <motion.tspan key={j} initial={{ opacity: 0 }} animate={{ opacity: 0.92 }} transition={{ duration: 0.35, ease: 'easeOut', delay: 0.4 + i * 0.55 + j * 0.055 }}>{ch}</motion.tspan>
+            <motion.tspan key={j} initial={{ opacity: 0 }} animate={{ opacity: 0.92 }} transition={{ duration: 0.3, ease: 'easeOut', delay: 0.5 + i * 0.3 + j * 0.04 }}>{ch}</motion.tspan>
           ))}
         </motion.text>
       ))}
       {/* A sage sprig tucked into the right page. */}
       <g stroke="#6b8e78" transform="translate(95 55) scale(0.55)">
-        <Pen d="M206 122C204 112 208 102 216 96" delay={0.9} duration={0.33} />
-        <Pen d="M216 96C224 96 228 90 228 84C220 84 216 90 216 96Z" delay={1.1} duration={0.22} />
-        <Pen d="M208 110C200 110 196 104 196 100C204 100 208 104 208 110Z" delay={1.2} duration={0.22} />
+        <Pen d="M206 122C204 112 208 102 216 96" delay={1.9} duration={0.35} />
+        <Pen d="M216 96C224 96 228 90 228 84C220 84 216 90 216 96Z" delay={2.15} duration={0.25} />
+        <Pen d="M208 110C200 110 196 104 196 100C204 100 208 104 208 110Z" delay={2.3} duration={0.25} />
       </g>
       {/* The bookmark ribbon drops from the top. */}
       <motion.path {...LINE} className="text-accent" d="M170 8V46L178 40L186 46V10" initial={{ pathLength: 0, y: -8, opacity: 0 }} animate={{ pathLength: 1, y: 0, opacity: 1 }} transition={{ duration: 0.4, delay: 0.75, ease: 'easeOut' }} />
@@ -197,7 +197,7 @@ export function WelcomePage({ name }: { name: string }) {
   // The book starts drawing only once the greeting and the quip have settled.
   const [bookIn, setBookIn] = useState(false);
   useEffect(() => {
-    const t = setTimeout(() => setBookIn(true), 1300);
+    const t = setTimeout(() => setBookIn(true), 450);
     return () => clearTimeout(t);
   }, []);
   const translateUi = useUi();
@@ -212,10 +212,10 @@ export function WelcomePage({ name }: { name: string }) {
     <div className="flex flex-col items-center py-6 text-center">
       <h1 className="flex max-w-2xl items-baseline justify-center font-serif text-[44px] leading-[1.12] font-semibold tracking-tight whitespace-nowrap" aria-label={full}>
         {/* "Welcome" arrives alone and centred; then the name opens up beside it and the two re-centre together. */}
-        <motion.span aria-hidden initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}>{lead}</motion.span>
-        <motion.span aria-hidden className="-my-1 overflow-hidden py-1 whitespace-pre" initial={{ width: 0, opacity: 0 }} animate={{ width: 'auto', opacity: 1 }} transition={{ width: { duration: 0.6, delay: 0.55, ease: [0.45, 0, 0.2, 1] }, opacity: { duration: 0.5, delay: 0.65, ease: 'easeOut' } }}>{rest}</motion.span>
+        <motion.span aria-hidden initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0, ease: [0.22, 1, 0.36, 1] }}>{lead}</motion.span>
+        <motion.span aria-hidden className="-my-1 overflow-hidden py-1 whitespace-pre" initial={{ width: 0, opacity: 0 }} animate={{ width: 'auto', opacity: 1 }} transition={{ width: { duration: 0.55, delay: 0.45, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.45, delay: 0.55, ease: 'easeOut' } }}>{rest}</motion.span>
       </h1>
-      <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 1.1, ease: [0.22, 1, 0.36, 1] }} className="mt-3 max-w-md text-[16.5px] leading-relaxed text-ink-soft italic">
+      <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.9, ease: [0.22, 1, 0.36, 1] }} className="mt-3 max-w-md text-[16.5px] leading-relaxed text-ink-soft italic">
         {quip}
       </motion.p>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, ease: 'easeOut' }} className="mt-10 h-[200px]">
