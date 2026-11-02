@@ -78,7 +78,9 @@ export function NamePage({ name, onName, onEnter }: { name: string; onName: (nam
       <HandMark size={72} className="text-ink" />
       <h1 className="mt-6 font-serif text-[40px] leading-[1.15] font-semibold tracking-tight"><span className="not-italic"><UiText source={'First things first.'} /></span></h1>
       <p className="mt-2 text-[16.5px] text-ink-soft"><UiText source={'What should we call you?'} /></p>
-      <div className="group relative mt-10 w-full max-w-sm">
+      <div className="group relative mt-10 inline-grid max-w-full">
+        {/* Mirror of the typed text: it sizes the box (and so the line) to the name. */}
+        <span aria-hidden className="invisible col-start-1 row-start-1 min-w-[11rem] px-2 pb-3 font-serif text-[32px] whitespace-pre">{name}</span>
         <input
           ref={input}
           value={name}
@@ -87,8 +89,26 @@ export function NamePage({ name, onName, onEnter }: { name: string; onName: (nam
           maxLength={40}
           autoComplete="given-name"
           aria-label={translateUi('Your name')}
-          className="w-full bg-transparent pb-3 text-center font-serif text-[32px] outline-none"
+          className="col-start-1 row-start-1 w-full min-w-0 bg-transparent px-2 pb-3 text-center font-serif text-[32px] outline-none"
         />
+        {/* A small pencil waiting on the line: it says "write here" without a word, and puts itself away once you type. */}
+        <motion.svg
+          viewBox="0 0 24 24"
+          width={26}
+          height={26}
+          className="pointer-events-none absolute -left-9 bottom-2.5 text-ink-soft transition-opacity duration-200"
+          style={{ opacity: name ? 0 : 1, transformOrigin: '4px 20px' }}
+          animate={{ rotate: [0, -10, 0, -6, 0] }}
+          transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 1.2, ease: 'easeInOut' }}
+          aria-hidden
+        >
+          <g {...LINE} strokeWidth={1.5}>
+            <path d="M4 20L5.2 15L16 4.2L19.8 8L9 18.8Z" />
+            <path d="M14 6.2L17.8 10" />
+            <path d="M5.2 15L9 18.8" className="text-accent" stroke="currentColor" />
+          </g>
+          <path d="M4 20L5.2 15L9 18.8Z" fill="var(--accent)" opacity={0.85} />
+        </motion.svg>
         {/* A pen-drawn line: a little wobble, a loose tail, and a second thin pass that appears on focus. */}
         <svg viewBox="0 0 384 14" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-0 h-3.5 w-full text-line-strong transition-colors duration-200 group-focus-within:text-accent" aria-hidden>
           <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
