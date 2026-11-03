@@ -8063,5 +8063,8 @@
   "Recent": "Недавнее",
   "Today’s challenge": "Задание на сегодня",
   "Books, articles and word decks": "Книги, статьи и колоды слов",
-  "Desk": "Стол"
+  "Desk": "Стол",
+  "Measured": "Измерено",
+  "last grade {0}": "последняя оценка {0}",
+  "{0} recalled (30 days)": "{0} вспомнено (30 дней)"
 }

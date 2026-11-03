@@ -513,6 +513,7 @@ const CEFR_CURRICULUM_BENCHMARKS: Record<
 export function calculateCurriculumProgress(
   targetLevel: CefrLevel,
   current: { words: number; grammarTopics: number; listeningHours: number; readingWords: number },
+  leaveOut: ReadonlyArray<CurriculumProgressItem['area']> = [],
 ): CurriculumProgressResult {
   const bench = CEFR_CURRICULUM_BENCHMARKS[targetLevel] ?? CEFR_CURRICULUM_BENCHMARKS.B1;
 
@@ -551,11 +552,12 @@ export function calculateCurriculumProgress(
     },
   ];
 
-  const overallReadiness = items.reduce((sum, item) => sum + item.fraction, 0) / items.length;
+  const counted = items.filter((item) => !leaveOut.includes(item.area));
+  const overallReadiness = counted.reduce((sum, item) => sum + item.fraction, 0) / counted.length;
 
   return {
     targetLevel,
-    items,
+    items: counted,
     overallReadiness,
     explanation: {
       whatItSays: 'Compares your exposure volume and mastered topics against typical curricular requirements for the target CEFR level.',

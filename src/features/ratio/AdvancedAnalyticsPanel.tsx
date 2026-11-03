@@ -16,6 +16,9 @@ import {
 import type { ChartExplanation } from '@/core/ratio/analytics';
 import type { EvidenceRow } from '@/core/contracts/learner';
 import { cx } from '@/lib/cx';
+import { shows } from '@/product';
+
+const LISTENING = shows('sonus') || shows('cantus') || shows('visio');
 
 export function AdvancedAnalyticsPanel({
   evidence,
@@ -44,7 +47,7 @@ export function AdvancedAnalyticsPanel({
     grammarTopics,
     listeningHours,
     readingWords,
-  });
+  }, [...(LISTENING ? [] : ['listening' as const]), ...(shows('grammatica') ? [] : ['grammar' as const])]);
   const listeningData = calculateListeningAnalytics(evidence);
   const mistakeData = calculateMistakeTrends(evidence);
 
@@ -67,7 +70,7 @@ export function AdvancedAnalyticsPanel({
             { id: 'curriculum', label: 'CEFR Benchmark' },
             { id: 'listening', label: 'Listening Speeds' },
             { id: 'errors', label: 'Mistakes' },
-          ].map((t) => (
+          ].filter((t) => t.id !== 'listening' || LISTENING).map((t) => (
             <button
               key={t.id}
               type="button"

@@ -62,6 +62,8 @@ export interface Overview {
     grades: Array<{ x: number; y: number }>;
     errors: Array<{ category: CorrectionCategory; count: number }>;
   };
+  /** This calendar month only, for the monthly report: words added, minutes studied, books finished. */
+  month: { newWords: number; minutes: number; finished: number };
   habit: {
     days: DayMinutes[];
     totals: Record<Activity, number>;
@@ -281,6 +283,12 @@ export async function loadOverview(langs: string[], database: LinguaDB = db, now
   const { current, longest } = streaks(met, now);
   const monday = dayMs(weekKey(now));
   const weekMet = Array.from({ length: 7 }, (_, i) => met.has(localDateKey(monday + i * DAY)));
+  const thisMonth = localDateKey(now).slice(0, 7);
+  const month = {
+    newWords: daily.filter((d) => d.date.startsWith(thisMonth)).reduce((n, d) => n + d.newKnown + d.newLearning, 0),
+    minutes: days.filter((d) => d.date.startsWith(thisMonth)).reduce((n, d) => n + d.total, 0),
+    finished: finishedTexts.filter((t) => t.finishedAt && localDateKey(t.finishedAt).startsWith(thisMonth)).length,
+  };
 
   return {
     langs,
@@ -334,6 +342,7 @@ export async function loadOverview(langs: string[], database: LinguaDB = db, now
         .map((e) => ({ x: dayMs(e.date), y: e.review!.scores.overall })),
       errors: [...errors].map(([category, count]) => ({ category, count })).sort((a, b) => b.count - a.count).slice(0, 5),
     },
+    month,
     habit: { days, totals, current, longest, byHour, weekMet },
   };
 }

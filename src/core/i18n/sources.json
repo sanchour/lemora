@@ -16982,5 +16982,14 @@
   ],
   "Desk": [
     "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "Measured": [
+    "src/features/ratio/MonthlyReportModal.tsx"
+  ],
+  "last grade {0}": [
+    "src/features/ratio/Overview.tsx"
+  ],
+  "{0} recalled (30 days)": [
+    "src/features/ratio/Overview.tsx"
   ]
 }

@@ -12,6 +12,10 @@ import { patchSetting, useSettings } from '@/data/settings';
 import { Button, Drawer } from '@/design/primitives';
 import { cx } from '@/lib/cx';
 import { toast } from '@/state/ui';
+import { shows } from '@/product';
+
+/** The stamps this build can award: singing along needs Cantus. The panel and the monthly report both count these. */
+export const earnedStamps = (input: Parameters<typeof checkMilestoneStamps>[0]) => checkMilestoneStamps(input).filter((s) => s.id !== 'first-song' || shows('cantus'));
 
 const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
   sprout: Sprout,
@@ -56,7 +60,7 @@ export function MilestoneStamps({
   const [rewardsOpen, setRewardsOpen] = useState(false);
   const [selectedStamp, setSelectedStamp] = useState<MilestoneStamp | null>(null);
 
-  const stamps = checkMilestoneStamps({
+  const stamps = earnedStamps({
     knownWords,
     finishedBooks,
     conversations,

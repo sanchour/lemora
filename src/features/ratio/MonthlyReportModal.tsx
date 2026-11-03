@@ -13,10 +13,10 @@ export interface MonthlyReportData {
   newWordsMonth: number;
   hoursStudiedMonth: number;
   booksReadMonth: number;
-  conversationsHeldMonth: number;
   currentStreak: number;
   stampsUnlocked: string[];
-  skillsSummary: Array<{ name: string; hours: number; accuracy: number }>;
+  /** Hours this month, and a measured figure where one exists (recall, a grade), else nothing. */
+  skillsSummary: Array<{ name: string; hours: number; measure: string | null }>;
   recentReflection?: string;
 }
 
@@ -98,7 +98,7 @@ export function MonthlyReportModal({
                   <tr>
                     <th className="p-3"><UiText source={'Skill'} /></th>
                     <th className="p-3 text-right"><UiText source={'Hours'} /></th>
-                    <th className="p-3 text-right"><UiText source={'Accuracy'} /></th>
+                    <th className="p-3 text-right"><UiText source={'Measured'} /></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-line">
@@ -106,9 +106,7 @@ export function MonthlyReportModal({
                     <tr key={s.name}>
                       <td className="p-3 font-medium text-ink">{s.name}</td>
                       <td className="p-3 text-right tabular-nums text-ink-soft">{s.hours.toFixed(1)} h</td>
-                      <td className="p-3 text-right tabular-nums text-ink font-semibold">
-                        {Math.round(s.accuracy * 100)}%
-                      </td>
+                      <td className="p-3 text-right tabular-nums text-ink font-semibold">{s.measure ?? '—'}</td>
                     </tr>
                   ))}
                 </tbody>

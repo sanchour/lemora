@@ -8063,5 +8063,8 @@
   "Recent": "最近",
   "Today’s challenge": "今日挑战",
   "Books, articles and word decks": "书籍、文章和词卡组",
-  "Desk": "书桌"
+  "Desk": "书桌",
+  "Measured": "实测",
+  "last grade {0}": "最近评分 {0}",
+  "{0} recalled (30 days)": "记住 {0}（30 天）"
 }

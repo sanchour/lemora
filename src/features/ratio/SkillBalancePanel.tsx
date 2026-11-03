@@ -5,6 +5,10 @@ import { Link } from 'react-router';
 import { Scale } from 'lucide-react';
 import { useSkillBalance } from '@/data/learner';
 import { Panel } from './common';
+import { shows } from '@/product';
+
+// A skill this build has no room for can't have answers; it is left out rather than called quiet.
+const ROOMLESS: Record<string, boolean> = { listening: !(shows('sonus') || shows('cantus') || shows('visio')), speaking: !shows('sermo'), pronunciation: !(shows('sermo') || shows('sounds')) };
 
 const NAME: Record<string, string> = { vocabulary: 'Words', grammar: 'Grammar', reading: 'Reading', listening: 'Listening', pronunciation: 'Pronunciation', speaking: 'Speaking', writing: 'Writing', translating: 'Translating' };
 
@@ -12,14 +16,15 @@ export function SkillBalancePanel({ lang }: { lang: string }) {
   const translateUi = useUi();
   const data = useSkillBalance(lang);
   if (!data || !data.balance.some((s) => s.answers > 0)) return null;
-  const most = Math.max(...data.balance.map((s) => s.answers), 1);
-  const quiet = data.balance.filter((s) => s.answers === 0).map((s) => translateUi(NAME[s.skill]));
+  const balance = data.balance.filter((s) => s.answers > 0 || !ROOMLESS[s.skill]);
+  const most = Math.max(...balance.map((s) => s.answers), 1);
+  const quiet = balance.filter((s) => s.answers === 0).map((s) => translateUi(NAME[s.skill]));
 
   return (
     <Panel title={translateUi('Skills, side by side')} icon={Scale}>
       <p className="mb-3 text-[13.5px] text-ink-soft"><UiText source={'The last two weeks. A short bar is a skill you have left quiet; the part with a hint is answers you did not manage alone.'} /></p>
       <ul className="space-y-1.5">
-        {data.balance.map((s) => (
+        {balance.map((s) => (
           <li key={s.skill} className="flex items-center gap-3 text-[13.5px]">
             <span className="w-28 shrink-0 text-ink-soft"><UiText source={NAME[s.skill]} /></span>
             <span className="relative h-2 flex-1 overflow-hidden rounded-full bg-sunken" role="img" aria-label={translateUi('{0} answers, {1} with help', [s.answers, s.assisted])}>

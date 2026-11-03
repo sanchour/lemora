@@ -178,6 +178,12 @@ describe('calculateCurriculumProgress', () => {
     expect(res.items.find((i) => i.area === 'words')?.fraction).toBeCloseTo(0.5);
     expect(res.overallReadiness).toBeGreaterThan(0.4);
   });
+
+  it('leaves out what the build cannot measure, and averages over the rest', () => {
+    const res = calculateCurriculumProgress('B1', { words: 1000, grammarTopics: 0, listeningHours: 0, readingWords: 0 }, ['grammar', 'listening']);
+    expect(res.items.map((i) => i.area)).toEqual(['words', 'reading']);
+    expect(res.overallReadiness).toBeCloseTo(res.items.reduce((n, i) => n + i.fraction, 0) / 2);
+  });
 });
 
 describe('calculateMistakeTrends', () => {

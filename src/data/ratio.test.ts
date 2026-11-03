@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { localDateKey } from '@/lib/format';
 import { bumpDaily, recordSession } from './activity';
 import { createDb } from './db';
@@ -15,6 +15,7 @@ function freshDb(): LinguaDB {
   return db;
 }
 afterEach(async () => {
+  vi.useRealTimers();
   await Promise.all(open.splice(0).map((db) => db.delete()));
 });
 
@@ -34,6 +35,29 @@ describe('streaks', () => {
 });
 
 describe('loadOverview', () => {
+  it('counts this calendar month alone for the monthly report', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date(2026, 10, 18, 12, 0));
+    const db = freshDb();
+    await completeOnboarding({ target: 'es', native: 'en', level: 'A2', theme: 'paper', seedKnown: false }, db);
+    await setWordState('es', 'perro', 1, {}, db);
+    await setWordState('es', 'gato', 2, { surface: 'gato', gloss: 'cat' }, db);
+    const now = Date.now();
+    await recordSession({ lang: 'es', type: 'read', startedAt: now - 30 * 60_000, endedAt: now - 10 * 60_000, activeMs: 20 * 60_000, wordsRead: 600 }, db);
+    // Logged last month: in the year's totals, not in this month's.
+    await db.studyLogs.add({ id: 'old', lang: 'es', at: now - 40 * DAY, minutes: 45, activity: 'class', createdAt: now, updatedAt: now });
+    await db.texts.bulkAdd([
+      { id: 't1', lang: 'es', title: 'Hoy', kind: 'text', content: '', createdAt: now, updatedAt: now, finishedAt: now - DAY } as never,
+      { id: 't2', lang: 'es', title: 'Antes', kind: 'text', content: '', createdAt: now, updatedAt: now, finishedAt: now - 60 * DAY } as never,
+    ]);
+    const o = await loadOverview(['es'], db);
+    expect(o.month.newWords).toBe(2);
+    expect(o.month.minutes).toBeCloseTo(20);
+    expect(o.month.finished).toBe(1);
+    expect(o.habit.totals.logged).toBe(45);
+    expect(o.reading.finishedThisYear).toBe(2);
+  });
+
   it('adds up reading, words, sessions and logged study', async () => {
     const db = freshDb();
     await completeOnboarding({ target: 'es', native: 'en', level: 'A2', theme: 'paper', seedKnown: false }, db);

@@ -8,7 +8,8 @@ import { estimateLevel } from '@/core/ratio/estimate';
 import { LISTENING_KIND_LABEL, lookupsPer1000 } from '@/core/ratio/kinds';
 import { useLanguages } from '@/data/languages';
 import { ACTIVITIES, loadOverview } from '@/data/ratio';
-import type { Overview as OverviewData } from '@/data/ratio';
+import type { Activity, Overview as OverviewData } from '@/data/ratio';
+import { localDateKey } from '@/lib/format';
 import { BarChart } from '@/design/charts/BarChart';
 import { Heatmap } from '@/design/charts/Heatmap';
 import { LineChart } from '@/design/charts/LineChart';
@@ -25,7 +26,7 @@ import { GrammarPanel } from './GrammarPanel';
 import { ErrorLogPanel } from './ErrorLogPanel';
 import { SkillBalancePanel } from './SkillBalancePanel';
 import { WeakSpotsPanel } from './WeakSpotsPanel';
-import { MilestoneStamps } from './MilestoneStamps';
+import { earnedStamps, MilestoneStamps } from './MilestoneStamps';
 import { RealLifeGoalsPanel } from './RealLifeGoalsPanel';
 import { AdvancedAnalyticsPanel } from './AdvancedAnalyticsPanel';
 import { ReflectionDrawer } from './ReflectionDrawer';
@@ -37,6 +38,7 @@ const MODE_LABEL: Record<string, string> = { mcq: 'Choose', match: 'Match pairs'
 const weekday = (date: string) => new Date(`${date}T12:00:00`).toLocaleDateString(undefined, { weekday: 'narrow' });
 
 export function Overview() {
+  const translateUi = useUi();
   const { language } = useApp();
   const lang = language.id;
   const [data, setData] = useState<OverviewData | null>(null);
@@ -68,22 +70,30 @@ export function Overview() {
     [lang],
   ) ?? 0;
 
+  // Every figure is this calendar month's, or says what it is; nothing is filled in.
+  const thisMonth = localDateKey(Date.now()).slice(0, 7);
+  const monthDays = data?.habit.days.filter((d) => d.date.startsWith(thisMonth)) ?? [];
+  const monthHours = (...activities: Activity[]) => monthDays.reduce((n, d) => n + activities.reduce((m, a) => m + d.minutes[a], 0), 0) / 60;
+  const lastGrade = data?.writing.grades.at(-1)?.y;
   const monthlyReportData = {
     languageName: getLanguage(language.id)?.name ?? language.id,
     monthName: new Date().toLocaleDateString(undefined, { month: 'long' }),
     year: new Date().getFullYear(),
     knownWords: data?.vocabulary.known ?? 0,
-    newWordsMonth: data?.vocabulary.newPerWeek.reduce((sum, w) => sum + w.words, 0) ?? 0,
-    hoursStudiedMonth: (data ? ACTIVITIES.reduce((sum, a) => sum + data.habit.totals[a], 0) : 0) / 60,
-    booksReadMonth: data?.reading.finishedThisYear ?? 0,
-    conversationsHeldMonth: conversationsCount,
+    newWordsMonth: data?.month.newWords ?? 0,
+    hoursStudiedMonth: (data?.month.minutes ?? 0) / 60,
+    booksReadMonth: data?.month.finished ?? 0,
     currentStreak: data?.habit.current ?? 0,
-    stampsUnlocked: ['First Word', '500 Words', 'First Book', 'One Week'].filter((_, i) => i < ((data?.vocabulary.known ?? 0) > 500 ? 3 : 1)),
+    stampsUnlocked: data
+      ? earnedStamps({ knownWords: data.vocabulary.known, finishedBooks: data.reading.finished, conversations: conversationsCount, journalEntries: data.writing.entries, songsSung: data.listening.songs, streakDays: data.habit.current, totalHours: ACTIVITIES.reduce((n, a) => n + data.habit.totals[a], 0) / 60 })
+          .filter((s) => s.unlockedAt)
+          .map((s) => s.title)
+      : [],
     skillsSummary: [
-      { name: 'Reading', hours: (data?.reading.minutes ?? 0) / 60, accuracy: 0.94 },
-      { name: 'Listening', hours: (data?.listening.minutes ?? 0) / 60, accuracy: 0.89 },
-      { name: 'Writing', hours: (data?.habit.totals.write ?? 0) / 60, accuracy: 0.86 },
-      { name: 'Vocabulary', hours: (data?.habit.totals.review ?? 0) / 60, accuracy: 0.91 },
+      { name: 'Reading', hours: monthHours('read'), measure: null },
+      ...(shows('sonus') || shows('cantus') || shows('visio') ? [{ name: 'Listening', hours: monthHours('listen', 'watch'), measure: null }] : []),
+      { name: 'Writing', hours: monthHours('write'), measure: lastGrade === undefined ? null : translateUi('last grade {0}', [lastGrade]) },
+      { name: 'Vocabulary', hours: monthHours('review', 'ludus'), measure: data?.flashcards.retention30 == null ? null : translateUi('{0} recalled (30 days)', [pct(data.flashcards.retention30)]) },
     ],
   };
 

@@ -8063,5 +8063,8 @@
   "Recent": "Zuletzt",
   "Today’s challenge": "Die Herausforderung des Tages",
   "Books, articles and word decks": "Bücher, Artikel und Wortstapel",
-  "Desk": "Schreibtisch"
+  "Desk": "Schreibtisch",
+  "Measured": "Gemessen",
+  "last grade {0}": "letzte Note {0}",
+  "{0} recalled (30 days)": "{0} erinnert (30 Tage)"
 }

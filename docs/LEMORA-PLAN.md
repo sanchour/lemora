@@ -24,7 +24,7 @@ two in one commit.
 | 2.4 | Alphabet on its own (Cursus tab alone); Ratio without Tabula or excluded panels | ✅ | Opus 5.5, 2026-11-03 |
 | 2.5 | Settings without Listening and Music; Lemora+ naming checked | ✅ | Opus 5.5, 2026-11-03 |
 | 2.6 | Delete what nothing reachable imports any more; bundle size before and after | ⬜ | |
-| 3.1 | Home: Lemora's own, **redesigned** (greeting, tools 2-up with per-tool progress, overall time, continue reading, recent, next actions); fixed sidebar with the tools always visible | ✅ | Opus 5.5, 2026-11-03 |
+| 3.1 | Home: Lingua's right-rail Home made for Lemora by default (circle tools, Time today open on the page, Tools on the greeting's line); the desk layout as a choice in Settings. Lemora's own, **redesigned** (greeting, tools 2-up with per-tool progress, overall time, continue reading, recent, next actions); fixed sidebar with the tools always visible | ✅ | Opus 5.5, 2026-11-03 |
 | 3.2 | Showcase → Lingua-Launch (rewritten in plain HTML and JS, checked there), then out of Lemora's onboarding | ⬜ | |
 | 3.3 | Onboarding map: frame each language from country geometry; multi-region languages get a primary focus plus alternatives | ⬜ | |
 | 3.4 | Level step: title → slider → content sequence (reduced motion respected); hover, click, multi-word and long-press translation of the example sentence from local data | ⬜ | |
@@ -39,11 +39,11 @@ two in one commit.
 | 3.13 | **Redesign: Settings** | ⬜ | |
 | 3.14 | Things to try redrawn and moved into Explora (out of the sidebar) | ✅ | Opus 5.5, 2026-11-03 |
 | 3.15 | Alphabet (with Sounds) only for languages not written in Latin script | ✅ | Opus 5.5, 2026-11-03 |
-| 3.16 | Explora's rotating hero in the bookish look, not a streaming billboard | ⬜ | |
-| 3.17 | Word decks: a better layout and design (Explora › Word decks, the starter library) | ⬜ | |
+| 3.16 | Explora's rotating hero in the bookish look, not a streaming billboard | ✅ | Opus 5.5, 2026-11-03 |
+| 3.17 | Word decks: a better layout and design (Explora › Word decks, the starter library) | ✅ | Opus 5.5, 2026-11-03 |
 | 3.18 | Bibliotheca: a better layout | ⬜ | |
-| 3.19 | Thesaurus's Discover moves to Explora entirely; a Discover icon at Thesaurus's top right | ⬜ | |
-| 3.20 | Hand-drawn touches where they fit, still clean (src/design/drawings.tsx: the handbook's icons and empty-page art) | ◐ Home, Things to try | |
+| 3.19 | Thesaurus's Discover moves to Explora entirely; a Discover icon at Thesaurus's top right | ✅ | Opus 5.5, 2026-11-03 |
+| 3.20 | Hand-drawn touches where they fit, still clean (src/design/drawings.tsx: the handbook's icons and empty-page art) | ◐ Home, Things to try, Explora's hero, word decks | |
 | 4.1 | Functional audit of every page (imports, files, lookups, saving, flashcards, Ludus, Diarium, language switch, backup and restore, offline, errors) | ⬜ | |
 | 4.2 | UX pass: spacing, type, focus, empty, loading and error states | ⬜ | |
 | 4.3 | Performance: bundle, lazy routes, rerenders, reader | ⬜ | |
@@ -85,7 +85,7 @@ desktop with no horizontal scrolling.
 | W4 | Demo: write | A Diarium line corrected in front of you: the word diff draws itself (crossed out, written in), with the reason beside it |
 | W5 | Demo: a new alphabet | Cyrillic letters as tiles that turn over to their sound and a word (Alphabet) |
 | W6 | Things to try | A row of hand-drawn challenge cards |
-| W7 | How it's made | Local-first, honest numbers, no streak guilt, your words follow you: four drawn icons with a line each |
+| W7 | How it's made | Yours on your device, honest numbers, reading first, calm by design: four drawn icons with a line each |
 | W8 | Footer | An ornament, *Built from Lingua*, the data's attributions (Wiktionary via kaikki.org, FrequencyWords, CC BY-SA 4.0) |
 
 **Steps.** ✅ W-a plan (this section) · ✅ W-b the page and its demos · ✅ W-c checked at 390, 1366 and 1440 wide, light
