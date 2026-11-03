@@ -175,7 +175,7 @@ export function rankGlobalSearch(corpus: GlobalSearchCorpus, rawQuery: string, l
         title: j.title || `Journal (${j.date})`,
         subtitle: `Diarium · ${j.date}`,
         snippet: j.text.slice(0, 120),
-        href: `/mentis/entry/${j.id}`,
+        href: `/mentis/diarium/${j.id}`,
         score: best,
       });
     }

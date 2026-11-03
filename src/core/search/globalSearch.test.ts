@@ -101,6 +101,8 @@ describe('core/search/globalSearch (6-22)', () => {
     expect(kinds.has('card')).toBe(true);
     expect(kinds.has('text')).toBe(true);
     expect(kinds.has('journal')).toBe(true);
+    // An entry opens at its own page (the router's mentis/diarium/:entryId), not Mentis's front.
+    expect(hits.find((h) => h.kind === 'journal')?.href).toBe('/mentis/diarium/j1');
     expect(kinds.has('grammar')).toBe(true);
     // Exact word match with favourite bonus ranks first
     expect(hits[0].kind).toBe('word');
