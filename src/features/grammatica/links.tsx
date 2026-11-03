@@ -10,6 +10,7 @@ import { topicsOf } from '@/core/grammar/types';
 import { useGrammarItems, useGrammarProgress } from '@/data/grammar';
 import { Card } from '@/design/primitives';
 import { TopicRing } from './parts';
+import { shows } from '@/product';
 
 function useGrammarOf(lang: string): Grammar | null | undefined {
   const [state, setState] = useState<{ lang: string; grammar: Grammar | null }>();
@@ -30,7 +31,7 @@ function useGrammarOf(lang: string): Grammar | null | undefined {
 export function WhyThisForm({ lang, description }: { lang: string; description: string }) {
   const grammar = useGrammarOf(lang);
   const topic = useMemo(() => (grammar ? topicForTags(grammar, description.toLowerCase().replace(/[,;()]/g, ' ')) : undefined), [grammar, description]);
-  if (!topic) return null;
+  if (!topic || !shows('grammatica')) return null;
   return (
     <Link
       to={`/cursus/grammatica/${topic.id}`}

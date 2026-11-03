@@ -1,4 +1,6 @@
 import { getLanguage } from '@/core/lang/languages';
+import { shows } from '@/product';
+import type { Feature } from '@/product';
 
 // Mundus › Beyond the app (Lingua 3.0-7): small, playful challenges that take the language out of
 // the app and into the day. General ones are written once with the language's name filled in; a
@@ -271,6 +273,32 @@ export function tipsFor(lang: string): Tip[] {
       action: { label: 'Wikipedia', href: wikipediaFor(lang) },
     },
     {
+      id: 'headlines',
+      icon: 'list',
+      habit: true,
+      title: 'Three headlines',
+      teaser: `Read three headlines from a ${name} news site, then open the one you understood best.`,
+      steps: ['Headlines are short and full of the words of the week.', 'Bring the article into Codex and read it with lookups.'],
+      action: { label: 'Add an article', to: '/codex/new?way=news' },
+    },
+    {
+      id: 'one-line',
+      icon: 'pen',
+      habit: true,
+      title: 'One line before bed',
+      teaser: `Write one sentence in ${name} about your day, however small.`,
+      steps: ['What you ate, who you saw, what annoyed you.', 'Tomorrow, read it back first: you’ll spot what to fix.'],
+      action: { label: 'Diarium', to: '/mentis/diarium' },
+    },
+    {
+      id: 'reread',
+      icon: 'smile',
+      title: 'Read it again',
+      teaser: 'Reread a page you finished a week or two ago and notice the words that became yours.',
+      steps: ['The page is easier than you remember: that’s your progress, in your hands.', 'Mark the words you still look up: they’re the ones to review.'],
+      action: { label: 'Your library', to: '/bibliotheca' },
+    },
+    {
       id: 'trip',
       icon: 'trip',
       title: 'Plan an imaginary trip',
@@ -359,7 +387,20 @@ export function tipsFor(lang: string): Tip[] {
       steps: [`Settings › Siri (Apple Intelligence & Siri on newer iPhones) › Language › ${name}.`, 'If Siri understands you, your pronunciation is getting there.', 'Switch it back when you’re done.'],
     });
   }
-  return [...tips, ...(data?.extras ?? [])];
+  return [...tips, ...(data?.extras ?? [])].flatMap(fitted);
+}
+
+/** The room a challenge is about, where it needs one: a song, a dubbed film, the radio. */
+const MEDIUM: Partial<Record<TipIcon, Feature>> = { song: 'cantus', spotify: 'cantus', film: 'visio', radio: 'sonus' };
+/** The room behind an in-app link, for the addresses of rooms a build may not have. */
+const roomOf = (to: string): Feature | undefined => (/^\/(sonus|cantus|visio)\b/.exec(to)?.[1] as Feature | undefined) ?? (/^\/cursus\/grammatica\b/.test(to) ? 'grammatica' : /^\/mentis(?:$|[?/](?!diarium|try))/.test(to) ? 'mundus' : undefined);
+
+/** Challenges for this build (src/product.ts): none about a room it hasn't, and no link into one. */
+function fitted(tip: Tip): Tip[] {
+  const medium = MEDIUM[tip.icon];
+  if (medium && !shows(medium)) return [];
+  const room = tip.action?.to ? roomOf(tip.action.to) : undefined;
+  return [room && !shows(room) ? { ...tip, action: undefined } : tip];
 }
 
 /** Today’s challenge for Home: one not done yet, a different one each day. */

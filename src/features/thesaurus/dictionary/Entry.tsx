@@ -40,6 +40,7 @@ import { WordPlaces } from './WordMemory';
 import { OriginLines, SyllableBadge } from './WordOrigin';
 import { YourWord } from './YourWord';
 import { EntryToolsSection } from './DictionaryToolsPanel';
+import { shows } from '@/product';
 
 const GENDER: Record<string, string> = { m: 'masculine', f: 'feminine', n: 'neuter', mf: 'masculine or feminine' };
 const POS: Record<string, string> = { adj: 'adjective', adv: 'adverb', prep: 'preposition', conj: 'conjunction', pron: 'pronoun', det: 'determiner', intj: 'interjection', num: 'numeral', particle: 'particle', phrase: 'phrase', verb: 'verb', noun: 'noun', character: 'character', suffix: 'suffix', prefix: 'prefix' };
@@ -275,7 +276,7 @@ function Entry({ lang, row }: { lang: string; row: FullDictRow }) {
             {ant.length > 0 && <WordLinks lang={lang} label="Opposite" words={ant} />}
           </Side>
         )}
-        {grammarTopics.length > 0 && (
+        {grammarTopics.length > 0 && shows('grammatica') && (
           <Side title={translateUi('Grammar for this word')}>
             <div className="flex flex-wrap gap-1.5">
               {grammarTopics.map((t) => (

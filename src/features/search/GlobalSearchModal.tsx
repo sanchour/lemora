@@ -16,6 +16,7 @@ import { listLibrary } from '@/data/notebook';
 import { Dialog, Kbd } from '@/design/primitives';
 import { cx } from '@/lib/cx';
 import { useUI } from '@/state/ui';
+import { shows } from '@/product';
 
 const KIND_ICONS: Record<GlobalSearchKind, LucideIcon> = {
   word: BookA,
@@ -77,8 +78,9 @@ export function GlobalSearchModal() {
         db.notes.where('lang').equals(lang).toArray(),
         db.texts.where('lang').equals(lang).toArray(),
         db.journalEntries.where('lang').equals(lang).toArray(),
-        loadGrammar(lang),
-        listLibrary('notebook', lang),
+        // Only what this build has a room for (src/product.ts).
+        shows('grammatica') ? loadGrammar(lang) : null,
+        shows('notebook') ? listLibrary('notebook', lang) : [],
         listLibrary('phrasebook', lang),
       ]);
       const textIds = texts.map((t) => t.id);

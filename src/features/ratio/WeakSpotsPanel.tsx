@@ -10,6 +10,7 @@ import { findTopic } from '@/core/grammar/types';
 import type { Grammar } from '@/core/grammar/types';
 import { useWeakSpots } from '@/data/learner';
 import { Panel } from './common';
+import { shows } from '@/product';
 
 /** What a spot is about, in words: the word, the grammar topic's title, or the sound. */
 export function nameOf(item: EvidenceItem, grammar: Grammar | null | undefined): string {
@@ -25,7 +26,7 @@ export function nameOf(item: EvidenceItem, grammar: Grammar | null | undefined):
   }
 }
 
-const where = (s: WeakSpot) => (s.item.type === 'grammar' && !s.item.topicId.startsWith('course:') ? `/cursus/grammatica/${s.item.topicId}` : undefined);
+const where = (s: WeakSpot) => (s.item.type === 'grammar' && shows('grammatica') && !s.item.topicId.startsWith('course:') ? `/cursus/grammatica/${s.item.topicId}` : undefined);
 
 export function WeakSpotsPanel({ lang }: { lang: string }) {
   const translateUi = useUi();

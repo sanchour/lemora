@@ -31,6 +31,7 @@ import { AdvancedAnalyticsPanel } from './AdvancedAnalyticsPanel';
 import { ReflectionDrawer } from './ReflectionDrawer';
 import { MonthlyReportModal } from './MonthlyReportModal';
 import { ACTIVITY_COLOR, ACTIVITY_LABEL, hours, Legend, Panel, pct, shortDate, Stat } from './common';
+import { shows } from '@/product';
 
 const MODE_LABEL: Record<string, string> = { mcq: 'Choose', match: 'Match pairs', cloze: 'Fill the gap', build: 'Build sentences', type: 'Typing', listen: 'Listening', speak: 'Speaking' };
 const weekday = (date: string) => new Date(`${date}T12:00:00`).toLocaleDateString(undefined, { weekday: 'narrow' });
@@ -337,7 +338,7 @@ function Dashboard({ data, lang, evidence, conversationsCount }: { data: Overvie
 
         <div className="space-y-5">
           {/* Listening */}
-          <Panel title={translateUi('Listening, music and watching')} icon={Headphones}>
+          {(shows('sonus') || shows('cantus') || shows('visio')) && <Panel title={translateUi('Listening, music and watching')} icon={Headphones}>
             <dl className="grid grid-cols-2 gap-4 sm:grid-cols-3">
               <Stat value={hours(l.minutes)} label={translateUi('Listened')} />
               <Stat value={l.finished} label={translateUi('Finished')} />
@@ -362,9 +363,9 @@ function Dashboard({ data, lang, evidence, conversationsCount }: { data: Overvie
                 </ul>
               </div>
             )}
-          </Panel>
+          </Panel>}
 
-          {data.typing && (
+          {data.typing && shows('typing') && (
             <Panel
               title={translateUi('Typing')}
               icon={Keyboard}
@@ -411,7 +412,7 @@ function Dashboard({ data, lang, evidence, conversationsCount }: { data: Overvie
         </div>
       </div>
 
-      <GrammarPanel lang={lang} />
+      {shows('grammatica') && <GrammarPanel lang={lang} />}
       <WeakSpotsPanel lang={lang} />
       <SkillBalancePanel lang={lang} />
       <ErrorLogPanel lang={lang} />

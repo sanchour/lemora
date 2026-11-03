@@ -9,6 +9,7 @@ import { stationsFor } from '@/services/radio/stations';
 import { searchLibrivox } from '@/services/sonus/librivox';
 import type { LibrivoxHit } from '@/services/sonus/librivox';
 import type { TitleType, TmdbTitle, WhereToWatch } from '@/services/mundus/tmdb';
+import { shows } from '@/product';
 
 /** A language's picks; `undefined` while loading, `null` for a language without any. */
 export function usePicks(lang: string): Picks | null | undefined {
@@ -128,9 +129,11 @@ function useFetched<T>(lang: string, load: (lang: string) => Promise<T[]>): T[] 
   return state.lang === lang ? state.items : [];
 }
 
-const topAudiobooks = async (lang: string) => (await searchLibrivox(lang)).hits.slice(0, 12);
+// Nothing is fetched for a room this build doesn't have (src/product.ts).
+const topAudiobooks = async (lang: string) => (shows('sonus') ? (await searchLibrivox(lang)).hits.slice(0, 12) : []);
 /** The most-listened stations, those with a logo first. */
 const topStations = async (lang: string) => {
+  if (!shows('sonus')) return [];
   const all = await stationsFor(lang);
   return [...all.slice(0, 40)].sort((a, b) => Number(Boolean(b.favicon)) - Number(Boolean(a.favicon))).slice(0, 14);
 };

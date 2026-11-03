@@ -18,6 +18,7 @@ import { LEVELS, LEVEL_HUE } from '@/core/mundus/explore';
 import type { PickLevel } from '@/core/mundus/types';
 import { cx } from '@/lib/cx';
 import type { ExploraCategory } from '../types';
+import { shows } from '@/product';
 
 interface ExploraHeaderBarProps {
   category: ExploraCategory;
@@ -52,14 +53,14 @@ export function ExploraHeaderBar({
     return () => window.removeEventListener('mousedown', handleClickOutside);
   }, [levelMenuOpen]);
 
-  const categories: Array<{ id: ExploraCategory; label: string; icon: typeof Sparkles }> = [
+  const categories = ([
     { id: 'all', label: 'All', icon: Sparkles },
     { id: 'screen', label: 'Series & Films', icon: Film },
     { id: 'books', label: 'Books', icon: BookOpen },
     { id: 'audio', label: 'Audio & Podcasts', icon: Headphones },
     { id: 'music', label: 'Music & Radio', icon: Music },
     { id: 'words', label: 'Word decks', icon: Layers },
-  ];
+  ] satisfies Array<{ id: ExploraCategory; label: string; icon: typeof Sparkles }>).filter((c) => (c.id === 'screen' ? shows('visio') : c.id === 'audio' ? shows('sonus') : c.id === 'music' ? shows('cantus') || shows('sonus') : true));
 
   const levelFilterLabel = (() => {
     if (levelFilter === 'mine') return translateUi('Around {0}', [learnerLevel]);

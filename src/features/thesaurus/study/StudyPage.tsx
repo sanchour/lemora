@@ -29,6 +29,7 @@ import type { LudusEntry } from './Ludus';
 import { Recall } from './Recall';
 import { Summary } from './Summary';
 import type { SummaryAction, SummaryStats } from './Summary';
+import { shows } from '@/product';
 
 /** Cards in a Lightning round: it goes round them as long as the minute lasts. */
 const LIGHTNING_CARDS = 30;
@@ -205,7 +206,7 @@ function CardStudy() {
           { label: 'Another lesson', onClick: () => setRound((r) => r + 1) },
           { label: 'Lightning round', onClick: () => navigate(`/thesaurus/study/${param}?mode=ludus&lightning=1`, { replace: true }) },
           { label: 'Sentences with a gap', onClick: () => navigate(`/thesaurus/study/${param}?mode=ludus&kind=sentences`, { replace: true }) },
-          ...(grammarNext ? [{ label: `Grammar: ${grammarNext.title}`, onClick: () => navigate(`/cursus/grammatica/${grammarNext.id}`) }] : []),
+          ...(grammarNext && shows('grammatica') ? [{ label: `Grammar: ${grammarNext.title}`, onClick: () => navigate(`/cursus/grammatica/${grammarNext.id}`) }] : []),
         ];
     return (
       <div className="grid min-h-dvh place-items-center py-10">

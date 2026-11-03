@@ -34,16 +34,17 @@ import { attachEpub } from '@/services/import/importers';
 import { pickFile } from '@/services/files/files';
 import { toast } from '@/state/ui';
 import type { Text } from '@/data/types';
+import { shows } from '@/product';
 
 type KindFilter = 'all' | 'read' | 'listen' | 'watch' | 'cards';
 
-const FILTERS: Array<{ value: KindFilter; label: string }> = [
+const FILTERS = ([
   { value: 'all', label: 'All' },
   { value: 'read', label: 'Reading' },
   { value: 'listen', label: 'Listening' },
   { value: 'watch', label: 'Watching' },
   { value: 'cards', label: 'Vocabulary' },
-];
+] satisfies Array<{ value: KindFilter; label: string }>).filter((f) => (f.value === 'listen' ? shows('sonus') : f.value === 'watch' ? shows('visio') : true));
 
 const enter = (i: number) => ({
   initial: { opacity: 0, y: 10 },
@@ -126,7 +127,8 @@ export default function BibliothecaPage() {
       }
     }
 
-    for (const m of listening ?? []) {
+    // Listening and watching only where this build has Sonus and Visio (src/product.ts); a restored Lingua backup may hold them.
+    for (const m of shows('sonus') ? (listening ?? []) : []) {
       const p = playback?.get(m.id);
       if (m.kind !== 'spotify' && m.lastPlayedAt && !p?.completed && (p?.positionMs ?? 0) > 5000) {
         const pct = m.durationMs && p ? Math.round((p.positionMs / m.durationMs) * 100) : undefined;
@@ -148,7 +150,7 @@ export default function BibliothecaPage() {
       }
     }
 
-    for (const v of videos ?? []) {
+    for (const v of shows('visio') ? (videos ?? []) : []) {
       const p = playback?.get(v.id);
       if (v.lastPlayedAt && !p?.completed && (p?.positionMs ?? 0) > 5000) {
         const pct = v.durationMs && p ? Math.round((p.positionMs / v.durationMs) * 100) : undefined;
@@ -191,11 +193,11 @@ export default function BibliothecaPage() {
     }
   };
 
-  const totalListenCount = filteredAudio.length + filteredFeeds.length + filteredAudiobooks.length + filteredSongs.length + filteredStations.length;
-  const totalCount = filteredTexts.length + totalListenCount + filteredVideos.length + filteredDecks.length;
+  const totalListenCount = shows('sonus') ? filteredAudio.length + filteredFeeds.length + filteredAudiobooks.length + filteredSongs.length + filteredStations.length : 0;
+  const totalCount = filteredTexts.length + totalListenCount + (shows('visio') ? filteredVideos.length : 0) + filteredDecks.length;
   const showRead = filter === 'all' || filter === 'read';
-  const showListen = filter === 'all' || filter === 'listen';
-  const showWatch = filter === 'all' || filter === 'watch';
+  const showListen = (filter === 'all' || filter === 'listen') && shows('sonus');
+  const showWatch = (filter === 'all' || filter === 'watch') && shows('visio');
   const showCards = filter === 'all' || filter === 'cards';
 
   return (

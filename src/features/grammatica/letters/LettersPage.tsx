@@ -13,6 +13,7 @@ import { cx } from '@/lib/cx';
 import { eyebrow } from '../parts';
 import { GroupRing, LetterSheet, Sample, useScript } from './parts';
 import { shown } from './LettersLesson';
+import { shows } from '@/product';
 
 /** `/cursus/alphabets`: a language's alphabet as a chart in groups, each with its lesson. */
 export default function LettersPage() {
@@ -69,7 +70,7 @@ export default function LettersPage() {
           <RotateCcw size={17} aria-hidden />
           {due ? translateUi('Review {0} {1}', [due, due === 1 ? 'letter' : 'letters']) : translateUi('No letters due')}
         </Link>
-        <Link to="/cursus/grammatica" className={cx(buttonClasses('ghost', 'md'), 'flex-1 sm:ml-auto sm:flex-none')}><UiText source={'Grammatica {0}'} values={[<ArrowRight size={16} aria-hidden />]} /></Link>
+        {shows('grammatica') && <Link to="/cursus/grammatica" className={cx(buttonClasses('ghost', 'md'), 'flex-1 sm:ml-auto sm:flex-none')}><UiText source={'Grammatica {0}'} values={[<ArrowRight size={16} aria-hidden />]} /></Link>}
       </div>
 
       {sets.map((set) => (

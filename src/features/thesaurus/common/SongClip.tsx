@@ -9,6 +9,7 @@ import { pause as pauseAudio, usePlayer } from '@/services/audio/engine';
 import { loadSpotifyApi } from '@/services/sonus/spotify';
 import type { SpotifyController } from '@/services/sonus/spotify';
 import { SongArt } from '@/features/cantus/SongArt';
+import { shows } from '@/product';
 
 /**
  * A card from a song: which song it's from, and its line played again when the song can play
@@ -18,7 +19,7 @@ export function SongClip({ note }: { note: Note }) {
   const translateUi = useUi();
   const song = useSong(note.context?.songId);
   const [playing, setPlaying] = useState(false);
-  if (!song || song.deletedAt) return null;
+  if (!song || song.deletedAt || !shows('cantus')) return null;
   const start = note.context?.startMs;
   const end = note.context?.endMs ?? (start !== undefined ? start + 5000 : undefined);
   const shift = song.offsetMs ?? 0;

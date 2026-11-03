@@ -33,6 +33,7 @@ import { fade, spring } from '@/design/motion';
 import { askTutor } from '@/services/llm/tutor';
 import { speak } from '@/services/speech/voice';
 import { toast, useUI } from '@/state/ui';
+import { shows } from '@/product';
 
 export function AskPanel() {
   const translateUi = useUi();
@@ -504,7 +505,7 @@ export function AskPanel() {
                   )}
 
                   {/* Matched Grammar Topic Links (F0222, F1012) */}
-                  {result.matchedGrammarTopicIds && result.matchedGrammarTopicIds.length > 0 && (
+                  {result.matchedGrammarTopicIds && result.matchedGrammarTopicIds.length > 0 && shows('grammatica') && (
                     <div className="rounded-2xl border border-line bg-paper p-3.5">
                       <div className="flex items-center gap-1.5 text-[12.5px] font-semibold text-ink mb-2">
                         <BookOpen size={14} className="text-accent-text" />

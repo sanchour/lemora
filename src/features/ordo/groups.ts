@@ -3,6 +3,7 @@
 import type { LucideIcon } from 'lucide-react';
 import { BookOpenText, Database, Gem, GraduationCap, Headphones, Info, Languages, Music2, Palette, Sparkles, Wrench } from 'lucide-react';
 import { searchKey } from '@/design/primitives';
+import { shows } from '@/product';
 
 export type SectionId = 'appearance' | 'reading' | 'study' | 'cards' | 'listening' | 'music' | 'language' | 'ai' | 'plus' | 'sync' | 'storage' | 'backup' | 'reset' | 'keyboard' | 'performance' | 'about';
 
@@ -15,8 +16,11 @@ export interface SettingsGroup {
   sections: SectionId[];
 }
 
+/** Sonus's and Cantus's settings only where the build has those rooms (src/product.ts). */
+export const shownSection = (id: SectionId): boolean => (id === 'listening' ? shows('sonus') : id === 'music' ? shows('cantus') : true);
+
 /** The overview shows "Your learning" first, then the app itself. */
-export const GROUPS: SettingsGroup[] = [
+export const GROUPS: SettingsGroup[] = ([
   { id: 'reading', title: 'Reading', icon: BookOpenText, color: '#c98a6b', sections: ['reading'] },
   { id: 'study', title: 'Study and cards', icon: GraduationCap, color: '#7f9f7a', sections: ['study', 'cards'] },
   { id: 'listening', title: 'Listening', icon: Headphones, color: '#6f9cc0', sections: ['listening'] },
@@ -28,7 +32,7 @@ export const GROUPS: SettingsGroup[] = [
   { id: 'data', title: 'Your data', icon: Database, color: '#5f9e96', sections: ['sync', 'storage', 'backup', 'reset'] },
   { id: 'about', title: 'About and more', icon: Info, color: '#948d82', sections: ['keyboard', 'about'] },
   { id: 'developer', title: 'Developer', icon: Wrench, color: '#6b7a8f', sections: ['performance'] },
-];
+] satisfies SettingsGroup[]).filter((g) => g.sections.some(shownSection));
 
 /** The developer's tools stand apart from the learner's settings, last and on their own. */
 export const DEVELOPER_GROUPS = ['developer'];
@@ -56,7 +60,7 @@ export interface SettingEntry {
 }
 
 /** Every setting, in page order. */
-export const SETTINGS_INDEX: SettingEntry[] = [
+export const SETTINGS_INDEX: SettingEntry[] = ([
   { label: 'Lingua in the language', section: 'appearance', also: 'interface translation immersion English hover offline' },
   { label: 'Theme', section: 'appearance', also: 'paper nocturne dark mode light night colour color system appearance' },
   { label: 'High contrast', section: 'appearance', also: 'accessibility contrast wcag aaa legibility visibility stark 7:1' },
@@ -144,7 +148,7 @@ export const SETTINGS_INDEX: SettingEntry[] = [
   { label: 'Device lab', section: 'performance', also: 'developer test replay onboarding grid outlines toasts caches' },
   { label: 'Design notes', section: 'performance', also: 'developer review feedback claude pin' },
   { label: 'About Lingua', section: 'about', also: 'version credits licences licenses' },
-];
+] satisfies SettingEntry[]).filter((entry) => shownSection(entry.section));
 
 const SECTION_TITLES: Record<SectionId, string> = {
   appearance: 'Preferences',

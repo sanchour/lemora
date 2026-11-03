@@ -32,6 +32,7 @@ import { addVideoLink, importSubtitlesOnly, SUBTITLE_ACCEPT } from '@/services/v
 import { AddBookDrawer } from '@/features/sonus/library/AddBookDrawer';
 import { sonusBase } from '@/features/sonus/paths';
 import { toast } from '@/state/ui';
+import { shows } from '@/product';
 
 interface AddOption {
   id: string;
@@ -231,7 +232,7 @@ export const AddLibraryMenu = memo(function AddLibraryMenu({ lang }: { lang: str
         },
       ],
     },
-  ];
+  ].filter((section) => (section.id === 'sonus' || section.id === 'visio' ? shows(section.id) : true));
 
   const renderContent = (close: () => void) => (
     <div className="max-h-[80vh] overflow-y-auto px-1 py-1 [scrollbar-width:thin]">

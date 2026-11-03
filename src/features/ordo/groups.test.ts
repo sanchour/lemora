@@ -2,7 +2,8 @@
 // own words and by the words people use for them.
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { GROUPS, SETTINGS_INDEX, groupOf, searchSettings } from './groups';
+import { GROUPS, SETTINGS_INDEX, groupOf, searchSettings, shownSection } from './groups';
+import type { SectionId } from './groups';
 
 const SECTION_FILES: Record<string, string[]> = {
   appearance: ['sections/AppearanceSection.tsx'],
@@ -29,7 +30,7 @@ describe('Ordo groups', () => {
   it('puts every section in exactly one group', () => {
     const all = GROUPS.flatMap((g) => g.sections);
     expect(new Set(all).size).toBe(all.length);
-    expect(all.sort()).toEqual(Object.keys(SECTION_FILES).sort());
+    expect(all.sort()).toEqual(Object.keys(SECTION_FILES).filter((id) => shownSection(id as SectionId)).sort());
   });
 
   it('indexes settings by words that are really on their page', () => {

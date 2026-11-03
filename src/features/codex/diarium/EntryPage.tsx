@@ -37,6 +37,7 @@ import { WritingDrafts } from './WritingDrafts';
 import { SimplifyWriting } from './SimplifyWriting';
 import { WritingSpelling } from './WritingSpelling';
 import { CorrectionList, ReviewSummary, ReviewText } from './Review';
+import { shows } from '@/product';
 
 const SAVE_DELAY = 500;
 /** Pauses longer than this between keystrokes don't count as writing time. */
@@ -221,7 +222,7 @@ function Entry({ entry }: { entry: JournalEntry }) {
             </div>
           )}
         </div>
-        {talkTopic && (
+        {talkTopic && shows('sermo') && (
           <Link to={`/mentis/sermo?topic=${encodeURIComponent(talkTopic)}`} className={cx(buttonClasses('secondary', 'md'), 'shrink-0')}><UiText source={'{0} Talk about this'} values={[<MessagesSquare size={16} aria-hidden />]} /></Link>
         )}
         <Popover

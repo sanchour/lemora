@@ -7,6 +7,7 @@ import { Segmented } from '@/design/primitives';
 import { fade } from '@/design/motion';
 import { Overview } from './Overview';
 import { Tabula } from './tabula/Tabula';
+import { shows } from '@/product';
 
 type Tab = 'overview' | 'tabula';
 
@@ -18,11 +19,11 @@ export default function RatioPage() {
   const translateUi = useUi();
   const [params, setParams] = useSearchParams();
   const picked = params.get('tab');
-  const tab: Tab = picked === 'tabula' || picked === 'iter' ? 'tabula' : 'overview';
+  const tab: Tab = (picked === 'tabula' || picked === 'iter') && shows('tabula') ? 'tabula' : 'overview';
   return (
     <>
       <PageHeader title={translateUi('Ratio')} englishTitle={'Ratio'} />
-      <div className="-mt-2 mb-7">
+      {shows('tabula') && <div className="-mt-2 mb-7">
         <Segmented<Tab>
           label={translateUi('Ratio')}
           value={tab}
@@ -32,7 +33,7 @@ export default function RatioPage() {
             { value: 'tabula', label: translateUi('Tabula'), icon: Table2 },
           ]}
         />
-      </div>
+      </div>}
       <AnimatePresence mode="wait" initial={false}>
         <motion.div key={tab} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={fade}>
           {tab === 'overview' && <Overview />}

@@ -10,6 +10,7 @@ import { Button, SearchInput, Select } from '@/design/primitives';
 import { AddToDeck } from '@/features/codex/reader/AddToDeck';
 import { SpeakButton } from '@/features/speech/SpeakButton';
 import { recordingsForWord } from '@/services/speech/recordings';
+import { shows } from '@/product';
 
 export function CultureShelf({ lang }: { lang: string }) {
   const translateUi = useUi();
@@ -45,7 +46,7 @@ export function CultureWordNotes({ lang, word }: { lang: string; word: string })
   const translateUi = useUi();
   const notes = wordCulture(lang, word);
   if (!notes.length) return null;
-  return <section className="space-y-2 border-t border-line pt-4" aria-label={translateUi('Culture notes for this word')}><h3 className="text-sm font-semibold"><UiText source={'Culture and usage'} /></h3>{notes.map((n) => <Link key={n.id} to={`/mentis/culture?note=${n.id}`} className="block text-sm underline decoration-line-strong underline-offset-4"><span lang={lang}>{n.term}</span> · {n.meaning}</Link>)}</section>;
+  return <section className="space-y-2 border-t border-line pt-4" aria-label={translateUi('Culture notes for this word')}><h3 className="text-sm font-semibold"><UiText source={'Culture and usage'} /></h3>{notes.map((n) => shows('culture') ? <Link key={n.id} to={`/mentis/culture?note=${n.id}`} className="block text-sm underline decoration-line-strong underline-offset-4"><span lang={lang}>{n.term}</span> · {n.meaning}</Link> : <p key={n.id} className="text-sm"><span lang={lang}>{n.term}</span> · {n.meaning}</p>)}</section>;
 }
 function RegionalSamples({ lang, initialWord }: { lang: string; initialWord: string }) {
   const translateUi = useUi();

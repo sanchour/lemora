@@ -31,6 +31,7 @@ import {
   WikipediaShelf,
 } from './components/BooksSection';
 import { WordDecksShelf } from './components/WordDecksShelf';
+import { shows } from '@/product';
 
 const EASE_LEVEL: Record<PickedArtist['ease'], PickLevel> = {
   clear: 'A2',
@@ -51,6 +52,10 @@ const KIND_TO_CATEGORY: Record<string, ExploraCategory> = {
   words: 'words',
   saved: 'saved',
 };
+
+/** Whether this build has the room an item opens in (src/product.ts): Lemora keeps what is read. */
+export const kindShown = (kind: Kind): boolean =>
+  kind === 'series' || kind === 'films' || kind === 'youtube' ? shows('visio') : kind === 'podcasts' || kind === 'audiobooks' || kind === 'radio' ? shows('sonus') : kind === 'music' ? shows('cantus') : kind === 'games' ? shows('mundus') : true;
 
 export const HERO_SLOT_HOURS = 5;
 export const HERO_SLOT_MS = HERO_SLOT_HOURS * 60 * 60 * 1000;
@@ -240,7 +245,7 @@ export function ExploreAll({
         book,
       });
     }
-    return out;
+    return out.filter((item) => kindShown(item.kind));
   }, [picks, stations, audiobooks, lang]);
 
   // Filter items according to active level filter
