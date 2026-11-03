@@ -1,5 +1,6 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 import { Check } from 'lucide-react';
 import { loadScript } from '@/core/script/load';
 import { codePoints } from '@/core/script/reading';
@@ -64,6 +65,7 @@ export function LetterSheet({ letter, script, onClose }: { letter: Letter | null
             )}
             <p className="mx-auto mt-2 max-w-sm text-[15.5px] leading-snug text-ink-soft">{letter.sound}</p>
             <p className="mt-2 font-mono text-[12.5px] text-ink-faint" dir="ltr" title={translateUi('Unicode code points')}>{codePoints(shown(letter))}</p>
+            <Link to={`/cursus/characters?text=${encodeURIComponent(shown(letter))}`} onClick={onClose} className="mt-2 inline-block text-[13px] text-accent-text underline"><UiText source="Open character reference" /></Link>
           </div>
           {lang === 'zh' && letter.character && <StrokeOrder char={[...letter.glyph][0]} />}
           {script.joins && <JoinedForms letter={letter} lang={lang} />}

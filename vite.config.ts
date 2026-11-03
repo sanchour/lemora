@@ -63,6 +63,12 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
+            // Character reference data stays lazy; cache the scripts and CJK readings opened by the learner.
+            urlPattern: ({ url, sameOrigin }) => sameOrigin && /\/chars\/(?:unicode\/[^/]+\.json|readings\.json)$/.test(url.pathname),
+            handler: 'CacheFirst',
+            options: { cacheName: 'lingua-unicode-17', expiration: { maxEntries: 190 } },
+          },
+          {
             // Every other font subset is cached the first time it is used.
             urlPattern: ({ request }) => request.destination === 'font',
             handler: 'CacheFirst',

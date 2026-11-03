@@ -4,7 +4,7 @@ import type { CSSProperties } from 'react';
 import { useApp } from '@/app/context';
 import { resolveTheme } from '@/app/theme';
 import { getLanguage, LANGUAGES, READING_LANGS } from '@/core/lang/languages';
-import { TRANSLIT_LANGS } from '@/core/script/reading';
+import { NAMED_READING_SCHEMES, selectedReadingScheme, TRANSLIT_LANGS, translitFor } from '@/core/script/reading';
 import type { Script } from '@/core/lang/languages';
 import { patchSetting } from '@/data/settings';
 import type { Settings } from '@/data/settings';
@@ -12,7 +12,7 @@ import { fallbackFamily, getReaderFont, READER_FONTS, readerFontStack } from '@/
 import { useMediaQuery } from '@/design/hooks/useMediaQuery';
 import { darkPaper, lightPaper, paperStyle } from '@/design/papers';
 import { PaperPicker } from '@/features/codex/reader/PaperPicker';
-import { Badge, Segmented, Slider, ToggleRow } from '@/design/primitives';
+import { Badge, Segmented, Select, Slider, ToggleRow } from '@/design/primitives';
 import { cx } from '@/lib/cx';
 import { SettingsSection } from '../SettingsSection';
 import { useDraft } from '../useDraft';
@@ -21,6 +21,7 @@ const SCRIPT_NAMES: Record<Script, string> = {
   Latn: 'Latin', Cyrl: 'Cyrillic', Grek: 'Greek', Arab: 'Arabic', Hans: 'Chinese', Hant: 'Traditional Chinese', Jpan: 'Japanese', Kore: 'Hangul',
   Deva: 'Devanagari', Thai: 'Thai', Taml: 'Tamil', Geor: 'Georgian', Beng: 'Bengali', Guru: 'Gurmukhi', Hebr: 'Hebrew', Armn: 'Armenian', Mymr: 'Burmese', Khmr: 'Khmer', Ethi: 'Ethiopic',
 };
+const SCHEME_EXAMPLES: Record<string, string> = { ru: 'Екатеринбург · Щит · Юлия · Цель', el: 'Αυγή · Ευτυχία · Μπάμπης · Ώρα' };
 const PREVIEW_SCRIPTS: Script[] = ['Latn', 'Cyrl', 'Grek'];
 
 export function ReadingSection({ reader, lang }: { reader: Settings['reader']; lang: string }) {
@@ -142,6 +143,16 @@ export function ReadingSection({ reader, lang }: { reader: Settings['reader']; l
           />
         </div>
       )}
+
+      {NAMED_READING_SCHEMES[target.code] && <div className="mt-5 space-y-3">
+        <Select label={translateUi('Transliteration scheme')} value={selectedReadingScheme(target.code, reader.readingSchemes?.[target.code])!}
+          onChange={(scheme) => void patchSetting('reader', { readingSchemes: { ...reader.readingSchemes, [target.code]: scheme } })}
+          options={NAMED_READING_SCHEMES[target.code].map(({ value, label }) => ({ value, label: translateUi(label) }))} />
+        <p lang={target.code} className="rounded-xl border border-line bg-raised px-4 py-3 text-[15px]">{SCHEME_EXAMPLES[target.code]}<br />
+          <bdi lang="en" className="text-ink-soft">{translitFor(target.code, SCHEME_EXAMPLES[target.code], selectedReadingScheme(target.code, reader.readingSchemes?.[target.code]))}</bdi>
+        </p>
+        {target.code === 'el' && <p data-hint="" className="text-[13px] text-ink-soft"><UiText source={'Modern Greek spelling; polytonic words are left without a reading.'} /></p>}
+      </div>}
 
       {target.code === 'ar' && (
         <div className="mt-5">

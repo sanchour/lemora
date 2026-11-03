@@ -5,14 +5,16 @@ Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIO
 <!-- new versions go here -->
 - **0.6.0-alpha.190** · 2026-11-03 · 6-29 G4: the atlas of all your words
 - **0.6.0-alpha.187** · 2026-11-03 · Finish 6-8 Reading and 6-12 Writing; reconcile 47 plus 5 audit entries
+- **0.6.0-alpha.185** · 2026-11-03 · 6-23 A2: Greek named choices and resolved main integration
 - **0.6.0-alpha.184** · 2026-11-03 · 6-29 G3: the word graph's contract, Dexie 46
 - **0.6.0-alpha.183** · 2026-11-03 · 6-21 deepened: all the plan's games and projects, A2 and B1 stories, topics, sound, record
 - **0.6.0-alpha.182** · 2026-11-03 · 6-21 finished: Finish it, story editor, Max story from words, more stories
 - **0.6.0-alpha.181** · 2026-11-03 · 6-21 finish: checkpoint, more stories and strength in the story engine
 - **0.6.0-alpha.180** · 2026-11-03 · 6-21 G5 to G7: daily, tournaments, timed games, stories, projects
 - **0.6.0-alpha.179** · 2026-11-03 · F0124 and F0125: the two varieties; Part A done for the core languages
-- **0.6.0-alpha.178** · 2026-11-03 · F0124 and F0125: the two varieties; Part A done for the core languages
+- **0.6.0-alpha.178 (unpublished attempt; superseded by alpha.179)** · 2026-11-03 · F0124 and F0125: the two varieties; Part A done for the core languages
 - **0.6.0-alpha.177** · 2026-11-03 · Part A leftovers: grammar check for the core languages, Say it in the record
+- **0.6.0-alpha.178** · 2026-11-03 · 6-23 A2: four Russian schemes, browser evidence and checked main integration
 - **0.6.0-alpha.176** · 2026-11-03 · Merge main (6-29 G2) into 6-21 G4
 - **0.6.0-alpha.175** · 2026-11-03 · 6-21 G4: pick, match and parts games; merge main
 - **0.6.0-alpha.174** · 2026-11-03 · 6-29 G2: Thesaurus › Atlas, the compass and the tree on screen
@@ -21,6 +23,13 @@ Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIO
 - **0.6.0-alpha.172** · 2026-11-03 · Merge main (6-29 G1) into 6-21 G3
 - **0.6.0-alpha.171** · 2026-11-03 · 6-21 G3: crossword, word-link races, sorting, odd one out
 - **0.6.0-alpha.170** · 2026-11-03 · 6-29 G1: the word graph's model, with the tree view
+- **0.6.0-alpha.169** · 2026-11-02 · resolve A2 transition cancellation blocker
+- **0.6.0-alpha.168** · 2026-11-02 · record A2 browser verification and transition-log blocker
+- **0.6.0-alpha.167** · 2026-11-02 · checkpoint A2.1 Russian schemes; browser acceptance pending
+- **0.6.0-alpha.166** · 2026-11-02 · claim 6-23 A2 transliteration as Codex
+- **0.6.0-alpha.165** · 2026-11-02 · record A1 offline diagnosis before A2
+- **0.6.0-alpha.164** · 2026-11-02 · 6-23 A1 checkpoint: Unicode reference implemented; offline reload acceptance open
+- **0.6.0-alpha.163** · 2026-11-02 · 6-23 A1: claim Unicode character reference only
 - **0.6.0-alpha.162** · 2026-11-02 · 6-23 T0: measured source audit, corrected deep plan and closed audit claim
 - **0.6.0-alpha.161** · 2026-11-02 · Claim 6-23 T0 data-source audit only
 - **0.6.0-alpha.160** · 2026-11-02 · Propose Lingua's iPhone structure and selective Liquid Glass design for Stitch

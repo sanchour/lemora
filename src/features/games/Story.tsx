@@ -160,4 +160,3 @@ export function Story({ lang, def, best }: { lang: string; def: GameDef; items: 
     />
   );
 }
-

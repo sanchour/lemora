@@ -1684,7 +1684,7 @@ feature checkbox changes in this audit. Tracks A–G remain open.
 - [ ] `F1303` Accent-mark exercises · **6-23** · partly there (light version, 6-23 reopened)
 - [ ] `F1304` Ligature recognition · **6-23** · partly there (light version, 6-23 reopened)
 - [ ] `F1305` Cursive recognition · **6-23** · partly there (light version, 6-23 reopened)
-- [ ] `F1306` Unicode character reference · **6-23** · partly there (light version, 6-23 reopened)
+- [ ] `F1306` Unicode character reference · **6-23** · A1 implemented and online browser-checked; offline reload failed/inspection blocked, final acceptance open ([checkpoint](6-23-A1.md))
 
 #### Russian and other Slavic languages
 
@@ -2151,3 +2151,49 @@ With this many possibilities, the danger is building a sprawling collection of t
 
 
 **6-25 final audit, Codex 2026-11-02:** F1546/F1550 controls are learner-reachable. [The final inventory](LINGUA-6-25-AUDIT.md) states the exact recovery lifetime, permanent device-forgetting boundary and checks not completed after browser review hit its usage limit. No real AI, microphone or screen-reader certification is implied by these ticks.
+
+### 6-23 A2.1 checkpoint · Codex · 2026-11-02
+
+F1298/F1300/F1301/F1371 remain unticked under the deep plan. The new Russian BGN/PCGN 1947
+and ISO 9:1995 engines, Settings selector/preview and reader/transcript wiring are checked by
+source-backed and integration tests; Russian browser acceptance is pending test-pack approval.
+Other named schemes, per-surface choices, position/reveal controls and lesson-based fading remain.
+[Source/review scope](review/6-23-ru.md). This does not close A1's offline verification gap.
+
+**A2.1 browser follow-up:** the approved Russian pack, both new schemes/persistence, actual reader
+and all three desktop sizes/themes were observed; Arabic interface/RTL text was also inspected.
+Two shared-transition AbortErrors stopped further implementation; [exact scope/evidence](6-23-A2-VERIFICATION.md).
+F1298/F1300/F1301/F1371 stay unticked. No full-A2 or clean-console acceptance.
+
+**Codex A2 transition stop resolved after the user's continuation, 2026-11-02:** observe the native
+ready promise at both existing theme/language transition callers. Expected AbortError cancellation
+is handled locally; other failures remain reported. Typecheck, 1,640 tests/one skipped and build
+pass; ordinary rebuilt-browser theme and Russian/Arabic switches completed with an empty warn/error
+log in that tab. [Evidence and scope](6-23-A2-VERIFICATION.md). No A2 audit ticks; continue remaining
+named schemes and per-surface controls under the existing Codex claim. A1 offline gap remains.
+
+**A2.2a Russian, 2026-11-03:** four named choices now reachable in Settings/reader; new ALA-LC and
+passport choices inspected at all three desktop sizes/themes. Tests/typecheck/build pass before
+incoming main integration. [Verification and remaining scope](6-23-A2-RUSSIAN.md). F1298/F1300/F1301/
+F1371 remain unticked until the full deep-plan acceptance; no claim about other surfaces/languages.
+
+**A2.2a integrated, Codex 2026-11-03:** current main 3c519b6 safely merged into Codex; seven additive
+catalogue conflicts preserve both sides without reformatting. Typecheck, 1,712 tests/one skipped and
+build pass on the integrated tree. All four Russian choices and the real passport reader were
+rechecked in that build; tab log clean. [Detailed verification limits](6-23-A2-RUSSIAN.md). Russian
+named-scheme slice complete; A2 and its audit entries remain open for other languages and independent
+surface/position/reveal/lesson controls. A1 offline gap remains. No direct main push or deployment.
+
+**Codex Russian A2 publication integration, 2026-11-03:** subsequently merged main 07008c7 and
+62b703a while preserving published history and other sessions' claims. Final integrated typecheck,
+1,740 tests / one skipped and production build pass. Russian browser evidence predates these last
+two integrations; incoming graph/games/conversation UI not audited. Full A2 and A1 offline acceptance
+remain open. [Russian scope and verification](6-23-A2-RUSSIAN.md).
+
+**Codex A2.2b, 2026-11-03:** modern Greek ELOT 743 Type 2 / ISO 843:1997 Type 1 spelling choices
+are learner-reachable in Reading settings and the reader/shared transcript renderer. Typecheck,
+1,806 tests / one skipped and build pass; browser twelve size/theme views, both choices' reload
+persistence, literal source/unsupported-word checks, Russian setting isolation and empty warn/error
+log. [Exact evidence and limits](6-23-A2-GREEK.md). Synchronization/publication outcome follows there.
+No full-A2 audit tick; other named languages/surface controls and A1 offline gap remain open. Codex
+retains A2, no A3 claim. Native standards review, live transcript and a fresh Arabic pass not performed.

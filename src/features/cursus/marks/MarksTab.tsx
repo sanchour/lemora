@@ -1,6 +1,7 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 // Cursus › Marks (6-23): converting a text between scripts, and small drills on accents, diacritics, ligatures and cursive.
 import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router';
 import { useApp } from '@/app/context';
 import { CONVERSIONS, convertScript } from '@/core/script/convert';
 import type { Conversion } from '@/core/script/convert';
@@ -24,6 +25,7 @@ export function MarksTab() {
   const lang = language.id;
   return (
     <div className="space-y-8">
+      <Link to="/cursus/characters" className="block rounded-2xl border border-line bg-surface px-5 py-4 font-serif text-[21px] font-semibold text-accent-text hover:border-line-strong"><UiText source="Unicode character reference" /></Link>
       {(lang === 'zh' || lang === 'ja') && <Hanzi set={lang} />}
       {lang in QUIZ_MODES && <CharQuiz lang={lang} />}
       {lang === 'zh' && <Tones />}

@@ -255,8 +255,8 @@ export function KaraokeTranscript({ media, cues, live, clock = engineClock, gutt
   return (
     <>
       <div {...handlers} onContextMenu={onContextMenu}>
-        <div ref={flowRef} lang={lang} style={style} className={cx('reader-flow karaoke', listenFirst && 'listen-first', reader.highlightUnseen && 'hl-unseen', layout === 'wide' && gutter && 'has-gutter', !live && 'is-still')}>
-          {model && <ChapterBody model={model} lang={lang} />}
+        <div ref={flowRef} lang={lang} style={style} className={cx('reader-flow karaoke', listenFirst && 'listen-first', reader.highlightUnseen && 'hl-unseen', layout === 'wide' && gutter && 'has-gutter', lang === 'ru' && reader.readings !== 'off' && `readings-${reader.readings}`, !live && 'is-still')}>
+          {model && <ChapterBody model={model} lang={lang} scheme={reader.readingSchemes?.[lang]} />}
         </div>
       </div>
 
