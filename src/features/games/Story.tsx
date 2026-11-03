@@ -7,8 +7,9 @@ import type { GameItem } from '@/core/games/source';
 import { checkStory, choose, fromAdventure, startStory, storyStars, visible, wordsUsed } from '@/core/games/story';
 import type { StoryGame } from '@/core/games/story';
 import { isRtl } from '@/core/lang/languages';
+import { reportGenerated } from '@/data/generated';
 import { aiBlock } from '@/data/plan';
-import { gameItems, storiesOf } from '@/data/games';
+import { gameItems, recordGameSkill, storiesOf } from '@/data/games';
 import { generateMaterial } from '@/services/llm/generate';
 import { readAdventure } from '@/core/generate/generate';
 import type { Cefr } from '@/core/lang/levels';
@@ -32,6 +33,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
   const [s, setS] = useState(() => startStory(story));
   const choices = visible(story, s);
   const over = s.status !== 'playing';
+  useSettleOnce(over, () => void recordGameSkill(lang, 'story', 'reading', `story:${story.id}`, s.status === 'won').catch(() => undefined));
   useSettleOnce(over, () => settle({ won: s.status === 'won', stars: storyStars(s, entry.shortest), hints: 0, message: s.status === 'won' ? t('You made it in {0} choices.', [s.moves]) : t('You are stuck here.') }));
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -46,7 +48,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
     <div className="max-w-2xl">
       <div className="rounded-3xl border border-line/70 bg-surface p-6">
         <p className="font-serif text-2xl leading-relaxed" lang={lang} dir={rtl ? 'rtl' : undefined}>{story.scenes[s.at].text}</p>
-        <div className="mt-3"><SpeakButton lang={lang} text={story.scenes[s.at].text} size={20} label="Hear it" className="size-10 rounded-full bg-sunken text-ink" /></div>
+        <div className="mt-3"><SpeakButton lang={lang} text={story.scenes[s.at].text} size={20} label={t('Hear it')} className="size-10 rounded-full bg-sunken text-ink" /></div>
       </div>
       {s.health !== undefined && (
         <p className="mt-3 text-[14px] text-ink-soft" aria-label={t('Strength: {0}', [s.health])}>
@@ -91,10 +93,22 @@ export function Story({ lang, def, best }: { lang: string; def: GameDef; items: 
     try {
       const words = (await gameItems(lang)).slice(0, 6).map((i) => i.term);
       if (words.length < 3) return setNote(t('Add at least three words to a deck first.'));
-      const row = (await generateMaterial({ lang, kind: 'adventure', level: (language.level === 'A0' ? 'A1' : language.level) as Cefr, topic: `a short adventure that uses these words: ${words.join(', ')}` })).row;
-      const body = readAdventure(row.content);
-      if (!body) return setNote(t('Max’s story could not be played. Try again.'));
-      setNote(t('{0} of your {1} words are in it.', [wordsUsed(fromAdventure(row.id, body), words), words.length]));
+      // Max is asked up to three times for a story that uses at least most of the words (a different topic line each time, so it is made anew), and the best is kept.
+      let best: { id: string; story: StoryGame; used: number } | null = null;
+      const tried: string[] = [];
+      for (let attempt = 1; attempt <= 3 && (!best || best.used < Math.min(words.length, 4)); attempt++) {
+        const row = (await generateMaterial({ lang, kind: 'adventure', level: (language.level === 'A0' ? 'A1' : language.level) as Cefr, topic: `a short adventure that uses these words: ${words.join(', ')}${attempt > 1 ? ` (try ${attempt}: every word must appear)` : ''}` })).row;
+        const body = readAdventure(row.content);
+        if (!body) continue;
+        const story = fromAdventure(row.id, body);
+        const used = wordsUsed(story, words);
+        tried.push(row.id);
+        if (!best || used > best.used) best = { id: row.id, story, used };
+      }
+      if (!best) return setNote(t('Max’s story could not be played. Try again.'));
+      // The tries that used fewer of the words are put away, so the list has the one that fits.
+      for (const id of tried) if (id !== best.id) await reportGenerated(id);
+      setNote(t('{0} of your {1} words are in it.', [best.used, words.length]));
       await reload();
     } catch (e) {
       setNote(e instanceof Error ? e.message : t('Max’s story could not be played. Try again.'));

@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { seededRandom } from '@/core/srs/ludus';
+import { TOPICS, topicOfWeek } from './topics';
 import { dailyList, dailyPuzzle, shareText, weeklyTheme, weeklyWords } from './daily';
 import type { ListWord } from './daily';
 import { GAMES } from './defs';
-import { progress, startProject, STEPS, TEMPLATES, templateOf, toggleStep } from './projects';
+import { carried, progress, setNote, startProject, stepTarget, STEPS, TEMPLATES, templateOf, toggleStep } from './projects';
 import { canPlay } from './source';
 import { checkStory, choose, fromAdventure, startStory, storyStars, visible, wordsUsed } from './story';
 import { completeItems, makeComplete } from './complete';
@@ -31,11 +32,29 @@ describe('daily and weekly', () => {
     const words = weeklyWords(LIST, t1, 'de', '2026-11-04');
     expect(words.length).toBeGreaterThan(0);
     expect(weeklyWords(LIST, t1, 'de', '2026-11-06')).toEqual(words);
-    for (const w of words) expect(t1.kind === 'length' ? w.word.length === t1.value : w.word[0] === t1.value).toBe(true);
+    for (const w of words) if (t1.kind !== 'topic') expect(t1.kind === 'length' ? w.word.length === t1.value : w.word[0] === t1.value).toBe(true);
     expect(dailyList(LIST).every((w) => w.gloss && w.word.length >= 4)).toBe(true);
+    expect(weeklyTheme(LIST, 'de', '2026-11-04')?.kind).toMatch(/length|start/);
   });
   it('shares only how it went', () => {
     expect(shareText('Daily puzzle', '2026-11-04', 2, 3)).toBe('Lingua · Daily puzzle · 2026-11-04\n★★☆');
+  });
+});
+
+describe('the weekly topics', () => {
+  const words = (gloss: string, n: number): ListWord[] => Array.from({ length: n }, (_, i) => ({ word: `w${i}xx`.padEnd(5, 'z'), gloss: `${gloss} number ${i}` }));
+  it('are 52, each with words to match', () => {
+    expect(TOPICS).toHaveLength(52);
+    expect(new Set(TOPICS.map((t) => t.id)).size).toBe(52);
+    expect(TOPICS.every((t) => t.words.length >= 8)).toBe(true);
+  });
+  it('take the week’s place in the list, or the next topic the list has words for', () => {
+    const list: ListWord[] = [...words('a big dog', 15), ...words('red wine', 15)];
+    expect(topicOfWeek(list, 1)?.topic.label).toBe('Animals');
+    expect(topicOfWeek(list, 3)?.topic.label).toBe('Drinks');
+    expect(topicOfWeek(list, 3)?.words.length).toBeGreaterThanOrEqual(12);
+    expect(topicOfWeek([{ word: 'abcd', gloss: 'zzz' }], 5)).toBeNull();
+    expect(topicOfWeek(list, 53)?.topic.label).toBeTruthy();
   });
 });
 
@@ -158,6 +177,29 @@ describe('projects', () => {
     expect(progress(p).finished).toBe(true);
     expect(toggleStep(p, 1).done).toEqual([0, 2]);
     expect(startProject(templateOf('week-topic')!, '  the sea ', 5).topic).toBe('the sea');
+  });
+});
+
+describe('projects carry what was chosen and made', () => {
+  it('opens the chosen text, recording or video, and the room when none is chosen', () => {
+    let p = startProject(templateOf('week-topic')!, 'sea', 1);
+    expect(stepTarget(p, 'read')).toBe('/codex');
+    p = { ...p, material: { textId: 't1' } };
+    expect(stepTarget(p, 'read')).toBe('/codex/read/t1');
+    p = { ...p, material: { mediaId: 'm1', mediaKind: 'audio' } };
+    expect(stepTarget(p, 'listen')).toBe('/sonus/play/m1');
+    expect(stepTarget(p, 'watch')).toBe('/visio');
+    p = { ...p, material: { mediaId: 'm2', mediaKind: 'video' } };
+    expect(stepTarget(p, 'watch')).toBe('/visio/watch/m2');
+  });
+  it('shows a step what the nearest step before it made', () => {
+    let p = startProject(templateOf('write-aloud')!, undefined, 1);
+    expect(carried(p, 1)).toBeUndefined();
+    p = setNote(p, 0, 'Mi gato duerme.');
+    expect(carried(p, 1)).toBe('Mi gato duerme.');
+    expect(carried(p, 0)).toBeUndefined();
+    p = setNote(setNote(p, 1, '  '), 0, 'Hola');
+    expect(carried(p, 2)).toBe('Hola');
   });
 });
 

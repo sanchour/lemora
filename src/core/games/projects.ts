@@ -55,6 +55,32 @@ export interface Project {
   startedAt: number;
   /** Positions of the steps that are done. */
   done: number[];
+  /** What the chain is about: the text, the recording or the video the learner chose, which the steps after it open. */
+  material?: { textId?: string; mediaId?: string; mediaKind?: 'audio' | 'video' };
+  /** What the learner wrote or made at a step, by its position, which the steps after it show. */
+  notes?: Record<number, string>;
+}
+
+/** The kinds of step that are done with a chosen text, recording or video. */
+export const CHOOSES: Partial<Record<StepKind, 'text' | 'audio' | 'video'>> = { read: 'text', listen: 'audio', watch: 'video' };
+/** The kinds of step that make something the next steps can use. */
+export const MAKES: StepKind[] = ['write', 'talk', 'translate', 'compare', 'type', 'make'];
+
+/** Where a step opens: the room, or the very text, recording or video the learner chose. */
+export function stepTarget(p: Project, kind: StepKind): string {
+  const m = p.material;
+  if (kind === 'read' && m?.textId) return `/codex/read/${m.textId}`;
+  if (kind === 'listen' && m?.mediaId && m.mediaKind === 'audio') return `/sonus/play/${m.mediaId}`;
+  if (kind === 'watch' && m?.mediaId && m.mediaKind === 'video') return `/visio/watch/${m.mediaId}`;
+  return STEPS[kind].to;
+}
+
+export const setNote = (p: Project, step: number, text: string): Project => ({ ...p, notes: { ...p.notes, [step]: text } });
+
+/** What was made at the nearest step before this one, for the step to show. */
+export function carried(p: Project, step: number): string | undefined {
+  for (let i = step - 1; i >= 0; i--) if (p.notes?.[i]?.trim()) return p.notes[i];
+  return undefined;
 }
 
 export const templateOf = (id: string): ProjectTemplate | undefined => TEMPLATES.find((t) => t.id === id);

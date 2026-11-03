@@ -21,6 +21,9 @@ import type { LinguaDB } from './db';
 import { normalizeWord } from '@/core/text/normalize';
 import { lookUpFull } from '@/services/dictionary/fullDict';
 import { recordEvidence } from './learner';
+import { wordId } from './words';
+import type { Skill } from '@/core/contracts/learner';
+import type { WordV6 } from '@/core/contracts/word';
 import { practiceNotes, wordFacts } from './practice';
 
 /** The learner's words with what the dictionary says of them: the same source Practice draws on. */
@@ -36,18 +39,31 @@ export async function gameItems(lang: string, database: LinguaDB = db): Promise<
     ];
     const row = await lookUpFull(lang, n.lemma ?? n.term).catch(() => undefined);
     const pairs = (row?.tatoeba ?? []).slice(0, 3).map((t): [string, string] => [t[0], t[1]]);
-    return { ...item, lemma: n.lemma, cats, pairs, parts: partsOf(n.term, row?.entries.find((e) => e.parts)?.parts, lang) ?? undefined };
+    const credit = n.imageCredit ? `${n.imageCredit.source} · ${n.imageCredit.licence}` : undefined;
+    return { ...item, lemma: n.lemma, cats, pairs, credit, parts: partsOf(n.term, row?.entries.find((e) => e.parts)?.parts, lang) ?? undefined };
   }));
 }
 
 /** Whether the dictionary, read from the typed word's side, also relates it to the prompt: a synonym is often listed under only one of the two. */
 export async function relatedBack(lang: string, typed: string, prompt: string, relation: 'synonym' | 'antonym' | 'any'): Promise<boolean> {
+  // The learner's own links between words (they said "these go together") count for association, which asks for anything related.
+  if (relation === 'any') {
+    const [a, b] = [wordId(lang, normalizeWord(prompt, lang)), wordId(lang, normalizeWord(typed, lang))];
+    const [pw, tw] = await Promise.all([db.words.get(a), db.words.get(b)]);
+    const links = (w: unknown) => (w as Partial<WordV6> | undefined)?.relatedWordIds ?? [];
+    if (links(pw).includes(b) || links(tw).includes(a)) return true;
+  }
   const row = await lookUpFull(lang, typed).catch(() => undefined);
   const entries = row?.entries ?? [];
   const syn = entries.flatMap((e) => [...(e.syn ?? []), ...e.senses.flatMap((x) => x.syn ?? [])]);
   const ant = entries.flatMap((e) => [...(e.ant ?? []), ...e.senses.flatMap((x) => x.ant ?? [])]);
   const forms = relation === 'synonym' ? syn : relation === 'antonym' ? ant : [...syn, ...ant];
   return forms.some((f) => normalizeWord(f, lang) === normalizeWord(prompt, lang));
+}
+
+/** A mark of a game in the learner's record where it is not a word of theirs: a translation, a line heard, a story read. */
+export function recordGameSkill(lang: string, game: string, skill: Skill, patternId: string, won: boolean, assisted = false, database: LinguaDB = db): Promise<void> {
+  return recordEvidence({ lang, at: Date.now(), skill, room: 'ludus', item: { type: 'pattern', patternId }, outcome: won ? 'right' : 'wrong', assisted, kind: game, contextId: 'games' }, database).then(() => undefined);
 }
 
 /** The commonest words of a language's list: a ladder is made of these, not of the learner's words. */
@@ -157,3 +173,18 @@ const PROJECTS_KEY = (lang: string) => `games.projects:${lang}`;
 export const loadProjects = async (lang: string, database: LinguaDB = db): Promise<Project[]> => ((await database.settings.get(PROJECTS_KEY(lang)))?.value as Project[] | undefined) ?? [];
 export const useProjects = (lang: string): Project[] | undefined => useLiveQuery(() => loadProjects(lang), [lang]);
 export const saveProjects = (lang: string, projects: Project[], database: LinguaDB = db): Promise<unknown> => database.settings.put({ key: PROJECTS_KEY(lang), value: projects, updatedAt: Date.now() });
+
+/** The texts, recordings and videos a project can be about (6-21 G7). */
+export interface ProjectMaterial {
+  texts: Array<{ id: string; title: string }>;
+  audio: Array<{ id: string; title: string }>;
+  video: Array<{ id: string; title: string }>;
+}
+export function useProjectMaterial(lang: string): ProjectMaterial | undefined {
+  return useLiveQuery(async () => {
+    const texts = (await db.texts.where('lang').equals(lang).filter((t) => !t.deletedAt).toArray()).sort((a, b) => (b.lastOpenedAt ?? b.updatedAt ?? 0) - (a.lastOpenedAt ?? a.updatedAt ?? 0));
+    const media = (await db.media.where('lang').equals(lang).filter((m) => !m.deletedAt && (m.kind === 'audio' || m.kind === 'video')).toArray()).sort((a, b) => (b.lastPlayedAt ?? b.updatedAt ?? 0) - (a.lastPlayedAt ?? a.updatedAt ?? 0));
+    const pick = (list: Array<{ id: string; title: string }>) => list.slice(0, 40).map((x) => ({ id: x.id, title: x.title }));
+    return { texts: pick(texts), audio: pick(media.filter((m) => m.kind === 'audio')), video: pick(media.filter((m) => m.kind === 'video')) };
+  }, [lang]);
+}

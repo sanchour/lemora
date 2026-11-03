@@ -9,6 +9,7 @@ import type { GameDef } from '@/core/games/defs';
 import type { GameItem } from '@/core/games/source';
 import { isRtl } from '@/core/lang/languages';
 import { shuffle } from '@/core/srs/ludus';
+import { recordGameSkill } from '@/data/games';
 import { Kbd } from '@/design/primitives';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { cx } from '@/lib/cx';
@@ -21,6 +22,7 @@ function Board({ entry, lang, settle }: BoardProps<CompleteRound>) {
   const [wrong, setWrong] = useState<number[]>([]);
   const [right, setRight] = useState(false);
   const over = right || wrong.length >= MAX_WRONG_PICKS;
+  useSettleOnce(over, () => void recordGameSkill(lang, 'complete', 'reading', `complete:${entry.item.kind}:${entry.item.before.slice(0, 30)}`, right, wrong.length > 0).catch(() => undefined));
   useSettleOnce(over, () => settle({ won: right, stars: choiceStars(wrong.length, right), hints: 0, message: right ? t('Right.') : t('The line that fits is marked.') }));
   const pick = (i: number) => {
     if (over || wrong.includes(i)) return;

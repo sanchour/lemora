@@ -21,6 +21,8 @@ export interface GameItem {
   synonyms: string[];
   antonyms: string[];
   image?: string;
+  /** Where the picture came from and its licence, as the card keeps it. */
+  credit?: string;
 }
 
 export const itemsOfFacts = (facts: WordFacts[]): GameItem[] =>

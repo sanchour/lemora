@@ -15,6 +15,8 @@ import type { BoardProps } from './RoundRunner';
 interface Entry {
   state: MemoryState;
   terms: string[];
+  /** Where the pictures came from, in picture mode. */
+  credits: string[];
 }
 
 function Board({ entry, lang, settle }: BoardProps<Entry>) {
@@ -45,6 +47,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
           );
         })}
       </div>
+      {entry.credits.length > 0 && <p className="mt-2 text-[12px] text-ink-faint"><UiText source={'Pictures: {0}'} values={[entry.credits.join('; ')]} /></p>}
       <p className="mt-4 text-[14px] text-ink-soft"><UiText source={'Moves: {0}'} values={[s.moves]} /> · <UiText source={'Pairs found: {0} of {1}'} values={[s.matched.length, pairs]} /></p>
     </div>
   );
@@ -66,7 +69,7 @@ export function Memory({ lang, def, items, best }: { lang: string; def: GameDef;
       make={(random) => {
         const mode: MemoryMode = pictures ? 'picture' : 'meaning';
         const state = makeMemory(items, 8, random, mode);
-        return state ? [{ state, terms: state.cards.filter((c) => c.side === 'word').map((c) => c.face.text ?? '') }] : [];
+        return state ? [{ state, terms: state.cards.filter((c) => c.side === 'word').map((c) => c.face.text ?? ''), credits: mode === 'picture' ? [...new Set(items.filter((i) => i.credit && state.cards.some((c) => c.face.image === i.image)).map((i) => i.credit!))] : [] }] : [];
       }}
       empty={t('The words would not make pairs. Try again.')}
       terms={(e) => e.terms}
