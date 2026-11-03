@@ -195,7 +195,7 @@ const LANE_ROOM: Record<Lane, { title: string; to: string; action: string }> = {
   read: { title: 'Read today’s news', to: '/codex/new?way=news', action: 'Open the news' },
   listen: { title: 'Find a podcast you like', to: '/sonus?tab=podcasts', action: 'Browse podcasts' },
   watch: { title: 'Find a series on your services', to: '/sonus?tab=streaming', action: 'Open Services' },
-  words: { title: 'Take a ready-made deck', to: '/thesaurus?tab=discover', action: 'Choose a deck' },
+  words: { title: 'Take a ready-made deck', to: '/explora?kind=words', action: 'Choose a deck' },
   write: { title: 'Write five lines in Diarium', to: '/mentis/diarium', action: 'Open Diarium' },
   speak: { title: 'Talk for five minutes in Sermo', to: '/mentis/sermo', action: 'Open Sermo' },
 };
@@ -211,7 +211,7 @@ const FIRST_TIME: Array<{ room: keyof GuideInput['used']; lane: Lane; title: str
   { room: 'visio', lane: 'watch', title: 'Watch something with its subtitles', to: '/sonus?tab=streaming', action: 'Open Streaming', reason: 'You haven’t watched anything in Sonus et Visio yet: with subtitles, a series becomes a lesson.' },
   { room: 'sonus', lane: 'listen', title: 'Follow a podcast', to: '/sonus?tab=podcasts', action: 'Open Sonus et Visio', reason: 'Nothing to listen to yet: a podcast at your level fits into a walk or the dishes.' },
   { room: 'codex', lane: 'read', title: 'Put something on your shelf', to: '/codex/new', action: 'Open Codex', reason: 'Codex is empty: an article or a short book, and every word is a tap away.' },
-  { room: 'thesaurus', lane: 'words', title: 'Start your first deck', to: '/thesaurus?tab=discover', action: 'Open Thesaurus', reason: 'No decks yet: the most common words make everything else easier.' },
+  { room: 'thesaurus', lane: 'words', title: 'Start your first deck', to: '/explora?kind=words', action: 'Open Thesaurus', reason: 'No decks yet: the most common words make everything else easier.' },
 ];
 
 /**

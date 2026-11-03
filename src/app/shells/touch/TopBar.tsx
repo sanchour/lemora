@@ -16,7 +16,7 @@ const BACK_TO: Record<string, string> = {
   'sonus/podcast': '/sonus?tab=podcasts',
   'sonus/book': '/sonus?tab=books',
   'mentis/diarium': '/mentis/diarium',
-  'thesaurus/ready': '/thesaurus?tab=discover',
+  'thesaurus/ready': '/explora?kind=words',
   'settings/lab': '/settings/developer',
   'cantus/spotify': '/sonus',
   'sonus/song': '/sonus',

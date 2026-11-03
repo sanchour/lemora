@@ -1,7 +1,7 @@
 import { ParallelReadingPage } from './pages';
 import { ReadingPracticePage } from './pages';
 import { createBrowserRouter, Navigate } from 'react-router';
-import LemoraHome from './home/LemoraHome';
+import HomeRouter from './home/HomeRouter';
 import {
   AlphabetPage,
   BibliothecaPage,
@@ -42,7 +42,7 @@ export const router = createBrowserRouter(
       element: <Root />,
       errorElement: <AppError />,
       children: [
-        { index: true, element: <LemoraHome /> },
+        { index: true, element: <HomeRouter /> },
         // Alphabet: Lingua's Cursus › Script on its own, with the character reference and the letters' lessons.
         { path: 'cursus', element: <Navigate to="/cursus/alphabets" replace /> },
         { path: 'cursus/alphabets', element: <AlphabetPage /> },

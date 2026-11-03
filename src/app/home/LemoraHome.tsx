@@ -31,6 +31,8 @@ import { TIP_ICONS } from '@/features/mundus/TipsView';
 import { cx } from '@/lib/cx';
 import { localDateKey } from '@/lib/format';
 import { GoalsDrawer } from './GoalsDrawer';
+import { ToolDuotoneIcon } from '@/features/home/homeComponents';
+import type { HomeToolItem } from '@/features/home/homeData';
 
 const label = 'text-[11.5px] font-bold tracking-[0.14em] text-ink-faint uppercase';
 const rise = (i: number) => ({ initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 }, transition: { ...spring.soft, delay: 0.04 * i } });
@@ -208,14 +210,14 @@ function ContinueCard({ book, author, percent, to }: { book?: string; author?: s
 /** A tool, laid on its side: icon, name, what's waiting there, and below it today's time against its goal. */
 function ToolCard({ section, line, locked, ms, goal }: { section: Section; line?: string; locked: boolean; ms: number; goal: number }) {
   const translateUi = useUi();
-  const tint = TINT[section.id as ToolId] ?? 'var(--accent)';
   const share = progressOf(ms, goal);
   const done = share !== undefined && share >= 1;
   return (
     <Link to={section.path} className="group flex h-full flex-col rounded-3xl border border-line/80 bg-surface p-4 transition-[border-color,background-color] hover:border-line-strong hover:bg-raised">
       <span className="flex items-center gap-3.5">
-        <span className="grid size-12 shrink-0 place-items-center rounded-2xl" style={wash(tint)}>
-          <section.icon size={22} aria-hidden />
+        {/* The tool's drawn emblem in its circle, as on Lingua's Home. */}
+        <span className="grid size-12 shrink-0 place-items-center rounded-full border-[1.5px] border-line-strong/80 transition-transform group-hover:-translate-y-0.5">
+          <ToolDuotoneIcon id={section.id as HomeToolItem['id']} className="size-7" />
         </span>
         <span className="min-w-0 flex-1">
           <span className="flex items-baseline gap-2">
