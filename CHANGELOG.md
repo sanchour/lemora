@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.6.0-alpha.170** · 2026-11-03 · 6-29 G1: the word graph's model, with the tree view
 - **0.6.0-alpha.169** · 2026-11-02 · resolve A2 transition cancellation blocker
 - **0.6.0-alpha.168** · 2026-11-02 · record A2 browser verification and transition-log blocker
 - **0.6.0-alpha.167** · 2026-11-02 · checkpoint A2.1 Russian schemes; browser acceptance pending

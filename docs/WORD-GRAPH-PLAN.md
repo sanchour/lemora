@@ -1,6 +1,7 @@
 # The word graph · the plan (Lingua 6, step 6-29)
 
-**Status: planned 2026-10-29, nothing built.** Planned by Claude Opus from the real dictionary and pack files; to be built
+**Status: planned 2026-10-29; G1 (the model, with the tree's) built 2026-11-03.** The user added a third view on
+2026-11-03, "a tree view, like a word tree view": section 2.4. Planned by Claude Opus from the real dictionary and pack files; to be built
 by Opus (the user's word) in seven pushes, **G1 to G7**, each versioned on its own. Claim the step in
 [LINGUA-6-PLAN.md](LINGUA-6-PLAN.md)'s table (row 6-29) before the first push, as every step is claimed.
 
@@ -39,10 +40,11 @@ fade. And each view ends in something to do, so the map is a way into practice, 
 
 **The seven calls.**
 
-1. **Two views of one web.** *The atlas* shows every word you have at once, in regions, and is where the tab opens: the
+1. **Three views of one web.** *The atlas* shows every word you have at once, in regions, and is where the tab opens: the
    user's overview. *The compass* shows one word with its neighbours in four quarters (meaning, form, origin, use), and is
    where a word opens: from its page, the reader, a search or the atlas. The handbook's rule for the map ("the map starts
-   from one word, never the whole graph") still holds when you come from a word; G7 rewrites its row for the tab.
+   from one word, never the whole graph") still holds when you come from a word; G7 rewrites its row for the tab. *The
+   tree* shows one word's family as a tree: what it is made from above, what is made from it below (section 2.4).
 2. **Hubs only when small.** A shared thing (a theme, an affix, a character, a root, a deck, a text) is one node its words
    hang from, so a 50-word theme is 50 threads, not 1,225. Only groups of **2 to 60** of your words are hubs; bigger ones (a
    part of speech, a gender, a 400-word book, an ending like *-ar*) are **lenses**: a filter or a tint, never a star of lines.
@@ -61,8 +63,8 @@ fade. And each view ends in something to do, so the map is a way into practice, 
 
 | Push | What the learner gets | Size |
 | --- | --- | --- |
-| **G1** The model | Nothing on screen: the web built and tested on real-shaped data | M |
-| **G2** The compass | The new tab; one word and its neighbours, the smooth lines, hover and zoom, the word's page beside it; "See its neighbours" on every word's page | L |
+| **G1** The model *(done 2026-11-03)* | Nothing on screen: the web, a word's neighbourhood, the regions and the tree, built and tested on real rows | M |
+| **G2** The compass and the tree | The new tab; one word and its neighbours, or its family as a tree; the smooth lines, hover and zoom, the word's page beside it; "See its neighbours" on every word's page | L |
 | **G3** The contract | Nothing on screen: Dexie 46 for the cached layout and saved views; the fields and question the later pushes need | S |
 | **G4** The atlas | All your words at once: regions, landmarks, semantic zoom, bundled lines, the minimap, search that flies | L |
 | **G5** Tools | Lenses and filters, saved views, your own links and pins, clusters, the lists that lead to practice | L |
@@ -134,7 +136,7 @@ word-to-word threads plus hubs. **What the numbers changed:**
 
 ---
 
-## 2. The two views
+## 2. The three views
 
 ### 2.1 The atlas: every word you have, at once
 
@@ -191,6 +193,29 @@ word's neighbours travel from their places in the atlas to their places on the c
 plays it backwards. With reduced motion the view changes at once, with a fade.
 
 ---
+
+### 2.4 The tree: a word's family
+
+The user, 2026-11-03: "also add a tree view, like a word tree view". The compass shows everything around a word at once; the
+tree shows one thread of it the way a dictionary of etymology would: **where the word comes from, and what grew from it**.
+
+- **Climbing.** From the word to what it is made from (*deshacer* → *hacer*, *Handschuh* → *Hand*), up to three steps,
+  from `parts`. The top word's ancestor in another language sits above it as a small italic note (*hacer* ← Old Spanish
+  *fazer*), and the same word in other languages beside it (*libro*: French *livre*, Italian *libro*).
+- **Branching.** Down from the top through what each word is made into: its `derived` list and every word whose `parts`
+  name it (`derived` lists only some; an index over the dictionary finds the rest). Two levels, at most eight branches a
+  word, yours first and then the most common; a word without a rank never (archaic *contrahacer*). The way down to the
+  word you opened is always drawn, however deep.
+- **Chinese and Japanese** grow one small tree per character, its branches your words written with it (女人: 女 and 人, and
+  under 人 your 男人 and 人们), since their dictionaries have no `parts`.
+- **How it looks:** a printed family tree, top down. Hairline elbows (a vertical, then a horizontal, rounded at the bend)
+  rather than curves, so it reads as a different view; your words in ink, words to discover in italic with a dotted dot;
+  the opened word bookmarked in terracotta; branches grow down in 280 ms when it opens, as the compass's lines draw out.
+- **Opening it:** *T* on a chosen word, or the Tree button beside the compass's word; Esc goes back. The address is
+  `&word=hacer&view=tree`. The keys walk it as a tree: up to the parent, down to the first branch, left and right
+  between siblings.
+- **Built:** the model in G1 (`core/graph/tree.ts`, `wordTree`), drawn in G2 with the compass's renderer. It ticks no new
+  audit entry: it is a second way to see F1079 (word families) and F1080 (roots).
 
 ## 3. Seeing everything: overview, hover, scroll, zoom
 
@@ -406,6 +431,7 @@ family, fly to the compass and back shows no frame over 16.7 ms at p95 (Ordo's F
 | `src/core/graph/langs.ts` | Each language's rules: lens affixes, the little words' parts of speech, character hubs, Arabic roots from `ety` |
 | `src/core/graph/compass.ts` | The compass: quarters, rings, caps |
 | `src/core/graph/regions.ts` | Regions: the little words, themes, label propagation, loose threads, names |
+| `src/core/graph/tree.ts` | The tree: climbing through `parts`, branching through `derived` and a made-from index, one tree per character in Chinese and Japanese |
 | `src/core/graph/curves.ts` | Thread geometry: bends, bundles, de Casteljau cuts, nib strokes |
 | `src/workers/graph.worker.ts` | Reads Dexie itself (as `dict.worker.ts` does), builds the web, lays out the atlas, writes the cache |
 | `src/services/graph/graph.ts` | The worker's client (a `?worker` import, as `services/dictionary/fullDict.ts` has) |
@@ -518,20 +544,29 @@ Each push: claim it in the plan's table, build, check (`npm run typecheck`, `npm
 added (`addStarterDeck`), half their words marked known (`markKnownBulk`); a few texts read in Codex, so there are
 sightings; a few wrong answers in Practice, so the record has mistakes. G7 adds a 10,000-word synthetic web.
 
-### G1 · The model (M)
+### G1 · The model (M) · done 2026-11-03
 
-- **Builds:** `core/graph`'s model, the language rules and the regions; no drawing.
-- **Tests:** joining through `normalizeWord` (Russian *сказа́ть* meets *сказать*; Spanish *sí* stays apart from *si*; Arabic
-  vowel marks fold); hubs only from 2 to 60 words, and the 61st word makes a lens; the lens affixes of each language; pairs
-  only for gender and aspect; no phrases or look-alikes in the atlas; words to discover ranked, the unranked dropped; Chinese
-  character hubs, with 人 the word as the hub; the little words by part of speech; the same regions for the same seed.
-  Fixtures are the real v3 rows of *mar*, *hacer*, *сказать*, *Handschuh* and 人, a few KB in `src/core/graph/fixtures/`.
-- **Done when:** the fixtures give the shapes section 1 measured, and the tests pass. No entries ticked (no screen yet).
+- **Built:** `src/core/graph/`: `model.ts` (`buildWeb`, and `neighbourhood` for the compass), `langs.ts` (each language's
+  rules), `regions.ts` (`regionsOf`), `tree.ts` (`wordTree`, `madeFromIndex`). Fixtures are real v3 rows of *mar*,
+  *hacer*, *perro*, *si*/*sí*, *сказать*/*говорить*, *Handschuh*, 人, 来 and وجد and their neighbours, with four Spanish
+  themes (`src/core/graph/fixtures/`, about 150 KB).
+- **Tested** (15 tests): joining through `normalizeWord` (Russian stress, Spanish accents, Arabic marks); look-alikes and
+  phrases never in the atlas; only gender and aspect pairs; hubs from 2 to 60 words, lenses above and for grammar-shaped
+  lists and endings; 人 the word as the hub; Arabic roots from the etymology; *mar*'s words to discover (*marino*, *marea*,
+  *mareo*, never the unranked *marear*); the ancestor only when it is another word; the little words; regions the same for
+  a seed; loose threads; the tree of *deshacer*, of *Handschuh* and of 女人.
+- **At real scale** (run once on the 3,000 most common words, not kept as a test): Spanish 3,086 nodes and 4,068 threads,
+  built in 130 ms and given regions in 39 ms; Russian 3,164 and 4,908; Mandarin 3,176 and 6,628. That is over the 50 ms a
+  main-thread task may take, so G4 runs it in the worker, as planned. **Found:** 700 of the 3,000 Spanish words end as
+  loose threads (599 groups), too many for a margin; G4 lets members of a small affix, root or character hub vote in the
+  regions too, and keeps the margin to groups of two or more, with single words in the rail's list.
+- **One rule learned:** a word's part of speech is the one with the most meanings, not its first entry (*de* is listed
+  first as the letter *d*).
 
-### G2 · The compass (L)
+### G2 · The compass and the tree (L)
 
 - **Builds:** the tab (lazy), opening on the last word you looked at or on *Which word?* (the atlas takes over in G4);
-  `compass.ts`; the renderer (camera, curves, the families' strokes, nib strokes, the draw-in, hover, zoom, pan, the
+  `compass.ts`; the tree (section 2.4), drawn top down; the renderer (camera, curves, the families' strokes, nib strokes, the draw-in, hover, zoom, pan, the
   bookmark); the side panel with `EntryView` and the neighbours as a list; walking by arrow keys; *See its neighbours* on
   the word's page; words to discover; phrases, sentences, texts, decks; the weak-spot dagger.
 - **Checked on:** the compasses of *mar*, *hacer*, *Handschuh*, *сказать* and 人, light and dark, Chrome and Safari, with
