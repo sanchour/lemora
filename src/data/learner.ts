@@ -4,7 +4,7 @@
 import Dexie from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
 import type { EvidenceDay, EvidenceItem, EvidenceRow, LearnerRecord, Skill, WeakSpot } from '@/core/contracts/learner';
-import { itemKeyOf, quietSkills, recognisedNotRecalled, skillBalance, summariseDay, weakSpotsOf } from '@/core/learner/learner';
+import { itemKeyOf, mixUpsOf, quietSkills, recognisedNotRecalled, skillBalance, summariseDay, weakSpotsOf } from '@/core/learner/learner';
 import { localDateKey } from '@/lib/format';
 import { db } from './db';
 import type { LinguaDB } from './db';
@@ -57,6 +57,11 @@ export function learnerRecord(database: LinguaDB = db, now: () => number = Date.
         out.push(summary);
       }
       return out;
+    },
+    mixUps: async (lang, limit) => {
+      const words = await database.words.where('[lang+state]').anyOf([[lang, 1], [lang, 2]]).toArray();
+      const yours = new Set(words.filter((w) => !w.deletedAt).flatMap((w) => [w.norm, w.lemma ?? w.norm]));
+      return mixUpsOf(await rowsOf(lang, now() - WEAK_WINDOW, now(), database), (norm) => yours.has(norm), limit);
     },
     forgetLanguage: (lang) => forgetEvidence(lang, database),
   };

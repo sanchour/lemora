@@ -1,6 +1,6 @@
 import Dexie from 'dexie';
 import type { EntityTable, Table } from 'dexie';
-import type { GeneratedRow } from '@/core/contracts/db';
+import type { GeneratedRow, GraphLayoutRow, GraphViewRow } from '@/core/contracts/db';
 import type { EvidenceDay, EvidenceRow } from '@/core/contracts/learner';
 import type { FullDictRow } from '@/core/dictionary/format';
 import type {
@@ -187,7 +187,14 @@ export const SCHEMA_V23 = {
   generated: 'id, [lang+kind], [lang+createdAt], hash',
 } as const;
 
-const SCHEMA = { ...SCHEMA_V1, ...SCHEMA_V2, ...SCHEMA_V3, ...SCHEMA_V4, ...SCHEMA_V5, ...SCHEMA_V6, ...SCHEMA_V7, ...SCHEMA_V8, ...SCHEMA_V9, ...SCHEMA_V10, ...SCHEMA_V12, ...SCHEMA_V13, ...SCHEMA_V14, ...SCHEMA_V15, ...SCHEMA_V16, ...SCHEMA_V17, ...SCHEMA_V18, ...SCHEMA_V19, ...SCHEMA_V20, ...SCHEMA_V22, ...SCHEMA_V23 };
+/** Version 46 (Lingua 6-29, the word graph; 17 + 29, outside 6-7 to 6-25's numbers): the atlas's cached scene, and the
+ *  learner's saved views and pins. */
+export const SCHEMA_V46 = {
+  graphLayouts: '[lang+lens]',
+  graphViews: 'id, lang, updatedAt',
+} as const;
+
+const SCHEMA = { ...SCHEMA_V1, ...SCHEMA_V2, ...SCHEMA_V3, ...SCHEMA_V4, ...SCHEMA_V5, ...SCHEMA_V6, ...SCHEMA_V7, ...SCHEMA_V8, ...SCHEMA_V9, ...SCHEMA_V10, ...SCHEMA_V12, ...SCHEMA_V13, ...SCHEMA_V14, ...SCHEMA_V15, ...SCHEMA_V16, ...SCHEMA_V17, ...SCHEMA_V18, ...SCHEMA_V19, ...SCHEMA_V20, ...SCHEMA_V22, ...SCHEMA_V23, ...SCHEMA_V46 };
 export type TableName = keyof typeof SCHEMA;
 export const TABLE_NAMES = Object.keys(SCHEMA) as TableName[];
 
@@ -239,6 +246,8 @@ export type LinguaDB = Dexie & {
   evidence: EntityTable<EvidenceRow, 'id'>;
   evidenceDays: EntityTable<EvidenceDay, 'id'>;
   generated: EntityTable<GeneratedRow, 'id'>;
+  graphLayouts: Table<GraphLayoutRow, [string, string]>;
+  graphViews: EntityTable<GraphViewRow, 'id'>;
 };
 
 export function createDb(name = 'lingua'): LinguaDB {
@@ -264,6 +273,7 @@ export function createDb(name = 'lingua'): LinguaDB {
   db.version(20).stores(SCHEMA_V20);
   db.version(22).stores(SCHEMA_V22);
   db.version(23).stores(SCHEMA_V23);
+  db.version(46).stores(SCHEMA_V46);
   return db;
 }
 

@@ -1,6 +1,6 @@
 # The word graph · the plan (Lingua 6, step 6-29)
 
-**Status: planned 2026-10-29; G1 (the model, with the tree's) built 2026-11-03; G2 (the compass and the tree on screen) built 2026-11-03.** The user added a third view on
+**Status: planned 2026-10-29; G1 (the model, with the tree's) built 2026-11-03; G2 (the compass and the tree on screen) and G3 (the contract) built 2026-11-03.** The user added a third view on
 2026-11-03, "a tree view, like a word tree view": section 2.4. Planned by Claude Opus from the real dictionary and pack files; to be built
 by Opus (the user's word) in seven pushes, **G1 to G7**, each versioned on its own. Claim the step in
 [LINGUA-6-PLAN.md](LINGUA-6-PLAN.md)'s table (row 6-29) before the first push, as every step is claimed.
@@ -65,7 +65,7 @@ fade. And each view ends in something to do, so the map is a way into practice, 
 | --- | --- | --- |
 | **G1** The model *(done 2026-11-03)* | Nothing on screen: the web, a word's neighbourhood, the regions and the tree, built and tested on real rows | M |
 | **G2** The compass and the tree *(done 2026-11-03)* | The new tab; one word and its neighbours, or its family as a tree; the smooth lines, hover and zoom, the word's page beside it; "See its neighbours" on every word's page | L |
-| **G3** The contract | Nothing on screen: Dexie 46 for the cached layout and saved views; the fields and question the later pushes need | S |
+| **G3** The contract *(done 2026-11-03)* | Nothing on screen: Dexie 46 for the cached layout and saved views; the fields and question the later pushes need | S |
 | **G4** The atlas | All your words at once: regions, landmarks, semantic zoom, bundled lines, the minimap, search that flies | L |
 | **G5** Tools | Lenses and filters, saved views, your own links and pins, clusters, the lists that lead to practice | L |
 | **G6** Time and bridges | How your web grew (a slider and a replay); your other languages joined by cognates | M |
@@ -591,9 +591,17 @@ sightings; a few wrong answers in Practice, so the record has mistakes. G7 adds 
 - **Done when:** the compass of *mar* holds what the sketch holds, with the profile's words in place of the stand-in's; from *mar* the keys alone reach *marea* and open it; the
   draw-in and the hover run at 60 fps; nothing is drawn at rest.
 
-### G3 · The contract (S)
+### G3 · The contract (S) · done 2026-11-03
 
-- **Builds:** section 10.6, as its own small push (`Contract: 6-29's tables and fields`), with LINGUA-6-CONTRACTS.md's
+- **Built (0.6.0-alpha.184):** everything section 10.6 lists. Dexie 46 with `graphLayouts` (the cached scene: nodes, positions as
+  `Float32Array`, thread ends as `Uint32Array`, families as `Uint8Array`, regions and a stamp; `skip` in backups) and
+  `graphViews` (saved views and the language's map with its pins; `lww`); `Lingua6Step` gains 29, `StepSchema.policy` gains
+  `skip`, `STEP_29_SCHEMA`; `LearnerRecord.mixUps` (`core/learner`'s `mixUpsOf`: a wrong answer whose `given` is another of
+  the learner's words, so a typo is never one); `Word.grammarTopics` and `relatedWordIds` in `data/types.ts`. Removing or
+  resetting a language empties both tables. Nothing on screen.
+- **Tested:** the schema equals the contract; a database at 23 opens at 46 with its words kept; removal and reset; a backup
+  carries the views and pins and never the scene; mix-ups pair two of the learner's words and skip a typo.
+- **Builds (as planned):** section 10.6, as its own small push (`Contract: 6-29's tables and fields`), with LINGUA-6-CONTRACTS.md's
   *Changes since 6-0* updated.
 - **Done when:** typecheck and tests pass, including backup policies, the removal of a language, and a database at 23
   opening at 46 (fake-indexeddb).
