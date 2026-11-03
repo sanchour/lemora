@@ -1,7 +1,7 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 // A round of a game (6-21): the ready screen, the entries one after another (words, puzzles or passages), the clock, the reveal after
 // each, the end with its stars, the best kept and a line in the learner's record for every word. A game only draws its board.
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import type { ComponentType, ReactNode } from 'react';
 import { RotateCcw, Star } from 'lucide-react';
 import { Link } from 'react-router';
@@ -42,7 +42,23 @@ export const Stars = ({ n, of = MAX_STARS }: { n: number; of?: number }) => (
   </span>
 );
 
+/** A tournament (6-21, F0190) runs rounds one after another: a round reports to it and the end of a round offers the next game instead of playing again. */
+export interface RoundReport {
+  stars: number;
+  of: number;
+  ms: number;
+}
+export interface TournamentLink {
+  index: number;
+  count: number;
+  report: (r: RoundReport) => void;
+  advance: () => void;
+}
+export const TournamentContext = createContext<TournamentLink | null>(null);
+
 interface RunnerProps<E> {
+  /** Called once when the round ends, with what it earned. */
+  onRound?: (r: RoundReport) => void;
   lang: string;
   def: GameDef;
   best?: Best;
@@ -63,7 +79,8 @@ interface RunnerProps<E> {
   rtl?: boolean;
 }
 
-export function RoundRunner<E>({ lang, def, best, unit, intro, options, make, empty, terms, label, Board, rules, rtl }: RunnerProps<E>) {
+export function RoundRunner<E>({ lang, def, best, unit, intro, options, make, empty, terms, label, Board, rules, rtl, onRound }: RunnerProps<E>) {
+  const tournament = useContext(TournamentContext);
   const translateUi = useUi();
   const { answered, cue } = useLessonFeel();
   const [phase, setPhase] = useState<'ready' | 'making' | 'playing' | 'done' | 'empty'>('ready');
@@ -119,6 +136,8 @@ export function RoundRunner<E>({ lang, def, best, unit, intro, options, make, em
     const ms = Math.round(spent.current);
     setPhase('done');
     cue('finish');
+    onRound?.({ stars: total, of: entries.length * MAX_STARS, ms });
+    tournament?.report({ stars: total, of: entries.length * MAX_STARS, ms });
     void saveRound(lang, def.id, { stars: total, of: entries.length * MAX_STARS, ms, at: Date.now() }).then((r) => setOutcome({ beat: r.beat }));
   }, [at, entries.length, results, cue, lang, def.id]);
 
@@ -219,8 +238,14 @@ export function RoundRunner<E>({ lang, def, best, unit, intro, options, make, em
               })}
             </ul>
             <div className="mt-6 flex gap-3">
-              <button type="button" onClick={() => void start()} className={buttonClasses('primary', 'lg')}><UiText source={'{0} Play again'} values={[<RotateCcw size={16} aria-hidden />]} /></button>
-              <Link to="/thesaurus/games" className={buttonClasses('secondary', 'lg')}><UiText source={'All games'} /></Link>
+              {tournament ? (
+                <button type="button" onClick={tournament.advance} className={buttonClasses('primary', 'lg')}>{tournament.index + 1 < tournament.count ? <UiText source={'Next game'} /> : <UiText source={'See the tournament'} />}</button>
+              ) : (
+                <>
+                  <button type="button" onClick={() => void start()} className={buttonClasses('primary', 'lg')}><UiText source={'{0} Play again'} values={[<RotateCcw size={16} aria-hidden />]} /></button>
+                  <Link to="/thesaurus/games" className={buttonClasses('secondary', 'lg')}><UiText source={'All games'} /></Link>
+                </>
+              )}
             </div>
           </div>
         }

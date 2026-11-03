@@ -12,6 +12,8 @@ export interface GameItem {
   /** The deck, the tags and the kind of word it is: what sorting games group by. */
   /** The dictionary's morphemes, when they put together spell the word (des-, hacer). */
   parts?: string[];
+  /** The dictionary's sentences for the word, with their English: [sentence, English]. */
+  pairs?: Array<[string, string]>;
   cats?: Array<{ kind: 'deck' | 'tag' | 'pos'; name: string }>;
   meaning?: string;
   example?: string;
@@ -42,6 +44,10 @@ export interface GameSource {
   items: GameItem[];
   texts: number;
   listWords: number;
+  /** Hand-made translation sentences for the language, and the ready-made and Max-made stories there are to play. */
+  tasks?: number;
+  sentences?: number;
+  stories?: number;
 }
 
 export type CanPlay = { ok: true } | { ok: false; reason: string };
@@ -50,6 +56,9 @@ export function canPlay(def: GameDef, src: GameSource, lang: string, translate: 
   const { needs } = def;
   if (needs.letters && !hasLetters(lang)) return { ok: false, reason: translate(NO_LETTERS) };
   if (needs.list && src.listWords < needs.list) return { ok: false, reason: translate('Needs the language’s word list, which comes with its dictionary pack. Wait for the pack to finish installing, or install it.') };
+  if (needs.tasks && (src.tasks ?? 0) < needs.tasks) return { ok: false, reason: translate('Needs sentences to translate: some languages have hand-made ones, and the dictionary’s sentences for your own words count too.') };
+  if (needs.sentences && (src.sentences ?? 0) < needs.sentences) return { ok: false, reason: translate('Needs sentences to dictate: some languages have hand-made ones, and the dictionary’s sentences and your own examples count too.') };
+  if (needs.stories && (src.stories ?? 0) < needs.stories) return { ok: false, reason: translate('Needs a story: there is a ready-made one for the six core languages, and Max can make more.') };
   if (needs.texts && src.texts < 1) return { ok: false, reason: translate('Needs a text in Codex to hunt in. Add or open one first.') };
   if (needs.image || needs.parts) {
     const have = usable(def, src.items, lang).length;
