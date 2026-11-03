@@ -1,25 +1,19 @@
 import { ParallelReadingPage } from './pages';
 import { ReadingPracticePage } from './pages';
-import type { ReactNode } from 'react';
-import { createBrowserRouter, Navigate, useLocation, useParams } from 'react-router';
+import { createBrowserRouter, Navigate } from 'react-router';
 import HomePage from '@/features/home/HomePage';
 import {
+  AlphabetPage,
   BibliothecaPage,
   BookDetailsPage,
-  CantusPage,
   CodexPage,
-  CommutePage,
-  CourseLessonPage,
-  CursusPage,
   CharactersPage,
   DeckPage,
+  DiariumRoom,
   ExploraPage,
-  GrammarLessonPage,
-  GrammarTopicPage,
   JournalEntryPage,
   LabPage,
   LettersLessonPage,
-  MentisPage,
   NewTextPage,
   OrdoPage,
   MakePage,
@@ -27,54 +21,21 @@ import {
   GamesPage,
   ProjectsPage,
   StoryEditorPage,
-  WordsAloudPage,
   RatioPage,
   ReaderPage,
-  SonusBookPage,
-  SonusFeedPage,
-  SonusPage,
-  SonusPlayerPage,
-  SpotifyCallbackPage,
   StarterPage,
-  StationPage,
   StudyPage,
   ThesaurusPage,
   TranslatePracticePage,
-  VisioPage,
-  WatchPage,
+  TryRoom,
 } from './pages';
 import { PlanRoute } from '@/features/plans/PlanRoute';
 import { AppError } from './AppError';
-import { movedPath } from './redirects';
 import { Root } from './Root';
 
 const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
 
-function SongMoved({ games = false }: { games?: boolean }) {
-  const { songId = '' } = useParams();
-  return <Navigate to={`/cantus/song/${encodeURIComponent(songId)}${games ? '/games' : ''}`} replace />;
-}
-
-/** Grammatica's pages come with Lingua+ (5.1-2a); without it, back to Cursus › Grammatica and the plans. */
-const grammar = (page: ReactNode) => (
-  <PlanRoute feature="grammatica" fallback="/cursus/grammatica">
-    {page}
-  </PlanRoute>
-);
-
-/** The course's lessons come with Lingua+ too; without it, back to Cursus › Course and the plans. */
-const course = (page: ReactNode) => (
-  <PlanRoute feature="course" fallback="/cursus/course">
-    {page}
-  </PlanRoute>
-);
-
-/** An address from before Lingua 5's rooms (app/redirects.ts says where it went). */
-function Moved() {
-  const { pathname, search, hash } = useLocation();
-  return <Navigate to={`${movedPath(pathname, search) ?? '/'}${hash}`} replace />;
-}
-
+// Lemora's rooms (src/product.ts) at Lingua's addresses, so links inside the shared code lead where they did there.
 export const router = createBrowserRouter(
   [
     {
@@ -83,18 +44,13 @@ export const router = createBrowserRouter(
       errorElement: <AppError />,
       children: [
         { index: true, element: <HomePage /> },
-        // Cursus: the course, Grammatica, alphabets and typing as tabs; lessons and topics as pages of their own.
-        { path: 'cursus', element: <CursusPage /> },
+        // Alphabet: Lingua's Cursus › Script on its own, with the character reference and the letters' lessons.
+        { path: 'cursus', element: <Navigate to="/cursus/alphabets" replace /> },
+        { path: 'cursus/alphabets', element: <AlphabetPage /> },
         { path: 'cursus/characters', element: <CharactersPage /> },
-        { path: 'cursus/:tab', element: <CursusPage /> },
-        { path: 'cursus/course/:unit/:lesson', element: course(<CourseLessonPage />) },
-        { path: 'cursus/grammatica/review', element: grammar(<GrammarLessonPage review />) },
-        { path: 'cursus/grammatica/placement', element: grammar(<GrammarLessonPage placement />) },
-        { path: 'cursus/grammatica/:topicId', element: grammar(<GrammarTopicPage />) },
-        { path: 'cursus/grammatica/:topicId/lesson', element: grammar(<GrammarLessonPage />) },
         { path: 'cursus/alphabets/review', element: <LettersLessonPage review /> },
         { path: 'cursus/alphabets/:groupId/lesson', element: <LettersLessonPage /> },
-        // Explora & Bibliotheca: discovery and unified library across every tool.
+        // Explora & Bibliotheca: what there is to read, and what you have.
         { path: 'explora', element: <ExploraPage /> },
         { path: 'bibliotheca', element: <BibliothecaPage /> },
         { path: 'codex', element: <CodexPage /> },
@@ -112,85 +68,30 @@ export const router = createBrowserRouter(
         { path: 'thesaurus/study/:deckId', element: <StudyPage /> },
         // What Max makes: a story, sentences, a dialogue or a word list, checked and labelled (6-6b).
         { path: 'thesaurus/make', element: <MakePage /> },
-        // Practice sets in every kind of exercise (6-4b): Lingua+, like Ludus.
-        {
-          path: 'thesaurus/practice/:set?',
+        // Practice sets in every kind of exercise (6-4b), and Ludus's games on the learner's words (6-21): with the plan.
+        ...[
+          { path: 'thesaurus/practice/:set?', page: <PracticePage /> },
+          { path: 'thesaurus/games/story-editor', page: <StoryEditorPage /> },
+          { path: 'thesaurus/games/projects/:project?', page: <ProjectsPage /> },
+          { path: 'thesaurus/games/:game?', page: <GamesPage /> },
+          { path: 'thesaurus/translate/:set?', page: <TranslatePracticePage /> },
+        ].map(({ path, page }) => ({
+          path,
           element: (
             <PlanRoute feature="ludus" fallback="/thesaurus">
-              <PracticePage />
+              {page}
             </PlanRoute>
           ),
-        },
-        // Games on the learner's words (6-21): Lingua+, like Ludus.
-        {
-          path: 'thesaurus/games/story-editor',
-          element: (
-            <PlanRoute feature="ludus" fallback="/thesaurus">
-              <StoryEditorPage />
-            </PlanRoute>
-          ),
-        },
-        {
-          path: 'thesaurus/games/projects/:project?',
-          element: (
-            <PlanRoute feature="ludus" fallback="/thesaurus">
-              <ProjectsPage />
-            </PlanRoute>
-          ),
-        },
-        {
-          path: 'thesaurus/games/:game?',
-          element: (
-            <PlanRoute feature="ludus" fallback="/thesaurus">
-              <GamesPage />
-            </PlanRoute>
-          ),
-        },
-        {
-          path: 'thesaurus/translate/:set?',
-          element: (
-            <PlanRoute feature="ludus" fallback="/thesaurus">
-              <TranslatePracticePage />
-            </PlanRoute>
-          ),
-        },
-        // Sonus & Visio: separate rooms for listening and watching.
-        { path: 'sonus', element: <SonusPage /> },
-        { path: 'sonus/play/:mediaId', element: <SonusPlayerPage /> },
-        { path: 'sonus/podcast/:feedId', element: <SonusFeedPage /> },
-        { path: 'sonus/book/:bookId', element: <SonusBookPage /> },
-        { path: 'sonus/audiobooks', element: <Navigate to="/sonus?tab=books" replace /> },
-        { path: 'sonus/commute', element: <CommutePage /> },
-        { path: 'sonus/words', element: <WordsAloudPage /> },
-        { path: 'sonus/station/:stationId', element: <StationPage /> },
-        { path: 'sonus/song/:songId', element: <SongMoved /> },
-        { path: 'sonus/song/:songId/games', element: <SongMoved games /> },
-        // Cantus, the music room: one page that shows its tabs, player and games by the address.
-        {
-          path: 'cantus/*',
-          element: (
-            <PlanRoute feature="sonusPlus" fallback="/sonus">
-              <CantusPage />
-            </PlanRoute>
-          ),
-        },
-        // Kept as it is: learners entered this address in their own Spotify app.
-        { path: 'cantus/spotify', element: <SpotifyCallbackPage /> },
-        { path: 'visio', element: <VisioPage /> },
-        { path: 'visio/watch/:mediaId', element: <WatchPage /> },
-        // Mentis: Mundus (with its own tabs), Sermo and Diarium; an entry is a page of its own.
-        // Mundus's Explore and Every pick are Explore in Explora now: the old addresses move there.
-        ...['mentis/explore', 'mentis/picks'].map((path) => ({ path, element: <Moved /> })),
-        { path: 'mentis/*', element: <MentisPage /> },
-        // The chat inside Lingua went in 5.2-6: old chat links open Sermo (the chats stay in the database).
-        { path: 'mentis/sermo/chat/:chatId', element: <Navigate to="/mentis/sermo" replace /> },
+        })),
+        // Diarium and Things to try, the two of Mentis's tabs Lemora keeps, as rooms; an entry is a page of its own.
+        { path: 'mentis/diarium', element: <DiariumRoom /> },
+        { path: 'mentis/try', element: <TryRoom /> },
+        { path: 'mentis/*', element: <Navigate to="/mentis/diarium" replace /> },
         { path: 'mentis/diarium/:entryId', element: <JournalEntryPage /> },
         { path: 'ratio', element: <RatioPage /> },
         { path: 'settings', element: <OrdoPage /> },
         { path: 'settings/lab', element: <LabPage /> },
         { path: 'settings/:group', element: <OrdoPage /> },
-        // Addresses from before Lingua 5.
-        ...['grammatica/*', 'mundus/*', 'colloquium/*', 'codex/diarium/:entryId', 'ordo/*'].map((path) => ({ path, element: <Moved /> })),
         { path: '*', element: <Navigate to="/" replace /> },
       ],
     },

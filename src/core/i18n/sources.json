@@ -3218,7 +3218,8 @@
     "src/features/cursus/course/SpeakLesson.tsx"
   ],
   "{0} · Write": [
-    "src/features/cursus/course/WriteLesson.tsx"
+    "src/features/cursus/course/WriteLesson.tsx",
+    "src/app/rooms/DiariumRoom.tsx"
   ],
   "Write it yourself": [
     "src/features/cursus/course/WriteLesson.tsx"
@@ -4093,7 +4094,8 @@
     "src/features/grammatica/letters/LettersLessonPage.tsx"
   ],
   "Alphabet": [
-    "src/features/grammatica/letters/LettersPage.tsx"
+    "src/features/grammatica/letters/LettersPage.tsx",
+    "src/app/rooms/AlphabetPage.tsx"
   ],
   "{0} uses the Latin alphabet": [
     "src/features/grammatica/letters/LettersPage.tsx"
@@ -4815,7 +4817,8 @@
     "src/features/lesson/kit.tsx"
   ],
   "Sounds": [
-    "src/features/lesson/kit.tsx"
+    "src/features/lesson/kit.tsx",
+    "src/app/rooms/AlphabetPage.tsx"
   ],
   "A chime for a right answer, a low note for a miss.": [
     "src/features/lesson/kit.tsx"
@@ -4911,7 +4914,8 @@
     "src/features/mundus/MundusPage.tsx"
   ],
   "Things to try": [
-    "src/features/mundus/MundusPage.tsx"
+    "src/features/mundus/MundusPage.tsx",
+    "src/app/rooms/TryRoom.tsx"
   ],
   "All of them {0}": [
     "src/features/mundus/MundusPage.tsx"
@@ -6103,7 +6107,8 @@
     "src/features/ratio/MonthlyReportModal.tsx"
   ],
   "Letters": [
-    "src/features/ratio/Overview.tsx"
+    "src/features/ratio/Overview.tsx",
+    "src/app/rooms/AlphabetPage.tsx"
   ],
   "Your slowest letter types at {0} words a minute; the course asks for {1}.": [
     "src/features/ratio/Overview.tsx"
@@ -9627,7 +9632,8 @@
     "src/features/codex/diarium/Entries.tsx"
   ],
   "Diarium": [
-    "src/features/codex/diarium/EntryPage.tsx"
+    "src/features/codex/diarium/EntryPage.tsx",
+    "src/app/rooms/DiariumRoom.tsx"
   ],
   "A word…": [
     "src/features/codex/diarium/WritingHelp.tsx"
@@ -11507,7 +11513,8 @@
     "src/features/grammatica/GrammaticaPage.tsx"
   ],
   "The alphabet · {0}": [
-    "src/features/grammatica/letters/LettersPage.tsx"
+    "src/features/grammatica/letters/LettersPage.tsx",
+    "src/app/rooms/AlphabetPage.tsx"
   ],
   "Think, talk and write in {0}": [
     "src/features/mentis/MentisPage.tsx"
@@ -15019,7 +15026,8 @@
     "src/features/cursus/characters/CharactersPage.tsx"
   ],
   "Character reference": [
-    "src/features/cursus/CursusPage.tsx"
+    "src/features/cursus/CursusPage.tsx",
+    "src/app/rooms/AlphabetPage.tsx"
   ],
   "Open character reference": [
     "src/features/grammatica/letters/parts.tsx"
