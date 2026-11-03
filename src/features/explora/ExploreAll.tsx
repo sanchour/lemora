@@ -32,6 +32,7 @@ import {
 } from './components/BooksSection';
 import { WordDecksShelf } from './components/WordDecksShelf';
 import { shows } from '@/product';
+import { TipsView } from '@/features/mundus/TipsView';
 
 const EASE_LEVEL: Record<PickedArtist['ease'], PickLevel> = {
   clear: 'A2',
@@ -50,6 +51,7 @@ const KIND_TO_CATEGORY: Record<string, ExploraCategory> = {
   music: 'music',
   radio: 'music',
   words: 'words',
+  try: 'try',
   saved: 'saved',
 };
 
@@ -181,6 +183,7 @@ export function ExploreAll({
         else if (cat === 'audio') next.set('kind', 'audiobooks');
         else if (cat === 'music') next.set('kind', 'music');
         else if (cat === 'words') next.set('kind', 'words');
+        else if (cat === 'try') next.set('kind', 'try');
         else if (cat === 'saved') next.set('kind', 'saved');
         return next;
       },
@@ -452,6 +455,10 @@ export function ExploreAll({
               ))}
             </div>
           )}
+        </div>
+      ) : category === 'try' ? (
+        <div className="pt-1">
+          <TipsView lang={lang} />
         </div>
       ) : category === 'words' ? (
         /* Word Decks Tab: StarterLibrary embedded in Explore */

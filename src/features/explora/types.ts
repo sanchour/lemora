@@ -5,7 +5,7 @@ import type { LibrivoxHit } from '@/services/sonus/librivox';
 
 export type Kind = PickGroup | 'music' | 'radio' | 'audiobooks';
 
-export type ExploraCategory = 'all' | 'screen' | 'books' | 'audio' | 'music' | 'words' | 'saved';
+export type ExploraCategory = 'all' | 'screen' | 'books' | 'audio' | 'music' | 'words' | 'try' | 'saved';
 
 export interface ExploraItem {
   id: string;

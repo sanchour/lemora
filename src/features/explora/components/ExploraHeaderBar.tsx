@@ -8,6 +8,7 @@ import {
   Film,
   Headphones,
   Layers,
+  Lightbulb,
   Music,
   Sparkles,
   Star,
@@ -60,6 +61,8 @@ export function ExploraHeaderBar({
     { id: 'audio', label: 'Audio & Podcasts', icon: Headphones },
     { id: 'music', label: 'Music & Radio', icon: Music },
     { id: 'words', label: 'Word decks', icon: Layers },
+    // Lemora keeps Things to try here, with what to discover (src/product.ts); Lingua has it in Mundus.
+    ...(shows('try') && !shows('mundus') ? [{ id: 'try' as const, label: 'Things to try', icon: Lightbulb }] : []),
   ] satisfies Array<{ id: ExploraCategory; label: string; icon: typeof Sparkles }>).filter((c) => (c.id === 'screen' ? shows('visio') : c.id === 'audio' ? shows('sonus') : c.id === 'music' ? shows('cantus') || shows('sonus') : true));
 
   const levelFilterLabel = (() => {
