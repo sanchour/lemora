@@ -2189,3 +2189,8 @@ Antigravity-1 verified coverage of 5.2-6 and 6-11 conversation scenes against `d
 
 Thesaurus › Atlas is the fifth tab (Phrases came first), loaded only when opened. One word's compass or tree is worked out in one pass (`core/graph/scene.ts`), never simulated, so it is the same on every visit; only the rows that word needs are read (`data/atlas.ts`), on the main thread, because the whole atlas waits for G4's worker. The canvas draws only while something moves: the threads drawing out (280 ms, the second ring 60 ms later), a hover fade (150 ms), an eased zoom (120 ms). **Labels are placed by importance** (the word, the chosen one, the hovered one, the first ring, the second) and one that would touch a label already drawn is left out until hovered or zoomed into room: at 1366 × 768 the compass's crowded quarters overlapped otherwise. The tree's lines are a sharp T under the parent and a rounded bend down to each child (two rounded corners met in a small peak). A small tree is not blown up past 1.25. Look-alikes stay behind a switch. The zoom buttons sit on the canvas so the toolbar keeps one row at 1280. Not done in G2, said in the plan: fading by memory, the made-from index (the tree branches through `derived` only for now), Safari and a frame-time measurement.
 
+**Codex Russian A2 publication integration, 2026-11-03:** subsequently merged main 07008c7 and
+62b703a while preserving published history and other sessions' claims. Final integrated typecheck,
+1,740 tests / one skipped and production build pass. Russian browser evidence predates these last
+two integrations; incoming graph/games/conversation UI not audited. Full A2 and A1 offline acceptance
+remain open. [Russian scope and verification](6-23-A2-RUSSIAN.md).

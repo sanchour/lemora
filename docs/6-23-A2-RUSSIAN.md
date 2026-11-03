@@ -47,3 +47,9 @@ log. [Integrated reader screenshot](verification/6-23-a2-russian-merged-1366.png
 scheme size/theme views above preceded integration; they were not all repeated after the merge.
 Incoming onboarding behavior was not audited. This finishes the Russian named-scheme slice only;
 continue A2 under the existing claim. No main merge/deployment, no full-A2 audit tick.
+
+**Further incoming-main checks:** main 07008c7 (graph model) passed typecheck, 252 test files /
+1,727 tests / one skipped and build. Main then advanced to 62b703a (games, conversation scenes and
+Atlas); merged without rewriting published Codex history, retaining the independent claims and
+decision entries. Typecheck, 254 files / 1,740 tests / one skipped and production build pass on that
+integration. These incoming features were not audited in the browser. No A2-wide acceptance tick.

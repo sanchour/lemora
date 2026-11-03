@@ -2632,3 +2632,9 @@ reformatting. Integrated typecheck, 1,712 tests/one skipped and production build
 the integrated asset, kept all four choices and showed the real passport reader at 1366×768 with
 intact source text and a clean tab log. Russian slice complete; remaining languages/controls stay
 under A2. [Exact scope and limits](6-23-A2-RUSSIAN.md). No main push or A3 claim.
+
+**Codex Russian A2 publication integration, 2026-11-03:** subsequently merged main 07008c7 and
+62b703a while preserving published history and other sessions' claims. Final integrated typecheck,
+1,740 tests / one skipped and production build pass. Russian browser evidence predates these last
+two integrations; incoming graph/games/conversation UI not audited. Full A2 and A1 offline acceptance
+remain open. [Russian scope and verification](6-23-A2-RUSSIAN.md).

@@ -2179,3 +2179,9 @@ build pass on the integrated tree. All four Russian choices and the real passpor
 rechecked in that build; tab log clean. [Detailed verification limits](6-23-A2-RUSSIAN.md). Russian
 named-scheme slice complete; A2 and its audit entries remain open for other languages and independent
 surface/position/reveal/lesson controls. A1 offline gap remains. No direct main push or deployment.
+
+**Codex Russian A2 publication integration, 2026-11-03:** subsequently merged main 07008c7 and
+62b703a while preserving published history and other sessions' claims. Final integrated typecheck,
+1,740 tests / one skipped and production build pass. Russian browser evidence predates these last
+two integrations; incoming graph/games/conversation UI not audited. Full A2 and A1 offline acceptance
+remain open. [Russian scope and verification](6-23-A2-RUSSIAN.md).
