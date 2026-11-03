@@ -9,6 +9,17 @@ Last updated 2026-10-27 (Lingua 6 · Features is step 23, next after 21; Lingua 
 
 ---
 
+## 2026-11-03 · Reading 6-8 and Writing 6-12
+
+- [x] Reconciled Reading’s complete row with all **72 assigned entries**, including the **47** still
+  open; finished/verified the remaining source, reader, comprehension and book-project controls.
+- [x] Finished Writing’s five open entries **F0617, F0657, F0676, F0684 and F0687**; all **55** assigned
+  entries are ticked. Existing W1–W4 are retained.
+- [x] Added [the per-entry audit](LINGUA-6-8-12-AUDIT.md), explicit spelling/storage/model boundaries,
+  regression checks and desktop interaction evidence. After integrating main: typecheck, 259 test files /
+  1,691 tests passing (one skipped) and production build pass. Version `0.6.0-alpha.187`; protected PR and
+  Pages verification in this chat’s end notes. No next step is claimed; stop after these two steps.
+
 ## Stitch design context · 2026-11-02
 
 - [x] Created [design-ios.md](../design-ios.md) after the user explicitly requested a phone-specific
