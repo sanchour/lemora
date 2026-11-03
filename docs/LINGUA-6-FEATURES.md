@@ -268,7 +268,7 @@ Vocabulary is much more than translating a word and flipping a flashcard. Learne
 - [x] `F0167` Word matching
 - [x] `F0168` Word hunting · **6-21**
 - [x] `F0169` Word ladders · **6-21**
-- [ ] `F0170` Crossword puzzles · **6-21**
+- [x] `F0170` Crossword puzzles · **6-21**
 - [x] `F0171` Word searches · **6-21**
 - [x] `F0172` Hangman-style spelling · **6-21**
 - [x] `F0173` Anagrams · **6-21** · partly there
@@ -277,11 +277,11 @@ Vocabulary is much more than translating a word and flipping a flashcard. Learne
 - [ ] `F0176` Guess the definition · **6-21**
 - [ ] `F0177` Guess the word from a picture · **6-21**
 - [x] `F0178` Guess the word from audio
-- [ ] `F0179` Word association · **6-21**
-- [ ] `F0180` Synonym races · **6-21**
-- [ ] `F0181` Antonym races · **6-21**
-- [ ] `F0182` Category sorting · **6-21**
-- [ ] `F0183` Odd-one-out challenges · **6-21**
+- [x] `F0179` Word association · **6-21**
+- [x] `F0180` Synonym races · **6-21**
+- [x] `F0181` Antonym races · **6-21**
+- [x] `F0182` Category sorting · **6-21**
+- [x] `F0183` Odd-one-out challenges · **6-21**
 - [ ] `F0184` Build a word from morphemes · **6-21**
 - [x] `F0185` Speed rounds
 - [ ] `F0186` Memory-matching cards · **6-21**
@@ -1541,16 +1541,16 @@ each with its definition, private and exportable. Lingua 5.2-9 already expands R
 - [x] `F1189` Listening quizzes
 - [ ] `F1190` Dictation races · **6-21**
 - [x] `F1191` Pronunciation challenges · **6-10**
-- [ ] `F1192` Word association games · **6-21**
-- [ ] `F1193` Crossword puzzles · **6-21**
+- [x] `F1192` Word association games · **6-21**
+- [x] `F1193` Crossword puzzles · **6-21**
 - [x] `F1194` Word searches · **6-21**
 - [x] `F1195` Anagrams · **6-21**
 - [x] `F1196` Hangman-style spelling · **6-21**
 - [x] `F1197` Guess-the-word games · **6-21**
 - [ ] `F1198` Picture vocabulary quizzes · **6-21**
 - [ ] `F1199` Memory matching · **6-21**
-- [ ] `F1200` Semantic category sorting · **6-21**
-- [ ] `F1201` Odd-one-out challenges · **6-21**
+- [x] `F1200` Semantic category sorting · **6-21**
+- [x] `F1201` Odd-one-out challenges · **6-21**
 - [x] `F1202` Fill-the-gap races
 - [ ] `F1203` Story completion games · **6-21**
 - [ ] `F1204` Dialogue completion · **6-21**
