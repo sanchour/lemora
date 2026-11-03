@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.8** · 2026-11-03 · Checkpoint: Ratio without invented figures; Atlas as its own tool in the sidebar
 - **0.1.0-alpha.7** · 2026-11-03 · Pages deploys from Actions only (the live app served raw source); the boot error names Lemora; the website pushed
 - **0.1.0-alpha.6** · 2026-11-03 · Home: the Tools heading on the greeting's line, its icons level with the cards
 - **0.1.0-alpha.5** · 2026-11-03 · Lingua's Home made for Lemora by default, the desk as a choice; Explora's hero, word decks and Discover; the website planned
