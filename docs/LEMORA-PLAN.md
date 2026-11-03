@@ -17,26 +17,33 @@ two in one commit.
 | 0.1 | Audit Lingua, Lemora and Lingua-Launch; write the extraction audit | ✅ | Opus 5.5, 2026-11-03 |
 | 1.1 | Lemora's own database, storage keys, caches, dev port, name and manifest | ✅ | Opus 5.5, 2026-11-03 |
 | 1.2 | Lemora's CLAUDE.md, README and this plan; first push to `sanchour/lemora`; GitHub Pages on | ✅ | Opus 5.5, 2026-11-03 |
-| 1.3 | Lemora's icons and logo (the book mark, its own colour), splash screens | ⬜ | |
+| 1.3 | Lemora's icon: the wordmark's l as a bookmark and its full stop, light and dark; the favicon follows the system | ✅ | Opus 5.5, 2026-11-03 |
 | 2.1 | Sections and routes: `ROOMS` and `shows()` in the product file, sidebar, router, page chunks, global search | ✅ | Opus 5.5, 2026-11-03 |
 | 2.2 | Explore reading-only; Library without audio and video; no dead links | ✅ | Opus 5.5, 2026-11-03 |
 | 2.3 | Mentis room → Diarium + Things to Try; tips filtered to Lemora's activities | ✅ | Opus 5.5, 2026-11-03 |
 | 2.4 | Alphabet on its own (Cursus tab alone); Ratio without Tabula or excluded panels | ✅ | Opus 5.5, 2026-11-03 |
 | 2.5 | Settings without Listening and Music; Lemora+ naming checked | ✅ | Opus 5.5, 2026-11-03 |
 | 2.6 | Delete what nothing reachable imports any more; bundle size before and after | ⬜ | |
-| 3.1 | Home: Lemora's own, **redesigned** (greeting, tools 2-up with per-tool progress, overall time, continue reading, recent, next actions); fixed sidebar with the tools always visible | ⬜ | Opus 5.5, 2026-11-03 |
+| 3.1 | Home: Lemora's own, **redesigned** (greeting, tools 2-up with per-tool progress, overall time, continue reading, recent, next actions); fixed sidebar with the tools always visible | ✅ | Opus 5.5, 2026-11-03 |
 | 3.2 | Showcase → Lingua-Launch (rewritten in plain HTML and JS, checked there), then out of Lemora's onboarding | ⬜ | |
 | 3.3 | Onboarding map: frame each language from country geometry; multi-region languages get a primary focus plus alternatives | ⬜ | |
 | 3.4 | Level step: title → slider → content sequence (reduced motion respected); hover, click, multi-word and long-press translation of the example sentence from local data | ⬜ | |
 | 3.5 | Known words from the same `starterLists` lemmas as the frequency decks; tests | ⬜ | |
 | 3.6 | Languages you speak: any living language (Intl.DisplayNames + Lingua's data), honest flags, suggestions only after typing, at most two, never over Continue | ⬜ | |
 | 3.7 | No horizontal overflow on any page (causes fixed); no stray scroll bars or edge controls | ⬜ | |
-| 3.8 | Per-tool daily goals (Codex, Thesaurus, Ludus, Diarium, Alphabet), one attribution rule, persisted, tested | ⬜ | |
+| 3.8 | Per-tool daily goals (Codex, Thesaurus, Ludus, Diarium, Alphabet), one attribution rule, persisted, tested | ✅ | Opus 5.5, 2026-11-03 |
 | 3.9 | **Redesign: Thesaurus, every tab** (a new layout and look; big changes welcome) | ⬜ | |
 | 3.10 | **Redesign: Ludus** | ⬜ | |
 | 3.11 | **Redesign: Diarium** | ⬜ | |
 | 3.12 | **Redesign: Ratio**, with only real numbers (Overview's monthly report feeds made-up "accuracy" figures and stamps today) | ⬜ | |
 | 3.13 | **Redesign: Settings** | ⬜ | |
+| 3.14 | Things to try redrawn and moved into Explora (out of the sidebar) | ✅ | Opus 5.5, 2026-11-03 |
+| 3.15 | Alphabet (with Sounds) only for languages not written in Latin script | ✅ | Opus 5.5, 2026-11-03 |
+| 3.16 | Explora's rotating hero in the bookish look, not a streaming billboard | ⬜ | |
+| 3.17 | Word decks: a better layout and design (Explora › Word decks, the starter library) | ⬜ | |
+| 3.18 | Bibliotheca: a better layout | ⬜ | |
+| 3.19 | Thesaurus's Discover moves to Explora entirely; a Discover icon at Thesaurus's top right | ⬜ | |
+| 3.20 | Hand-drawn touches where they fit, still clean (src/design/drawings.tsx: the handbook's icons and empty-page art) | ◐ Home, Things to try | |
 | 4.1 | Functional audit of every page (imports, files, lookups, saving, flashcards, Ludus, Diarium, language switch, backup and restore, offline, errors) | ⬜ | |
 | 4.2 | UX pass: spacing, type, focus, empty, loading and error states | ⬜ | |
 | 4.3 | Performance: bundle, lazy routes, rerenders, reader | ⬜ | |
@@ -46,6 +53,8 @@ two in one commit.
 | 5.1 | Module boundaries of Codex and Thesaurus reviewed; reintegration document final | ⬜ | |
 | 5.2 | Feasibility check: cherry-pick a `[shared]` commit onto a throwaway clone of Lingua, typecheck and test it (never pushed) | ⬜ | |
 | 6.1 | Completion report | ⬜ | |
+
+Ratio (3.12) must feel minimal while keeping every number, chart and feature it has (the user, 2026-11-03).
 
 The redesigns (3.1 and 3.9 to 3.13) are the user's addition of 2026-11-03: "improve and create a new
 layout and aesthetic … for settings, ratio, home, thesaurus all tabs … diarium and ludus too … be creative and
@@ -72,3 +81,11 @@ go in the step's line below, with what wasn't checked said plainly.
   Found and fixed on the way (shared, good for Lingua too): global search's Diarium results linked to an
   address with no route. Not yet done: deleting the excluded code (2.6); the Sonus mini player still loads in
   the shell.
+- **1.3, 3.1, 3.8, 3.14, 3.15** (2026-11-03): Home is `src/app/home` (Lingua's `features/home` untouched and no longer
+  loaded). Time per tool: `core/goals/tools.ts` (the rule, with tests), `data/toolGoals.ts`; the day's goal (`goalMet`,
+  the streak) now counts review, Ludus and letters time too, a deliberate change for Lingua as well. Ludus's games
+  and practice pages record time now (`features/lesson/useStudySession.ts`). Checked at 1440×900 and 1366×768, Paper
+  and Nocturne, Spanish (no Alphabet) and Russian (Alphabet): no horizontal overflow. Not checked yet: a phone width;
+  a locked Ludus with a plan that opens it; the PWA icon once installed (only the PNGs and the SVG were looked at).
+  Home is taller than one 1366×768 screen (Next for you falls below), on purpose, for the breathing room the brief asks.
+

@@ -82,7 +82,7 @@ const chip = 'no-callout inline-flex h-8 items-center gap-1.5 rounded-full borde
 const weekday = (date: string, locale: string) => new Intl.DateTimeFormat(locale, { weekday: 'narrow' }).format(new Date(`${date}T12:00:00`));
 
 /**
- * Things to try (5.2-7, redrawn for Lemora 3.11): small challenges that take the language off the page. On the left,
+ * Things to try (5.2-7, redrawn for Lemora): small challenges that take the language off the page. On the left,
  * today's challenge as a card to hold (Deal another turns it over) and the week it belongs to; on the right, every
  * challenge in calm rows, grouped by where you'd do it, with the time and place to find one for the moment.
  */

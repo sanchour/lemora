@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.4** · 2026-11-03 · Lemora's Home, time per tool and goals, its icon, Things to try in Explora
 - **0.1.0-alpha.3** · 2026-11-03 · Rooms Lemora hasn't: hidden everywhere, never linked; Things to try for reading and writing
 - **0.1.0-alpha.2** · 2026-11-03 · Lemora's rooms: Alphabet, Diarium and Things to try; Lemora's routes only
 - **0.1.0-alpha.1** · 2026-11-03 · Lemora begins: Lingua's code at f0a088f, with its own database, storage, caches and name
