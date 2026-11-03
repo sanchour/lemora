@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { movedPath, roomKey } from './redirects';
-import { PRIMARY_SECTIONS, SECTIONS, SHORTCUT_SECTIONS, TOOL_SECTIONS, sectionKey } from './sections';
+import { ROOMS } from '@/product';
+import { BOTTOM_SECTIONS, PRIMARY_SECTIONS, SECTIONS, SHORTCUT_SECTIONS, TOOL_SECTIONS, sectionKey } from './sections';
 
 describe('movedPath', () => {
   it.each([
@@ -54,27 +55,10 @@ describe('movedPath', () => {
 });
 
 describe('rooms', () => {
-  it('lists the primary sections, tools (with Sonus and Visio separate), and bottom links', () => {
-    expect(PRIMARY_SECTIONS.map((s) => s.id)).toEqual(['home', 'cursus', 'explora', 'bibliotheca']);
-    expect(TOOL_SECTIONS.map((s) => s.id)).toEqual(['codex', 'thesaurus', 'ludus', 'sonus', 'cantus', 'visio', 'mentis']);
-    expect(SECTIONS.map((s) => s.name)).toEqual([
-      'Home',
-      'Cursus',
-      'Explora',
-      'Bibliotheca',
-      'Codex',
-      'Thesaurus',
-      'Ludus',
-      'Sonus',
-      'Cantus',
-      'Visio',
-      'Mentis',
-      'Ratio',
-      'Settings',
-    ]);
-    expect(SHORTCUT_SECTIONS.slice(0, 10).map((_, i) => sectionKey(i))).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
-    // Ludus came later and has no Alt-number; the others keep theirs: Mentis Alt 9, Ratio Alt 0.
-    expect(SHORTCUT_SECTIONS.slice(0, 10).map((s) => s.id).slice(4)).toEqual(['codex', 'thesaurus', 'sonus', 'visio', 'mentis', 'ratio']);
+  it('draws this build’s rooms (src/product.ts) in its order, each in one sidebar group', () => {
+    expect(SECTIONS.map((s) => s.id)).toEqual(ROOMS);
+    expect(PRIMARY_SECTIONS.length + TOOL_SECTIONS.length + BOTTOM_SECTIONS.length).toBe(SECTIONS.length);
+    expect(SHORTCUT_SECTIONS.slice(0, 10).map((_, i) => sectionKey(i))).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 0].slice(0, Math.min(10, SHORTCUT_SECTIONS.length)));
   });
 
   it('gives a room’s tabs one page key, and its detail pages their own', () => {

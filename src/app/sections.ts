@@ -1,5 +1,6 @@
-import { BookOpen, ChartNoAxesColumn, Clapperboard, Compass, Gamepad2, GraduationCap, Headphones, House, Lamp, Library, Music, Settings2 } from 'lucide-react';
+import { BookOpen, ChartNoAxesColumn, Clapperboard, Compass, Feather, Gamepad2, GraduationCap, Headphones, House, Lamp, Languages, Library, Lightbulb, Music, Settings2 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { ROOMS } from '@/product';
 import { DeckIcon } from './DeckIcon';
 
 export type SectionId =
@@ -15,7 +16,11 @@ export type SectionId =
   | 'visio'
   | 'mentis'
   | 'ratio'
-  | 'ordo';
+  | 'ordo'
+  // Rooms of their own in Lemora; in Lingua they are tabs (Mentis › Diarium, Mundus › Things to try, Cursus › Script).
+  | 'try'
+  | 'diarium'
+  | 'alphabet';
 
 export interface Section {
   id: SectionId;
@@ -34,11 +39,10 @@ export interface Section {
 }
 
 /**
- * Lingua 6's rooms and tools in sidebar order:
- * Home, Cursus, Explora, Bibliotheca, then Tools (Codex, Thesaurus, Ludus, Sonus, Visio, Mentis),
- * with Ratio and Settings pinned at the bottom.
+ * Every room either app has. Lingua 6's sidebar: Home, Cursus, Explora, Bibliotheca, then Tools (Codex, Thesaurus,
+ * Ludus, Sonus, Cantus, Visio, Mentis), with Ratio and Settings pinned at the bottom. src/product.ts picks a build's own.
  */
-export const SECTIONS: Section[] = [
+const ALL_SECTIONS: Section[] = [
   { id: 'home', path: '/', name: 'Home', role: 'Your hearth', icon: House, group: 'primary', placement: 'tab' },
   { id: 'cursus', path: '/cursus', name: 'Cursus', role: 'Course & grammar', icon: GraduationCap, group: 'primary', placement: 'tab' },
   { id: 'explora', path: '/explora', name: 'Explora', role: 'Discover content', icon: Compass, group: 'primary', placement: 'tab' },
@@ -52,7 +56,13 @@ export const SECTIONS: Section[] = [
   { id: 'mentis', path: '/mentis', name: 'Mentis', role: 'Guide, talk & write', icon: Lamp, group: 'tool', placement: 'side' },
   { id: 'ratio', path: '/ratio', name: 'Ratio', role: 'Stats', icon: ChartNoAxesColumn, group: 'bottom', placement: 'header' },
   { id: 'ordo', path: '/settings', name: 'Settings', role: 'Settings', icon: Settings2, group: 'bottom', placement: 'header' },
+  { id: 'try', path: '/mentis/try', name: 'Things to try', role: 'Beyond the page', icon: Lightbulb, group: 'primary', placement: 'side' },
+  { id: 'diarium', path: '/mentis/diarium', name: 'Diarium', role: 'Write', icon: Feather, group: 'tool', placement: 'side' },
+  { id: 'alphabet', path: '/cursus/alphabets', name: 'Alphabet', role: 'Letters & sounds', icon: Languages, group: 'tool', placement: 'side' },
 ];
+
+/** This build's rooms, in its sidebar's order. */
+export const SECTIONS: Section[] = ROOMS.flatMap((id) => ALL_SECTIONS.filter((s) => s.id === id));
 
 export const PRIMARY_SECTIONS = SECTIONS.filter((s) => s.group === 'primary');
 export const TOOL_SECTIONS = SECTIONS.filter((s) => s.group === 'tool');
