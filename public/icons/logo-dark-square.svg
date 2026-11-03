@@ -1,12 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>Lemora: a bookmark and a full stop, the place you pause in a book</title>
   <defs>
-    <linearGradient id="bd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2D2724"/><stop offset="1" stop-color="#191513"/></linearGradient>
-    <linearGradient id="md" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EE9C80"/><stop offset="1" stop-color="#CF7455"/></linearGradient>
+    <linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2D2724"/><stop offset="1" stop-color="#191513"/></linearGradient>
+    <clipPath id="t"><rect width="512" height="512" rx="112"/></clipPath>
   </defs>
-  <rect width="512" height="512" rx="0" fill="url(#bd)"/>
-  <g transform="translate(256 266) scale(1.3) translate(-256 -266)">
-    <path d="M250 184C216 160 166 150 116 156V352C166 346 216 356 250 380Z" fill="url(#md)"/>
-    <path d="M262 184C296 160 346 150 396 156V352C346 346 296 356 262 380Z" fill="url(#md)"/>
-    <path d="M318 154V262l22-16 22 16V152Z" fill="#221D1A"/>
+  <rect width="512" height="512" rx="112" fill="url(#b)"/>
+  <g clip-path="url(#t)">
+    <path d="M196 -4H264V346L230 314L196 346Z" fill="#EBE0CC"/>
+    <path d="M196 -4H218V324L196 346Z" fill="#BFB29C" opacity=".5"/>
+    <circle cx="334" cy="314" r="34" fill="#D49B54"/>
+    <path d="M140 392Q256 384 372 392" fill="none" stroke="#EBE0CC" stroke-width="9" stroke-linecap="round" opacity=".22"/>
   </g>
 </svg>

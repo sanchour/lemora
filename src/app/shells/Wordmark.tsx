@@ -1,13 +1,13 @@
 import { cx } from '@/lib/cx';
 import { PRODUCT } from '@/product';
 
-/** App mark: two solid pages with a ribbon cut out of one (same drawing as public/logo.svg). */
+/** App mark: a bookmark for the "l" and the full stop beside it, on its line (the same drawing as public/logo.svg). */
 export function LogoMark({ size = 28, className }: { size?: number; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="108 140 296 252" className={className} aria-hidden>
-      <path d="M250 184C216 160 166 150 116 156V352C166 346 216 356 250 380Z" fill="var(--accent)" />
-      <path d="M262 184C296 160 346 150 396 156V352C346 346 296 356 262 380Z" fill="var(--accent)" />
-      <path d="M318 154V262l22-16 22 16V152Z" fill="var(--surface)" />
+    <svg width={size} height={size} viewBox="120 0 272 420" className={className} aria-hidden>
+      <path d="M196 0H264V346L230 314L196 346Z" fill="var(--ink)" />
+      <circle cx="334" cy="314" r="34" fill="var(--accent)" />
+      <path d="M140 392Q256 384 372 392" fill="none" stroke="var(--ink)" strokeWidth={12} strokeLinecap="round" opacity={0.25} />
     </svg>
   );
 }

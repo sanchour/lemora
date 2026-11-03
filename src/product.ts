@@ -18,10 +18,10 @@ export type Feature =
   | 'tabula';
 
 /** The sidebar's rooms, in order (src/app/sections.ts draws them). */
-export const ROOMS: readonly Feature[] = ['home', 'explora', 'bibliotheca', 'try', 'codex', 'thesaurus', 'ludus', 'diarium', 'alphabet', 'ratio', 'ordo'];
+export const ROOMS: readonly Feature[] = ['home', 'explora', 'bibliotheca', 'codex', 'thesaurus', 'ludus', 'diarium', 'alphabet', 'ratio', 'ordo'];
 
-/** Lemora: reading, words, writing and a new script, each a room of its own. In Lingua the list is the whole app. */
-const FEATURES: ReadonlySet<Feature> = new Set<Feature>(ROOMS);
+/** Lemora: reading, words, writing and a new script, each a room of its own, and Things to try inside Explora. In Lingua the list is the whole app. */
+const FEATURES: ReadonlySet<Feature> = new Set<Feature>([...ROOMS, 'try']);
 
 /** Whether this build has a room or tab: shared code asks before it shows or links to one. */
 export const shows = (feature: Feature): boolean => FEATURES.has(feature);

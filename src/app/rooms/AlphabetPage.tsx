@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from 'react-router';
+import { Link, Navigate, useSearchParams } from 'react-router';
 import { AudioLines, Languages } from 'lucide-react';
 import { interpolate } from '@/core/i18n/messages';
 import { useUi } from '@/design/i18n/UiText';
@@ -23,6 +23,8 @@ export default function AlphabetPage() {
   const { language } = useApp();
   const name = getLanguage(language.id)?.name ?? language.id;
   const tab: Tab = useSearchParams()[0].get('tab') === 'sounds' ? 'sounds' : 'letters';
+  // Only for a language in a script other than Latin (src/app/sections.ts); the others have no Alphabet.
+  if ((getLanguage(language.id)?.script ?? 'Latn') === 'Latn') return <Navigate to="/" replace />;
   return (
     <>
       <PageHeader

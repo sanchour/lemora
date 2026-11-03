@@ -1,6 +1,7 @@
 import { BookOpen, ChartNoAxesColumn, Clapperboard, Compass, Feather, Gamepad2, GraduationCap, Headphones, House, Lamp, Languages, Library, Lightbulb, Music, Settings2 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { ROOMS } from '@/product';
+import { getLanguage } from '@/core/lang/languages';
 import { DeckIcon } from './DeckIcon';
 
 export type SectionId =
@@ -36,6 +37,8 @@ export interface Section {
   noShortcut?: true;
   /** A colour of its own when active; others use the accent. */
   tint?: string;
+  /** Only for some languages (Alphabet: those written in a script other than Latin). */
+  forLanguage?: (lang: string) => boolean;
 }
 
 /**
@@ -58,7 +61,7 @@ const ALL_SECTIONS: Section[] = [
   { id: 'ordo', path: '/settings', name: 'Settings', role: 'Settings', icon: Settings2, group: 'bottom', placement: 'header' },
   { id: 'try', path: '/mentis/try', name: 'Things to try', role: 'Beyond the page', icon: Lightbulb, group: 'primary', placement: 'side' },
   { id: 'diarium', path: '/mentis/diarium', name: 'Diarium', role: 'Write', icon: Feather, group: 'tool', placement: 'side' },
-  { id: 'alphabet', path: '/cursus/alphabets', name: 'Alphabet', role: 'Letters & sounds', icon: Languages, group: 'tool', placement: 'side' },
+  { id: 'alphabet', path: '/cursus/alphabets', name: 'Alphabet', role: 'Letters & sounds', icon: Languages, group: 'tool', placement: 'side', forLanguage: (lang) => (getLanguage(lang)?.script ?? 'Latn') !== 'Latn' },
 ];
 
 /** This build's rooms, in its sidebar's order. */
@@ -74,5 +77,8 @@ export const HEADER_SECTIONS = SECTIONS.filter((s) => s.placement === 'header');
 /** The sections with an Alt-number: Alt 1 … 9 open them in order, and Alt 0 the tenth. */
 export const SHORTCUT_SECTIONS = SECTIONS.filter((s) => !s.noShortcut);
 
+
+/** Whether a section is there for a language: `sections.filter(shownFor(lang))`. */
+export const shownFor = (lang: string) => (section: Section) => !section.forLanguage || section.forLanguage(lang);
 
 export const sectionKey = (index: number) => (index < 9 ? index + 1 : 0);

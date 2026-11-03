@@ -3358,7 +3358,7 @@
   "Bulgaria": "保加利亚",
   "Bullet list": "项目符号列表",
   "Burmese": "缅甸语",
-  "Burning the midnight oil": "深夜阅读时光",
+  "Burning the midnight oil": "还在挑灯夜读",
   "Burning the midnight oil?": "开夜车？",
   "Busker Busker": "街头艺人",
   "Butter": "黄油",
@@ -8055,5 +8055,12 @@
   "Discover more": "Discover more",
   "Tools of the study": "Tools of the study",
   "At your desk": "At your desk",
-  "Choose between Topline tools, Right rail, Bottom shelf, or Classic.": "Choose between Topline tools, Right rail, Bottom shelf, or Classic."
+  "Choose between Topline tools, Right rail, Bottom shelf, or Classic.": "Choose between Topline tools, Right rail, Bottom shelf, or Classic.",
+  "Daily goals": "每日目标",
+  "Every tool counts toward the day.": "每个工具的时间都计入当天。",
+  "{0} today": "今天 {0}",
+  "Nothing yet today: time shows here as you read, review and write.": "今天还没有记录：阅读、复习和写作的时间会显示在这里。",
+  "Recent": "最近",
+  "Today’s challenge": "今日挑战",
+  "Books, articles and word decks": "书籍、文章和词卡组"
 }

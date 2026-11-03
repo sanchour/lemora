@@ -3358,7 +3358,7 @@
   "Bulgaria": "Bulgarien",
   "Bullet list": "Bullet-Liste",
   "Burmese": "Burmesisch",
-  "Burning the midnight oil": "Nächtliche Lektüre",
+  "Burning the midnight oil": "Noch wach um diese Zeit",
   "Burning the midnight oil?": "Das Mitternachtsöl verbrennen?",
   "Busker Busker": "Busker Busker",
   "Butter": "Butter",
@@ -8055,5 +8055,12 @@
   "Discover more": "Discover more",
   "Tools of the study": "Tools of the study",
   "At your desk": "At your desk",
-  "Choose between Topline tools, Right rail, Bottom shelf, or Classic.": "Choose between Topline tools, Right rail, Bottom shelf, or Classic."
+  "Choose between Topline tools, Right rail, Bottom shelf, or Classic.": "Choose between Topline tools, Right rail, Bottom shelf, or Classic.",
+  "Daily goals": "Tagesziele",
+  "Every tool counts toward the day.": "Jedes Werkzeug zählt für den Tag.",
+  "{0} today": "{0} heute",
+  "Nothing yet today: time shows here as you read, review and write.": "Heute noch nichts: Die Zeit erscheint hier, während du liest, wiederholst und schreibst.",
+  "Recent": "Zuletzt",
+  "Today’s challenge": "Die Herausforderung des Tages",
+  "Books, articles and word decks": "Bücher, Artikel und Wortstapel"
 }

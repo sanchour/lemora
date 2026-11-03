@@ -3358,7 +3358,7 @@
   "Bulgaria": "بلغاريا",
   "Bullet list": "قائمة نقطية",
   "Burmese": "البورمية",
-  "Burning the midnight oil": "قراءة في آخر الليل",
+  "Burning the midnight oil": "سهرٌ حتى منتصف الليل",
   "Burning the midnight oil?": "حرق زيت منتصف الليل؟",
   "Busker Busker": "بوسكر بوسكر",
   "Butter": "زبدة",
@@ -3740,7 +3740,7 @@
   "Ghibli songs from Totoro and Laputa": "أغاني جيبلي من توتورو ولابوتا",
   "Gold": "الذهب",
   "Good": "جيد",
-  "Good afternoon": "طاب مساؤك",
+  "Good afternoon": "طاب يومك",
   "Good evening": "مساء الخير",
   "Good morning": "صباح الخير",
   "Good reasons. Any more?": "أسباب وجيهة. هل هناك المزيد؟",
@@ -8055,5 +8055,12 @@
   "Discover more": "Discover more",
   "Tools of the study": "Tools of the study",
   "At your desk": "At your desk",
-  "Choose between Topline tools, Right rail, Bottom shelf, or Classic.": "Choose between Topline tools, Right rail, Bottom shelf, or Classic."
+  "Choose between Topline tools, Right rail, Bottom shelf, or Classic.": "Choose between Topline tools, Right rail, Bottom shelf, or Classic.",
+  "Daily goals": "الأهداف اليومية",
+  "Every tool counts toward the day.": "كل أداة تُحسب ضمن يومك.",
+  "{0} today": "{0} اليوم",
+  "Nothing yet today: time shows here as you read, review and write.": "لا شيء بعد اليوم: يظهر الوقت هنا عندما تقرأ وتراجع وتكتب.",
+  "Recent": "الأخيرة",
+  "Today’s challenge": "تحدي اليوم",
+  "Books, articles and word decks": "كتب ومقالات ومجموعات كلمات"
 }

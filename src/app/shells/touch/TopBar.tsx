@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { HEADER_SECTIONS, PRIMARY_SECTIONS, SECTIONS, TOOL_SECTIONS } from '@/app/sections';
+import { HEADER_SECTIONS, PRIMARY_SECTIONS, SECTIONS, shownFor, TOOL_SECTIONS } from '@/app/sections';
+import { useApp } from '@/app/context';
 import { IconButton } from '@/design/primitives';
 import { spring } from '@/design/motion';
 import { cx } from '@/lib/cx';
@@ -26,6 +27,7 @@ export function TopBar() {
   const title = useUI((s) => s.pageTitle);
   const titleHidden = useUI((s) => s.pageTitleHidden);
   const setTopBarHeight = useUI((s) => s.setTopBarHeight);
+  const { language } = useApp();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const ref = useRef<HTMLElement>(null);
@@ -150,7 +152,7 @@ export function TopBar() {
             className="relative overflow-hidden border-t border-line/50 bg-surface/95 backdrop-blur-xl"
           >
             <div className="flex flex-wrap items-center gap-1.5 px-3 py-2">
-              {TOOL_SECTIONS.map(({ id, path, name, icon: Icon }) => (
+              {TOOL_SECTIONS.filter(shownFor(language.id)).map(({ id, path, name, icon: Icon }) => (
                 <NavLink
                   key={id}
                   to={path}

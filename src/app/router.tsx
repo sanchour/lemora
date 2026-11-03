@@ -1,7 +1,7 @@
 import { ParallelReadingPage } from './pages';
 import { ReadingPracticePage } from './pages';
 import { createBrowserRouter, Navigate } from 'react-router';
-import HomePage from '@/features/home/HomePage';
+import LemoraHome from './home/LemoraHome';
 import {
   AlphabetPage,
   BibliothecaPage,
@@ -27,7 +27,6 @@ import {
   StudyPage,
   ThesaurusPage,
   TranslatePracticePage,
-  TryRoom,
 } from './pages';
 import { PlanRoute } from '@/features/plans/PlanRoute';
 import { AppError } from './AppError';
@@ -43,7 +42,7 @@ export const router = createBrowserRouter(
       element: <Root />,
       errorElement: <AppError />,
       children: [
-        { index: true, element: <HomePage /> },
+        { index: true, element: <LemoraHome /> },
         // Alphabet: Lingua's Cursus › Script on its own, with the character reference and the letters' lessons.
         { path: 'cursus', element: <Navigate to="/cursus/alphabets" replace /> },
         { path: 'cursus/alphabets', element: <AlphabetPage /> },
@@ -85,7 +84,8 @@ export const router = createBrowserRouter(
         })),
         // Diarium and Things to try, the two of Mentis's tabs Lemora keeps, as rooms; an entry is a page of its own.
         { path: 'mentis/diarium', element: <DiariumRoom /> },
-        { path: 'mentis/try', element: <TryRoom /> },
+        // Things to try lives in Explora in Lemora.
+        { path: 'mentis/try', element: <Navigate to="/explora?kind=try" replace /> },
         { path: 'mentis/*', element: <Navigate to="/mentis/diarium" replace /> },
         { path: 'mentis/diarium/:entryId', element: <JournalEntryPage /> },
         { path: 'ratio', element: <RatioPage /> },

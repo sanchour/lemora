@@ -191,7 +191,8 @@
     "src/features/mundus/TipsView.tsx",
     "src/features/ratio/forms.tsx",
     "src/features/sonus/player/SleepTimer.tsx",
-    "src/features/ratio/AdvancedAnalyticsPanel.tsx"
+    "src/features/ratio/AdvancedAnalyticsPanel.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "At {0} minutes a day, {1} in about{2}{3}.": [
     "src/app/onboarding/GoalStep.tsx"
@@ -426,7 +427,8 @@
   "Tools": [
     "src/app/shells/desktop/Sidebar.tsx",
     "src/app/shells/touch/TopBar.tsx",
-    "src/core/games/topics.ts"
+    "src/core/games/topics.ts",
+    "src/app/home/LemoraHome.tsx"
   ],
   "Statistics and settings": [
     "src/app/shells/desktop/Sidebar.tsx",
@@ -465,7 +467,8 @@
     "src/design/primitives/SortMenu.tsx"
   ],
   "Bibliotheca": [
-    "src/features/bibliotheca/BibliothecaPage.tsx"
+    "src/features/bibliotheca/BibliothecaPage.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "{0} Explora": [
     "src/features/bibliotheca/BibliothecaPage.tsx"
@@ -487,7 +490,8 @@
   ],
   "Explora": [
     "src/features/bibliotheca/BibliothecaPage.tsx",
-    "src/features/explora/ExploraPage.tsx"
+    "src/features/explora/ExploraPage.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "Try another search, or find something new in{0}{1}.": [
     "src/features/bibliotheca/BibliothecaPage.tsx"
@@ -618,7 +622,8 @@
     "src/features/translate/BackTranslationView.tsx",
     "src/features/translate/TranslatePracticePage.tsx",
     "src/features/sonus/WordsAloud.tsx",
-    "src/features/games/RoundRunner.tsx"
+    "src/features/games/RoundRunner.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "Every round. You know this song.": [
     "src/features/cantus/SongGames.tsx"
@@ -1363,7 +1368,8 @@
     "src/features/codex/goodreads/GoodreadsTab.tsx"
   ],
   "Start reading": [
-    "src/features/codex/BookDetailsPage.tsx"
+    "src/features/codex/BookDetailsPage.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "Read": [
     "src/features/codex/BookDetailsPage.tsx",
@@ -1475,7 +1481,8 @@
     "src/features/codex/CodexPage.tsx"
   ],
   "Continue reading": [
-    "src/features/codex/CodexPage.tsx"
+    "src/features/codex/CodexPage.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "Continue {0}": [
     "src/features/codex/CodexPage.tsx",
@@ -2047,7 +2054,8 @@
     "src/features/sonus/BookPage.tsx"
   ],
   "{0}% read": [
-    "src/features/codex/library/BookCard.tsx"
+    "src/features/codex/library/BookCard.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "New": [
     "src/features/codex/library/BookCard.tsx",
@@ -2602,7 +2610,8 @@
     "src/features/exercise/ExerciseSession.tsx",
     "src/features/lesson/kit.tsx",
     "src/features/sonus/library/LibraryHome.tsx",
-    "src/features/phrasebook/Recall.tsx"
+    "src/features/phrasebook/Recall.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "Study tools": [
     "src/features/codex/reader/ReadingTools.tsx"
@@ -4104,7 +4113,8 @@
     "src/features/grammatica/letters/LettersPage.tsx"
   ],
   "Review {0} {1}": [
-    "src/features/grammatica/letters/LettersPage.tsx"
+    "src/features/grammatica/letters/LettersPage.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "No letters due": [
     "src/features/grammatica/letters/LettersPage.tsx"
@@ -4172,7 +4182,8 @@
     "src/features/home/HomeClassic.tsx"
   ],
   "This week": [
-    "src/features/home/HomeClassic.tsx"
+    "src/features/home/HomeClassic.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "day": [
     "src/features/home/HomeClassic.tsx",
@@ -4863,7 +4874,8 @@
     "src/features/mundus/HomeCard.tsx"
   ],
   "Next for you": [
-    "src/features/mundus/MundusPage.tsx"
+    "src/features/mundus/MundusPage.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "Your week and things to try": [
     "src/features/mundus/MundusPage.tsx"
@@ -4888,7 +4900,8 @@
   ],
   "Done today": [
     "src/features/mundus/MundusPage.tsx",
-    "src/features/mundus/TipsView.tsx"
+    "src/features/mundus/TipsView.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "I did it": [
     "src/features/mundus/MundusPage.tsx",
@@ -4915,7 +4928,7 @@
   ],
   "Things to try": [
     "src/features/mundus/MundusPage.tsx",
-    "src/app/rooms/TryRoom.tsx"
+    "src/features/explora/components/ExploraHeaderBar.tsx"
   ],
   "All of them {0}": [
     "src/features/mundus/MundusPage.tsx"
@@ -6205,7 +6218,8 @@
   ],
   "Goal": [
     "src/features/ratio/forms.tsx",
-    "src/features/ratio/tabula/Tabula.tsx"
+    "src/features/ratio/tabula/Tabula.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "By (optional)": [
     "src/features/ratio/forms.tsx"
@@ -6541,7 +6555,8 @@
   ],
   "Your library": [
     "src/features/sonus/SonusPage.tsx",
-    "src/features/sonus/library/LibraryHome.tsx"
+    "src/features/sonus/library/LibraryHome.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "Open Sonus+: songs to sing and learn, and podcasts": [
     "src/features/sonus/SonusPage.tsx"
@@ -8060,7 +8075,8 @@
     "src/features/thesaurus/library/StarterLibrary.tsx"
   ],
   "All caught up": [
-    "src/features/thesaurus/library/TodayCard.tsx"
+    "src/features/thesaurus/library/TodayCard.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "About {0} min": [
     "src/features/thesaurus/library/TodayCard.tsx"
@@ -13232,7 +13248,8 @@
     "src/features/games/GamesPage.tsx"
   ],
   "Games": [
-    "src/features/games/GamesPage.tsx"
+    "src/features/games/GamesPage.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "{0}, played on your words": [
     "src/features/games/GamesPage.tsx"
@@ -14466,7 +14483,8 @@
     "src/features/home/HomeClassic.tsx"
   ],
   "Write today’s entry": [
-    "src/features/home/HomeClassic.tsx"
+    "src/features/home/HomeClassic.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "Talk for ten minutes": [
     "src/features/home/HomeClassic.tsx"
@@ -14619,7 +14637,8 @@
     "src/features/home/DailyWordCard.tsx"
   ],
   "{0} cards due today": [
-    "src/features/home/DailyWordCard.tsx"
+    "src/features/home/DailyWordCard.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "Full Review": [
     "src/features/home/DailyWordCard.tsx"
@@ -16873,7 +16892,8 @@
     "src/features/home/TimeADayMeter.tsx"
   ],
   "Time today": [
-    "src/features/home/TimeADayMeter.tsx"
+    "src/features/home/TimeADayMeter.tsx",
+    "src/app/home/LemoraHome.tsx"
   ],
   "min": [
     "src/features/home/TimeADayMeter.tsx"
@@ -16925,5 +16945,39 @@
   ],
   "Kind of deck": [
     "src/features/thesaurus/ThesaurusPage.tsx"
+  ],
+  "Daily goals": [
+    "src/app/home/GoalsDrawer.tsx",
+    "src/app/home/LemoraHome.tsx"
+  ],
+  "Every tool counts toward the day.": [
+    "src/app/home/GoalsDrawer.tsx"
+  ],
+  "{0} today": [
+    "src/app/home/LemoraHome.tsx"
+  ],
+  "Nothing yet today: time shows here as you read, review and write.": [
+    "src/app/home/LemoraHome.tsx"
+  ],
+  "Recent": [
+    "src/app/home/LemoraHome.tsx"
+  ],
+  "Today’s challenge": [
+    "src/app/home/LemoraHome.tsx"
+  ],
+  "Good morning": [
+    "src/app/home/LemoraHome.tsx"
+  ],
+  "Good afternoon": [
+    "src/app/home/LemoraHome.tsx"
+  ],
+  "Good evening": [
+    "src/app/home/LemoraHome.tsx"
+  ],
+  "Burning the midnight oil": [
+    "src/app/home/LemoraHome.tsx"
+  ],
+  "Books, articles and word decks": [
+    "src/app/home/LemoraHome.tsx"
   ]
 }

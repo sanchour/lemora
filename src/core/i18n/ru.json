@@ -3358,7 +3358,7 @@
   "Bulgaria": "Болгария",
   "Bullet list": "Маркированный список",
   "Burmese": "бирманский",
-  "Burning the midnight oil": "Ночное чтение",
+  "Burning the midnight oil": "Засиделись допоздна",
   "Burning the midnight oil?": "Сжигать полуночное масло?",
   "Busker Busker": "Уличный музыкант",
   "Butter": "Масло",
@@ -8055,5 +8055,12 @@
   "Discover more": "Discover more",
   "Tools of the study": "Tools of the study",
   "At your desk": "At your desk",
-  "Choose between Topline tools, Right rail, Bottom shelf, or Classic.": "Choose between Topline tools, Right rail, Bottom shelf, or Classic."
+  "Choose between Topline tools, Right rail, Bottom shelf, or Classic.": "Choose between Topline tools, Right rail, Bottom shelf, or Classic.",
+  "Daily goals": "Цели на день",
+  "Every tool counts toward the day.": "Каждый инструмент засчитывается в день.",
+  "{0} today": "{0} сегодня",
+  "Nothing yet today: time shows here as you read, review and write.": "Сегодня пока ничего: время появится здесь, когда вы читаете, повторяете и пишете.",
+  "Recent": "Недавнее",
+  "Today’s challenge": "Задание на сегодня",
+  "Books, articles and word decks": "Книги, статьи и колоды слов"
 }

@@ -1,5 +1,5 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
-import { sectionKey, SHORTCUT_SECTIONS } from '@/app/sections';
+import { sectionKey, SHORTCUT_SECTIONS, shownFor } from '@/app/sections';
 import { useApp } from '@/app/context';
 import { patchSetting } from '@/data/settings';
 import { Button, Dialog, Kbd, Segmented } from '@/design/primitives';
@@ -83,9 +83,11 @@ export const WATCHING_SHORTCUTS: Array<[string[], string]> = [
 export function ShortcutList({ style }: { style?: KeyboardStyle }) {
   const translateUi = useUi();
   let appStyle: KeyboardStyle = 'auto';
+  let sections = SHORTCUT_SECTIONS;
   try {
     const app = useApp();
     appStyle = app.settings.ui.keyboardStyle ?? 'auto';
+    sections = SHORTCUT_SECTIONS.filter(shownFor(app.language.id));
   } catch {
     // Outside App context
   }
@@ -93,7 +95,7 @@ export function ShortcutList({ style }: { style?: KeyboardStyle }) {
 
   return (
     <div className="grid gap-6 sm:grid-cols-2">
-      <Group isMac={isMac} title={translateUi('Navigate')} rows={[...SHORTCUT_SECTIONS.slice(0, 10).map((s, i): [string[], string] => [['Alt', String(sectionKey(i))], s.name]), ...GENERAL]} />
+      <Group isMac={isMac} title={translateUi('Navigate')} rows={[...sections.slice(0, 10).map((s, i): [string[], string] => [['Alt', String(sectionKey(i))], s.name]), ...GENERAL]} />
       <Group isMac={isMac} title={translateUi('Reading')} rows={READER_SHORTCUTS} />
       <Group isMac={isMac} title={translateUi('Studying')} rows={STUDY_SHORTCUTS} />
       <Group isMac={isMac} title={translateUi('Listening')} rows={LISTENING_SHORTCUTS} />
