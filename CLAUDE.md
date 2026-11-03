@@ -1,96 +1,63 @@
-# Working on Lingua
+# Working on Lemora
 
-Lingua is a local-first language-learning PWA (Vite 8, React 19, TypeScript, Tailwind 4, Dexie,
-Zustand, motion/react). It is live at https://sanchour.github.io/lingua./ and GitHub Pages
-deploys it from `main` (repo `sanchour/lingua.`). Setting up a new computer: [docs/SETUP.md](docs/SETUP.md).
-Continuing from another account: [docs/HANDOVER.md](docs/HANDOVER.md).
+Lemora is a local-first app for reading, collecting words and writing in a new language: Lingua's
+reading-centred half made into its own product. It shares Lingua's code and git history (Vite 8,
+React 19, TypeScript, Tailwind 4, Dexie, Zustand, motion/react). Repository `sanchour/lemora`,
+published by GitHub Pages at https://sanchour.github.io/lemora/ from `main`.
 
-## Where the work stands (2026-10-29)
+## Start here
 
-- **Start here: [docs/HANDOVER.md](docs/HANDOVER.md).** The work still open, in order, how to claim
-  a step so two accounts never do the same one, what only the user can do, and the prompt to paste.
-  The plan, with what is done ticked, is [docs/ROADMAP.md](docs/ROADMAP.md); the user's original brief
-  is [Lingua updates.txt](Lingua%20updates.txt).
-- **Done and live:** Lingua 2.0 to 5 (Lingua 5 released as 0.5.2 on 2026-10-28). Details and what was
-  left out are in the ROADMAP and [docs/DECISIONS.md](docs/DECISIONS.md). Only the six core
-  languages (tier 1) get a course; tier 2 stays cheap (automatic packs, decks, podcasts, music search).
-- **Now: Lingua 6 · Features** ([docs/LINGUA-6-PLAN.md](docs/LINGUA-6-PLAN.md), 28 steps, versions 0.6.x; audit in
-  [docs/LINGUA-6-FEATURES.md](docs/LINGUA-6-FEATURES.md), tick entries as built; claim steps in the plan's table).
-  **Then Lingua 7 · Design** ([docs/LINGUA-7-PLAN.md](docs/LINGUA-7-PLAN.md), versions 0.7.x). Before any design work
-  read Part One of the handbook, [docs/handbook/Lingua-Design-Handbook.pdf](docs/handbook/Lingua-Design-Handbook.pdf)
-  (source `docs/handbook/handbook.html`, printed with `node scripts/handbook-pdf.ts`), and the chapter for the
-  room you change. Tablet and phone guides in it are reference only; the desktop-only rule still holds.
-- **6-29 The word graph** (the user's idea; Opus builds it, beside Part B): [docs/WORD-GRAPH-PLAN.md](docs/WORD-GRAPH-PLAN.md),
-  seven pushes, G1 to G7. Its numbers were measured on the real dictionaries; read its sections 1, 3 and 4 before drawing.
-- **Lingua for Mac** (a look, not a launch; Tauri v2; the user, 2026-10-29): [docs/MAC-PLAN.md](docs/MAC-PLAN.md), handover step 25, parallel with the rest.
-- **New idea: Slang & Dialects** (the user, 2026-10-31): a section where learners compare and learn regional slang and dialect words, colloquial differences, and how to speak in that dialect, accompanied by a visual dialect map. Only the 6 core languages first (e.g. Spanish Latin American varieties like Paisa, Caleño, Costeño, Argentinian, Chilean, Peruvian, Mexican, Dominican, Cuban, Puerto Rican; Mandarin variants; French varieties, etc.). **Do not build yet: a stronger model (e.g. Claude Opus) needs to plan it out first.**
-- **Sandesigner** (the user's own design canvas for all their apps) lives in `sandesigning/`, apart from Lingua's code
-  (no React, no dependencies); format in `sandesigning/FORMAT.md`. After changing it run `npm run sandesigner` and
-  commit both `public/sandesigner/` and `public/sandesigning/`.
-- Other accounts and sessions push to `main` all the time: rebase onto `origin/main` before every push.
-- Why things are the way they are: [docs/DECISIONS.md](docs/DECISIONS.md). Structure:
-  [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). The 60 fps rules: [docs/PERFORMANCE.md](docs/PERFORMANCE.md).
+- **[docs/LEMORA-PLAN.md](docs/LEMORA-PLAN.md)**: the steps, which are done, and how to claim the next.
+- [docs/EXTRACTION-AUDIT.md](docs/EXTRACTION-AUDIT.md): what was taken from Lingua, what was left out and why.
+- [docs/LINGUA-REINTEGRATION.md](docs/LINGUA-REINTEGRATION.md): how a change goes back to Lingua.
+- Still true for the shared code: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md),
+  [docs/PERFORMANCE.md](docs/PERFORMANCE.md) (the 60 fps rules), [docs/DECISIONS.md](docs/DECISIONS.md),
+  the design handbook (`docs/handbook/`). Lingua's plans (`docs/LINGUA-*`, `ROADMAP.md`, `HANDOVER.md`,
+  `Lingua updates.txt`, `what next.*`) are Lingua's history; don't take work from them here.
 
-## How the user wants each prompt handled
+## Rules that always hold
 
-1. Write a plan first (in the roadmap), then build it without waiting for confirmation.
-2. Check it: `npm run typecheck`, `npm test`, `npm run build`, and look at it in a browser at
-   desktop sizes (1280, 1440, and a 1366×768 laptop), light and dark.
-3. Update the docs it touches (ROADMAP, DECISIONS, FEATURES), and tick the step in docs/HANDOVER.md.
-4. After every finished prompt, commit and push to `main`, then check the Pages deploy went live
-   (the installed desktop app updates from it). **Every push gets a version** (the user, 2026-10-25),
-   checkpoints and claims too: `node scripts/version.ts "what this push is"`, commit, rebase, then
-   tag and push the tag. The scheme is 0.<Lingua>.<part>-alpha.<push> (alpha, so 0): [docs/VERSIONS.md](docs/VERSIONS.md).
+- **Never change the original Lingua.** Its repository and folder (`../Lingua`) are read-only from
+  here; the `lingua` remote is fetch-only. Nothing is merged into Lingua without the user's approval.
+- **`src/product.ts` is the only file that differs by design.** Shared code asks it for the database
+  name, the storage prefix, the name and the sections, and never hard-codes "Lemora".
+- **Tag every commit** `[shared]` (shared code, fit to go back to Lingua) or `[lemora]` (product file,
+  sections, Home, onboarding, branding, docs). One kind per commit.
+- **Keep shared files where they are.** Don't rename or move anything under `src/features/codex`,
+  `src/features/thesaurus`, `src/core`, `src/data` or `src/design`: identical paths are what let
+  `git cherry-pick` work between the two apps.
+- **Keep Lingua's database schema.** No new Dexie version and no dropped table: Lingua reserves
+  version numbers, and backups move between the apps. New data goes in `settings` keys or existing tables.
+- Storage stays apart from Lingua's (both apps can be on one origin): the `lemora` database, keys and
+  caches starting with `PRODUCT.prefix`, the dev server on port 5175.
+- API keys (Groq, Gemini) stay on the device and travel only in request headers, never in a URL.
+  Tests use fake keys such as `test-not-a-real-key`.
+- Never sign in to the user's real accounts or create accounts. Ask before a browser download.
+- Lemora is responsive (the brief asks for touch and phone widths too), unlike Lingua's desktop-only rule.
+
+## How each prompt is handled
+
+1. Claim the step in docs/LEMORA-PLAN.md, then build it without waiting for confirmation.
+2. Check it: `npm run typecheck`, `npm test`, `npm run build`, and look at it in a browser at 1280,
+   1440 and 1366×768, light and dark (and at phone width where the step is responsive).
+3. Update the docs it touches and tick the step, with what wasn't verified.
+4. Version every push: `node scripts/version.ts "what this push is"` (0.1.x-alpha.N for Lemora 1),
+   commit, `git pull --rebase origin main`, push to `main`, then check the Pages deploy went live.
 5. When a session finishes, give end notes: what changed, what wasn't verified, what's next.
 
-The user prefers token-efficient sessions: work inline and read only what is needed; no
-multi-agent workflows unless they ask for one.
-
-The user often works across usage limits and is away while work runs: when a limit is hit, the
-work should pick up again once it refreshes. They decide where a version ends.
+The user prefers token-efficient sessions: work inline, read only what is needed, no multi-agent
+workflows unless they ask. They often work across usage limits; the work picks up once a limit resets.
 
 Commit as `sanchour <255895307+sanchour@users.noreply.github.com>`
 (`git -c user.name=sanchour -c user.email=255895307+sanchour@users.noreply.github.com commit …`).
 
-## Rules that always hold
-
-- **Desktop only (the user, 2026-10-20).** Design, layout and functions are made for the desktop
-  app. Use wide windows fully: columns, side panels, sticky rails, desktop-style tabs and
-  toolbars, hover states, keyboard shortcuts, and right-click or drag where it helps. **The phone
-  isn't needed anymore** (the user: "Phone is not needed anymore"): don't design, build or check
-  for it; what exists for it stays as it is.
-  **Scoped update, 2026-11-02:** the user requested [an iOS design brief for Stitch](design-ios.md),
-  rethinking phone navigation and using Liquid Glass where appropriate. Phone design exploration
-  is authorised for that proposal; iOS implementation has not been requested.
-
-- **Sonus+ song streaming and sharing (the user, 2026-10-30):** When listening to music in **YouTube Music,
-  Amazon Music, Spotify, or Apple Music**, the learner can easily stream or share the song straight to Sonus+;
-  the song opens cleanly and immediately in Sonus+ (`/cantus`), resolving lyrics, vocabulary, and player without friction.
-
-- Work only inside this repository's folder. Never open or change anything to do with the user's
-  internship, or other folders on the computer. Temporary files go in the session's scratchpad.
-- API keys (Groq, Gemini) stay on the device and travel only in request headers, never
-  in a URL. Tests use fake keys such as `test-not-a-real-key`, never the user's real ones.
-- Never sign in to the user's real accounts or create accounts. Ask before a browser download.
-
 ## Practical notes
 
-- **No formatter:** there is no Prettier or ESLint fix step. Never run `npx prettier` or
-  `eslint --fix` (a stock Prettier once rewrote about 70 files); format by hand to match: single
-  quotes, long lines (about 200 columns), JSX wrapped the way the file around it is.
-- Node 24 runs the TypeScript scripts directly (`node scripts/lang-data/fetch.ts`).
-- Vitest caches transformed modules in `node_modules/.vitest-cache`, and an `import.meta.glob`
-  there doesn't see files added later (the course's languages): delete the folder when a test
-  should find a new file and doesn't.
-- Windows, Git Bash: if `node` isn't found, `export PATH="/c/Program Files/nodejs:$PATH"`.
-  Heredocs and `node -e` there lose backslashes: write patch scripts to a file instead.
-- Antivirus software (Kaspersky did this on the first PC) can rewrite a local headless Chrome's
-  traffic and fake CORS failures; check in the app's built-in browser before blaming the code.
-- Pack builds and `count.ts` take 1–2 GB of memory each and the Japanese count about an hour: on
-  an 8 GB laptop run them one at a time, with the dev server stopped.
-- `scripts/.cache` (about 2 GB, git-ignored) holds the raw word data for building language packs.
-  It isn't needed to run the app (the packs in `public/packs` are committed); rebuild it as
-  docs/SETUP.md says, only for pack work.
-
-
-**Main protection (user, 2026-10-31):** after the explicitly authorized final repair publication, main must require a pull request and passing `verify` checks, without a second reviewer. Push subsequent work to a feature/Codex branch, then merge a checked PR; do not bypass protection or push straight to main. This supersedes older direct-main publication instructions. Version every branch push as before. Preserve published history: integrate main by merge when rebasing would replay already-published Codex commits. `.github/workflows/checks.yml` runs typecheck, tests and the production-path build on PRs and main/Codex pushes.
+- **No formatter:** never run Prettier or `eslint --fix`; format by hand to match (single quotes,
+  long lines of about 200 columns, JSX wrapped like the file around it).
+- Node 24+ runs the TypeScript scripts directly (`node scripts/version.ts`).
+- Vitest caches transformed modules in `node_modules/.vitest-cache`; delete it when a test should
+  see a newly added or removed file and doesn't.
+- `public/packs` and `public/dict` are committed language data. Rebuilding them needs
+  `scripts/.cache` (2 GB, git-ignored; see docs/SETUP.md) and is rarely needed.
+- `sandesigning/` is the user's design canvas for all their apps; leave it as it is.

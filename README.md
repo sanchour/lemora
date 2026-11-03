@@ -1,22 +1,22 @@
-# Lingua
+# Lemora
 
-A calm, local-first language-learning studio: an interactive reader (Codex), flashcards and
-exercises (Thesaurus), audio with transcripts (Sonus), dual-subtitle video (Visio), stats (Ratio)
-and settings (Ordo). Installs as an app on Windows and iPhone from one URL. Russian and Greek have
-full support.
+A calm, local-first place to read, collect words and write in a new language. Read real books and
+articles with instant translations (Codex), keep and review your words (Thesaurus and Ludus), write
+a journal that gets corrected (Diarium), learn a new alphabet, and see honest progress (Ratio).
+Everything stays in your browser; installs as an app.
+
+Lemora is built from [Lingua](https://github.com/sanchour/lingua.) and shares its code and history,
+so improvements can move between the two.
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173
+npm run dev      # http://localhost:5175
 npm test
 npm run build
 ```
 
-- Working on it from another computer (and with Claude): [docs/SETUP.md](docs/SETUP.md), [CLAUDE.md](CLAUDE.md)
-- The plan, now Lingua 3.0 (twenty languages, a phone-first look with themes, a working music
-  room, natural voices and sync, Grammatica with alphabets and writing, radio, Mundus, comics,
-  audiobooks and AI conversation): [docs/ROADMAP.md](docs/ROADMAP.md)
-- Architecture, data schema and phase plan: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-- 60 fps budget and rules: [docs/PERFORMANCE.md](docs/PERFORMANCE.md)
-- Decisions: [docs/DECISIONS.md](docs/DECISIONS.md)
-- Putting it on your iPhone: [docs/DEPLOY.md](docs/DEPLOY.md), then [docs/QA-ios.md](docs/QA-ios.md)
+- The plan and where it stands: [docs/LEMORA-PLAN.md](docs/LEMORA-PLAN.md)
+- What came from Lingua and why: [docs/EXTRACTION-AUDIT.md](docs/EXTRACTION-AUDIT.md)
+- Bringing changes back to Lingua: [docs/LINGUA-REINTEGRATION.md](docs/LINGUA-REINTEGRATION.md)
+- Architecture (shared with Lingua): [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- Working on it (and with Claude): [CLAUDE.md](CLAUDE.md)
