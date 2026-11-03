@@ -34,3 +34,15 @@ it('uses the selected Russian scheme without putting the reading in selectable w
   const unknown = renderToStaticMarkup(createElement(ChapterBody, { model, lang: 'ru', scheme: 'unknown-old-setting' }));
   expect(unknown).toContain('data-r="Shchit"');
 });
+
+it('honors named Greek spelling ahead of an old reading and keeps unsupported words literal', () => {
+  const text = 'Ώρα ἀλφα.';
+  const model: ChapterModel = { chapter: { id: 'g', textId: 't', index: 0, wordCount: 2, blocks: [{ t: 'p', text }] }, blocks: [{ block: { t: 'p', text }, tokens: tokenize(text, 'el') }], norms: ['ώρα', 'ἀλφα'], states: new Map(), senses: new Map(), glosses: new Map([['ώρα', { text: 'hour', source: 'dict', reading: 'old-reading' }]]) };
+  for (const [scheme, reading] of [['elot-743', 'Óra'], ['iso-843-1997-1', 'Ṓra'], ['stale-setting', 'Óra']]) {
+    const html = renderToStaticMarkup(createElement(ChapterBody, { model, lang: 'el', scheme }));
+    expect(html).toContain(`data-r="${reading}"`);
+    expect(html).toContain('>Ώρα</span>');
+    expect(html).toContain('>ἀλφα</span>.');
+    expect(html).not.toContain('old-reading');
+  }
+});

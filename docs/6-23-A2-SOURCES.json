@@ -31,6 +31,18 @@
       "url": "https://www.icao.int/sites/default/files/publications/DocSeries/9303_p3_cons_en.pdf",
       "bytes": 2278826,
       "sha256": "55543aca6740140f1db0fb129f7f4815d1cf85dcfd49118cdb602f646c8a5553"
+    },
+    {
+      "file": "iso-843-1997-preview.pdf",
+      "url": "https://cdn.standards.iteh.ai/samples/5215/ebfdc4425f834833a5fe07c44f2dca79/ISO-843-1997.pdf",
+      "bytes": 1500106,
+      "sha256": "2fa5fa1a4e9ad94616948326a841f6bccde7b9bdc7e591c423628144c7af934b"
+    },
+    {
+      "file": "ungegn-greek-2016.pdf",
+      "url": "https://unstats.un.org/unsd/ungegn/working_groups/wg5/documents/wgrr4greek.pdf",
+      "bytes": 148273,
+      "sha256": "b15d6cded9ddb4b6f71989998f20760e3fe12e6411e06c959d4485984f3fb558"
     }
   ]
 }

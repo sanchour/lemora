@@ -7606,5 +7606,8 @@
   "Look up a word to see what is around it: its meanings, its family, where it comes from and how it is used.": "查一个词，看看它周围有什么：词义、词族、来源和用法。",
   "Synonyms, families and origins come with a full dictionary, which this language doesn’t have yet.": "同义词、词族和来源需要完整词典，这门语言目前还没有。",
   "Its neighbours, in words": "它的邻居（文字版）",
-  "See its neighbours": "查看邻近词"
+  "See its neighbours": "查看邻近词",
+  "ELOT 743 · Type 2": "ELOT 743 · 类型 2",
+  "ISO 843:1997 · Type 1": "ISO 843:1997 · 类型 1",
+  "Modern Greek spelling; polytonic words are left without a reading.": "现代希腊语拼写；多调正字法词语不显示转写。"
 }

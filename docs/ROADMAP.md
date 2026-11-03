@@ -2638,3 +2638,17 @@ under A2. [Exact scope and limits](6-23-A2-RUSSIAN.md). No main push or A3 claim
 1,740 tests / one skipped and production build pass. Russian browser evidence predates these last
 two integrations; incoming graph/games/conversation UI not audited. Full A2 and A1 offline acceptance
 remain open. [Russian scope and verification](6-23-A2-RUSSIAN.md).
+
+### A2.2b · Greek named schemes · Codex · 2026-11-03
+
+- [x] Pin/check the cached ISO 843:1997 Type 1 tables and UNGEGN's ELOT 743 transcription table;
+  distinguish modern monotonic spelling support from full polytonic/archaic conversion.
+- [x] Add independent table/example golden tests and regressions for accents, diaeresis,
+  contextual pairs, capitalization, unsupported input and stale saved choices. Preserve lessons.
+- [x] Reuse Reading settings and ChapterBody for named Greek choice/preview, saving per language;
+  verify both reader choices at three desktop sizes in both themes, reload and source-span integrity.
+- [ ] Typecheck, tests and production build; record exact limits, synchronize and version/push Codex
+  only. Full A2 audit entries remain open; no A3 claim. The six local test packs are user-approved.
+
+Scope reaches core display dispatch, Settings, the reader/shared transcript render, tests, catalogues
+and source/review ledgers. No learner data migration, protected exercise/editor/SRS changes or dependency.

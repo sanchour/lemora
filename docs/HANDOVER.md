@@ -362,3 +362,11 @@ surface/position/reveal/lesson controls. A1 offline gap remains. No direct main 
 1,740 tests / one skipped and production build pass. Russian browser evidence predates these last
 two integrations; incoming graph/games/conversation UI not audited. Full A2 and A1 offline acceptance
 remain open. [Russian scope and verification](6-23-A2-RUSSIAN.md).
+
+**Codex A2.2b, 2026-11-03:** modern Greek ELOT 743 Type 2 / ISO 843:1997 Type 1 spelling choices
+are learner-reachable in Reading settings and the reader/shared transcript renderer. Typecheck,
+1,806 tests / one skipped and build pass; browser twelve size/theme views, both choices' reload
+persistence, literal source/unsupported-word checks, Russian setting isolation and empty warn/error
+log. [Exact evidence and limits](6-23-A2-GREEK.md). Synchronization/publication outcome follows there.
+No full-A2 audit tick; other named languages/surface controls and A1 offline gap remain open. Codex
+retains A2, no A3 claim. Native standards review, live transcript and a fresh Arabic pass not performed.

@@ -2196,3 +2196,12 @@ Thesaurus › Atlas is the fifth tab (Phrases came first), loaded only when open
 1,740 tests / one skipped and production build pass. Russian browser evidence predates these last
 two integrations; incoming graph/games/conversation UI not audited. Full A2 and A1 offline acceptance
 remain open. [Russian scope and verification](6-23-A2-RUSSIAN.md).
+
+## 2026-11-03 · Distinguish Greek transcription from transliteration
+
+Name ELOT 743 Type 2 and ISO 843:1997 Type 1 explicitly, rather than treating the two as aliases.
+The former uses contextual consonant/vowel pairs, the latter preserves η/ω with macrons. Use one
+named-choice list for the existing Russian and new Greek selector/reader paths, including stale
+choice fallback; retain independent saved choices and old alphabet lessons. Refuse polytonic/archaic
+words and state the limit beside the selector. [Source/review ledger](review/6-23-el.md) records that
+this is modern word display, not full ISO text-conversion compliance; full A2 remains open.

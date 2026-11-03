@@ -7606,5 +7606,8 @@
   "Look up a word to see what is around it: its meanings, its family, where it comes from and how it is used.": "ابحث عن كلمة لترى ما حولها: معانيها وعائلتها ومن أين جاءت وكيف تُستعمل.",
   "Synonyms, families and origins come with a full dictionary, which this language doesn’t have yet.": "المرادفات والعائلات والأصول تأتي مع قاموس كامل، وهذه اللغة لا تملكه بعد.",
   "Its neighbours, in words": "جيرانها، بالكلمات",
-  "See its neighbours": "عرض جيرانها"
+  "See its neighbours": "عرض جيرانها",
+  "ELOT 743 · Type 2": "ELOT 743 · النوع 2",
+  "ISO 843:1997 · Type 1": "ISO 843:1997 · النوع 1",
+  "Modern Greek spelling; polytonic words are left without a reading.": "تهجئة اليونانية الحديثة؛ تُعرض الكلمات ذات النظام متعدد العلامات دون نقل صوتي."
 }

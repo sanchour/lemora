@@ -15371,5 +15371,14 @@
   ],
   "See its neighbours": [
     "src/features/thesaurus/dictionary/Entry.tsx"
+  ],
+  "ELOT 743 · Type 2": [
+    "src/core/script/translit/greek.ts"
+  ],
+  "ISO 843:1997 · Type 1": [
+    "src/core/script/translit/greek.ts"
+  ],
+  "Modern Greek spelling; polytonic words are left without a reading.": [
+    "src/features/ordo/sections/ReadingSection.tsx"
   ]
 }
