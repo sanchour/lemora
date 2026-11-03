@@ -6,6 +6,7 @@ import { Navigate, useNavigate, useSearchParams } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
 import { BookA, Compass, Layers, LayoutGrid, List, MessageSquareQuote, Plus, Search, SearchX, Sparkles, Waypoints } from 'lucide-react';
 import { useApp } from '@/app/context';
+import { shows } from '@/product';
 import { PageHeader } from '@/app/PageHeader';
 import { RoomTabs } from '@/app/RoomTabs';
 import type { RoomTab } from '@/app/RoomTabs';
@@ -137,7 +138,7 @@ export default function ThesaurusPage() {
     { id: 'decks', label: 'My decks', to: '/thesaurus?tab=decks', icon: Layers },
     { id: 'dictionary', label: 'Dictionary', to: '/thesaurus?tab=dictionary', icon: BookA },
     { id: 'phrases', label: 'Phrases', to: '/thesaurus?tab=phrases', icon: MessageSquareQuote },
-    { id: 'atlas', label: 'Atlas', to: '/thesaurus?tab=atlas', icon: Waypoints },
+    ...(shows('atlas') ? [] : [{ id: 'atlas' as const, label: 'Atlas', to: '/thesaurus?tab=atlas', icon: Waypoints }]),
   ];
 
   const [searching, setSearching] = useState(false);
@@ -192,6 +193,8 @@ export default function ThesaurusPage() {
   };
 
   if (picked === 'discover') return <Navigate to={DISCOVER} replace />;
+  // Where the atlas is a room of its own, its old tab address (and the word it was on) opens the room.
+  if (picked === 'atlas' && shows('atlas')) return <Navigate to={`/atlas${params.get('word') ? `?${new URLSearchParams({ word: params.get('word')!, ...(params.get('view') ? { view: params.get('view')! } : {}) })}` : ''}`} replace />;
   return (
     <>
       <PageHeader

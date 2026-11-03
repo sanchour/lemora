@@ -9,9 +9,9 @@ export const PRODUCT = {
   prefix: 'lemora',
 } as const;
 
-/** Every room and tab a build can have. Lingua's rooms are Cursus, Sonus, Cantus, Visio, Mentis…; diarium, try and alphabet are rooms only in Lemora. */
+/** Every room and tab a build can have. Lingua's rooms are Cursus, Sonus, Cantus, Visio, Mentis…; diarium, try, alphabet and atlas are rooms only in Lemora. */
 export type Feature =
-  | 'home' | 'explora' | 'bibliotheca' | 'codex' | 'thesaurus' | 'ludus' | 'ratio' | 'ordo'
+  | 'home' | 'explora' | 'bibliotheca' | 'codex' | 'thesaurus' | 'atlas' | 'ludus' | 'ratio' | 'ordo'
   | 'cursus' | 'course' | 'grammatica' | 'sounds' | 'typing' | 'alphabet'
   | 'sonus' | 'visio' | 'cantus'
   | 'mentis' | 'mundus' | 'culture' | 'sermo' | 'notebook' | 'diarium' | 'try'
@@ -19,7 +19,7 @@ export type Feature =
   | 'desk';
 
 /** The sidebar's rooms, in order (src/app/sections.ts draws them). */
-export const ROOMS: readonly Feature[] = ['home', 'explora', 'bibliotheca', 'codex', 'thesaurus', 'ludus', 'diarium', 'alphabet', 'ratio', 'ordo'];
+export const ROOMS: readonly Feature[] = ['home', 'explora', 'bibliotheca', 'codex', 'thesaurus', 'atlas', 'ludus', 'diarium', 'alphabet', 'ratio', 'ordo'];
 
 /** Lemora: reading, words, writing and a new script, each a room of its own, and Things to try inside Explora. In Lingua the list is the whole app. */
 const FEATURES: ReadonlySet<Feature> = new Set<Feature>([...ROOMS, 'try', 'desk']);

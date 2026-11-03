@@ -4,6 +4,7 @@ import { createBrowserRouter, Navigate } from 'react-router';
 import HomeRouter from './home/HomeRouter';
 import {
   AlphabetPage,
+  AtlasRoom,
   BibliothecaPage,
   BookDetailsPage,
   CodexPage,
@@ -62,6 +63,8 @@ export const router = createBrowserRouter(
         { path: 'codex/new', element: <NewTextPage /> },
         { path: 'codex/book/:textId', element: <BookDetailsPage /> },
         { path: 'thesaurus', element: <ThesaurusPage /> },
+        // Atlas, Thesaurus's word map, as a room of its own; its old tab address opens it.
+        { path: 'atlas', element: <AtlasRoom /> },
         { path: 'thesaurus/deck/:deckId', element: <DeckPage /> },
         { path: 'thesaurus/ready/:key', element: <StarterPage /> },
         { path: 'thesaurus/study/:deckId', element: <StudyPage /> },

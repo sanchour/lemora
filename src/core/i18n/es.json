@@ -8066,5 +8066,8 @@
   "Desk": "Escritorio",
   "Measured": "Medido",
   "last grade {0}": "última nota {0}",
-  "{0} recalled (30 days)": "{0} recordado (30 días)"
+  "{0} recalled (30 days)": "{0} recordado (30 días)",
+  "{0} · Word map": "{0} · Mapa de palabras",
+  "Word map": "Mapa de palabras",
+  "Every word you have, as a map": "Todas tus palabras, como un mapa"
 }

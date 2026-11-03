@@ -15541,7 +15541,9 @@
   ],
   "Atlas": [
     "src/features/thesaurus/ThesaurusPage.tsx",
-    "src/features/thesaurus/atlas/AtlasTab.tsx"
+    "src/features/thesaurus/atlas/AtlasTab.tsx",
+    "src/app/rooms/AtlasRoom.tsx",
+    "src/app/sections.ts"
   ],
   "Which word?": [
     "src/features/thesaurus/atlas/AtlasTab.tsx"
@@ -16991,5 +16993,14 @@
   ],
   "{0} recalled (30 days)": [
     "src/features/ratio/Overview.tsx"
+  ],
+  "{0} · Word map": [
+    "src/app/rooms/AtlasRoom.tsx"
+  ],
+  "Word map": [
+    "src/app/sections.ts"
+  ],
+  "Every word you have, as a map": [
+    "src/features/home/homeData.ts"
   ]
 }

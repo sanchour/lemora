@@ -18,7 +18,7 @@ import { madeFromOf, madeFromReady, refreshAtlas } from '@/services/graph/graph'
 import { EntryView } from '../dictionary/Entry';
 import { etymonName } from '../dictionary/WordOrigin';
 import { AtlasCanvas, nodeTowards, type AtlasCanvasHandle, type Camera } from './AtlasCanvas';
-import { PRODUCT } from '@/product';
+import { PRODUCT, shows } from '@/product';
 
 type View = 'atlas' | 'compass' | 'tree';
 const lastKey = (lang: string) => `${PRODUCT.prefix}.atlas.${lang}`;
@@ -98,7 +98,8 @@ export default function AtlasTab({ lang }: { lang: string }) {
     // regionLabel only changes with the interface's language, which translateUi follows.
   }, [view, row, states, memory, data, lookalikes, translateUi]);
 
-  const open = (w: string, as: View = view === 'atlas' ? 'compass' : view) => setParams(as === 'atlas' ? { tab: 'atlas' } : { tab: 'atlas', word: w, ...(as === 'tree' ? { view: 'tree' } : {}) });
+  const here: Record<string, string> = shows('atlas') ? {} : { tab: 'atlas' };
+  const open = (w: string, as: View = view === 'atlas' ? 'compass' : view) => setParams(as === 'atlas' ? here : { ...here, word: w, ...(as === 'tree' ? { view: 'tree' } : {}) });
   const chosen = scene?.nodes.find((n) => n.id === selected);
   const page = chosen?.key ? chosen.label : view !== 'atlas' && data ? data.label : null;
   const select = (n: SceneNode) => {

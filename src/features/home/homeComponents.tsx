@@ -112,6 +112,17 @@ export function ToolDuotoneIcon({ id, className = 'size-8' }: { id: HomeToolItem
           <path d="M20 30l-2 6" stroke="var(--ink)" />
         </svg>
       );
+    case 'atlas':
+      // Words as stars joined by threads: a small constellation, one word in the accent.
+      return (
+        <svg viewBox="0 0 48 48" className={className} fill="none" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M13 34L23 15L35 29M13 34L35 29M35 29L41 39" stroke="var(--ink)" strokeWidth={1.6} opacity={0.55} />
+          <circle cx="23" cy="14" r="5.5" stroke="var(--ink)" fill="var(--accent)" fillOpacity={0.3} />
+          <circle cx="12.5" cy="34.5" r="4.5" stroke="var(--ink)" fill="#6b8e78" fillOpacity={0.3} />
+          <circle cx="35.5" cy="28.5" r="4" stroke="var(--ink)" />
+          <circle cx="41.5" cy="39.5" r="2.2" stroke="var(--accent)" />
+        </svg>
+      );
     case 'alphabet':
       // A letter in two hands: a capital drawn in ink, its small one in the accent, on a ruled line.
       return (

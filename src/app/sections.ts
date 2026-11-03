@@ -1,4 +1,4 @@
-import { BookOpen, ChartNoAxesColumn, Clapperboard, Compass, Feather, Gamepad2, GraduationCap, Headphones, House, Lamp, Languages, Library, Lightbulb, Music, Settings2 } from 'lucide-react';
+import { BookOpen, ChartNoAxesColumn, Clapperboard, Compass, Feather, Gamepad2, GraduationCap, Headphones, House, Lamp, Languages, Library, Lightbulb, Music, Settings2, Waypoints } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { ROOMS } from '@/product';
 import { getLanguage } from '@/core/lang/languages';
@@ -18,10 +18,11 @@ export type SectionId =
   | 'mentis'
   | 'ratio'
   | 'ordo'
-  // Rooms of their own in Lemora; in Lingua they are tabs (Mentis › Diarium, Mundus › Things to try, Cursus › Script).
+  // Rooms of their own in Lemora; in Lingua they are tabs (Mentis › Diarium, Mundus › Things to try, Cursus › Script, Thesaurus › Atlas).
   | 'try'
   | 'diarium'
-  | 'alphabet';
+  | 'alphabet'
+  | 'atlas';
 
 export interface Section {
   id: SectionId;
@@ -61,6 +62,7 @@ const ALL_SECTIONS: Section[] = [
   { id: 'ordo', path: '/settings', name: 'Settings', role: 'Settings', icon: Settings2, group: 'bottom', placement: 'header' },
   { id: 'try', path: '/mentis/try', name: 'Things to try', role: 'Beyond the page', icon: Lightbulb, group: 'primary', placement: 'side' },
   { id: 'diarium', path: '/mentis/diarium', name: 'Diarium', role: 'Write', icon: Feather, group: 'tool', placement: 'side' },
+  { id: 'atlas', path: '/atlas', name: 'Atlas', role: 'Word map', icon: Waypoints, group: 'tool', placement: 'side', noShortcut: true },
   { id: 'alphabet', path: '/cursus/alphabets', name: 'Alphabet', role: 'Letters & sounds', icon: Languages, group: 'tool', placement: 'side', forLanguage: (lang) => (getLanguage(lang)?.script ?? 'Latn') !== 'Latn' },
 ];
 

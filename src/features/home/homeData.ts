@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { AudioLines, BookOpen, Bookmark, Clapperboard, Feather, Gamepad2, Headphones, Languages, Layers, MessageCircle, MessagesSquare, Music, PenLine, Radio, Sparkles } from 'lucide-react';
+import { AudioLines, BookOpen, Bookmark, Clapperboard, Feather, Gamepad2, Headphones, Languages, Layers, MessageCircle, MessagesSquare, Music, PenLine, Radio, Sparkles, Waypoints } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { getLanguage } from '@/core/lang/languages';
@@ -26,7 +26,7 @@ import { reaches, shows } from '@/product';
 
 /** Core tool entry with SVG icon and route */
 export interface HomeToolItem {
-  id: 'codex' | 'sonus' | 'cantus' | 'visio' | 'thesaurus' | 'ludus' | 'mentis' | 'cursus' | 'diarium' | 'alphabet';
+  id: 'codex' | 'sonus' | 'cantus' | 'visio' | 'thesaurus' | 'ludus' | 'mentis' | 'cursus' | 'diarium' | 'alphabet' | 'atlas';
   name: string;
   role: string;
   to: string;
@@ -45,6 +45,7 @@ export const HOME_TOOLS: HomeToolItem[] = [
   // Rooms of their own in Lemora (src/product.ts); in Lingua they live inside Mentis and Cursus.
   { id: 'diarium', name: 'Diarium', role: 'Your journal, written and corrected', to: '/mentis/diarium', icon: Feather },
   { id: 'alphabet', name: 'Alphabet', role: 'Letters, sounds & stroke order', to: '/cursus/alphabets', icon: Languages },
+  { id: 'atlas', name: 'Atlas', role: 'Every word you have, as a map', to: '/atlas', icon: Waypoints },
 ];
 
 /** The tools this build has, in its sidebar's order (Alphabet only for a language in another script). */
