@@ -286,9 +286,9 @@ Vocabulary is much more than translating a word and flipping a flashcard. Learne
 - [x] `F0185` Speed rounds
 - [x] `F0186` Memory-matching cards · **6-21**
 - [x] `F0187` Vocabulary bingo · **6-21**
-- [ ] `F0188` Daily word challenges · **6-21** · partly there
+- [x] `F0188` Daily word challenges · **6-21** · partly there
 - [x] `F0189` Guess a word from progressively revealing clues · **6-21**
-- [ ] `F0190` Mini word tournaments · **6-21**
+- [x] `F0190` Mini word tournaments · **6-21**
 - [x] `F0191` Personal best challenges
 - [ ] `F0192` Cooperative vocabulary challenges · **6-27** · needs the user's word
 
@@ -441,8 +441,8 @@ Reading is one of the richest sources of vocabulary, grammar and cultural knowle
 - [ ] `F0310` Children’s literature · **6-8** · partly there
 - [x] `F0311` Comic strips
 - [x] `F0312` Graphic novels
-- [ ] `F0313` Interactive fiction · **6-21**
-- [ ] `F0314` Choose-your-own-adventure stories · **6-21**
+- [x] `F0313` Interactive fiction · **6-21**
+- [x] `F0314` Choose-your-own-adventure stories · **6-21**
 - [x] `F0315` User-imported texts
 - [x] `F0316` Personal document library
 - [x] `F0317` Public-domain literature collection
@@ -1155,7 +1155,7 @@ This is the structured side of the app. Learners need a route through the materi
 - [ ] `F0882` Topic-based lessons · **6-14** · partly there
 - [ ] `F0883` Story-based lessons · **6-14**
 - [ ] `F0884` Dialogue-based lessons · **6-14**
-- [ ] `F0885` Project-based learning · **6-21**
+- [x] `F0885` Project-based learning · **6-21**
 - [ ] `F0886` Discovery-based learning · **6-14**
 - [ ] `F0887` Lessons built around a single authentic text · **6-14**
 - [ ] `F0888` Lessons built around a single conversation · **6-14**
@@ -1534,12 +1534,12 @@ each with its definition, private and exportable. Lingua 5.2-9 already expands R
 
 - [x] `F1183` Word matching games
 - [x] `F1184` Vocabulary speed rounds
-- [ ] `F1185` Timed translation · **6-21**
+- [x] `F1185` Timed translation · **6-21**
 - [x] `F1186` Sentence construction puzzles
 - [x] `F1187` Word ordering challenges
 - [x] `F1188` Grammar competitions
 - [x] `F1189` Listening quizzes
-- [ ] `F1190` Dictation races · **6-21**
+- [x] `F1190` Dictation races · **6-21**
 - [x] `F1191` Pronunciation challenges · **6-10**
 - [x] `F1192` Word association games · **6-21**
 - [x] `F1193` Crossword puzzles · **6-21**
@@ -1555,17 +1555,17 @@ each with its definition, private and exportable. Lingua 5.2-9 already expands R
 - [ ] `F1203` Story completion games · **6-21**
 - [ ] `F1204` Dialogue completion · **6-21**
 - [ ] `F1205` Interactive mysteries · **6-21**
-- [ ] `F1206` Text adventures · **6-21**
-- [ ] `F1207` Choose-your-own-adventure stories · **6-21**
+- [x] `F1206` Text adventures · **6-21**
+- [x] `F1207` Choose-your-own-adventure stories · **6-21**
 - [ ] `F1208` Roleplaying quests · **6-21**
-- [ ] `F1209` Escape-room-style language puzzles · **6-21**
+- [x] `F1209` Escape-room-style language puzzles · **6-21**
 - [ ] `F1210` Clue-based detective games · **6-21**
 - [ ] `F1211` Simulated travel adventures · **6-21**
 - [ ] `F1212` Virtual city exploration · **6-21**
 - [ ] `F1213` Survival-language challenges · **6-21**
 - [ ] `F1214` Conversation quests · **6-21**
-- [ ] `F1215` Daily puzzles · **6-21**
-- [ ] `F1216` Weekly themed challenges · **6-21**
+- [x] `F1215` Daily puzzles · **6-21**
+- [x] `F1216` Weekly themed challenges · **6-21**
 - [ ] `F1217` Cooperative multiplayer quizzes · **6-27** · needs the user's word
 - [ ] `F1218` Head-to-head vocabulary matches · **6-27** · needs the user's word
 - [ ] `F1219` Community tournaments · **6-27** · needs the user's word
@@ -1578,29 +1578,29 @@ These are integrated activities that combine skills instead of training each one
 
 *In Lingua: Sermo with words due; Grammatica's own sentence; In your own words.*
 
-- [ ] `F1222` Read a story, then discuss it · **6-21**
-- [ ] `F1223` Listen to a story, then summarize it aloud · **6-21**
-- [ ] `F1224` Read an article, then write an opinion · **6-21**
-- [ ] `F1225` Watch a video, then explain the main argument · **6-21**
+- [x] `F1222` Read a story, then discuss it · **6-21**
+- [x] `F1223` Listen to a story, then summarize it aloud · **6-21**
+- [x] `F1224` Read an article, then write an opinion · **6-21**
+- [x] `F1225` Watch a video, then explain the main argument · **6-21**
 - [x] `F1226` Learn vocabulary, then use it in a conversation
 - [x] `F1227` Study grammar, then write a paragraph using it
-- [ ] `F1228` Listen to a dialogue, then recreate it · **6-21**
-- [ ] `F1229` Read a dialogue, then perform both roles · **6-21**
-- [ ] `F1230` Learn idioms, then use them in a story · **6-21**
-- [ ] `F1231` Translate a passage, then compare alternatives · **6-21**
-- [ ] `F1232` Listen to a recording, then write a transcript · **6-21**
+- [x] `F1228` Listen to a dialogue, then recreate it · **6-21**
+- [x] `F1229` Read a dialogue, then perform both roles · **6-21**
+- [x] `F1230` Learn idioms, then use them in a story · **6-21**
+- [x] `F1231` Translate a passage, then compare alternatives · **6-21**
+- [x] `F1232` Listen to a recording, then write a transcript · **6-21**
 - [x] `F1233` Read a text, then retell it without looking
-- [ ] `F1234` Write a paragraph, then read it aloud · **6-21** · partly there
-- [ ] `F1235` Record a spoken response, then transcribe it · **6-21**
+- [x] `F1234` Write a paragraph, then read it aloud · **6-21** · partly there
+- [x] `F1235` Record a spoken response, then transcribe it · **6-21**
 - [x] `F1236` Discuss a book with an AI tutor · **5.2-6**
-- [ ] `F1237` Debate an issue after reading about it · **6-21**
-- [ ] `F1238` Create a presentation from a text · **6-21**
+- [x] `F1237` Debate an issue after reading about it · **6-21**
+- [x] `F1238` Create a presentation from a text · **6-21**
 - [x] `F1239` Turn a podcast into a vocabulary deck · **6-2** · partly there
-- [ ] `F1240` Turn a conversation into a personalized lesson · **6-21**
-- [ ] `F1241` Turn writing corrections into future review exercises · **6-21**
-- [ ] `F1242` Build a weekly project around one topic · **6-21**
-- [ ] `F1243` Produce a short story using recently learned words · **6-21**
-- [ ] `F1244` Create a personal podcast in the target language · **6-21**
+- [x] `F1240` Turn a conversation into a personalized lesson · **6-21**
+- [x] `F1241` Turn writing corrections into future review exercises · **6-21**
+- [x] `F1242` Build a weekly project around one topic · **6-21**
+- [x] `F1243` Produce a short story using recently learned words · **6-21**
+- [x] `F1244` Create a personal podcast in the target language · **6-21**
 
 ## 18 · Dictionaries and linguistic reference tools
 

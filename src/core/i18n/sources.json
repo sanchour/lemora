@@ -1112,7 +1112,8 @@
     "src/features/mundus/TipsView.tsx",
     "src/features/thesaurus/ThesaurusPage.tsx",
     "src/features/thesaurus/library/DeckTree.tsx",
-    "src/features/thesaurus/library/TodayCard.tsx"
+    "src/features/thesaurus/library/TodayCard.tsx",
+    "src/core/games/defs.ts"
   ],
   "Finding a song for today": [
     "src/features/cantus/room/pages.tsx"
@@ -15274,5 +15275,357 @@
   ],
   "See its neighbours": [
     "src/features/thesaurus/dictionary/Entry.tsx"
+  ],
+  "Daily puzzle": [
+    "src/features/games/Daily.tsx",
+    "src/core/games/defs.ts"
+  ],
+  "Done for today: {0} of 3 stars.": [
+    "src/features/games/Daily.tsx"
+  ],
+  "A new puzzle comes tomorrow, the same for everyone learning this language.": [
+    "src/features/games/Daily.tsx"
+  ],
+  "{0} Copy the result": [
+    "src/features/games/Daily.tsx"
+  ],
+  "Today’s puzzle is {0}. It is the same for everyone learning this language, and it can be played once.": [
+    "src/features/games/Daily.tsx"
+  ],
+  "The word comes from the language’s own list, with its meaning. Three stars at most; hints cost one each.": [
+    "src/features/games/Daily.tsx"
+  ],
+  "Words of {0} letters": [
+    "src/features/games/Daily.tsx"
+  ],
+  "Words that start with “{0}”": [
+    "src/features/games/Daily.tsx"
+  ],
+  "This week: {0}. Five words, the same all week, played as hangman.": [
+    "src/features/games/Daily.tsx"
+  ],
+  "Type a letter or click it. Six wrong letters and the word is lost. Up to three stars a word.": [
+    "src/features/games/Daily.tsx"
+  ],
+  "That project is not here.": [
+    "src/features/games/Projects.tsx"
+  ],
+  "All projects": [
+    "src/features/games/Projects.tsx"
+  ],
+  "Finished.": [
+    "src/features/games/Projects.tsx"
+  ],
+  "{0} of {1} steps done": [
+    "src/features/games/Projects.tsx"
+  ],
+  "Needs Max; skip it without.": [
+    "src/features/games/Projects.tsx"
+  ],
+  "{0} Open": [
+    "src/features/games/Projects.tsx"
+  ],
+  "{0} Delete this project": [
+    "src/features/games/Projects.tsx"
+  ],
+  "{0}, in chains": [
+    "src/features/games/Projects.tsx"
+  ],
+  "Small chains across rooms: each step opens the room that does it. Tick a step when you have done it.": [
+    "src/features/games/Projects.tsx"
+  ],
+  "Your projects": [
+    "src/features/games/Projects.tsx"
+  ],
+  "Start a project": [
+    "src/features/games/Projects.tsx"
+  ],
+  "The topic": [
+    "src/features/games/Projects.tsx"
+  ],
+  "Next game": [
+    "src/features/games/RoundRunner.tsx"
+  ],
+  "See the tournament": [
+    "src/features/games/RoundRunner.tsx"
+  ],
+  "You made it in {0} choices.": [
+    "src/features/games/Story.tsx"
+  ],
+  "You are stuck here.": [
+    "src/features/games/Story.tsx"
+  ],
+  "You have: {0}": [
+    "src/features/games/Story.tsx"
+  ],
+  "You have nothing yet.": [
+    "src/features/games/Story.tsx"
+  ],
+  "Story": [
+    "src/features/games/Story.tsx"
+  ],
+  "A story to play through. Choose what to do; look for things you can use later.": [
+    "src/features/games/Story.tsx"
+  ],
+  "More stories come from Max.": [
+    "src/features/games/Story.tsx"
+  ],
+  "Make one": [
+    "src/features/games/Story.tsx"
+  ],
+  "Click a choice or press its number. A choice that needs something stays hidden until you have found it. Three stars for finishing in a few more choices than the shortest way.": [
+    "src/features/games/Story.tsx"
+  ],
+  "Done: {0} right.": [
+    "src/features/games/Timed.tsx"
+  ],
+  "{0} Hear it again": [
+    "src/features/games/Timed.tsx"
+  ],
+  "Say it in the language": [
+    "src/features/games/Timed.tsx"
+  ],
+  "Your answer": [
+    "src/features/games/Timed.tsx"
+  ],
+  "The model answer": [
+    "src/features/games/Timed.tsx"
+  ],
+  "Mine was as good": [
+    "src/features/games/Timed.tsx"
+  ],
+  "English sentences to put into the language. You have 90 seconds: as many as you can.": [
+    "src/features/games/Timed.tsx"
+  ],
+  "Lines to hear and type. You have 90 seconds: as many as you can.": [
+    "src/features/games/Timed.tsx"
+  ],
+  "Timed translation": [
+    "src/features/games/Timed.tsx",
+    "src/core/games/defs.ts"
+  ],
+  "Dictation race": [
+    "src/features/games/Timed.tsx",
+    "src/core/games/defs.ts"
+  ],
+  "Type the translation and press Enter. A near miss counts. If a translation is marked wrong but was as good as the model, say so and it counts. Three stars for five, two for three, one for any.": [
+    "src/features/games/Timed.tsx"
+  ],
+  "The line is read aloud by your device’s voice; press Hear it again as often as you like. Words matter, case and punctuation do not. Three stars for five, two for three, one for any.": [
+    "src/features/games/Timed.tsx"
+  ],
+  "Game {0} of {1}": [
+    "src/features/games/Tournament.tsx"
+  ],
+  "{0} stars so far": [
+    "src/features/games/Tournament.tsx"
+  ],
+  "Mini tournament": [
+    "src/features/games/Tournament.tsx",
+    "src/core/games/defs.ts"
+  ],
+  "A new best.": [
+    "src/features/games/Tournament.tsx"
+  ],
+  "Better than last time.": [
+    "src/features/games/Tournament.tsx"
+  ],
+  "Last time: {0} stars.": [
+    "src/features/games/Tournament.tsx"
+  ],
+  "Your first tournament.": [
+    "src/features/games/Tournament.tsx"
+  ],
+  "Play another": [
+    "src/features/games/Tournament.tsx"
+  ],
+  "Needs a story: there is a ready-made one for the six core languages, and Max can make more.": [
+    "src/core/games/source.ts"
+  ],
+  "The same puzzle for everyone learning this language today.": [
+    "src/core/games/defs.ts"
+  ],
+  "One word puzzle a day, the same for everyone learning the language.": [
+    "src/core/games/defs.ts"
+  ],
+  "Weekly challenge": [
+    "src/core/games/defs.ts"
+  ],
+  "Five words on this week’s theme, the same all week.": [
+    "src/core/games/defs.ts"
+  ],
+  "Three quick games in a row with one score, against your own last one.": [
+    "src/core/games/defs.ts"
+  ],
+  "Translate as many sentences as you can before the time runs out.": [
+    "src/core/games/defs.ts"
+  ],
+  "Hear a line and type it, as many as you can before the time runs out.": [
+    "src/core/games/defs.ts"
+  ],
+  "Escape and adventure stories": [
+    "src/core/games/defs.ts"
+  ],
+  "A story to play through: choose what to do, find things, use them.": [
+    "src/core/games/defs.ts"
+  ],
+  "Project chains": [
+    "src/core/games/defs.ts"
+  ],
+  "Read, talk and write in a chain, each step opening the room that does it.": [
+    "src/core/games/defs.ts"
+  ],
+  "Read a text": [
+    "src/core/games/projects.ts"
+  ],
+  "Listen to a recording": [
+    "src/core/games/projects.ts"
+  ],
+  "Watch a video": [
+    "src/core/games/projects.ts"
+  ],
+  "Talk about it": [
+    "src/core/games/projects.ts"
+  ],
+  "Write about it": [
+    "src/core/games/projects.ts"
+  ],
+  "Translate it": [
+    "src/core/games/projects.ts"
+  ],
+  "Compare your translation with the model": [
+    "src/core/games/projects.ts"
+  ],
+  "Type what you hear": [
+    "src/core/games/projects.ts"
+  ],
+  "Make it with Max": [
+    "src/core/games/projects.ts"
+  ],
+  "Make a deck of the words": [
+    "src/core/games/projects.ts"
+  ],
+  "Review the cards": [
+    "src/core/games/projects.ts"
+  ],
+  "Practise it": [
+    "src/core/games/projects.ts"
+  ],
+  "Play a game on the words": [
+    "src/core/games/projects.ts"
+  ],
+  "Read, talk, write": [
+    "src/core/games/projects.ts"
+  ],
+  "Read a story, talk about it, write what you think of it.": [
+    "src/core/games/projects.ts"
+  ],
+  "Listen and sum up": [
+    "src/core/games/projects.ts"
+  ],
+  "Listen to something and sum it up aloud.": [
+    "src/core/games/projects.ts"
+  ],
+  "Article and opinion": [
+    "src/core/games/projects.ts"
+  ],
+  "Read an article, then write your opinion of it.": [
+    "src/core/games/projects.ts"
+  ],
+  "Watch and explain": [
+    "src/core/games/projects.ts"
+  ],
+  "Watch a video and explain its main argument.": [
+    "src/core/games/projects.ts"
+  ],
+  "Recreate a dialogue": [
+    "src/core/games/projects.ts"
+  ],
+  "Listen to a dialogue, write it out, then say it again.": [
+    "src/core/games/projects.ts"
+  ],
+  "Play both parts": [
+    "src/core/games/projects.ts"
+  ],
+  "Read a dialogue and perform both roles.": [
+    "src/core/games/projects.ts"
+  ],
+  "Idioms in a story": [
+    "src/core/games/projects.ts"
+  ],
+  "Learn some idioms, then use them in a story.": [
+    "src/core/games/projects.ts"
+  ],
+  "Translate and compare": [
+    "src/core/games/projects.ts"
+  ],
+  "Translate a passage, then compare it with the model.": [
+    "src/core/games/projects.ts"
+  ],
+  "Record and transcribe": [
+    "src/core/games/projects.ts"
+  ],
+  "Listen to a recording and write a transcript of it.": [
+    "src/core/games/projects.ts"
+  ],
+  "Write, then read aloud": [
+    "src/core/games/projects.ts"
+  ],
+  "Write a paragraph, then read it aloud.": [
+    "src/core/games/projects.ts"
+  ],
+  "Say it, then write it": [
+    "src/core/games/projects.ts"
+  ],
+  "Record a spoken answer, then write it out.": [
+    "src/core/games/projects.ts"
+  ],
+  "Debate after reading": [
+    "src/core/games/projects.ts"
+  ],
+  "Read about an issue, then debate it.": [
+    "src/core/games/projects.ts"
+  ],
+  "A presentation from a text": [
+    "src/core/games/projects.ts"
+  ],
+  "Read a text, make a presentation of it, give it aloud.": [
+    "src/core/games/projects.ts"
+  ],
+  "A conversation into a lesson": [
+    "src/core/games/projects.ts"
+  ],
+  "Turn a conversation into a lesson of your own.": [
+    "src/core/games/projects.ts"
+  ],
+  "Corrections into practice": [
+    "src/core/games/projects.ts"
+  ],
+  "Turn what was corrected in your writing into review exercises.": [
+    "src/core/games/projects.ts"
+  ],
+  "A story with new words": [
+    "src/core/games/projects.ts"
+  ],
+  "Write a short story with the words you learned lately.": [
+    "src/core/games/projects.ts"
+  ],
+  "Your own podcast": [
+    "src/core/games/projects.ts"
+  ],
+  "Make a short podcast in the language.": [
+    "src/core/games/projects.ts"
+  ],
+  "A week on one topic": [
+    "src/core/games/projects.ts"
+  ],
+  "Read, listen, watch, write and talk about one topic for a week.": [
+    "src/core/games/projects.ts"
+  ],
+  "Needs sentences to translate: some languages have hand-made ones, and the dictionary’s sentences for your own words count too.": [
+    "src/core/games/source.ts"
+  ],
+  "Needs sentences to dictate: some languages have hand-made ones, and the dictionary’s sentences and your own examples count too.": [
+    "src/core/games/source.ts"
   ]
 }
