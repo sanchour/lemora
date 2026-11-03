@@ -4,6 +4,7 @@
 // (Visio › Services); Wikipedia serves no copyrighted posters. Only titles and names are sent. Answers, misses
 // included, are kept on the device, and at most four lookups run at once.
 import type { Pick, PickGroup } from '@/core/mundus/types';
+import { PRODUCT } from '@/product';
 
 export type ImageQuery =
   | { kind: 'book'; title: string; by?: string }
@@ -12,7 +13,7 @@ export type ImageQuery =
   | { kind: 'wiki'; q: string; must: string; lang?: string }
   | { kind: 'article'; title: string };
 
-const PREFIX = 'lingua.img.v1:';
+const PREFIX = `${PRODUCT.prefix}.img.v1:`;
 const DAY = 86_400_000;
 const KEEP_MS = 60 * DAY;
 const MISS_MS = 5 * DAY;

@@ -3,6 +3,7 @@ import { offerRemovalUndo } from '@/data/removalUndo';
 // (localStorage, never synced or backed up; Reset clears them), and written out as Markdown for Claude.
 import { create } from 'zustand';
 import { SECTIONS } from '@/app/sections';
+import { PRODUCT } from '@/product';
 
 /** What kind of change a note asks for (7-0c). */
 export const KINDS = ['Layout', 'Spacing', 'Size', 'Colour', 'Type', 'Words', 'Remove', 'Add', 'Behaviour', 'Question'] as const;
@@ -72,7 +73,7 @@ export type NewDesignNote = Omit<DesignNote, 'id' | 'createdAt' | 'updatedAt' | 
 /** What the note card can change; Bigger and Smaller move a note to another element. */
 export type NotePatch = Partial<Pick<DesignNote, 'text' | 'done' | 'kinds' | 'priority' | 'words' | 'tweaks' | 'selector' | 'element' | 'rect' | 'facts' | 'area' | 'at'>>;
 
-const KEY = 'lingua.designNotes';
+const KEY = `${PRODUCT.prefix}.designNotes`;
 
 function load(): DesignNote[] {
   try {

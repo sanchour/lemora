@@ -36,9 +36,9 @@ export default defineConfig({
       },
       manifest: {
         id: base,
-        name: 'Lingua',
-        short_name: 'Lingua',
-        description: 'A calm, local-first studio for reading, vocabulary, listening and watching in a new language.',
+        name: 'Lemora',
+        short_name: 'Lemora',
+        description: 'A calm, local-first place to read, collect words and write in a new language.',
         lang: 'en',
         start_url: base,
         scope: base,
@@ -49,6 +49,8 @@ export default defineConfig({
         categories: ['education', 'books'],
       },
       workbox: {
+        // Lemora and Lingua can share an origin: their caches must not share names (src/product.ts).
+        cacheId: 'lemora',
         globPatterns: [
           '**/*.{js,css,html,svg,png,ico,webmanifest}',
           // UI + default reader font subsets for all ten languages (Latin incl. ő/ű, Cyrillic, Greek), so the first offline launch looks right.
@@ -66,37 +68,37 @@ export default defineConfig({
             // Character reference data stays lazy; cache the scripts and CJK readings opened by the learner.
             urlPattern: ({ url, sameOrigin }) => sameOrigin && /\/chars\/(?:unicode\/[^/]+\.json|readings\.json)$/.test(url.pathname),
             handler: 'CacheFirst',
-            options: { cacheName: 'lingua-unicode-17', expiration: { maxEntries: 190 } },
+            options: { cacheName: 'lemora-unicode-17', expiration: { maxEntries: 190 } },
           },
           {
             // Every other font subset is cached the first time it is used.
             urlPattern: ({ request }) => request.destination === 'font',
             handler: 'CacheFirst',
-            options: { cacheName: 'lingua-fonts', expiration: { maxEntries: 120 } },
+            options: { cacheName: 'lemora-fonts', expiration: { maxEntries: 120 } },
           },
           {
             // The SQLite engine for Anki imports (685 kB) and the Whisper worker are only fetched when first needed.
             urlPattern: ({ url, sameOrigin }) => sameOrigin && (url.pathname.endsWith('.wasm') || url.pathname.includes('/whisper.worker-')),
             handler: 'CacheFirst',
-            options: { cacheName: 'lingua-wasm', expiration: { maxEntries: 6 } },
+            options: { cacheName: 'lemora-wasm', expiration: { maxEntries: 6 } },
           },
           {
             // Piper's worker and espeak-ng's language data (18 MB), the first time a voice made on the device speaks.
             urlPattern: ({ url, sameOrigin }) => sameOrigin && (url.pathname.includes('/piper.worker-') || /\/assets\/piper_phonemize-[\w-]+\.data$/.test(url.pathname)),
             handler: 'CacheFirst',
-            options: { cacheName: 'lingua-piper', expiration: { maxEntries: 4 } },
+            options: { cacheName: 'lemora-piper', expiration: { maxEntries: 4 } },
           },
           {
             // pdf.js (about 400 kB) and its worker (1.2 MB) load the first time a PDF is added.
             urlPattern: ({ url, sameOrigin }) => sameOrigin && /\/assets\/pdf(?:\.worker\.min)?-[\w-]+\.m?js$/.test(url.pathname),
             handler: 'CacheFirst',
-            options: { cacheName: 'lingua-pdf', expiration: { maxEntries: 6 } },
+            options: { cacheName: 'lemora-pdf', expiration: { maxEntries: 6 } },
           },
           {
             // Tesseract's engine (about 4 MB) and worker, for reading comics' speech bubbles, load the first time a comic opens.
             urlPattern: ({ url, sameOrigin }) => sameOrigin && /\/assets\/(tesseract-core-|worker\.min-)[\w.-]+\.js$/.test(url.pathname),
             handler: 'CacheFirst',
-            options: { cacheName: 'lingua-ocr', expiration: { maxEntries: 4 } },
+            options: { cacheName: 'lemora-ocr', expiration: { maxEntries: 4 } },
           },
         ],
       },
@@ -109,9 +111,9 @@ export default defineConfig({
   },
   // Module workers: Whisper's engine loads its WebAssembly with dynamic imports.
   worker: { format: 'es' },
-  server: {
-    allowedHosts: ['sb-1stu1j9xhxst.vercel.run'],
-  },
+  // Not Lingua's 5173: on localhost the port is part of the origin, so the two apps keep their data apart.
+  server: { port: 5175, strictPort: true },
+  preview: { port: 5176, strictPort: true },
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts', 'sandesigning/src/**/*.test.ts'],

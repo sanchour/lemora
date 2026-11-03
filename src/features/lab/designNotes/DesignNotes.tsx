@@ -17,6 +17,7 @@ import { BoxModelOverlay } from './BoxModelOverlay';
 import { notesOn, priorityCount, roomFor, useDesignNotes } from './notes';
 import type { DesignNote } from './notes';
 import { describe } from './selector';
+import { PRODUCT } from '@/product';
 
 /** Everything the tool draws carries this attribute, so picking never picks the tool itself. */
 const MARK = 'data-design-notes';
@@ -30,7 +31,7 @@ const CORNERS = {
   tr: { bar: 'right-4 top-4', panel: 'right-4 top-16 bottom-4', box: 'right-4 top-16' },
 } as const;
 type Corner = keyof typeof CORNERS;
-const CORNER_KEY = 'lingua.designNotes.corner';
+const CORNER_KEY = `${PRODUCT.prefix}.designNotes.corner`;
 function savedCorner(): Corner {
   try {
     const value = localStorage.getItem(CORNER_KEY);
@@ -40,7 +41,7 @@ function savedCorner(): Corner {
   }
 }
 
-const COLLAPSED_KEY = 'lingua.designNotes.collapsed';
+const COLLAPSED_KEY = `${PRODUCT.prefix}.designNotes.collapsed`;
 function savedCollapsed(): boolean {
   try {
     return localStorage.getItem(COLLAPSED_KEY) === 'true';
@@ -49,7 +50,7 @@ function savedCollapsed(): boolean {
   }
 }
 
-const HOVER_EXPAND_KEY = 'lingua.designNotes.expandOnHover';
+const HOVER_EXPAND_KEY = `${PRODUCT.prefix}.designNotes.expandOnHover`;
 function savedHoverExpand(): boolean {
   try {
     return localStorage.getItem(HOVER_EXPAND_KEY) !== 'false';

@@ -2,6 +2,7 @@ import { removalInProgress, undoableRemoval } from './removalUndo';
 // Starting over: one language's progress, or everything on this device.
 import { db } from './db';
 import type { LinguaDB } from './db';
+import { PRODUCT } from '@/product';
 
 export interface ResetCounts {
   words: number;
@@ -59,19 +60,20 @@ export async function resetLanguageProgress(lang: string, database: LinguaDB = d
   );
 }
 
-/** Erases everything Lingua stored on this device and starts again at onboarding. */
+/** Erases everything this app stored on this device and starts again at onboarding. */
 export async function eraseEverything(database: LinguaDB = db): Promise<void> {
   database.close();
   await database.delete();
   try {
-    localStorage.clear();
+    // Only this app's keys: Lingua and Lemora can share an origin, and the other's keys are not ours to clear.
+    for (const key of Object.keys(localStorage)) if (key.startsWith(PRODUCT.prefix)) localStorage.removeItem(key);
     sessionStorage.clear();
   } catch {
     /* storage unavailable */
   }
   // Runtime caches (fonts, the Anki engine); the app itself stays installed and offline-ready.
   if ('caches' in window) {
-    for (const name of await caches.keys()) if (name.startsWith('lingua-')) await caches.delete(name);
+    for (const name of await caches.keys()) if (name.startsWith(`${PRODUCT.prefix}-`)) await caches.delete(name);
   }
   location.replace(import.meta.env.BASE_URL);
 }

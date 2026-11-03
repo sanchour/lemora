@@ -1,7 +1,8 @@
 // Explore's "Save": what the learner wants to try later, kept on this device per language (5.2-7).
 import { useSyncExternalStore } from 'react';
+import { PRODUCT } from '@/product';
 
-const key = (lang: string) => `lingua-explore-saved:${lang}`;
+const key = (lang: string) => `${PRODUCT.prefix}-explore-saved:${lang}`;
 const CHANGED = 'lingua-explore-saved-changed';
 
 function read(lang: string): string[] {

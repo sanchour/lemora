@@ -1,5 +1,5 @@
-import { UiText } from '@/design/i18n/UiText';
 import { cx } from '@/lib/cx';
+import { PRODUCT } from '@/product';
 
 /** App mark: two solid pages with a ribbon cut out of one (same drawing as public/logo.svg). */
 export function LogoMark({ size = 28, className }: { size?: number; className?: string }) {
@@ -12,17 +12,17 @@ export function LogoMark({ size = 28, className }: { size?: number; className?: 
   );
 }
 
-/** Wordmark: lowercase serif "lingua" with an accent full stop. */
+/** Wordmark: the app's name in lowercase serif with an accent full stop ("lemora.", "lingua."). */
 export function Wordmark({ className, size = 'md' }: { className?: string; size?: 'sm' | 'md' }) {
   return (
     <span className={cx('font-serif leading-none font-semibold tracking-tight text-ink', size === 'sm' ? 'text-[22px]' : 'text-[30px]', className)}>
-      <UiText source={'lingua'} />
+      {PRODUCT.name.toLowerCase()}
       <span className="text-accent" aria-hidden>.</span>
     </span>
   );
 }
 
-/** Monogram: lowercase serif "l." with an accent full stop, in the style of lingua. */
+/** Monogram: lowercase serif "l." with an accent full stop, in the style of the wordmark. */
 export function Monogram({ className, size = 'md' }: { className?: string; size?: 'sm' | 'md' }) {
   return (
     <span className={cx('font-serif leading-none font-semibold tracking-tight text-ink select-none', size === 'sm' ? 'text-[20px]' : 'text-[24px]', className)}>

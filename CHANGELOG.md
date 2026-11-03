@@ -3,6 +3,10 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.1** · 2026-11-03 · Lemora begins: Lingua's code at f0a088f, with its own database, storage, caches and name
+
+Lemora's versions are 0.1.x (Lemora 1); everything below is Lingua's history, which Lemora shares.
+
 - **0.6.0-alpha.190** · 2026-11-03 · 6-29 G4: the atlas of all your words
 - **0.6.0-alpha.187** · 2026-11-03 · Finish 6-8 Reading and 6-12 Writing; reconcile 47 plus 5 audit entries
 - **0.6.0-alpha.185** · 2026-11-03 · 6-23 A2: Greek named choices and resolved main integration

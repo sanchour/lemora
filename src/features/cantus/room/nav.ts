@@ -4,6 +4,7 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { create } from 'zustand';
+import { PRODUCT } from '@/product';
 
 export type RoomTab = 'today' | 'music' | 'podcasts' | 'search';
 
@@ -46,7 +47,7 @@ export function roomSongOf(pathname: string): string | undefined {
   }
 }
 
-const KEY = 'lingua.cantus.tab';
+const KEY = `${PRODUCT.prefix}.cantus.tab`;
 const isTab = (value: unknown): value is RoomTab => ROOM_TABS.some((t) => t.id === value);
 
 function readTab(): RoomTab {

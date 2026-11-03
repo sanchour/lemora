@@ -18,10 +18,11 @@ import { madeFromOf, madeFromReady, refreshAtlas } from '@/services/graph/graph'
 import { EntryView } from '../dictionary/Entry';
 import { etymonName } from '../dictionary/WordOrigin';
 import { AtlasCanvas, nodeTowards, type AtlasCanvasHandle, type Camera } from './AtlasCanvas';
+import { PRODUCT } from '@/product';
 
 type View = 'atlas' | 'compass' | 'tree';
-const lastKey = (lang: string) => `lingua.atlas.${lang}`;
-const cameraKey = (lang: string) => `lingua.atlas.camera.${lang}`;
+const lastKey = (lang: string) => `${PRODUCT.prefix}.atlas.${lang}`;
+const cameraKey = (lang: string) => `${PRODUCT.prefix}.atlas.camera.${lang}`;
 const QUARTERS: Quarter[] = ['meaning', 'form', 'origin', 'use'];
 const idOf = (n: Neighbour) => `${n.kind}:${n.lang ?? ''}:${n.key ?? n.label}`;
 

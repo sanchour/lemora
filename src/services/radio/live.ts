@@ -6,11 +6,12 @@ import { frameLength } from '@/core/audio/mp3';
 import type { Cue } from '@/data/types';
 import { usePlayer } from '@/services/audio/engine';
 import { clipBlocker, transcribeClip, TranscribeError } from '@/services/transcribe/groq';
+import { PRODUCT } from '@/product';
 
 const PART_MS = 12_000;
 /** Lines kept on screen; older ones go. */
 const KEEP = 80;
-const PREF = 'lingua.radio.live';
+const PREF = `${PRODUCT.prefix}.radio.live`;
 
 export interface LiveState {
   /** The learner wants stations written out. */

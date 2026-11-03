@@ -4,6 +4,7 @@ import { useMediaQuery } from '@/design/hooks/useMediaQuery';
 import type { Settings, Theme, ThemePref } from '@/data/settings';
 import { motionIsReduced } from '@/design/motionPref';
 import { installPaletteStyles } from '@/design/palettes';
+import { PRODUCT } from '@/product';
 
 const THEME_COLOR: Record<Theme, string> = { paper: '#FAF6F0', nocturne: '#1F1C1A' };
 
@@ -35,8 +36,8 @@ export function useThemeController(pref: ThemePref | undefined, palettes?: Setti
     installPaletteStyles();
     if (pref) {
       try {
-        localStorage.setItem('lingua.theme', pref);
-        if (palettes) localStorage.setItem('lingua.palette', JSON.stringify(palettes));
+        localStorage.setItem(`${PRODUCT.prefix}.theme`, pref);
+        if (palettes) localStorage.setItem(`${PRODUCT.prefix}.palette`, JSON.stringify(palettes));
       } catch {
         // Storage can be unavailable (private mode); the theme still applies for this session.
       }

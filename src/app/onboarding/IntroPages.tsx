@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { HandMark } from './HandMark';
 import { LevelIcon } from './LevelStep';
 import { cx } from '@/lib/cx';
+import { PRODUCT } from '@/product';
 
 /** The fine line drawings' shared stroke. */
 const LINE = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.3, strokeLinecap: 'round', strokeLinejoin: 'round' } as const;
@@ -526,7 +527,7 @@ export function AboutPage({ room: roomIndex, onRoom }: { room: number; onRoom: (
         {pre}
         {hasName ? (
           <span className="relative inline-block">
-            {'lingua'}<span className="text-accent">.</span>
+            {PRODUCT.name.toLowerCase()}<span className="text-accent">.</span>
             {/* A smooth orange line that fades and draws itself in under the name. */}
             <svg viewBox="0 0 120 10" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 -bottom-1.5 h-2.5 w-full text-accent" aria-hidden>
               <motion.path d="M3 6C25 2 50 9 70 5C90 2 105 7 117 4" fill="none" stroke="currentColor" strokeWidth={2.6} strokeLinecap="round" vectorEffect="non-scaling-stroke" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ pathLength: { duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.6, delay: 0.3 } }} />

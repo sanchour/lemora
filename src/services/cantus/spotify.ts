@@ -3,11 +3,12 @@
 // the sign-in stay on this device. Playback itself is Spotify's own embedded player.
 import { getSettings, patchSetting } from '@/data/settings';
 import type { Settings } from '@/data/settings';
+import { PRODUCT } from '@/product';
 
 const AUTH = 'https://accounts.spotify.com';
 const API = 'https://api.spotify.com/v1';
 const SCOPES = 'user-library-read';
-const PENDING = 'lingua:spotify-pkce';
+const PENDING = `${PRODUCT.prefix}:spotify-pkce`;
 
 export class SpotifyError extends Error {
   constructor(

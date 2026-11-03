@@ -1,7 +1,8 @@
 import type { UnicodeIndex, UnicodeShard } from '@/core/script/unicode';
 import type { CharReadings } from '@/core/script/hanzi';
+import { PRODUCT } from '@/product';
 
-export const UNICODE_CACHE = 'lingua-unicode-17';
+export const UNICODE_CACHE = `${PRODUCT.prefix}-unicode-17`;
 export interface UnicodeAsset<T> { data: T; offline: boolean }
 const VERSION = '17.0.0';
 const pending = new Map<string, Promise<UnicodeAsset<unknown>>>();

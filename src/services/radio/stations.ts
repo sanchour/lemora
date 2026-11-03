@@ -7,6 +7,7 @@ import { placesOf as territoriesOf } from '@/data/territories';
 import type { RadioStation } from '@/data/types';
 import { inLanguage } from './filter';
 import type { FilterContext } from './filter';
+import { PRODUCT } from '@/product';
 
 /** The language's names in radio-browser.info, where they differ from the English name. */
 export const RADIO_NAMES: Record<string, string[]> = {
@@ -177,7 +178,7 @@ async function byLanguage(lang: string, extra: Record<string, string | number>, 
 
 const KEEP_MS = 12 * 3600_000;
 // v2: lists from before the language filter (5.2-2) are fetched again.
-const cacheKey = (lang: string) => `lingua.radio.v2.${lang}`;
+const cacheKey = (lang: string) => `${PRODUCT.prefix}.radio.v2.${lang}`;
 const memory = new Map<string, Promise<RadioStation[]>>();
 
 function readCache(lang: string): { at: number; stations: RadioStation[] } | null {
@@ -233,7 +234,7 @@ export async function searchStations(lang: string, query: string): Promise<Radio
 
 // ── "Not in Spanish" ──────────────────────────────────────────────────────────
 
-const hiddenKey = (lang: string) => `lingua.radio.hidden.${lang}`;
+const hiddenKey = (lang: string) => `${PRODUCT.prefix}.radio.hidden.${lang}`;
 
 /** Stations the learner said aren't in the language, hidden on this device. */
 export function hiddenStations(lang: string): Set<string> {

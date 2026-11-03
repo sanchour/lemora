@@ -7,6 +7,7 @@ import { db } from '@/data/db';
 import { matchSong } from '@/services/cantus/catalog';
 import { likedTracks } from '@/services/cantus/spotify';
 import type { SpotifyTrack } from '@/services/cantus/spotify';
+import { PRODUCT } from '@/product';
 
 export interface ChartSong {
   title: string;
@@ -58,7 +59,7 @@ export async function openByName(lang: string, title: string, artist: string, ex
 
 // ── Spotify likes in the language ─────────────────────────────────────────────────────────────
 
-const CACHE_KEY = 'lingua:spotify-langs';
+const CACHE_KEY = `${PRODUCT.prefix}:spotify-langs`;
 const SCAN_LIMIT = 400;
 
 function cachedLangs(): Record<string, string> {

@@ -9,8 +9,9 @@ import { putSpeech } from '@/data/speechCache';
 import type { PiperWorkerMessage } from '@/workers/piper.worker';
 import PiperWorker from '@/workers/piper.worker?worker';
 import { pcmToWav } from './gemini';
+import { PRODUCT } from '@/product';
 
-const CACHE = 'lingua-piper-voices';
+const CACHE = `${PRODUCT.prefix}-piper-voices`;
 
 const openCache = () => (typeof caches === 'undefined' ? Promise.resolve(null) : caches.open(CACHE).catch(() => null));
 

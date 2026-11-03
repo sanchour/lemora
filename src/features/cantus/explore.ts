@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { searchSongs } from '@/services/cantus/catalog';
 import type { SongHit } from '@/services/cantus/catalog';
 import { discoverFor } from './discover';
+import { PRODUCT } from '@/product';
 
 export interface Explore {
   /** Songs from three of the language's artists, mixed. */
@@ -14,7 +15,7 @@ export interface Explore {
 }
 
 const today = () => new Date().toISOString().slice(0, 10);
-const keyOf = (lang: string) => `lingua.music.explore.${lang}`;
+const keyOf = (lang: string) => `${PRODUCT.prefix}.music.explore.${lang}`;
 
 /** A small seeded random (mulberry32), so a day's picks are the same all day. */
 export function seeded(seed: number): () => number {

@@ -48,6 +48,7 @@ import type {
   Transcript,
   Word,
 } from './types';
+import { PRODUCT } from '@/product';
 
 /** Version 1: the original schema. New tables arrive in later versions (additive, non-destructive). */
 export const SCHEMA_V1 = {
@@ -250,7 +251,7 @@ export type LinguaDB = Dexie & {
   graphViews: EntityTable<GraphViewRow, 'id'>;
 };
 
-export function createDb(name = 'lingua'): LinguaDB {
+export function createDb(name: string = PRODUCT.db): LinguaDB {
   const db = new Dexie(name) as LinguaDB;
   db.version(1).stores(SCHEMA_V1);
   db.version(2).stores(SCHEMA_V2);

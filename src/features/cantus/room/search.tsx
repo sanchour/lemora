@@ -19,6 +19,7 @@ import { discoverFor } from '../discover';
 import { SongArt } from '../SongArt';
 import { useOpenSong, usePreview } from './open';
 import { enter, hueOf, RoomTitle, SkeletonTiles, StyleGrid } from './rails';
+import { PRODUCT } from '@/product';
 
 type Kind = 'all' | 'songs' | 'artists' | 'albums';
 const KINDS: Array<[Kind, string]> = [
@@ -28,7 +29,7 @@ const KINDS: Array<[Kind, string]> = [
   ['albums', 'Albums'],
 ];
 
-const RECENT = 'lingua.cantus.searches';
+const RECENT = `${PRODUCT.prefix}.cantus.searches`;
 function recentSearches(): string[] {
   try {
     const list = JSON.parse(localStorage.getItem(RECENT) ?? '[]') as unknown;

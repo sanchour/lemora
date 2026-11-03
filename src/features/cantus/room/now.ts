@@ -3,6 +3,7 @@
 import { create } from 'zustand';
 import type { Song } from '@/data/types';
 import type { SongClock } from '../player/clocks';
+import { PRODUCT } from '@/product';
 
 interface NowPlaying {
   /** The song open in the room's player (shown or folded away). */
@@ -18,7 +19,7 @@ export const useCantusNow = create<NowPlaying>((set) => ({
   set: (song, clock) => set({ song, clock }),
 }));
 
-const KEY = 'lingua.cantus.place';
+const KEY = `${PRODUCT.prefix}.cantus.place`;
 
 /** The song last open and where it was, so Open Cantus carries on from there. */
 export function keepPlace(songId: string, ms: number): void {

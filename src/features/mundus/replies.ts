@@ -4,8 +4,9 @@ import { useSyncExternalStore } from 'react';
 import { noReplies, reply } from '@/core/mundus/guide';
 import type { Replies, Say } from '@/core/mundus/guide';
 import { localDateKey } from '@/lib/format';
+import { PRODUCT } from '@/product';
 
-const KEY = 'lingua-mundus-replies';
+const KEY = `${PRODUCT.prefix}-mundus-replies`;
 const CHANGED = 'lingua-mundus-replies-changed';
 
 function read(): Replies {

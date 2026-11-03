@@ -13,6 +13,7 @@ import { installedPiperFor, piperSpeech, warmPiper } from './piper';
 import { findRecording, recordingBlob } from './recordings';
 import { speechParts } from '@/core/audio/piper';
 import type { PiperVoice } from '@/core/audio/piper';
+import { PRODUCT } from '@/product';
 
 export type Speaker =
   | { kind: 'gemini'; locale: string; voice: { id: string; name: string } }
@@ -67,7 +68,7 @@ async function deviceVoices(): Promise<SpeechSynthesisVoice[]> {
 
 // The library voice picked for a locale when the learner hasn't chosen one, so it needn't be asked
 // again (and works offline for what was already spoken). Per device, like the key.
-const remembered = (locale: string) => `lingua.voice.${locale}`;
+const remembered = (locale: string) => `${PRODUCT.prefix}.voice.${locale}`;
 function recall(locale: string): { id: string; name: string } | undefined {
   try {
     const raw = localStorage.getItem(remembered(locale));

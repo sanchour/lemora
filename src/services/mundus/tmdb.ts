@@ -3,11 +3,12 @@
 // pick can be watched. The learner's own free "API Read Access Token" travels in the Authorization
 // header, never in an address (TMDB's short v3 key only works in an address, so it isn't accepted).
 // Answers are kept on the device for a day (lists) or a week (titles), so a page costs few requests.
+import { PRODUCT } from '@/product';
 
 const API = 'https://api.themoviedb.org/3';
 const IMAGES = 'https://image.tmdb.org/t/p/';
 const DAY = 86_400_000;
-const CACHE_PREFIX = 'lingua.tmdb.v1:';
+const CACHE_PREFIX = `${PRODUCT.prefix}.tmdb.v1:`;
 
 export type TitleType = 'tv' | 'movie';
 

@@ -1,9 +1,9 @@
 {
-  "name": "lingua",
+  "name": "lemora",
   "private": true,
-  "version": "0.6.0-alpha.190",
+  "version": "0.1.0-alpha.1",
   "type": "module",
-  "description": "Lingua: a local-first language-learning studio (reader, flashcards, audio, video).",
+  "description": "Lemora: a local-first place to read, collect words and write in a new language. Built from Lingua.",
   "scripts": {
     "dev": "vite",
     "build": "npm run typecheck && vite build",
