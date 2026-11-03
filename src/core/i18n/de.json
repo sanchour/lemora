@@ -7458,5 +7458,21 @@
   "Sort words into the decks, tags or kinds of word they belong to.": "Ordnen Sie Wörter den Stapeln, Tags oder Wortarten zu, zu denen sie gehören.",
   "Odd one out": "Der Außenseiter",
   "Three of the four words belong together. Find the one that does not.": "Drei der vier Wörter gehören zusammen. Finden Sie das, das nicht dazugehört.",
-  "Your words crossed on a grid, clued by their meanings.": "Ihre Wörter, auf einem Gitter gekreuzt, mit ihren Bedeutungen als Hinweisen."
+  "Your words crossed on a grid, clued by their meanings.": "Ihre Wörter, auf einem Gitter gekreuzt, mit ihren Bedeutungen als Hinweisen.",
+  "Atlas": "Atlas",
+  "Which word?": "Welches Wort?",
+  "Atlas view": "Atlas-Ansicht",
+  "Compass": "Kompass",
+  "Tree": "Baum",
+  "Look-alikes": "Ähnliche Wörter",
+  "Fit": "Einpassen",
+  "Form": "Form",
+  "Origin": "Herkunft",
+  "The tree of {0}": "Der Baum von {0}",
+  "The compass of {0}: {1} things around it": "Der Kompass von {0}: {1} Dinge ringsum",
+  "No word “{0}” here yet. Try another.": "Hier gibt es noch kein Wort „{0}“. Versuchen Sie ein anderes.",
+  "Look up a word to see what is around it: its meanings, its family, where it comes from and how it is used.": "Schlagen Sie ein Wort nach, um zu sehen, was es umgibt: seine Bedeutungen, seine Familie, seine Herkunft und seinen Gebrauch.",
+  "Synonyms, families and origins come with a full dictionary, which this language doesn’t have yet.": "Synonyme, Wortfamilien und Herkunft kommen mit einem vollständigen Wörterbuch, das diese Sprache noch nicht hat.",
+  "Its neighbours, in words": "Seine Nachbarn, in Worten",
+  "See its neighbours": "Nachbarn ansehen"
 }

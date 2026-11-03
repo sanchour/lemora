@@ -15101,5 +15101,54 @@
   ],
   "Your words crossed on a grid, clued by their meanings.": [
     "src/core/games/defs.ts"
+  ],
+  "Atlas": [
+    "src/features/thesaurus/ThesaurusPage.tsx",
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Which word?": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Atlas view": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Compass": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Tree": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Look-alikes": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Fit": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Form": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Origin": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "The tree of {0}": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "The compass of {0}: {1} things around it": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "No word “{0}” here yet. Try another.": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Look up a word to see what is around it: its meanings, its family, where it comes from and how it is used.": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Synonyms, families and origins come with a full dictionary, which this language doesn’t have yet.": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Its neighbours, in words": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "See its neighbours": [
+    "src/features/thesaurus/dictionary/Entry.tsx"
   ]
 }

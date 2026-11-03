@@ -7458,5 +7458,21 @@
   "Sort words into the decks, tags or kinds of word they belong to.": "صنّف الكلمات في المجموعات أو الوسوم أو أنواع الكلمات التي تنتمي إليها.",
   "Odd one out": "الكلمة الشاذة",
   "Three of the four words belong together. Find the one that does not.": "ثلاث من الكلمات الأربع تنتمي معًا. اعثر على التي لا تنتمي.",
-  "Your words crossed on a grid, clued by their meanings.": "كلماتك متقاطعة على شبكة، وتلميحاتها معانيها."
+  "Your words crossed on a grid, clued by their meanings.": "كلماتك متقاطعة على شبكة، وتلميحاتها معانيها.",
+  "Atlas": "الأطلس",
+  "Which word?": "أي كلمة؟",
+  "Atlas view": "عرض الأطلس",
+  "Compass": "البوصلة",
+  "Tree": "الشجرة",
+  "Look-alikes": "كلمات متشابهة",
+  "Fit": "ملاءمة",
+  "Form": "الشكل",
+  "Origin": "الأصل",
+  "The tree of {0}": "شجرة {0}",
+  "The compass of {0}: {1} things around it": "بوصلة {0}: {1} عنصرًا حولها",
+  "No word “{0}” here yet. Try another.": "لا توجد كلمة «{0}» هنا بعد. جرّب كلمة أخرى.",
+  "Look up a word to see what is around it: its meanings, its family, where it comes from and how it is used.": "ابحث عن كلمة لترى ما حولها: معانيها وعائلتها ومن أين جاءت وكيف تُستعمل.",
+  "Synonyms, families and origins come with a full dictionary, which this language doesn’t have yet.": "المرادفات والعائلات والأصول تأتي مع قاموس كامل، وهذه اللغة لا تملكه بعد.",
+  "Its neighbours, in words": "جيرانها، بالكلمات",
+  "See its neighbours": "عرض جيرانها"
 }

@@ -7458,5 +7458,21 @@
   "Sort words into the decks, tags or kinds of word they belong to.": "Разложите слова по колодам, меткам или частям речи, к которым они относятся.",
   "Odd one out": "Лишнее слово",
   "Three of the four words belong together. Find the one that does not.": "Три из четырёх слов подходят друг другу. Найдите то, которое не подходит.",
-  "Your words crossed on a grid, clued by their meanings.": "Ваши слова, пересекающиеся на сетке, с их значениями в качестве подсказок."
+  "Your words crossed on a grid, clued by their meanings.": "Ваши слова, пересекающиеся на сетке, с их значениями в качестве подсказок.",
+  "Atlas": "Атлас",
+  "Which word?": "Какое слово?",
+  "Atlas view": "Вид атласа",
+  "Compass": "Компас",
+  "Tree": "Дерево",
+  "Look-alikes": "Похожие слова",
+  "Fit": "Вписать",
+  "Form": "Форма",
+  "Origin": "Происхождение",
+  "The tree of {0}": "Дерево слова {0}",
+  "The compass of {0}: {1} things around it": "Компас слова {0}: вокруг {1}",
+  "No word “{0}” here yet. Try another.": "Слова «{0}» здесь пока нет. Попробуйте другое.",
+  "Look up a word to see what is around it: its meanings, its family, where it comes from and how it is used.": "Найдите слово, чтобы увидеть, что вокруг него: значения, родственные слова, происхождение и употребление.",
+  "Synonyms, families and origins come with a full dictionary, which this language doesn’t have yet.": "Синонимы, родственные слова и происхождение появятся с полным словарём, которого у этого языка пока нет.",
+  "Its neighbours, in words": "Соседи слова — списком",
+  "See its neighbours": "Посмотреть соседей"
 }
