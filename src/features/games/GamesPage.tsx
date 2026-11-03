@@ -6,7 +6,7 @@ import type { ComponentType } from 'react';
 import { Link, useParams } from 'react-router';
 import { Gamepad2, Trophy } from 'lucide-react';
 import { clock } from '@/core/games/bests';
-import type { Best } from '@/core/games/bests';
+import type { Best, Bests } from '@/core/games/bests';
 import { GAME_GROUPS, GAMES as ALL_GAMES, gameById } from '@/core/games/defs';
 import type { GameDef, GameGroup } from '@/core/games/defs';
 import { canPlay } from '@/core/games/source';
@@ -18,10 +18,22 @@ import { PageHeader } from '@/app/PageHeader';
 import { buttonClasses, Card, EmptyState } from '@/design/primitives';
 import { Anagram } from './Anagram';
 import { Clues } from './Clues';
+import { Bingo } from './Bingo';
+import { Choice } from './Choice';
+import { Complete } from './Complete';
+import { Crossword } from './Crossword';
+import { Daily, Weekly } from './Daily';
 import { Hangman } from './Hangman';
 import { Hunt } from './Hunt';
 import { Ladder } from './Ladder';
+import { Memory } from './Memory';
 import { MissingLetters } from './MissingLetters';
+import { Parts } from './Parts';
+import { Race } from './Race';
+import { Story } from './Story';
+import { Timed } from './Timed';
+import { Tournament } from './Tournament';
+import { OddOneOut, Sorting } from './Sorting';
 import { WordSearch } from './WordSearch';
 
 interface ScreenProps {
@@ -29,11 +41,14 @@ interface ScreenProps {
   def: GameDef;
   items: GameItem[];
   best?: Best;
+  /** For the tournament, which plays the others. */
+  source?: GameSource;
+  bests?: Bests;
 }
 
 /** The screen of each game that has one; a game without one is not on the shelf yet. */
-const SCREENS: Record<string, ComponentType<ScreenProps>> = { hangman: Hangman, anagram: Anagram, missing: MissingLetters, clues: Clues, wordsearch: WordSearch, hunt: Hunt, ladder: Ladder };
-const GAMES = ALL_GAMES.filter((g) => g.id in SCREENS);
+const SCREENS: Record<string, ComponentType<ScreenProps>> = { hangman: Hangman, anagram: Anagram, missing: MissingLetters, clues: Clues, wordsearch: WordSearch, hunt: Hunt, ladder: Ladder, crossword: Crossword, complete: Complete, daily: Daily, weekly: Weekly, story: Story, translate: (p) => <Timed {...p} kind="translate" />, dictation: (p) => <Timed {...p} kind="dictation" />, tournament: (p) => <Tournament {...p} source={p.source!} render={(id) => { const S = SCREENS[id]; return <S {...p} def={gameById(id)!} best={p.bests?.[id]} />; }} />, definition: (p) => <Choice {...p} kind="definition" />, picture: (p) => <Choice {...p} kind="picture" />, memory: Memory, bingo: Bingo, parts: Parts, sorting: Sorting, odd: OddOneOut, synonyms: (p) => <Race {...p} relation="synonym" />, antonyms: (p) => <Race {...p} relation="antonym" />, association: (p) => <Race {...p} relation="any" /> };
+const GAMES = ALL_GAMES.filter((g) => g.id in SCREENS || g.id === 'projects');
 
 export default function GamesPage() {
   const translateUi = useUi();
@@ -69,7 +84,7 @@ export default function GamesPage() {
         </EmptyState>
       );
     const Screen = SCREENS[def.id];
-    return <Screen key={`${lang}:${def.id}`} lang={lang} def={def} items={source.items} best={bests?.[def.id]} />;
+    return <Screen key={`${lang}:${def.id}`} lang={lang} def={def} items={source.items} best={bests?.[def.id]} source={source} bests={bests} />;
   }
 
   const played = GAMES.filter((g) => bests?.[g.id]);
@@ -93,7 +108,7 @@ export default function GamesPage() {
                 {!can ? (
                   <p className="mt-4 text-[12.5px] text-ink-faint"><UiText source={'Looking at your words…'} /></p>
                 ) : can.ok ? (
-                  <Link to={`/thesaurus/games/${g.id}`} className={buttonClasses('primary', 'sm') + ' mt-4 self-start'}>
+                  <Link to={g.id === 'projects' ? '/thesaurus/games/projects' : `/thesaurus/games/${g.id}`} className={buttonClasses('primary', 'sm') + ' mt-4 self-start'}>
                     {best ? translateUi('Play again') : translateUi('Play')}
                   </Link>
                 ) : (

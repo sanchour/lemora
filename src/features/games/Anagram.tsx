@@ -15,22 +15,23 @@ import { buttonClasses, Kbd } from '@/design/primitives';
 import { cx } from '@/lib/cx';
 import { AccentsOption } from './Hangman';
 import { useLetterKeys } from './LetterKeyboard';
+import { iso } from './iso';
 import { RoundRunner, useSettleOnce } from './RoundRunner';
 import type { BoardProps } from './RoundRunner';
 
-interface Entry {
+export interface Entry {
   item: GameItem;
   state: AnagramState;
   exact: boolean;
 }
 
-function Board({ entry, lang, settle }: BoardProps<Entry>) {
+export function Board({ entry, lang, settle }: BoardProps<Entry>) {
   const translateUi = useUi();
   const rtl = isRtl(lang);
   const [s, setS] = useState(entry.state);
   const over = s.status !== 'playing';
   useLetterKeys({ lang, exact: entry.exact, alphabet: s.tileKeys, enabled: !over, onKey: (k) => setS((x) => placeKey(x, k)), onHint: () => setS(hint), onBack: () => setS(unplace) });
-  useSettleOnce(over, () => settle({ won: s.status === 'won', stars: starsOf(s), hints: s.hints, message: `${s.status === 'won' ? 'Right: ' : 'It was '}${entry.item.term}` }));
+  useSettleOnce(over, () => settle({ won: s.status === 'won', stars: starsOf(s), hints: s.hints, message: s.status === 'won' ? translateUi('Right: {0}', [iso(entry.item.term)]) : translateUi('It was {0}', [iso(entry.item.term)]) }));
   const slots = slotsOf(s);
   return (
     <div>
@@ -38,7 +39,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
         <p className="text-[12px] font-bold tracking-[0.12em] text-ink-faint uppercase"><UiText source={'Meaning'} /></p>
         <p className="mt-1 font-serif text-2xl leading-snug">{entry.item.meaning}</p>
       </div>
-      <div className="mt-8 flex flex-wrap gap-x-1.5 gap-y-3" lang={lang} dir={rtl ? 'rtl' : undefined} aria-live="polite" aria-label={over ? entry.item.term : 'The word so far'}>
+      <div className="mt-8 flex flex-wrap gap-x-1.5 gap-y-3" lang={lang} dir={rtl ? 'rtl' : undefined} aria-live="polite" aria-label={over ? entry.item.term : translateUi('The word so far')}>
         {s.marks.map((mark, i) =>
           s.keys[i] === null ? (
             <span key={i} className="grid h-12 min-w-3 place-items-end pb-1 font-serif text-3xl text-ink-soft">
@@ -51,7 +52,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
           ),
         )}
       </div>
-      <div className="mt-8 flex flex-wrap gap-2" lang={lang} dir={rtl ? 'rtl' : undefined} role="group" aria-label="Letters to put in order">
+      <div className="mt-8 flex flex-wrap gap-2" lang={lang} dir={rtl ? 'rtl' : undefined} role="group" aria-label={translateUi('Letters to put in order')}>
         {s.tiles.map((t, i) => (
           <button key={i} type="button" disabled={over || s.placed.includes(i)} onClick={() => setS((x) => place(x, i))} className="grid size-12 place-items-center rounded-xl border border-line bg-raised font-serif text-2xl font-semibold uppercase shadow-elev-1 transition-colors hover:border-line-strong hover:bg-surface disabled:opacity-25 disabled:shadow-none">
             {t}
@@ -68,15 +69,16 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
 }
 
 export function Anagram({ lang, def, items, best }: { lang: string; def: GameDef; items: GameItem[]; best?: Best }) {
+  const translateUi = useUi();
   const [exact, setExact] = useState(true);
   return (
     <RoundRunner<Entry>
       lang={lang}
       def={def}
       best={best}
-      unit="Word"
+      unit={translateUi('Word')}
       rtl={isRtl(lang)}
-      intro="Five of your words, their letters mixed up. Put each back in order, from its meaning."
+      intro={<UiText source={'Five of your words, their letters mixed up. Put each back in order, from its meaning.'} />}
       options={getLanguage(lang)?.script === 'Latn' && <AccentsOption exact={exact} onChange={setExact} />}
       make={(random) =>
         shuffle(usable(def, items, lang), random)
@@ -89,7 +91,7 @@ export function Anagram({ lang, def, items, best }: { lang: string; def: GameDef
       terms={(e) => [e.item.term]}
       label={(e) => ({ title: e.item.term, detail: e.item.meaning })}
       Board={Board}
-      rules={<p>Click the letters in order, or type them; Backspace takes one back. Three full tries that are wrong and the word is lost. Up to three stars a word: a hint costs one, so do two wrong tries.</p>}
+      rules={<UiText source={'Click the letters in order, or type them; Backspace takes one back. Three full tries that are wrong and the word is lost. Up to three stars a word: a hint costs one, so do two wrong tries.'} />}
     />
   );
 }

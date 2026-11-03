@@ -1,10 +1,10 @@
 import { Phrasebook } from '@/features/phrasebook/Phrasebook';
 import { UiText, useUi } from '@/design/i18n/UiText';
-import { useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
-import { BookA, Compass, Layers, LayoutGrid, List, Plus, Search, SearchX, Sparkles } from 'lucide-react';
+import { BookA, Compass, Layers, LayoutGrid, List, Plus, Search, SearchX, Sparkles, Waypoints } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { PageHeader } from '@/app/PageHeader';
 import { RoomTabs } from '@/app/RoomTabs';
@@ -39,7 +39,9 @@ import { TodayCard } from './library/TodayCard';
 import { useDeckImport } from './library/useDeckImport';
 import { DictionaryView } from './dictionary/DictionaryView';
 
-type Tab = 'decks' | 'discover' | 'dictionary' | 'phrases';
+type Tab = 'decks' | 'discover' | 'dictionary' | 'phrases' | 'atlas';
+// The Atlas draws on a canvas and loads its code only when its tab opens (6-29).
+const AtlasTab = lazy(() => import('./atlas/AtlasTab'));
 
 const SORTS: Array<{ value: DeckSort; label: string }> = [
   { value: 'due', label: 'Most to do' },
@@ -82,7 +84,7 @@ export default function ThesaurusPage() {
   // The tab you pick wins; with nothing chosen, an empty treasury opens on Discover.
   const picked = params.get('tab');
   // "memory" was the word memory's own tab before it joined the dictionary.
-  const tab: Tab = picked === 'decks' || picked === 'discover' || picked === 'dictionary' || picked === 'phrases' ? picked : picked === 'memory' ? 'dictionary' : allDecks && !hasDecks ? 'discover' : 'decks';
+  const tab: Tab = picked === 'decks' || picked === 'discover' || picked === 'dictionary' || picked === 'phrases' || picked === 'atlas' ? picked : picked === 'memory' ? 'dictionary' : allDecks && !hasDecks ? 'discover' : 'decks';
   const browse = () => {
     setSearching(false);
     setQuery('');
@@ -94,12 +96,13 @@ export default function ThesaurusPage() {
     { id: 'discover', label: 'Discover', to: '/thesaurus?tab=discover', icon: Compass },
     { id: 'dictionary', label: 'Dictionary', to: '/thesaurus?tab=dictionary', icon: BookA },
     { id: 'phrases', label: 'Phrases', to: '/thesaurus?tab=phrases', icon: BookA },
+    { id: 'atlas', label: 'Atlas', to: '/thesaurus?tab=atlas', icon: Waypoints },
   ];
 
   const [searching, setSearching] = useState(false);
   const [query, setQuery] = useState('');
   const searchRef = useRef<HTMLInputElement>(null);
-  useHotkeys({ '/': () => (searching ? searchRef.current?.focus() : setSearching(true)) }, pointer === 'fine' && tab !== 'dictionary');
+  useHotkeys({ '/': () => (searching ? searchRef.current?.focus() : setSearching(true)) }, pointer === 'fine' && tab !== 'dictionary' && tab !== 'atlas');
 
   const openStarter = (spec: StarterSpec) => navigate('/thesaurus/ready/' + starterKey(spec));
   const [naming, setNaming] = useState<NameRequest | null>(null);
@@ -204,14 +207,18 @@ export default function ThesaurusPage() {
           </span>]} /></div>
       )}
 
-      {hasDecks && !rail && (
+      {hasDecks && !rail && tab !== 'atlas' && (
         <div className="mb-5">
           <TodayCard lang={lang} totals={totals} forecast={outlook?.forecast} />
         </div>
       )}
 
       <AnimatePresence mode="wait" initial={false}>
-        {tab === 'phrases' ? <Phrasebook key={lang} lang={lang} /> : query.trim() && tab !== 'discover' ? (
+        {tab === 'phrases' ? <Phrasebook key={lang} lang={lang} /> : tab === 'atlas' ? (
+          <Suspense key="atlas" fallback={null}>
+            <AtlasTab key={lang} lang={lang} />
+          </Suspense>
+        ) : query.trim() && tab !== 'discover' ? (
           <motion.div key="results" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
             <SearchResults lang={lang} query={query} decks={decks ?? []} folders={folders ?? []} order={order.decks} onOpenStarter={openStarter}>
               {(found) => <DeckResults decks={found} folders={folders ?? []} counts={counts} lastStudied={outlook?.lastStudied} actions={actions} />}

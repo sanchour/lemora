@@ -1,4 +1,4 @@
-import { UiText } from '@/design/i18n/UiText';
+import { UiText, useUi } from '@/design/i18n/UiText';
 // Word ladder (6-21, F0169): from one word to another, one letter at a time, each step a real word of the language's own list.
 import { useRef, useState } from 'react';
 import type { FormEvent } from 'react';
@@ -14,6 +14,7 @@ import { normalizeWord } from '@/core/text/normalize';
 import { ladderWords } from '@/data/games';
 import { buttonClasses } from '@/design/primitives';
 import { cx } from '@/lib/cx';
+import { iso } from './iso';
 import { RoundRunner, useSettleOnce } from './RoundRunner';
 import type { BoardProps } from './RoundRunner';
 
@@ -40,6 +41,7 @@ function wayOn(s: LadderState, graph: Graph, dist: Map<string, number>): string[
 }
 
 function Board({ entry, lang, settle }: BoardProps<Entry>) {
+  const translateUi = useUi();
   const rtl = isRtl(lang);
   const { graph, dist, gloss } = entry;
   const [s, setS] = useState(entry.state);
@@ -47,7 +49,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
   const [tried, setTried] = useState('');
   const input = useRef<HTMLInputElement>(null);
   const over = s.status !== 'playing';
-  useSettleOnce(over, () => settle({ won: s.status === 'won', stars: starsOf(s), hints: s.hints, message: s.status === 'won' ? `Reached ${s.end} in ${s.path.length - 1} steps (the shortest is ${s.steps})` : `Not reached. One way: ${[s.path[s.path.length - 1], ...wayOn(s, graph, dist)].join(' → ')}` }));
+  useSettleOnce(over, () => settle({ won: s.status === 'won', stars: starsOf(s), hints: s.hints, message: s.status === 'won' ? translateUi('Reached {0} in {1} steps (the shortest is {2})', [iso(s.end), s.path.length - 1, s.steps]) : translateUi('Not reached. One way: {0}', [iso([s.path[s.path.length - 1], ...wayOn(s, graph, dist)].join(' → '))]) }));
   const submit = (e: FormEvent) => {
     e.preventDefault();
     const word = normalizeWord(typed.trim(), lang);
@@ -76,7 +78,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
           <li>
             <form onSubmit={submit} className="flex items-center gap-3">
               <ArrowDown size={18} className="text-ink-faint" aria-hidden />
-              <input ref={input} autoFocus value={typed} onChange={(e) => setTyped(e.target.value)} lang={lang} dir={rtl ? 'rtl' : undefined} autoComplete="off" spellCheck={false} aria-label="The next word" placeholder="Next word" className="h-12 w-52 rounded-xl border border-line bg-raised px-4 font-serif text-xl outline-none focus:border-line-strong" />
+              <input ref={input} autoFocus value={typed} onChange={(e) => setTyped(e.target.value)} lang={lang} dir={rtl ? 'rtl' : undefined} autoComplete="off" spellCheck={false} aria-label={translateUi('The next word')} placeholder={translateUi('Next word')} className="h-12 w-52 rounded-xl border border-line bg-raised px-4 font-serif text-xl outline-none focus:border-line-strong" />
               <button type="submit" disabled={!typed.trim()} className={buttonClasses('primary', 'md') + ' disabled:opacity-50'}><UiText source={'Add'} /></button>
             </form>
           </li>
@@ -88,7 +90,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
       </ol>
       <p className="mt-3 min-h-6 text-[14px] text-accent-text" role="alert">
         {s.last && s.last !== 'ok' && (
-          <><UiText source={'{0} {1} ({2} of {3} wrong tries)'} values={[<bdi lang={lang}>{tried}</bdi>, WHY[s.last], s.wrong, MAX_TRIES]} /></>
+          <><UiText source={'{0} {1} ({2} of {3} wrong tries)'} values={[<bdi lang={lang}>{tried}</bdi>, translateUi(WHY[s.last]), s.wrong, MAX_TRIES]} /></>
         )}
       </p>
       {!over && (
@@ -102,14 +104,15 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
 }
 
 export function Ladder({ lang, def, best }: { lang: string; def: GameDef; items?: unknown; best?: Best }) {
+  const translateUi = useUi();
   return (
     <RoundRunner<Entry>
       lang={lang}
       def={def}
       best={best}
-      unit="Ladder"
+      unit={translateUi('Ladder')}
       rtl={isRtl(lang)}
-      intro="Three ladders. Each starts at one word and has to reach another, changing one letter at a time."
+      intro={<UiText source={'Three ladders. Each starts at one word and has to reach another, changing one letter at a time.'} />}
       make={async (random) => {
         const list = await ladderWords(lang);
         const graph = buildGraph(list.map((w) => w.word));
@@ -122,11 +125,11 @@ export function Ladder({ lang, def, best }: { lang: string; def: GameDef; items?
         }
         return out;
       }}
-      empty="The language’s word list has no ladders in it yet."
-      terms={() => []}
+      empty={translateUi('The language’s word list has no ladders in it yet.')}
+      terms={(e) => [e.state.start, e.state.end]}
       label={(e) => ({ title: `${e.state.start} → ${e.state.end}`, detail: `${e.state.steps} steps` })}
       Board={Board}
-      rules={<p>Type the next word and press Enter. A word that is not on the language’s list, not one letter away, or already used is a wrong try; five and the ladder is lost. Three stars: a hint costs one, so does going two steps over the shortest way.</p>}
+      rules={<UiText source={'Type the next word and press Enter. A word that is not on the language’s list, not one letter away, or already used is a wrong try; five and the ladder is lost. Three stars: a hint costs one, so does going two steps over the shortest way.'} />}
     />
   );
 }

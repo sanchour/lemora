@@ -24,6 +24,8 @@ import {
   MakePage,
   PracticePage,
   GamesPage,
+  ProjectsPage,
+  StoryEditorPage,
   WordsAloudPage,
   RatioPage,
   ReaderPage,
@@ -118,6 +120,22 @@ export const router = createBrowserRouter(
           ),
         },
         // Games on the learner's words (6-21): Lingua+, like Ludus.
+        {
+          path: 'thesaurus/games/story-editor',
+          element: (
+            <PlanRoute feature="ludus" fallback="/thesaurus">
+              <StoryEditorPage />
+            </PlanRoute>
+          ),
+        },
+        {
+          path: 'thesaurus/games/projects/:project?',
+          element: (
+            <PlanRoute feature="ludus" fallback="/thesaurus">
+              <ProjectsPage />
+            </PlanRoute>
+          ),
+        },
         {
           path: 'thesaurus/games/:game?',
           element: (

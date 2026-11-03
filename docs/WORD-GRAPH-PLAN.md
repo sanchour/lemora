@@ -1,6 +1,6 @@
 # The word graph · the plan (Lingua 6, step 6-29)
 
-**Status: planned 2026-10-29; G1 (the model, with the tree's) built 2026-11-03.** The user added a third view on
+**Status: planned 2026-10-29; G1 (the model, with the tree's) built 2026-11-03; G2 (the compass and the tree on screen) and G3 (the contract) built 2026-11-03.** The user added a third view on
 2026-11-03, "a tree view, like a word tree view": section 2.4. Planned by Claude Opus from the real dictionary and pack files; to be built
 by Opus (the user's word) in seven pushes, **G1 to G7**, each versioned on its own. Claim the step in
 [LINGUA-6-PLAN.md](LINGUA-6-PLAN.md)'s table (row 6-29) before the first push, as every step is claimed.
@@ -64,8 +64,8 @@ fade. And each view ends in something to do, so the map is a way into practice, 
 | Push | What the learner gets | Size |
 | --- | --- | --- |
 | **G1** The model *(done 2026-11-03)* | Nothing on screen: the web, a word's neighbourhood, the regions and the tree, built and tested on real rows | M |
-| **G2** The compass and the tree | The new tab; one word and its neighbours, or its family as a tree; the smooth lines, hover and zoom, the word's page beside it; "See its neighbours" on every word's page | L |
-| **G3** The contract | Nothing on screen: Dexie 46 for the cached layout and saved views; the fields and question the later pushes need | S |
+| **G2** The compass and the tree *(done 2026-11-03)* | The new tab; one word and its neighbours, or its family as a tree; the smooth lines, hover and zoom, the word's page beside it; "See its neighbours" on every word's page | L |
+| **G3** The contract *(done 2026-11-03)* | Nothing on screen: Dexie 46 for the cached layout and saved views; the fields and question the later pushes need | S |
 | **G4** The atlas | All your words at once: regions, landmarks, semantic zoom, bundled lines, the minimap, search that flies | L |
 | **G5** Tools | Lenses and filters, saved views, your own links and pins, clusters, the lists that lead to practice | L |
 | **G6** Time and bridges | How your web grew (a slider and a replay); your other languages joined by cognates | M |
@@ -511,7 +511,7 @@ export const HUB_MIN = 2, HUB_MAX = 60;
 ### 10.7 The tab, the address, the chunk
 
 - A fourth tab, *Atlas*, on `/thesaurus` (`?tab=atlas`), with `&word=mar` for a compass and `&view=<id>` for a saved view, so a link
-  from anywhere opens exactly that. Key 4 opens it, as 1 to 3 open the others.
+  from anywhere opens exactly that. Key 5 opens it, as 1 to 4 open the others (Phrases came first, in 6-20).
 - `ThesaurusPage` imports `DictionaryView` statically; the graph tab is `React.lazy`, so its code (and d3-force) loads only
   when the tab opens (PERFORMANCE.md, rule 8).
 
@@ -563,7 +563,23 @@ sightings; a few wrong answers in Practice, so the record has mistakes. G7 adds 
 - **One rule learned:** a word's part of speech is the one with the most meanings, not its first entry (*de* is listed
   first as the letter *d*).
 
-### G2 · The compass and the tree (L)
+### G2 · The compass and the tree (L) · done 2026-11-03
+
+- **Built:** Thesaurus › Atlas (key 5; its code in its own 11.5 KB chunk): `core/graph/scene.ts` (the compass and the tree
+  worked out in one pass), `core/graph/curves.ts` (bends, the draw-in's cut, nib strokes, elbows), `data/atlas.ts` (one
+  word's rows read from the device, about a hundred, on the main thread), `features/thesaurus/atlas/` (the canvas, the tab),
+  *See its neighbours* on every word's page. Labels are placed by importance and one that would touch another waits for a
+  hover or more room, so nothing overlaps at any zoom. The zoom buttons sit on the canvas's corner so the page keeps to one
+  screen. Five new tests (the layouts and the curves); sixteen interface strings, translated into the six languages.
+- **Looked at** in the app's browser with a stand-in learner (the 3,000 most common Spanish words, half known): the compasses
+  of *mar* and *comer* and the trees of *deshacer* and *hacer*, at 1366 × 768 and 1280 × 800 in Paper and 1440 × 900 in
+  Nocturne; hover (a thread darkens, the rest fade), the arrows walking the tree, Enter opening a word.
+- **Not looked at, or not built:** other languages on screen (their model is tested); Safari; a frame-time measurement (the
+  draw-in and hover looked smooth, nothing is drawn at rest by construction); reduced motion; texts, sentences, decks and the
+  weak-spot dagger (written, but the stand-in had no sightings, decks or mistakes); fading by memory (with G4's cache). The
+  tree branches through `derived` only until G4's worker builds the made-from index, so *rehacer* is missing under *hacer*.
+  The dev check ran without the app's fonts (the worktree's `node_modules` is a link Vite won't serve fonts through).
+
 
 - **Builds:** the tab (lazy), opening on the last word you looked at or on *Which word?* (the atlas takes over in G4);
   `compass.ts`; the tree (section 2.4), drawn top down; the renderer (camera, curves, the families' strokes, nib strokes, the draw-in, hover, zoom, pan, the
@@ -575,9 +591,17 @@ sightings; a few wrong answers in Practice, so the record has mistakes. G7 adds 
 - **Done when:** the compass of *mar* holds what the sketch holds, with the profile's words in place of the stand-in's; from *mar* the keys alone reach *marea* and open it; the
   draw-in and the hover run at 60 fps; nothing is drawn at rest.
 
-### G3 · The contract (S)
+### G3 · The contract (S) · done 2026-11-03
 
-- **Builds:** section 10.6, as its own small push (`Contract: 6-29's tables and fields`), with LINGUA-6-CONTRACTS.md's
+- **Built (0.6.0-alpha.184):** everything section 10.6 lists. Dexie 46 with `graphLayouts` (the cached scene: nodes, positions as
+  `Float32Array`, thread ends as `Uint32Array`, families as `Uint8Array`, regions and a stamp; `skip` in backups) and
+  `graphViews` (saved views and the language's map with its pins; `lww`); `Lingua6Step` gains 29, `StepSchema.policy` gains
+  `skip`, `STEP_29_SCHEMA`; `LearnerRecord.mixUps` (`core/learner`'s `mixUpsOf`: a wrong answer whose `given` is another of
+  the learner's words, so a typo is never one); `Word.grammarTopics` and `relatedWordIds` in `data/types.ts`. Removing or
+  resetting a language empties both tables. Nothing on screen.
+- **Tested:** the schema equals the contract; a database at 23 opens at 46 with its words kept; removal and reset; a backup
+  carries the views and pins and never the scene; mix-ups pair two of the learner's words and skip a typo.
+- **Builds (as planned):** section 10.6, as its own small push (`Contract: 6-29's tables and fields`), with LINGUA-6-CONTRACTS.md's
   *Changes since 6-0* updated.
 - **Done when:** typecheck and tests pass, including backup policies, the removal of a language, and a database at 23
   opening at 46 (fake-indexeddb).

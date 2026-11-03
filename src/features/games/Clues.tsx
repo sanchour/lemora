@@ -12,6 +12,7 @@ import type { GameItem } from '@/core/games/source';
 import { isRtl } from '@/core/lang/languages';
 import { shuffle } from '@/core/srs/ludus';
 import { buttonClasses } from '@/design/primitives';
+import { iso } from './iso';
 import { RoundRunner, useSettleOnce } from './RoundRunner';
 import type { BoardProps } from './RoundRunner';
 
@@ -29,7 +30,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
   const [typed, setTyped] = useState('');
   const input = useRef<HTMLInputElement>(null);
   const over = s.status !== 'playing';
-  useSettleOnce(over, () => settle({ won: s.status === 'won', stars: starsOf(s), hints: 0, message: `${s.status === 'won' ? 'Right: ' : 'It was '}${entry.item.term}` }));
+  useSettleOnce(over, () => settle({ won: s.status === 'won', stars: starsOf(s), hints: 0, message: s.status === 'won' ? translateUi('Right: {0}', [iso(entry.item.term)]) : translateUi('It was {0}', [iso(entry.item.term)]) }));
   const submit = (e: FormEvent) => {
     e.preventDefault();
     setS((x) => guess(x, typed, entry.item.term, lang));
@@ -41,7 +42,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
       <ol className="space-y-3" aria-label={translateUi('Clues')}>
         {s.clues.slice(0, s.shown).map((c, i) => (
           <li key={i} className="rounded-2xl border border-line/70 bg-surface px-5 py-4">
-            <p className="text-[12px] font-bold tracking-[0.12em] text-ink-faint uppercase">{NAME[c.kind]}</p>
+            <p className="text-[12px] font-bold tracking-[0.12em] text-ink-faint uppercase">{translateUi(NAME[c.kind])}</p>
             {c.image ? (
               <img src={c.image} alt="" className="mt-2 max-h-40 rounded-xl" />
             ) : c.kind === 'example' || c.kind === 'synonyms' || c.kind === 'antonyms' ? (
@@ -50,8 +51,8 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
               </p>
             ) : (
               <p className="mt-1 font-serif text-xl leading-snug">
-                {c.text}{' '}
-                {c.value && (
+                {c.kind === 'length' ? translateUi(c.text === 'letters' ? '{0} letters' : '{0} characters', [c.value]) : c.kind === 'meaning' ? c.text : translateUi(c.text ?? '')}{c.kind !== 'length' && ' '}
+                {c.kind === 'first' && c.value && (
                   <bdi lang={lang} className="font-semibold">
                     “{c.value}”
                   </bdi>
@@ -72,8 +73,8 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
             dir={rtl ? 'rtl' : undefined}
             autoComplete="off"
             spellCheck={false}
-            aria-label="Your guess"
-            placeholder="Type the word"
+            aria-label={translateUi('Your guess')}
+            placeholder={translateUi('Type the word')}
             className="h-12 w-64 rounded-xl border border-line bg-raised px-4 font-serif text-xl outline-none focus:border-line-strong"
           />
           <button type="submit" disabled={!typed.trim()} className={buttonClasses('primary', 'md') + ' disabled:opacity-50'}><UiText source={'Guess'} /></button>
@@ -89,14 +90,15 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
 }
 
 export function Clues({ lang, def, items, best }: { lang: string; def: GameDef; items: GameItem[]; best?: Best }) {
+  const translateUi = useUi();
   return (
     <RoundRunner<Entry>
       lang={lang}
       def={def}
       best={best}
-      unit="Word"
+      unit={translateUi('Word')}
       rtl={isRtl(lang)}
-      intro="Five of your words, each given in clues, the hardest first. Guess it as early as you can."
+      intro={<UiText source={'Five of your words, each given in clues, the hardest first. Guess it as early as you can.'} />}
       make={(random) =>
         shuffle(usable(def, items, lang), random)
           .slice(0, def.round)
@@ -105,7 +107,7 @@ export function Clues({ lang, def, items, best }: { lang: string; def: GameDef; 
       terms={(e) => [e.item.term]}
       label={(e) => ({ title: e.item.term, detail: e.item.meaning })}
       Board={Board}
-      rules={<p>Type the word and press Enter. A wrong guess gives the next clue; you can also ask for one. Three stars with two clues or fewer, two with three or four, one after that.</p>}
+      rules={<UiText source={'Type the word and press Enter. A wrong guess gives the next clue; you can also ask for one. Three stars with two clues or fewer, two with three or four, one after that.'} />}
     />
   );
 }

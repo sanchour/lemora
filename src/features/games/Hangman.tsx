@@ -17,16 +17,17 @@ import { cx } from '@/lib/cx';
 import type { Best } from '@/core/games/bests';
 import { HangmanFigure } from './HangmanFigure';
 import { LetterKeyboard, useLetterKeys } from './LetterKeyboard';
+import { iso } from './iso';
 import { RoundRunner, Stars, useSettleOnce } from './RoundRunner';
 import type { BoardProps } from './RoundRunner';
 
-interface Entry {
+export interface Entry {
   item: GameItem;
   state: HangmanState;
   exact: boolean;
 }
 
-function Board({ entry, lang, random, settle }: BoardProps<Entry>) {
+export function Board({ entry, lang, random, settle }: BoardProps<Entry>) {
   const translateUi = useUi();
   const rtl = isRtl(lang);
   const [s, setS] = useState(entry.state);
@@ -34,7 +35,7 @@ function Board({ entry, lang, random, settle }: BoardProps<Entry>) {
   const press = (key: string) => setS((x) => guess(x, key));
   const useHint = () => setS((x) => hint(x, random));
   useLetterKeys({ lang, exact: entry.exact, alphabet, enabled: s.status === 'playing', onKey: press, onHint: useHint });
-  useSettleOnce(s.status !== 'playing', () => settle({ won: s.status === 'won', stars: starsOf(s), hints: s.hints, message: `${s.status === 'won' ? 'Right: ' : 'It was '}${entry.item.term}` }));
+  useSettleOnce(s.status !== 'playing', () => settle({ won: s.status === 'won', stars: starsOf(s), hints: s.hints, message: s.status === 'won' ? translateUi('Right: {0}', [iso(entry.item.term)]) : translateUi('It was {0}', [iso(entry.item.term)]) }));
 
   const over = s.status !== 'playing';
   const example = entry.item.example && (over ? entry.item.example : s.wrong.length >= 2 ? hideIn(entry.item.example, entry.item.term, lang) : null);
@@ -52,7 +53,7 @@ function Board({ entry, lang, random, settle }: BoardProps<Entry>) {
       <div className="mt-6 flex items-center gap-8">
         <HangmanFigure wrong={s.wrong.length} max={MAX_MISTAKES} />
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap gap-x-1.5 gap-y-3" lang={lang} dir={rtl ? 'rtl' : undefined} aria-live="polite" aria-label={over ? entry.item.term : `${s.keys.filter((k) => k !== null).length} letters`}>
+          <div className="flex flex-wrap gap-x-1.5 gap-y-3" lang={lang} dir={rtl ? 'rtl' : undefined} aria-live="polite" aria-label={over ? entry.item.term : translateUi('{0} letters', [s.keys.filter((k) => k !== null).length])}>
             {s.marks.map((mark, i) =>
               s.keys[i] === null ? (
                 <span key={i} className="grid h-12 min-w-3 place-items-end pb-1 font-serif text-3xl text-ink-soft">
@@ -83,15 +84,16 @@ function Board({ entry, lang, random, settle }: BoardProps<Entry>) {
 }
 
 export function Hangman({ lang, def, items, best }: { lang: string; def: GameDef; items: GameItem[]; best?: Best }) {
+  const translateUi = useUi();
   const [exact, setExact] = useState(false);
   return (
     <RoundRunner<Entry>
       lang={lang}
       def={def}
       best={best}
-      unit="Word"
+      unit={translateUi('Word')}
       rtl={isRtl(lang)}
-      intro="Five of your words, each asked by its meaning. Name the letters before the drawing is done."
+      intro={<UiText source={'Five of your words, each asked by its meaning. Name the letters before the drawing is done.'} />}
       options={getLanguage(lang)?.script === 'Latn' && <AccentsOption exact={exact} onChange={setExact} />}
       make={(random) =>
         shuffle(usable(def, items, lang), random)
@@ -104,7 +106,7 @@ export function Hangman({ lang, def, items, best }: { lang: string; def: GameDef
       terms={(e) => [e.item.term]}
       label={(e) => ({ title: e.item.term, detail: e.item.meaning })}
       Board={Board}
-      rules={<p>Type a letter or click it. Six wrong letters and the word is lost. A word is worth up to three stars: a hint costs one, so do three wrong letters.</p>}
+      rules={<UiText source={'Type a letter or click it. Six wrong letters and the word is lost. A word is worth up to three stars: a hint costs one, so do three wrong letters.'} />}
     />
   );
 }

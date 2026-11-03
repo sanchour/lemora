@@ -1,6 +1,7 @@
 // The learner's record, worked out (6-5): from the evidence rows alone, what is weak, what is quiet, what is known one way
 // and not the other. Pure: no database, no DOM, so Grammatica, Ratio and the tutor ask the same questions of the same rows.
-import type { EvidenceDay, EvidenceItem, EvidenceRow, MistakeCategory, Skill, WeakSpot } from '@/core/contracts/learner';
+import type { EvidenceDay, EvidenceItem, EvidenceRow, MistakeCategory, MixUp, Skill, WeakSpot } from '@/core/contracts/learner';
+import { normalizeWord } from '@/core/text/normalize';
 import { PERSISTENT_MISTAKE } from '@/core/contracts/learner';
 
 export const SKILLS: Skill[] = ['vocabulary', 'grammar', 'reading', 'listening', 'pronunciation', 'speaking', 'writing', 'translating'];
@@ -79,6 +80,24 @@ export function recognisedNotRecalled(rows: readonly EvidenceRow[], limit = 50):
     .sort((a, b) => b[1].last - a[1].last)
     .slice(0, limit)
     .map(([key]) => wordIdOfKey(key)!);
+}
+
+/** Pairs of the learner's own words written one for the other: a wrong answer whose `given` is another word they have
+ *  (6-29, the word graph's mix-up threads). Only words they have count, so a typo is never a mix-up. Most often first. */
+export function mixUpsOf(rows: readonly EvidenceRow[], yours: (norm: string) => boolean, limit = 30): MixUp[] {
+  const pairs = new Map<string, MixUp>();
+  for (const r of rows) {
+    if (r.item.type !== 'word' || r.outcome !== 'wrong' || !r.given) continue;
+    const norm = normalizeWord(r.given.trim(), r.lang);
+    const given = `${r.lang}:${norm}`;
+    if (!norm || given === r.item.wordId || !yours(norm)) continue;
+    const id = `${r.item.wordId}|${given}`;
+    const p = pairs.get(id) ?? { expected: r.item.wordId, given, times: 0, last: 0 };
+    p.times++;
+    p.last = Math.max(p.last, r.at);
+    pairs.set(id, p);
+  }
+  return [...pairs.values()].sort((a, b) => b.times - a.times || b.last - a.last).slice(0, limit);
 }
 
 /** The skills with the fewest answers in the last `days` days, quietest first (a skill with none comes first). */

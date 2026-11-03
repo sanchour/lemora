@@ -10,7 +10,7 @@
 export const LINGUA5_LAST_DEXIE_VERSION = 17;
 
 /** The Dexie version of Lingua 6's step N (1 to 25). */
-export type Lingua6Step = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25;
+export type Lingua6Step = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 29;
 
 export function dexieVersionOfStep(step: Lingua6Step): number {
   return LINGUA5_LAST_DEXIE_VERSION + step;
@@ -25,7 +25,8 @@ export interface StepSchema {
   /** Tables and the full index string of each. */
   stores: Record<string, string>;
   /** Merge policy for each new table in backup and restore (src/data/backup.ts). */
-  policy: Record<string, 'lww' | 'union' | 'insertOnly'>;
+  /** `skip`: a cache, rebuilt on the device and never backed up (as `evidenceDays`). */
+  policy: Record<string, 'lww' | 'union' | 'insertOnly' | 'skip'>;
   /** What the upgrade function does, if there is one. Never rewrites the learner's data to fill a default. */
   upgrade?: string;
 }
@@ -85,9 +86,61 @@ export const PART_A_SCHEMA: StepSchema[] = [
 
 /** Parts B to E: the version number each step may use, reserved. Their tables are added to this file by the step
  *  that needs them, before it writes any code (docs/LINGUA-6-CONTRACTS.md). */
-export const LATER_STEPS_RESERVED: Record<string, number> = Object.fromEntries(
-  Array.from({ length: 19 }, (_, i) => [`6-${i + 7}`, LINGUA5_LAST_DEXIE_VERSION + i + 7]),
-);
+export const LATER_STEPS_RESERVED: Record<string, number> = {
+  ...Object.fromEntries(Array.from({ length: 19 }, (_, i) => [`6-${i + 7}`, LINGUA5_LAST_DEXIE_VERSION + i + 7])),
+  // The word graph (docs/WORD-GRAPH-PLAN.md), outside 6-7 to 6-25's range.
+  '6-29': LINGUA5_LAST_DEXIE_VERSION + 29,
+};
+
+/** 6-29, the word graph (G3): the atlas's cached scene and the learner's saved views and pins. */
+export const STEP_29_SCHEMA: StepSchema = {
+  step: 29,
+  stores: {
+    graphLayouts: '[lang+lens]',
+    graphViews: 'id, lang, updatedAt',
+  },
+  policy: { graphLayouts: 'skip', graphViews: 'lww' },
+  upgrade: 'none: two new tables',
+};
+
+/** `graphLayouts`: everything a frame of the atlas needs, so it opens at once (WORD-GRAPH-PLAN.md 10.4). A cache: rebuilt
+ *  by the worker whenever `stamp` no longer matches, never backed up. */
+export interface GraphLayoutRow {
+  lang: string;
+  /** 'atlas' for the whole web. */
+  lens: string;
+  /** What it was built from: the counts and latest `updatedAt` of words, notes, cards and sightings, and the dictionary's
+   *  and pack's versions. A different stamp means build again. */
+  stamp: string;
+  builtAt: number;
+  nodes: Array<{ id: string; kind: string; label: string; rank?: number; region?: string }>;
+  x: Float32Array;
+  y: Float32Array;
+  /** Thread ends, two node indexes each. */
+  threads: Uint32Array;
+  /** One family per thread (the order of `Family` in core/graph/model.ts). */
+  families: Uint8Array;
+  regions: Array<{ id: string; label: string }>;
+}
+
+/** `graphViews`: a saved view (lens, filters, families, a focus word, the camera), or the language's own map (`${lang}:map`,
+ *  which holds the pins). The learner's: backed up, last write wins. */
+export interface GraphViewRow {
+  id: string;
+  lang: string;
+  name: string;
+  kind: 'view' | 'map';
+  view?: 'atlas' | 'compass' | 'tree';
+  focus?: string;
+  lenses?: string[];
+  families?: string[];
+  camera?: { x: number; y: number; k: number };
+  /** Words placed by hand: word key → position. */
+  pins?: Record<string, [x: number, y: number]>;
+  createdAt: number;
+  updatedAt: number;
+  deletedAt?: number;
+}
 
 /** The `generated` table's row, 6-6: one thing Max made. */
 export interface GeneratedRow {

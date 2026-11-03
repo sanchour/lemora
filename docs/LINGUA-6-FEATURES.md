@@ -1,4 +1,6 @@
-# Lingua 6 · Features · the audit
+
+**Writing completion, 2026-11-03:** the five remaining entries F0617/F0657/F0676/F0684/F0687 are implemented; all 55 assigned entries are now ticked. [The audit](LINGUA-6-8-12-AUDIT.md) records image privacy/media-backup requirements, simplification limits, dictionary/native spelling, reusable templates and ten draft snapshots.
+**Reading completion, 2026-11-03:** all 72 assigned entries are reconciled with their actual implementation in [the Reading/Writing audit](LINGUA-6-8-12-AUDIT.md), including the 47 previously open. Searchable source kinds are not a newly hosted corpus; generated interpretations remain unverified, and the audit states the exact source/excerpt/storage boundaries.# Lingua 6 · Features · the audit
 
 The Lingyu design package's feature catalogue (1,618 entries, F0001–F1618, pasted by the user on 2026-10-26)
 checked against Lingua as it is on 2026-10-26 (version 0.5.2-alpha.3). The plan that builds what is missing is
@@ -217,8 +219,8 @@ Vocabulary is much more than translating a word and flipping a flashcard. Learne
 - [x] `F0121` Formality and register labels · **6-1** · partly there
 - [x] `F0122` Slang and colloquial labels · **6-1** · partly there
 - [x] `F0123` Regional usage labels · **6-1** · partly there
-- [ ] `F0124` British versus American English distinctions · **6-1**
-- [ ] `F0125` European versus Brazilian Portuguese distinctions · **6-1** · partly there
+- [x] `F0124` British versus American English distinctions · **6-1**
+- [x] `F0125` European versus Brazilian Portuguese distinctions · **6-1** · partly there
 - [x] `F0126` Etymology and word origins
 - [x] `F0127` Word families · **6-1**
 - [x] `F0128` Roots and stems · **6-1**
@@ -268,27 +270,27 @@ Vocabulary is much more than translating a word and flipping a flashcard. Learne
 - [x] `F0167` Word matching
 - [x] `F0168` Word hunting · **6-21**
 - [x] `F0169` Word ladders · **6-21**
-- [ ] `F0170` Crossword puzzles · **6-21**
+- [x] `F0170` Crossword puzzles · **6-21**
 - [x] `F0171` Word searches · **6-21**
 - [x] `F0172` Hangman-style spelling · **6-21**
 - [x] `F0173` Anagrams · **6-21** · partly there
 - [x] `F0174` Sentence completion
 - [x] `F0175` Missing-letter puzzles · **6-21**
-- [ ] `F0176` Guess the definition · **6-21**
-- [ ] `F0177` Guess the word from a picture · **6-21**
+- [x] `F0176` Guess the definition · **6-21**
+- [x] `F0177` Guess the word from a picture · **6-21**
 - [x] `F0178` Guess the word from audio
-- [ ] `F0179` Word association · **6-21**
-- [ ] `F0180` Synonym races · **6-21**
-- [ ] `F0181` Antonym races · **6-21**
-- [ ] `F0182` Category sorting · **6-21**
-- [ ] `F0183` Odd-one-out challenges · **6-21**
-- [ ] `F0184` Build a word from morphemes · **6-21**
+- [x] `F0179` Word association · **6-21**
+- [x] `F0180` Synonym races · **6-21**
+- [x] `F0181` Antonym races · **6-21**
+- [x] `F0182` Category sorting · **6-21**
+- [x] `F0183` Odd-one-out challenges · **6-21**
+- [x] `F0184` Build a word from morphemes · **6-21**
 - [x] `F0185` Speed rounds
-- [ ] `F0186` Memory-matching cards · **6-21**
-- [ ] `F0187` Vocabulary bingo · **6-21**
-- [ ] `F0188` Daily word challenges · **6-21** · partly there
+- [x] `F0186` Memory-matching cards · **6-21**
+- [x] `F0187` Vocabulary bingo · **6-21**
+- [x] `F0188` Daily word challenges · **6-21** · partly there
 - [x] `F0189` Guess a word from progressively revealing clues · **6-21**
-- [ ] `F0190` Mini word tournaments · **6-21**
+- [x] `F0190` Mini word tournaments · **6-21**
 - [x] `F0191` Personal best challenges
 - [ ] `F0192` Cooperative vocabulary challenges · **6-27** · needs the user's word
 
@@ -408,8 +410,6 @@ Grammar can be taught through explanation, pattern recognition, repeated example
 
 Reading is one of the richest sources of vocabulary, grammar and cultural knowledge. I’d make it a first-class feature rather than a collection of disconnected reading exercises.
 
-**Reading completion, 2026-11-03:** all 72 assigned entries are reconciled with their actual implementation in [the Reading/Writing audit](LINGUA-6-8-12-AUDIT.md), including the 47 previously open. Searchable source kinds are not a newly hosted corpus; generated interpretations remain unverified, and the audit states the exact source/excerpt/storage boundaries.
-
 #### 4.1 Reading library
 
 *In Lingua: Codex: imports (EPUB, PDF, text, comics, photos), Discover (Gutenberg, Wikisource, Wikipedia, news), song lyrics as texts.*
@@ -443,8 +443,8 @@ Reading is one of the richest sources of vocabulary, grammar and cultural knowle
 - [x] `F0310` Children’s literature · **6-8**
 - [x] `F0311` Comic strips
 - [x] `F0312` Graphic novels
-- [ ] `F0313` Interactive fiction · **6-21**
-- [ ] `F0314` Choose-your-own-adventure stories · **6-21**
+- [x] `F0313` Interactive fiction · **6-21**
+- [x] `F0314` Choose-your-own-adventure stories · **6-21**
 - [x] `F0315` User-imported texts
 - [x] `F0316` Personal document library
 - [x] `F0317` Public-domain literature collection
@@ -683,9 +683,6 @@ Listening comprehension deserves its own system because recognizing a written wo
 
 ## 06 · Speaking and conversation
 
-**Writing completion, 2026-11-03:** the five remaining entries F0617/F0657/F0676/F0684/F0687 are implemented; all 55 assigned entries are now ticked. [The audit](LINGUA-6-8-12-AUDIT.md) records image privacy/media-backup requirements, simplification limits, dictionary/native spelling, reusable templates and ten draft snapshots.
-
-
 This is where an AI-powered app can become especially valuable. Learners often have plenty of opportunities to study words but very few opportunities to use them spontaneously.
 
 #### 6.1 AI conversation partner
@@ -695,40 +692,40 @@ This is where an AI-powered app can become especially valuable. Learners often h
 - [x] `F0511` ⭐ Open-ended text conversations
 - [x] `F0512` ⭐ Voice conversations
 - [x] `F0513` Free conversation without a fixed script
-- [ ] `F0514` Beginner-friendly guided conversation · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0515` Conversation by topic · **5.2-6** · planned in Lingua 5.2
+- [x] `F0514` Beginner-friendly guided conversation · **5.2-6**
+- [x] `F0515` Conversation by topic · **5.2-6**
 - [x] `F0516` Conversation by CEFR level
 - [x] `F0517` Conversation based on saved vocabulary
-- [ ] `F0518` Conversation based on recent lessons · **5.2-6** · planned in Lingua 5.2
+- [x] `F0518` Conversation based on recent lessons · **5.2-6**
 - [x] `F0519` Conversation focused on a grammar point
 - [x] `F0520` Conversation focused on pronunciation · **6-11**
-- [ ] `F0521` Casual conversation with an informal persona · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0522` Formal professional conversation · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0523` Travel conversations · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0524` Restaurant conversations · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0525` Shopping conversations · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0526` Hotel check-in simulations · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0527` Airport and train station simulations · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0528` Meeting new people · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0529` Talking about hobbies · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0530` Discussing books and films · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0531` Discussing philosophy · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0532` Talking about current events · **5.2-6** · planned in Lingua 5.2
+- [x] `F0521` Casual conversation with an informal persona · **5.2-6**
+- [x] `F0522` Formal professional conversation · **5.2-6**
+- [x] `F0523` Travel conversations · **5.2-6**
+- [x] `F0524` Restaurant conversations · **5.2-6**
+- [x] `F0525` Shopping conversations · **5.2-6**
+- [x] `F0526` Hotel check-in simulations · **5.2-6**
+- [x] `F0527` Airport and train station simulations · **5.2-6**
+- [x] `F0528` Meeting new people · **5.2-6**
+- [x] `F0529` Talking about hobbies · **5.2-6**
+- [x] `F0530` Discussing books and films · **5.2-6**
+- [x] `F0531` Discussing philosophy · **5.2-6** · **6-11**
+- [x] `F0532` Talking about current events · **5.2-6**
 - [x] `F0533` Debate practice
-- [ ] `F0534` Job interview simulations · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0535` University seminar simulations · **5.2-6** · planned in Lingua 5.2
+- [x] `F0534` Job interview simulations · **5.2-6**
+- [x] `F0535` University seminar simulations · **5.2-6** · **6-11**
 - [x] `F0536` Negotiation practice · **6-11**
-- [ ] `F0537` Giving a presentation · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0538` Making a phone call · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0539` Handling an awkward situation · **5.2-6** · planned in Lingua 5.2
+- [x] `F0537` Giving a presentation · **5.2-6**
+- [x] `F0538` Making a phone call · **5.2-6**
+- [x] `F0539` Handling an awkward situation · **5.2-6** · **6-11**
 - [x] `F0540` Asking for clarification · **6-11**
-- [ ] `F0541` Expressing disagreement politely · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0542` Telling a story · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0543` Explaining an opinion · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0544` Talking about past experiences · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0545` Talking about future plans · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0546` Roleplay with a fictional character · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0547` Interactive mystery conversations · **5.2-6** · planned in Lingua 5.2
+- [x] `F0541` Expressing disagreement politely · **5.2-6** · **6-11**
+- [x] `F0542` Telling a story · **5.2-6**
+- [x] `F0543` Explaining an opinion · **5.2-6**
+- [x] `F0544` Talking about past experiences · **5.2-6**
+- [x] `F0545` Talking about future plans · **5.2-6**
+- [x] `F0546` Roleplay with a fictional character · **5.2-6**
+- [x] `F0547` Interactive mystery conversations · **5.2-6**
 - [x] `F0548` Conversation with branching outcomes · **6-11**
 - [x] `F0549` Multi-character conversations · **6-11**
 - [x] `F0550` Group conversation simulation · **6-11**
@@ -1094,7 +1091,7 @@ Immersion is not just watching foreign films. It is building a life in which the
 - [x] `F0830` Simulate ordering food
 - [x] `F0831` Simulate travel
 - [x] `F0832` Read local advertisements and signs · **6-19** · partly there
-- [ ] `F0833` Practice common phone calls · **5.2-6** · planned in Lingua 5.2
+- [x] `F0833` Practice common phone calls · **5.2-6**
 - [x] `F0834` Write real messages with feedback · **6-12**
 - [x] `F0835` Maintain a personal phrasebook · **6-20**
 - [x] `F0836` Set a daily target-language challenge
@@ -1160,7 +1157,7 @@ This is the structured side of the app. Learners need a route through the materi
 - [ ] `F0882` Topic-based lessons · **6-14** · partly there
 - [ ] `F0883` Story-based lessons · **6-14**
 - [ ] `F0884` Dialogue-based lessons · **6-14**
-- [ ] `F0885` Project-based learning · **6-21**
+- [x] `F0885` Project-based learning · **6-21**
 - [ ] `F0886` Discovery-based learning · **6-14**
 - [ ] `F0887` Lessons built around a single authentic text · **6-14**
 - [ ] `F0888` Lessons built around a single conversation · **6-14**
@@ -1398,24 +1395,24 @@ Think of this as a personal linguistic knowledge base.
 
 #### 13.2 Personal linguistic graph
 
-- [ ] `F1076` Synonym connections · **6-29**
-- [ ] `F1077` Antonym connections · **6-29**
-- [ ] `F1078` Cognate connections · **6-29**
-- [ ] `F1079` Word-family connections · **6-29**
-- [ ] `F1080` Root connections · **6-29**
-- [ ] `F1081` Collocation connections · **6-29**
+- [x] `F1076` Synonym connections · **6-29**
+- [x] `F1077` Antonym connections · **6-29**
+- [x] `F1078` Cognate connections · **6-29**
+- [x] `F1079` Word-family connections · **6-29**
+- [x] `F1080` Root connections · **6-29**
+- [x] `F1081` Collocation connections · **6-29**
 - [ ] `F1082` Semantic category connections · **6-29**
 - [ ] `F1083` Grammatical connections · **6-29**
 - [ ] `F1084` Topic connections · **6-29**
-- [ ] `F1085` Idiom connections · **6-29**
-- [ ] `F1086` Shared example sentence connections · **6-29**
-- [ ] `F1087` Connections between a word and a saved text · **6-29**
+- [x] `F1085` Idiom connections · **6-29**
+- [x] `F1086` Shared example sentence connections · **6-29**
+- [x] `F1087` Connections between a word and a saved text · **6-29**
 - [ ] `F1088` Connections between a word and a personal mistake · **6-29**
 - [ ] `F1089` Connections between words across multiple languages · **6-29**
 - [ ] `F1090` Visual graph exploration · **6-29**
 - [ ] `F1091` Filter by word type, topic or difficulty · **6-29**
 - [ ] `F1092` Identify isolated words with few connections · **6-29**
-- [ ] `F1093` Discover related vocabulary · **6-29**
+- [x] `F1093` Discover related vocabulary · **6-29**
 - [ ] `F1094` Build a personal semantic map · **6-29**
 - [ ] `F1095` Create a word cluster from a selected concept · **6-29**
 
@@ -1539,43 +1536,43 @@ each with its definition, private and exportable. Lingua 5.2-9 already expands R
 
 - [x] `F1183` Word matching games
 - [x] `F1184` Vocabulary speed rounds
-- [ ] `F1185` Timed translation · **6-21**
+- [x] `F1185` Timed translation · **6-21**
 - [x] `F1186` Sentence construction puzzles
 - [x] `F1187` Word ordering challenges
 - [x] `F1188` Grammar competitions
 - [x] `F1189` Listening quizzes
-- [ ] `F1190` Dictation races · **6-21**
+- [x] `F1190` Dictation races · **6-21**
 - [x] `F1191` Pronunciation challenges · **6-10**
-- [ ] `F1192` Word association games · **6-21**
-- [ ] `F1193` Crossword puzzles · **6-21**
+- [x] `F1192` Word association games · **6-21**
+- [x] `F1193` Crossword puzzles · **6-21**
 - [x] `F1194` Word searches · **6-21**
 - [x] `F1195` Anagrams · **6-21**
 - [x] `F1196` Hangman-style spelling · **6-21**
 - [x] `F1197` Guess-the-word games · **6-21**
-- [ ] `F1198` Picture vocabulary quizzes · **6-21**
-- [ ] `F1199` Memory matching · **6-21**
-- [ ] `F1200` Semantic category sorting · **6-21**
-- [ ] `F1201` Odd-one-out challenges · **6-21**
+- [x] `F1198` Picture vocabulary quizzes · **6-21**
+- [x] `F1199` Memory matching · **6-21**
+- [x] `F1200` Semantic category sorting · **6-21**
+- [x] `F1201` Odd-one-out challenges · **6-21**
 - [x] `F1202` Fill-the-gap races
-- [ ] `F1203` Story completion games · **6-21**
-- [ ] `F1204` Dialogue completion · **6-21**
-- [ ] `F1205` Interactive mysteries · **6-21**
-- [ ] `F1206` Text adventures · **6-21**
-- [ ] `F1207` Choose-your-own-adventure stories · **6-21**
-- [ ] `F1208` Roleplaying quests · **6-21**
-- [ ] `F1209` Escape-room-style language puzzles · **6-21**
-- [ ] `F1210` Clue-based detective games · **6-21**
-- [ ] `F1211` Simulated travel adventures · **6-21**
-- [ ] `F1212` Virtual city exploration · **6-21**
-- [ ] `F1213` Survival-language challenges · **6-21**
-- [ ] `F1214` Conversation quests · **6-21**
-- [ ] `F1215` Daily puzzles · **6-21**
-- [ ] `F1216` Weekly themed challenges · **6-21**
+- [x] `F1203` Story completion games · **6-21**
+- [x] `F1204` Dialogue completion · **6-21**
+- [x] `F1205` Interactive mysteries · **6-21**
+- [x] `F1206` Text adventures · **6-21**
+- [x] `F1207` Choose-your-own-adventure stories · **6-21**
+- [x] `F1208` Roleplaying quests · **6-21**
+- [x] `F1209` Escape-room-style language puzzles · **6-21**
+- [x] `F1210` Clue-based detective games · **6-21**
+- [x] `F1211` Simulated travel adventures · **6-21**
+- [x] `F1212` Virtual city exploration · **6-21**
+- [x] `F1213` Survival-language challenges · **6-21**
+- [x] `F1214` Conversation quests · **6-21**
+- [x] `F1215` Daily puzzles · **6-21**
+- [x] `F1216` Weekly themed challenges · **6-21**
 - [ ] `F1217` Cooperative multiplayer quizzes · **6-27** · needs the user's word
 - [ ] `F1218` Head-to-head vocabulary matches · **6-27** · needs the user's word
 - [ ] `F1219` Community tournaments · **6-27** · needs the user's word
-- [ ] `F1220` Custom game creation · **6-21**
-- [ ] `F1221` AI-generated games based on personal vocabulary · **6-21**
+- [x] `F1220` Custom game creation · **6-21**
+- [x] `F1221` AI-generated games based on personal vocabulary · **6-21**
 
 ## 17 · Reading, writing and speaking together
 
@@ -1583,29 +1580,29 @@ These are integrated activities that combine skills instead of training each one
 
 *In Lingua: Sermo with words due; Grammatica's own sentence; In your own words.*
 
-- [ ] `F1222` Read a story, then discuss it · **6-21**
-- [ ] `F1223` Listen to a story, then summarize it aloud · **6-21**
-- [ ] `F1224` Read an article, then write an opinion · **6-21**
-- [ ] `F1225` Watch a video, then explain the main argument · **6-21**
+- [x] `F1222` Read a story, then discuss it · **6-21**
+- [x] `F1223` Listen to a story, then summarize it aloud · **6-21**
+- [x] `F1224` Read an article, then write an opinion · **6-21**
+- [x] `F1225` Watch a video, then explain the main argument · **6-21**
 - [x] `F1226` Learn vocabulary, then use it in a conversation
 - [x] `F1227` Study grammar, then write a paragraph using it
-- [ ] `F1228` Listen to a dialogue, then recreate it · **6-21**
-- [ ] `F1229` Read a dialogue, then perform both roles · **6-21**
-- [ ] `F1230` Learn idioms, then use them in a story · **6-21**
-- [ ] `F1231` Translate a passage, then compare alternatives · **6-21**
-- [ ] `F1232` Listen to a recording, then write a transcript · **6-21**
+- [x] `F1228` Listen to a dialogue, then recreate it · **6-21**
+- [x] `F1229` Read a dialogue, then perform both roles · **6-21**
+- [x] `F1230` Learn idioms, then use them in a story · **6-21**
+- [x] `F1231` Translate a passage, then compare alternatives · **6-21**
+- [x] `F1232` Listen to a recording, then write a transcript · **6-21**
 - [x] `F1233` Read a text, then retell it without looking
-- [ ] `F1234` Write a paragraph, then read it aloud · **6-21** · partly there
-- [ ] `F1235` Record a spoken response, then transcribe it · **6-21**
-- [ ] `F1236` Discuss a book with an AI tutor · **5.2-6** · planned in Lingua 5.2
-- [ ] `F1237` Debate an issue after reading about it · **6-21**
-- [ ] `F1238` Create a presentation from a text · **6-21**
+- [x] `F1234` Write a paragraph, then read it aloud · **6-21** · partly there
+- [x] `F1235` Record a spoken response, then transcribe it · **6-21**
+- [x] `F1236` Discuss a book with an AI tutor · **5.2-6**
+- [x] `F1237` Debate an issue after reading about it · **6-21**
+- [x] `F1238` Create a presentation from a text · **6-21**
 - [x] `F1239` Turn a podcast into a vocabulary deck · **6-2** · partly there
-- [ ] `F1240` Turn a conversation into a personalized lesson · **6-21**
-- [ ] `F1241` Turn writing corrections into future review exercises · **6-21**
-- [ ] `F1242` Build a weekly project around one topic · **6-21**
-- [ ] `F1243` Produce a short story using recently learned words · **6-21**
-- [ ] `F1244` Create a personal podcast in the target language · **6-21**
+- [x] `F1240` Turn a conversation into a personalized lesson · **6-21**
+- [x] `F1241` Turn writing corrections into future review exercises · **6-21**
+- [x] `F1242` Build a weekly project around one topic · **6-21**
+- [x] `F1243` Produce a short story using recently learned words · **6-21**
+- [x] `F1244` Create a personal podcast in the target language · **6-21**
 
 ## 18 · Dictionaries and linguistic reference tools
 

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { seededRandom } from '@/core/srs/ludus';
 import * as anagram from './anagram';
 import * as clues from './clues';
+import { stems } from './clitics';
 import { makeHunts, huntStars } from './hunt';
 import * as ladder from './ladder';
 import * as missing from './missing';
@@ -183,7 +184,7 @@ describe('clues', () => {
     expect(clues.cluesOf(item('gato'), 'es').map((c) => c.kind)).toEqual(['length', 'first', 'meaning']);
     expect(clues.cluesOf(word, 'es')[0].text).toBe('Abre la _______, por favor.');
     expect(clues.cluesOf(word, 'es')[1].text).toBe('abertura');
-    expect(clues.cluesOf(item('日本'), 'ja').find((c) => c.kind === 'length')?.text).toBe('2 characters');
+    expect(clues.cluesOf(item('日本'), 'ja').find((c) => c.kind === 'length')).toMatchObject({ text: 'characters', value: '2' });
     expect(clues.cluesOf(item('gato'), 'es').find((c) => c.kind === 'first')).toMatchObject({ text: 'Starts with', value: 'g' });
   });
   it('a wrong guess gives the next clue, the last wrong guess loses, a near guess wins', () => {
@@ -204,6 +205,21 @@ describe('clues', () => {
     expect([won(1), won(2), won(3), won(4), won(5)]).toEqual([3, 3, 2, 2, 1]);
     expect(clues.another({ ...base, shown: 7 }).shown).toBe(7);
     expect(clues.giveUp(base).status).toBe('lost');
+  });
+});
+
+describe('word hunt in a language with glued-on beginnings', () => {
+  it('takes the article and the one-letter words off, keeping at least three letters', () => {
+    expect(stems('الكتاب', 'ar')).toEqual(['الكتاب', 'كتاب']);
+    expect(stems('بيت', 'ar')).toEqual(['بيت']);
+    expect(stems('gato', 'es')).toEqual(['gato']);
+    expect(stems('הבית', 'he')).toContain('בית');
+  });
+  it('finds an Arabic word that has the article on it', () => {
+    const body = 'ذهب الرجل إلى السوق في الصباح الباكر مع أخيه الصغير وهما يتحدثان عن الأيام الماضية والأصدقاء القدامى ثم رأى الكتاب الجميل على الطاولة في البيت القريب من المدرسة القديمة وفي المساء أخذ القلم وكتب رسالة طويلة';
+    const items = ['كتاب', 'بيت', 'مدرسة', 'قلم'].map((t) => ({ term: t, synonyms: [], antonyms: [] }));
+    const hunts = makeHunts([body], items, 'ar', seededRandom(1), 1);
+    expect(hunts[0]?.targets.map((t) => t.term).sort()).toEqual(['بيت', 'قلم', 'كتاب', 'مدرسة'].sort());
   });
 });
 

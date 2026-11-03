@@ -5,7 +5,8 @@ import { reportGenerated } from '@/data/generated';
 import { LlmError } from './client';
 import { generateMaterial, MAX_ATTEMPTS } from './generate';
 import type { GenerateDeps, GenerateRequest, Lookup } from './generate';
-import { labelFor } from '@/core/generate/generate';
+import { labelFor, readAdventure } from '@/core/generate/generate';
+import { checkStory, fromAdventure, wordsUsed } from '@/core/games/story';
 
 const open: LinguaDB[] = [];
 function freshDb(): LinguaDB {
@@ -30,10 +31,16 @@ const pack = (): Lookup => ({
   ranks: new Map([...COMMON.map((w, i) => [w, 50 + i] as [string, number]), ...GRAND.map((w, i) => [w, 7000 + i] as [string, number])]),
 });
 
-function deps(db: LinguaDB, answers: unknown[], lookup: Lookup | null = pack()) {
+function deps(db: LinguaDB, answers: unknown[], lookup: Lookup | null = pack(), proofreader: unknown = { errors: [] }) {
   const prompts: Array<{ system: string; user: string }> = [];
+  const proofread: string[] = [];
   const d: GenerateDeps = {
     ask: async (system, user) => {
+      // The short grammar check is a question of its own, counted apart from the making.
+      if (system.startsWith('You proofread')) {
+        proofread.push(user);
+        return proofreader;
+      }
       prompts.push({ system, user });
       return answers[Math.min(prompts.length - 1, answers.length - 1)];
     },
@@ -42,7 +49,7 @@ function deps(db: LinguaDB, answers: unknown[], lookup: Lookup | null = pack()) 
     model: 'test-model',
     now: () => 1_000,
   };
-  return { d, prompts };
+  return { d, prompts, proofread };
 }
 
 describe('making a story, checked', () => {
@@ -51,7 +58,7 @@ describe('making a story, checked', () => {
     const { d, prompts } = deps(db, [EASY]);
     const first = await generateMaterial(REQ, d);
     expect(first.cached).toBe(false);
-    expect(first.row).toMatchObject({ lang: 'fr', kind: 'story', level: 'A2', checks: ['schema', 'dictionary', 'level'], model: 'test-model', content: EASY });
+    expect(first.row).toMatchObject({ lang: 'fr', kind: 'story', level: 'A2', checks: ['schema', 'dictionary', 'level', 'grammar'], model: 'test-model', content: EASY });
     // The name nobody lists is flagged, not hidden.
     expect(first.row.unknownWords).toEqual(['marie']);
     expect(labelFor(first.row).detail).toContain('checked at A2');
@@ -131,6 +138,30 @@ describe('making a story, checked', () => {
   });
 });
 
+describe('the short grammar check', () => {
+  it('is claimed only when the proofreader finds nothing, and only for a core language', async () => {
+    const clean = deps(freshDb(), [EASY]);
+    expect((await generateMaterial(REQ, clean.d)).row.checks).toContain('grammar');
+    expect(clean.proofread).toHaveLength(1);
+
+    const flagged = deps(freshDb(), [EASY], pack(), { errors: ['elle achète: agreement'] });
+    const row = (await generateMaterial(REQ, flagged.d)).row;
+    expect(row.checks).toEqual(['schema', 'dictionary', 'level']);
+    expect(labelFor(row).detail).not.toContain('grammar double-checked');
+
+    const odd = deps(freshDb(), [EASY], pack(), 'not json shaped');
+    expect((await generateMaterial({ ...REQ, lang: 'it' }, odd.d)).row.checks).not.toContain('grammar');
+    // Italian has no course here, so it was not even asked.
+    expect(odd.proofread).toHaveLength(0);
+  });
+
+  it('asks for no second reading of a text that is beyond its level', async () => {
+    const x = deps(freshDb(), [HARD]);
+    await generateMaterial(REQ, x.d);
+    expect(x.proofread).toHaveLength(0);
+  });
+});
+
 describe('dialogues and rewrites, checked and kept', () => {
   const dialogue = { title: 'Au marché', lines: [{ speaker: 'Marie', text: 'Je vais au marché.', translation: 'I go to the market.' }, { speaker: 'Luc', text: 'Tu achètes du pain ?', translation: 'Do you buy bread?' }, { speaker: 'Marie', text: 'Oui, et du lait.', translation: 'Yes, and milk.' }, { speaker: 'Luc', text: 'Elle rentre à la maison.', translation: 'She goes home.' }] };
 
@@ -156,5 +187,19 @@ describe('dialogues and rewrites, checked and kept', () => {
     expect(prompts[1].system).toContain('question');
     // "combine" needs two sentences to start from: this answer has one, so there is nothing usable.
     await expect(generateMaterial({ ...REQ, kind: 'rewrites', task: 'combine' }, deps(db, [items(3)]).d)).rejects.toBeInstanceOf(LlmError);
+  });
+});
+
+describe('a story game from the learner’s words (6-21, F1221)', () => {
+  it('asks for the words, and what comes back is a story that can be played and says how many words it used', async () => {
+    const db = freshDb();
+    const adventure = { title: 'Au marché', start: 'a', scenes: { a: { text: 'Marie voit du pain et du lait au marché.', choices: [{ label: 'Acheter le pain', to: 'b' }] }, b: { text: 'Elle rentre à la maison avec le pain.', choices: [{ label: 'Manger', to: 'c' }] }, c: { text: 'Le pain est très bon.', choices: [{ label: 'Encore', to: 'a' }, { label: 'Fin', to: 'd' }] }, d: { text: 'Fin de la journée.', choices: [] } } };
+    const { d, prompts } = deps(db, [adventure]);
+    const { row } = await generateMaterial({ lang: 'fr', kind: 'adventure', level: 'A2', topic: 'a short adventure that uses these words: pain, lait, maison' }, d);
+    expect(prompts[0].user).toContain('pain, lait, maison');
+    const body = readAdventure(row.content)!;
+    const story = fromAdventure(row.id, body, 'A2');
+    expect(checkStory(story).ok).toBe(true);
+    expect(wordsUsed(story, ['pain', 'lait', 'maison', 'cheval'])).toBe(3);
   });
 });

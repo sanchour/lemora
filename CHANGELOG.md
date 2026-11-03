@@ -3,8 +3,21 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
-- **0.6.0-alpha.172** · 2026-11-03 · Reading and Writing completion claim; next free version
-- **0.6.0-alpha.171** · 2026-11-03 · Claim Reading and Writing audit completion
+- **0.6.0-alpha.184** · 2026-11-03 · 6-29 G3: the word graph's contract, Dexie 46
+- **0.6.0-alpha.183** · 2026-11-03 · 6-21 deepened: all the plan's games and projects, A2 and B1 stories, topics, sound, record
+- **0.6.0-alpha.182** · 2026-11-03 · 6-21 finished: Finish it, story editor, Max story from words, more stories
+- **0.6.0-alpha.181** · 2026-11-03 · 6-21 finish: checkpoint, more stories and strength in the story engine
+- **0.6.0-alpha.180** · 2026-11-03 · 6-21 G5 to G7: daily, tournaments, timed games, stories, projects
+- **0.6.0-alpha.179** · 2026-11-03 · F0124 and F0125: the two varieties; Part A done for the core languages
+- **0.6.0-alpha.178** · 2026-11-03 · F0124 and F0125: the two varieties; Part A done for the core languages
+- **0.6.0-alpha.177** · 2026-11-03 · Part A leftovers: grammar check for the core languages, Say it in the record
+- **0.6.0-alpha.176** · 2026-11-03 · Merge main (6-29 G2) into 6-21 G4
+- **0.6.0-alpha.175** · 2026-11-03 · 6-21 G4: pick, match and parts games; merge main
+- **0.6.0-alpha.174** · 2026-11-03 · 6-29 G2: Thesaurus › Atlas, the compass and the tree on screen
+- **0.6.0-alpha.173** · 2026-11-03 · 5.2 conversation scenes audit (F0514-F0547, F0833, F1236)
+- **0.6.0-alpha.172** · 2026-11-03 · Reading and Writing audit completion claim
+- **0.6.0-alpha.172** · 2026-11-03 · Merge main (6-29 G1) into 6-21 G3
+- **0.6.0-alpha.171** · 2026-11-03 · 6-21 G3: crossword, word-link races, sorting, odd one out
 - **0.6.0-alpha.170** · 2026-11-03 · 6-29 G1: the word graph's model, with the tree view
 - **0.6.0-alpha.162** · 2026-11-02 · 6-23 T0: measured source audit, corrected deep plan and closed audit claim
 - **0.6.0-alpha.161** · 2026-11-02 · Claim 6-23 T0 data-source audit only

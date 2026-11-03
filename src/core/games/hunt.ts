@@ -1,6 +1,7 @@
 // Word hunt (6-21, F0168): the learner's words, hidden in plain sight in a passage of a text they have. Pure: passages come from Codex.
 import { tokenize } from '@/core/text/tokenizer';
 import { normalizeWord } from '@/core/text/normalize';
+import { stems } from './clitics';
 import { MAX_STARS } from './hangman';
 import type { GameItem } from './source';
 
@@ -19,7 +20,7 @@ export interface Hunt {
 const WORDS = { min: 30, max: 200 };
 const TARGETS = { min: 3, max: 8 };
 
-/** Passages that have three to eight of the learner's words in them, up to `count`, in a random order. */
+/** Passages that have three to eight of the learner's words in them (in any form: in Arabic and Hebrew with the glued-on beginning taken off), up to `count`, in a random order. */
 export function makeHunts(passages: string[], items: GameItem[], lang: string, random: () => number, count: number): Hunt[] {
   const forms = new Map<string, number>();
   items.forEach((it, i) => {
@@ -32,7 +33,8 @@ export function makeHunts(passages: string[], items: GameItem[], lang: string, r
     if (words < WORDS.min || words > WORDS.max) continue;
     const found = new Map<number, number>();
     const marked: HuntToken[] = tokens.map((t) => {
-      const item = t.isWord ? forms.get(t.norm ?? normalizeWord(t.text, lang)) ?? (t.base ? forms.get(normalizeWord(t.base, lang)) : undefined) : undefined;
+      const at = (norm: string) => stems(norm, lang).map((x) => forms.get(x)).find((i) => i !== undefined);
+      const item = t.isWord ? at(t.norm ?? normalizeWord(t.text, lang)) ?? (t.base ? at(normalizeWord(t.base, lang)) : undefined) : undefined;
       if (item === undefined) return { text: t.text, isWord: t.isWord };
       if (!found.has(item)) found.set(item, found.size);
       return { text: t.text, isWord: true, target: found.get(item) };

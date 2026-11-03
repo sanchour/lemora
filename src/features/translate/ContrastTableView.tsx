@@ -24,6 +24,7 @@ const DIMENSION_TABS: Array<{ id: 'all' | ContrastDimension; label: string }> = 
   { id: 'tense-aspect', label: 'Tense & Aspect' },
   { id: 'articles', label: 'Articles' },
   { id: 'prepositions', label: 'Prepositions' },
+  { id: 'pronouns', label: 'Pronouns' },
   { id: 'politeness', label: 'Politeness & Address' },
   { id: 'false-friends', label: 'False Friends' },
   { id: 'roots-formation', label: 'Roots & Formation' },

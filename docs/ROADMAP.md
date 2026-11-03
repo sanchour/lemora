@@ -24,6 +24,18 @@ A working plan for the next prompts. Each prompt is planned here first, then bui
 stopping, then committed and pushed. A push redeploys GitHub Pages, and installed apps update
 themselves. Ticks show what is done.
 
+## 2026-11-03 · 5.2 Conversation scenes audit & completion (F0514–F0547, 6-11)
+
+Antigravity-1 verified coverage of 5.2-6 and 6-11 conversation scenes against `docs/LINGUA-6-FEATURES.md` (F0514–F0547, plus F0833 and F1236):
+- 28 scenes and features were already built and verified in `src/core/colloquium/` and `src/features/colloquium/` from Lingua 5.2-6 and 6-11.
+- Built 4 dedicated scenes to guarantee 100% explicit scene coverage:
+  - `philosophy` (`src/core/colloquium/scenes/culture.ts`) for F0531 (Discussing philosophy & ethics).
+  - `seminar` (`src/core/colloquium/scenes/work.ts`) for F0535 (University seminar simulations & research debates).
+  - `awkward` (`src/core/colloquium/scenes/social.ts`) for F0539 (Handling an awkward situation & tactful resolution).
+  - `disagree` (`src/core/colloquium/scenes/practice.ts`) for F0541 (Expressing disagreement politely with diplomatic softening).
+- Ticked F0514–F0547, F0833, and F1236 in `docs/LINGUA-6-FEATURES.md`. Added unit test coverage in `src/core/colloquium/prompts.test.ts`.
+- Validated with typecheck, tests, and production build.
+
 ## 2026-11-02 · iOS design brief for Stitch
 
 The user now asks for a separate iOS app brief with appropriate Liquid Glass controls and a
@@ -2347,7 +2359,7 @@ Planned 2026-10-26 in [LINGUA-6-PLAN.md](LINGUA-6-PLAN.md), from the audit
 - [ ] **Part C · Paths and guidance:** 6-14 courses and lessons · 6-15 the tutor, in context · 6-16 personal and
       adaptive · 6-17 goals, habits and progress · 6-18 exams and levels.
 - [ ] **Part D · More of the language:** 6-19 immersion and culture · 6-20 phrasebook and notebook · 6-21 games and
-      projects · 6-22 dictionary tools · 6-23 tools for each language · **6-29 the word graph** (Thesaurus › Atlas:
+      projects (done) · 6-22 dictionary tools · 6-23 tools for each language · **6-29 the word graph** (Thesaurus › Atlas:
       your vocabulary as a bookish, Obsidian-like web, the user's idea of 2026-10-29; Opus builds it, planned in full in
       [WORD-GRAPH-PLAN.md](WORD-GRAPH-PLAN.md): the atlas of all your words and the compass of one, in seven pushes).
 - [ ] **Part E · Around the app:** 6-24 import, export and integrations · 6-25 accessibility and the desktop.
