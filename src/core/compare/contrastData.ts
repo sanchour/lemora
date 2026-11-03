@@ -1,3 +1,4 @@
+import { VARIETY_PAIRS } from './varieties';
 export type ContrastDimension =
   | 'word-order'
   | 'gender'
@@ -763,6 +764,9 @@ export const CONTRAST_PAIRS: LanguagePairContrast[] = [
     ],
   },
 ];
+
+// The varieties of one language (F0124, F0125) join the list from their own file.
+CONTRAST_PAIRS.push(...VARIETY_PAIRS);
 
 /** Returns contrast entries for a specific pair of languages. */
 export function getContrastPair(lang1: string, lang2: string): LanguagePairContrast | undefined {
