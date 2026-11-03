@@ -104,12 +104,17 @@ describe('stories', () => {
     const shortest: Record<string, number> = { room: 5, mystery: 6, detective: 5, travel: 5, city: 4, survival: 2, roleplay: 4, conversation: 5 };
     for (const lang of ['es', 'fr', 'de', 'ru', 'zh', 'ar']) {
       const stories = readyStories(lang);
-      expect(stories.map((s) => s.id.split(':')[2]).sort()).toEqual(Object.keys(shortest).sort());
+      const levels: Record<string, number> = { 'mystery-a2': 8, 'mystery-b1': 8, 'escape-a2': 7, 'escape-b1': 7, 'city-a2': 5, 'city-b1': 5 };
+      expect(stories.map((s) => s.id.split(':')[2]).sort()).toEqual([...Object.keys(shortest), ...Object.keys(levels)].sort());
       for (const story of stories) {
         const check = checkStory(story);
+        const key = story.id.split(':')[2];
         expect(check.problems, `${lang} ${story.id}`).toEqual([]);
-        expect(check.shortest, `${lang} ${story.id}`).toBe(shortest[story.id.split(':')[2]]);
+        expect(check.shortest, `${lang} ${story.id}`).toBe(shortest[key] ?? levels[key]);
+        expect(story.title.length).toBeGreaterThan(2);
       }
+      // three stories of each kind at every level from A1 to B1
+      for (const level of ['A1', 'A2', 'B1']) expect(stories.filter((s) => s.level === level).length).toBeGreaterThanOrEqual(3);
     }
     const [first] = readyStories('es');
     expect(first.id).toBe('ready:es:room');

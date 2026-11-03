@@ -16045,5 +16045,23 @@
   ],
   "Qualities": [
     "src/core/games/topics.ts"
+  ],
+  "What goes with each word": [
+    "src/features/games/Memory.tsx"
+  ],
+  "Its picture": [
+    "src/features/games/Memory.tsx"
+  ],
+  "Its sound": [
+    "src/features/games/Memory.tsx"
+  ],
+  "The word, read aloud": [
+    "src/features/games/Memory.tsx"
+  ],
+  "A podcast into a deck": [
+    "src/core/games/projects.ts"
+  ],
+  "Listen to a podcast, write what you heard, turn its words into a deck and review it.": [
+    "src/core/games/projects.ts"
   ]
 }

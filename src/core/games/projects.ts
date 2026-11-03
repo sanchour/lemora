@@ -44,6 +44,7 @@ export const TEMPLATES: ProjectTemplate[] = [
   { id: 'conversation-lesson', title: 'A conversation into a lesson', detail: 'Turn a conversation into a lesson of your own.', steps: ['talk', 'make', 'deck', 'review'] },
   { id: 'corrections-review', title: 'Corrections into practice', detail: 'Turn what was corrected in your writing into review exercises.', steps: ['write', 'practice', 'review'] },
   { id: 'story-new-words', title: 'A story with new words', detail: 'Write a short story with the words you learned lately.', steps: ['deck', 'write', 'review'] },
+  { id: 'podcast-deck', title: 'A podcast into a deck', detail: 'Listen to a podcast, write what you heard, turn its words into a deck and review it.', steps: ['listen', 'type', 'deck', 'review'] },
   { id: 'podcast', title: 'Your own podcast', detail: 'Make a short podcast in the language.', steps: ['make', 'talk', 'listen'] },
   { id: 'week-topic', title: 'A week on one topic', detail: 'Read, listen, watch, write and talk about one topic for a week.', steps: ['read', 'listen', 'watch', 'write', 'talk', 'games'], topic: true },
 ];

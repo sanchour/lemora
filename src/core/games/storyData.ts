@@ -1,6 +1,7 @@
 // The stories made by hand (6-21 G6): one for each of the six core languages, an escape room at A1. Max makes more (6-6b), and those play here too.
 import type { StoryGame } from './story';
 import { GENRES } from './storyGenres';
+import { levelStories } from './storyLevels';
 
 type Texts = { title: string; room: string; note: string; rug: string; window: string; locked: string; win: string; note_: string; key_: string; desk: string; under: string; out: string; door: string; open: string; back: string };
 
@@ -36,5 +37,6 @@ export function readyStories(lang: string): StoryGame[] {
       },
     },
     ...more,
+    ...levelStories(lang),
   ];
 }

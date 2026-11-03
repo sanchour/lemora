@@ -1,12 +1,13 @@
 // Memory matching (6-21, F0186 and F1199): cards face down, a word on one and its meaning (or picture) on another. Pure.
 import type { GameItem } from './source';
 
-export type MemoryMode = 'meaning' | 'picture';
+export type MemoryMode = 'meaning' | 'picture' | 'sound';
 
 export interface MemoryCard {
   id: number;
   pair: number;
-  face: { text?: string; image?: string };
+  /** `sound`: the word is said when the card is turned. */
+  face: { text?: string; image?: string; sound?: string };
   /** The word's own card, or what goes with it. */
   side: 'word' | 'other';
 }
@@ -21,12 +22,12 @@ export interface MemoryState {
 
 /** Up to `pairs` of the words, as two cards each, mixed. In picture mode only words with a picture. */
 export function makeMemory(items: GameItem[], pairs: number, random: () => number, mode: MemoryMode): MemoryState | null {
-  const usable = items.filter((i) => (mode === 'picture' ? i.image : i.meaning));
+  const usable = items.filter((i) => (mode === 'picture' ? i.image : mode === 'sound' ? i.term : i.meaning));
   const picked = [...usable].sort(() => random() - 0.5).slice(0, pairs);
   if (picked.length < 2) return null;
   const cards = picked.flatMap((item, pair): Array<Omit<MemoryCard, 'id'>> => [
     { pair, side: 'word', face: { text: item.term } },
-    { pair, side: 'other', face: mode === 'picture' ? { image: item.image } : { text: item.meaning } },
+    { pair, side: 'other', face: mode === 'picture' ? { image: item.image } : mode === 'sound' ? { sound: item.term } : { text: item.meaning } },
   ]);
   return { cards: cards.sort(() => random() - 0.5).map((c, id) => ({ ...c, id })), open: [], matched: [], moves: 0 };
 }
