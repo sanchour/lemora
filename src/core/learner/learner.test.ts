@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { EvidenceRow } from '@/core/contracts/learner';
-import { itemKeyOf, quietSkills, recognisedNotRecalled, skillBalance, summariseDay, weakSpotsOf, wordIdOfKey } from './learner';
+import { itemKeyOf, mixUpsOf, quietSkills, recognisedNotRecalled, skillBalance, summariseDay, weakSpotsOf, wordIdOfKey } from './learner';
 
 const DAY = 86_400_000;
 const NOW = new Date(2026, 9, 29, 12).getTime();
@@ -120,5 +120,17 @@ describe('skills side by side', () => {
     const listening = skillBalance([day(4, 1, 2), day(3, 0, 1)]).find((s) => s.skill === 'listening');
     expect(listening).toEqual({ skill: 'listening', answers: 8, wrong: 1, assisted: 3 });
     expect(skillBalance([]).every((s) => s.answers === 0)).toBe(true);
+  });
+});
+
+describe('mix-ups (6-29)', () => {
+  const wrong = (expected: string, given: string, at: number): EvidenceRow => ({ id: `${at}`, lang: 'es', at, day: '2026-11-03', skill: 'vocabulary', room: 'thesaurus', item: { type: 'word', wordId: `es:${expected}` }, itemKey: `word:es:${expected}`, outcome: 'wrong', assisted: false, given, expected });
+  it('pairs two of the learner’s words written one for the other, most often first, and never a typo', () => {
+    const yours = new Set(['coger', 'comer', 'coser']);
+    const rows = [wrong('comer', 'coger', 1), wrong('comer', 'Coger ', 3), wrong('coser', 'comer', 2), wrong('comer', 'comr', 4), wrong('comer', 'comer', 5)];
+    expect(mixUpsOf(rows, (n) => yours.has(n))).toEqual([
+      { expected: 'es:comer', given: 'es:coger', times: 2, last: 3 },
+      { expected: 'es:coser', given: 'es:comer', times: 1, last: 2 },
+    ]);
   });
 });

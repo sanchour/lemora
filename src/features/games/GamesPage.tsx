@@ -56,6 +56,7 @@ import { Anagram } from './Anagram';
 import { Clues } from './Clues';
 import { Bingo } from './Bingo';
 import { Choice } from './Choice';
+import { Complete } from './Complete';
 import { Crossword } from './Crossword';
 import { Daily, Weekly } from './Daily';
 import { Hangman } from './Hangman';
@@ -82,7 +83,7 @@ interface ScreenProps {
 }
 
 /** The screen of each game that has one; a game without one is not on the shelf yet. */
-const SCREENS: Record<string, ComponentType<ScreenProps>> = { hangman: Hangman, anagram: Anagram, missing: MissingLetters, clues: Clues, wordsearch: WordSearch, hunt: Hunt, ladder: Ladder, crossword: Crossword, daily: Daily, weekly: Weekly, story: Story, translate: (p) => <Timed {...p} kind="translate" />, dictation: (p) => <Timed {...p} kind="dictation" />, tournament: (p) => <Tournament {...p} source={p.source!} render={(id) => { const S = SCREENS[id]; return <S {...p} def={gameById(id)!} best={p.bests?.[id]} />; }} />, definition: (p) => <Choice {...p} kind="definition" />, picture: (p) => <Choice {...p} kind="picture" />, memory: Memory, bingo: Bingo, parts: Parts, sorting: Sorting, odd: OddOneOut, synonyms: (p) => <Race {...p} relation="synonym" />, antonyms: (p) => <Race {...p} relation="antonym" />, association: (p) => <Race {...p} relation="any" /> };
+const SCREENS: Record<string, ComponentType<ScreenProps>> = { hangman: Hangman, anagram: Anagram, missing: MissingLetters, clues: Clues, wordsearch: WordSearch, hunt: Hunt, ladder: Ladder, crossword: Crossword, complete: Complete, daily: Daily, weekly: Weekly, story: Story, translate: (p) => <Timed {...p} kind="translate" />, dictation: (p) => <Timed {...p} kind="dictation" />, tournament: (p) => <Tournament {...p} source={p.source!} render={(id) => { const S = SCREENS[id]; return <S {...p} def={gameById(id)!} best={p.bests?.[id]} />; }} />, definition: (p) => <Choice {...p} kind="definition" />, picture: (p) => <Choice {...p} kind="picture" />, memory: Memory, bingo: Bingo, parts: Parts, sorting: Sorting, odd: OddOneOut, synonyms: (p) => <Race {...p} relation="synonym" />, antonyms: (p) => <Race {...p} relation="antonym" />, association: (p) => <Race {...p} relation="any" /> };
 const GAMES = ALL_GAMES.filter((g) => g.id in SCREENS || g.id === 'projects');
 
 const QUICK_MODES = [

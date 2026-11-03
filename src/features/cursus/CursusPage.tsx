@@ -1,7 +1,7 @@
 import { interpolate } from '@/core/i18n/messages';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useEffect } from 'react';
-import { Navigate, useParams, useSearchParams } from 'react-router';
+import { Link, Navigate, useParams, useSearchParams } from 'react-router';
 import { useApp } from '@/app/context';
 import { PageHeader } from '@/app/PageHeader';
 import { InRoom } from '@/app/room';
@@ -63,8 +63,12 @@ export default function CursusPage() {
         englishTitle={'Cursus'}
         eyebrow={translateUi('Learn {0} step by step', [translateUi(name)])}
         englishEyebrow={interpolate('Learn {0} step by step', [name])}
+        actions={
+          <Link to="/cursus/characters" className="text-[14px] font-semibold text-accent-text hover:underline">
+            {translateUi('Character reference')}
+          </Link>
+        }
       />
-
       <InRoom.Provider value>
         {activeTool ? (
           <div className="mb-6 flex items-center justify-between border-b border-line/60 pb-3">

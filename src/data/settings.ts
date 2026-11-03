@@ -165,6 +165,8 @@ export interface Settings {
     readings: 'new' | 'all' | 'fade' | 'off';
     /** Transliteration letters: scholarly (ā, ḥ, ʿ) or plain (a, h, '). Arabic's scheme is the one with marks. */
     translit?: 'scholarly' | 'plain';
+    /** Named display scheme per language (6-23 A2); missing values use that language's default. */
+    readingSchemes?: Record<string, string>;
     /** How Known, Learning and Unseen words look; unset is the usual look. Unseen marks show with `highlightUnseen`. */
     words?: Partial<Record<WordLookState, WordLook>>;
     /** The end page of a text: "Check yourself", the two story questions with AI, and "In your own words". */

@@ -70,6 +70,8 @@ export interface Text extends Synced {
   readingGenre?: string;
   readingParallel?: import('@/core/reading/parallel').ParallelPassage[];
   readingMarks?: import('@/core/reading/aids').ReadingMark[];
+  readingGlossary?: Array<{ id: string; name: string; kind: 'character' | 'place'; chapterIndex: number; quote: string; note: string }>;
+  generatedId?: string;
   id: string;
   lang: Lang;
   /** 'comic': one chapter per page, the page's picture first and its speech bubbles after it. */
@@ -183,6 +185,10 @@ export interface Word extends Synced {
   important?: Bit;
   /** Where a met word waits (6-2). Absent reads as 'kept' on a word that has a row; a word met with no row at all is in the inbox. */
   inbox?: InboxState;
+  /** Grammatica topic ids this word is linked to (6-29, contracts/word.ts). Absent reads as []. */
+  grammarTopics?: string[];
+  /** Other words the learner linked it to, as word ids (6-29: the word graph's own threads). Absent reads as []. */
+  relatedWordIds?: string[];
 }
 
 export interface FrequencyRow {
@@ -725,6 +731,7 @@ export interface JournalReview {
 }
 
 export interface JournalEntry extends Synced {
+  pictureBlobId?: string;
   portfolio?: { level: string; topic: string; at: number };
   writingTaskId?: string;
   id: string;

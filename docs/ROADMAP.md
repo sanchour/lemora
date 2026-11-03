@@ -1,5 +1,43 @@
 # Roadmap: what's being built now
 
+## 2026-11-03 · 6-8 Reading and 6-12 Writing completion and audit reconciliation
+
+Reopen the stale complete row and account for all 72 assigned entries, including the 47 still unticked.
+Keep the existing reader, annotation storage, exercise views and checked material generator.
+
+- [x] R5: verify existing stories, parallel/simplified reading, translation comparison and highlight export;
+  expose all promised reading kinds and open-source routes from the Graded shelf.
+- [x] R6: finish comprehension kinds and explicit chapter-end practice; read a chapter aloud with
+  sentence following; make saved passages navigable bookmarks and a favourite-passages shelf.
+- [x] R7: book-project chapter vocabulary/density, learner-confirmed character/place glossary and
+  chapter discussion, preserving exact source anchors and existing backup rows.
+- [x] W5: finish F0617 image description, F0657 lower-level simplification, F0676 target-language
+  spellchecking, F0684 reusable sentence templates and F0687 saved draft comparison.
+- [x] R8: regression tests, desktop light/dark browser review, typecheck, full tests and production build;
+  reconcile the plan/audit/handover with specific evidence, then version and publish through a checked PR.
+
+Scope reaches Reading's shelf, chapter contents, selection/tools, end page, shared question parser/service,
+existing generated-material and export controls, text metadata and their focused tests. No learner-data
+migration, new dependency or unrelated Games changes. Real-provider output remains explicitly unverified.
+
+**Validation (0.6.0-alpha.187):** after merging current main, typecheck, all **259 test files**
+(**1,691 passing tests, one skipped**, one worker) and `BASE_PATH=/lingua./ npm run build` pass.
+All 72 Reading IDs map to the audit; all 55 Writing entries are ticked, with 155 valid local audit
+references and incoming translations retained. Reader, Writing and book project were reviewed at
+1280×800, 1366×768 and 1440×900 in Lux/Nox with no horizontal overflow. Arabic parallel text was
+checked at all three widths (Lux, `dir=auto` resolving to RTL); six interface catalogues pass coverage,
+without a native-language UI review. Live Wikivoyage Madrid and Wikibooks Gazpacho search/import,
+chapter save/Undo, saved-mark flush/favourites, narration start/follow/stop, local picture/Undo,
+snapshots/restore, reusable templates and spelling/no-key states were exercised in a disposable profile.
+The Wikibooks check exposed unlabelled navigation and layout tables; the parser regression now retains
+separate ingredients/instructions and the second live import confirms it. Original Device theme and
+viewport restored. Build warnings remain about existing CSS properties, externalised Piper modules,
+chunk sizes and mixed static/dynamic imports. Versioned feature branch goes through the protected
+`verify` PR workflow; CI/merge/Pages are verified in this chat's end notes. No next step is claimed.
+Real AI output, native translation/audio quality, OS spellcheck coverage, complete screen-reader
+navigation, very large books, concurrent device edits and browser download round trips are unverified.
+
+
 A working plan for the next prompts. Each prompt is planned here first, then built without
 stopping, then committed and pushed. A push redeploys GitHub Pages, and installed apps update
 themselves. Ticks show what is done.
@@ -2339,7 +2377,7 @@ Planned 2026-10-26 in [LINGUA-6-PLAN.md](LINGUA-6-PLAN.md), from the audit
 - [ ] **Part C · Paths and guidance:** 6-14 courses and lessons · 6-15 the tutor, in context · 6-16 personal and
       adaptive · 6-17 goals, habits and progress · 6-18 exams and levels.
 - [ ] **Part D · More of the language:** 6-19 immersion and culture · 6-20 phrasebook and notebook · 6-21 games and
-      projects · 6-22 dictionary tools · 6-23 tools for each language · **6-29 the word graph** (Thesaurus › Atlas:
+      projects (done) · 6-22 dictionary tools · 6-23 tools for each language · **6-29 the word graph** (Thesaurus › Atlas:
       your vocabulary as a bookish, Obsidian-like web, the user's idea of 2026-10-29; Opus builds it, planned in full in
       [WORD-GRAPH-PLAN.md](WORD-GRAPH-PLAN.md): the atlas of all your words and the compass of one, in seven pushes).
 - [ ] **Part E · Around the app:** 6-24 import, export and integrations · 6-25 accessibility and the desktop.
@@ -2510,3 +2548,169 @@ User scope: finish T0 only, then stop; no implementation track is claimed.
 audit self-check and report links pass. Typecheck, 247 test files (1,607 passed, one skipped;
 one worker) and production-path build pass. No browser, device/audio, real AI or native-speaker
 verification; no runtime feature changes. T0 claim closed; stop here, no implementation track claimed.
+
+## 2026-11-02 · 6-23 A1 Unicode character reference (Codex)
+
+Scope: A1 only, then stop. Reuse the pinned T0 Unicode cache; no new source download or database table.
+
+- [x] Clean setup checks; publish the A1-only claim as alpha.163.
+- [x] Build reproducible Unicode 17 character data by script, names/block/script search and a
+  desktop inspector for pasted text, category, case, NFC/NFD, UTF-8 and lookalikes; reuse CJK readings.
+- [x] Link `/cursus/characters` from Marks and the letter sheet, add typing links and explicit offline
+  status, cache data on first use; preserve Unicode licence/source attribution.
+- [x] Check every alphabet character against the pinned source, edge cases and fetch failures;
+  run typecheck/tests/build and browser checks at 1280, 1440, 1366×768, light/dark and Arabic.
+- [ ] Record visible acceptance and limits, release the A1 claim, version/push through a checked PR;
+  verify deployment and stop without claiming A2.
+
+**Stopped at alpha.164 checkpoint:** [A1 evidence](6-23-A1.md). Typecheck, 1,616 tests/one skipped
+and production build pass; six desktop size/theme views inspected. Offline reload failed, and the
+browser blocked inspection of its error page. No workaround, merge or deployment; final acceptance
+and F1306 remain open, Codex retains A1. No A2 work.
+
+### A1 completion follow-up · 2026-11-02
+
+The user explicitly asks to diagnose the offline reload and finish A1; the existing Codex A1 claim continues.
+
+- [x] Repeat the clean setup checks on alpha.164 before changes.
+- [ ] Diagnose registration/control using the existing device-lab UI and browser logs before an
+  offline attempt; distinguish a worker failure from the browser's navigation/error-page behavior.
+- [ ] Fix the established cause with a regression check, verify cached A1 data and reload behavior,
+  then update acceptance, release the claim and publish through the protected-main PR. Stop after A1.
+
+**Follow-up outcome:** the existing device lab showed “Offline support Active” on alpha.164, including
+an online reload. The subsequent server-off reload still failed. No service-worker defect was
+established and no runtime code was changed. Safari comparison could not run: native Computer Use
+permissions were not granted. A1 acceptance/F1306 remain open. The user's next request explicitly
+switches to A2; preserve this gap rather than mark A1 complete.
+
+### 6-23 A2 · Codex · 2026-11-02
+
+Claim published alone as alpha.166; A1's offline acceptance gap remains open. Work in checked,
+versioned slices, preserving the original A2 acceptance rather than ticking partial implementations:
+
+- [~] A2.1: source-backed Russian BGN/PCGN 1947 and ISO 9:1995 engines, Settings › Reading scheme
+  selection and reader use; preserve legacy alphabet-lesson fixtures until explicitly migrated.
+- [ ] A2.2: remaining named systems for Russian, Greek, Arabic, Japanese, Korean, Mandarin,
+  Georgian and Cantonese; published examples per named edition, with review files and limits.
+- [ ] A2.3: shared per-language scheme and per-surface display controls (reader, cards, dictionary,
+  lessons, subtitles), over/under/hover, click reveal, word/lesson fading and check-yourself mode.
+- [ ] A2.4: desktop acceptance at 1280, 1440 and 1366×768, Paper/Nocturne and Arabic; final tests,
+  typecheck and build, honest source/native-review/offline limits, versioned Codex push.
+
+Callers to cover: ChapterBody/ReaderPage, KaraokeTranscript, FlipCard, dictionary Entry, CourseIntro
+and SpeakLesson; settings persistence, shared CSS, golden fixtures and interface catalogues. No
+learner text or stored readings are rewritten; conversion is a display operation. No Claude-owned
+exercise views, card editor or SRS files will be edited.
+
+**A2.1 checkpoint:** two source-backed engines and their persistent selector/preview are implemented;
+Codex and Russian transcripts receive the scheme without changing saved words or alphabet lesson
+fixtures. Typecheck, 250 files/1,637 tests passing/one skipped and production-path build pass. A
+regression caused by adding app context inside ChapterBody was corrected by passing the scheme
+from its callers; the existing test remains intact and a selected-scheme/source-text regression
+was added. Russian browser acceptance is pending the requested 2.6 MB local test-pack approval.
+Arabic Settings was opened after rebuild; this is not certification of the new Russian controls.
+No A2 audit ticks, acceptance, main merge or deployment. A2 claim remains; A1 offline gap remains.
+
+### A2.1 verification follow-up · Codex · 2026-11-02
+
+Russian pack approval received; installation, both scheme selections, reload/language-switch
+persistence, actual reader data and the three desktop sizes in Paper/Nocturne observed. Arabic
+interface/RTL text also inspected. [Evidence, screenshots and exact stop](6-23-A2-VERIFICATION.md).
+No runtime code changed. Setup: typecheck, 1,637 tests/one skipped and production build pass.
+**Stop:** two ViewTransition AbortErrors appeared in browser logs. Existing theme/language transition
+files are unchanged from main; the exact caller is not established. Follow the user's stop rule;
+no shared transition fix, motion workaround, clean-console claim or A2.2 implementation. Keep A2
+claimed and its audit entries open. A1's offline acceptance remains unresolved separately.
+
+### A2 continuation · resolve transition cancellation first · Codex · 2026-11-02
+
+The user asked to continue after the alpha.168 stop. Diagnose and repair the local transition
+promise handling, not global error handling or motion settings; retain A1's separate offline gap.
+The clean implementation baseline passed typecheck, 1,637 tests and build in the immediately
+preceding follow-up; alpha.168 added only docs/version metadata and GitHub Checks passed.
+
+- [x] Handle expected ready-promise cancellation once at the two existing transition call sites;
+  retain visible unexpected errors and the original update callback/transition object.
+- [x] Regression-check cancellation, genuine failure reporting and callback completion; run all
+  required checks, then repeat ordinary theme/language switches in a fresh browser tab.
+- [x] Publish the checked repair alone; continue A2's remaining named schemes in checked slices.
+
+**Transition repair outcome:** both existing callers now use startVisualTransition, which attaches a
+handler to ready immediately. Only DOMException AbortError (replaced/skipped animation) is accepted;
+unexpected animation failures still reach console.error, and the native callback/finished object
+is preserved. Typecheck, 251 files/1,640 tests passing/one skipped and production build pass. Rebuilt
+main asset confirmed in a fresh tab; theme changes and Russian→Arabic→Russian switching completed,
+with preserved Russian settings and no warn/error log entries in that tab. Existing full desktop
+A2.1 render checks remain recorded at alpha.168; no new UI layout or motion preference was changed.
+The previous transition stop is resolved for continuing A2, not A1's separate offline gap.
+
+### A2.2a · remaining Russian schemes · Codex · 2026-11-02
+
+- [x] Add ALA-LC 2012's complete published Russian table (including four obsolete letters) and
+  ICAO 9303's Russian passport-letter spelling, keeping editions/limits explicit.
+- [x] Golden-check the primary tables independently, including tied capitals, terminal hard sign,
+  soft-sign omission for the passport choice, case and unknown saved settings.
+- [x] Reach both choices and the real reader in Settings; check required desktop sizes/themes,
+  run typecheck/tests/build and publish separately. Keep the full A2 audit entries open.
+
+LC's PDF cells were visually inspected after Word text extraction omitted their equation-like glyphs.
+The official Danish consular passport table was read through its public web PDF; direct caching
+returned 403, so it has no invented cache hash. The larger ICAO document is already cached.
+
+**A2.2a resumed 2026-11-03:** own interrupted changes preserved. Setup/typecheck, 1,712 tests/one
+skipped and production build pass. Both new choices and the actual reader inspected at all three
+sizes in both themes, with persistence/source-word checks and an empty warn/error log. [Evidence](6-23-A2-RUSSIAN.md).
+Before versioning, integrate 74 incoming main commits (onboarding PR) by merge to preserve Codex's
+published history; rerun integrated checks. No broad A2 audit ticks; no A3 claim.
+
+**A2.2a integrated outcome:** incoming main 3c519b6 merged without rewriting published history.
+All seven additive catalogue conflicts retain the exact three-way content, without duplicates or
+reformatting. Integrated typecheck, 1,712 tests/one skipped and production build pass; browser loaded
+the integrated asset, kept all four choices and showed the real passport reader at 1366×768 with
+intact source text and a clean tab log. Russian slice complete; remaining languages/controls stay
+under A2. [Exact scope and limits](6-23-A2-RUSSIAN.md). No main push or A3 claim.
+
+**Codex Russian A2 publication integration, 2026-11-03:** subsequently merged main 07008c7 and
+62b703a while preserving published history and other sessions' claims. Final integrated typecheck,
+1,740 tests / one skipped and production build pass. Russian browser evidence predates these last
+two integrations; incoming graph/games/conversation UI not audited. Full A2 and A1 offline acceptance
+remain open. [Russian scope and verification](6-23-A2-RUSSIAN.md).
+
+### A2.2b · Greek named schemes · Codex · 2026-11-03
+
+- [x] Pin/check the cached ISO 843:1997 Type 1 tables and UNGEGN's ELOT 743 transcription table;
+  distinguish modern monotonic spelling support from full polytonic/archaic conversion.
+- [x] Add independent table/example golden tests and regressions for accents, diaeresis,
+  contextual pairs, capitalization, unsupported input and stale saved choices. Preserve lessons.
+- [x] Reuse Reading settings and ChapterBody for named Greek choice/preview, saving per language;
+  verify both reader choices at three desktop sizes in both themes, reload and source-span integrity.
+- [x] Typecheck, tests and production build; record exact limits, synchronize and version/push Codex
+  only. Full A2 audit entries remain open; no A3 claim. The six local test packs are user-approved.
+
+Scope reaches core display dispatch, Settings, the reader/shared transcript render, tests, catalogues
+and source/review ledgers. No learner data migration, protected exercise/editor/SRS changes or dependency.
+
+**A2.2b required stop:** local Greek commit 7065da6 is checked as above, but incoming main a76b749
+fails `git diff --check --cached` in unchanged incoming games/Story.tsx:107 (blank line at EOF).
+Resolved merge remains staged/uncommitted; no workaround, integrated checks, Greek version or push.
+The publication checkbox stays open. [Resume evidence](6-23-A2-GREEK.md).
+
+### A1 and A2 completion continuation · Codex · 2026-11-03
+
+The user explicitly requests completing both tracks, including resolving the known inherited
+whitespace blocker. Keep the existing A1/A2 claims and publish only codex/lingua.
+
+- [x] Finish the pending main integration and checked Greek push; remove only the known blank EOF
+  line in incoming Story.tsx, without changing its behavior or any other session's claimed work.
+- [ ] Resolve A1's offline reload evidence using a supported browser; verify the real Unicode
+  page, cached script/data access and source-backed alphabet/name coverage. Record device limits.
+- [ ] Finish A2's named Arabic, Japanese, Korean, Mandarin, Georgian and Cantonese systems from
+  their sources, with independent fixtures, correct reading inputs and explicit unsupported cases.
+- [ ] Honor independent per-surface choices in reader, cards, dictionary, lessons and subtitles;
+  add over/under/hover, click-to-check and lesson/word-state fading through shared display code.
+- [ ] Verify learner-reachable controls and required desktop/light/dark/Arabic behavior; complete
+  checks and version each coherent push. Tick only the full applicable acceptance, then stop.
+
+No data migration/dependency planned. Preserve learner source text and existing lesson fixtures.
+Native linguistic review, actual screen-reader use and real AI/microphone are not implied by tests.

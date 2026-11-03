@@ -3,7 +3,7 @@
 **Written 2026-10-30 (Claude Sonnet 5.5), after the user reopened the step: "I want all done deeply."** Step 6-23 was first built in
 seven light pushes (0.6.0-alpha.120 to .129). They are real and they stay, but most of them are short hand-written item sets and
 small tools. This plan is what "done deeply" means, entry by entry. All 51 entries of 6-23 are open again in
-[LINGUA-6-FEATURES.md](LINGUA-6-FEATURES.md) until their own "done when" below is met. Nothing here is built yet.
+[LINGUA-6-FEATURES.md](LINGUA-6-FEATURES.md) until their own "done when" below is met. T0 is audited; A1 has an implementation checkpoint with an unresolved offline browser check. Later tracks are not built.
 
 ## 0 · What the light version left, in one list
 
@@ -78,6 +78,11 @@ Each track is a list of pushes. "Done when" is what makes its entries tickable. 
   Search by character, by name or by code point. For CJK, the Unihan data already in `public/chars`. Data: `public/chars/unicode/<script>.json`, built by
   `scripts/script/unicode.ts`. **Done when:** a learner can paste any text and see every character in it explained, and a test
   checks the names against `UnicodeData.txt` for all characters of the alphabets.
+**A1 checkpoint, Codex 2026-11-02 (alpha.164):** the reference, generated data and source-backed tests
+are implemented; online browser checks passed at the required sizes/themes, with Arabic. An offline
+reload failed and the browser blocked error-page inspection. [Exact evidence and stop point](6-23-A1.md).
+Acceptance/F1306 remain open; A1 claim retained, A2 not started.
+
 - **A2 · Transliteration schemes and controls (F1298, F1300, F1301, F1371).** One engine, `core/script/translit/<script>.ts`, with
   named schemes: Russian (BGN/PCGN, ISO 9, ALA-LC, a passport scheme), Greek (ELOT 743, ISO 843), Arabic (DIN 31635, ALA-LC, IJMES,
   Buckwalter, plain, "chat Arabic"), Japanese (Hepburn, Kunrei-shiki, Nihon-shiki, with long vowels as macrons, doubled or `ou`), Korean (Revised
@@ -86,6 +91,21 @@ Each track is a list of pushes. "Done when" is what makes its entries tickable. 
   reading is shown over, under, or in a hover; "reveal this word" on a click; fading by word state (done) and by lesson. Golden tests per scheme from published
   examples. **Done when:** every scheme has golden tests from its standard's own examples, the schemes are chosen in Settings › Reading
   and honoured in every surface, and F1300 (reading with no transliteration) is a visible mode with a "check yourself" reveal.
+**A2.1 checkpoint, Codex 2026-11-02:** Russian BGN/PCGN 1947 and ISO 9:1995 are implemented,
+with primary-source golden fixtures, a persistent Settings › Reading selector/preview and scheme
+props into the reader/transcript ChapterBody. [Review ledger and exact scope](review/6-23-ru.md).
+Typecheck, 1,637 tests/one skipped and production build pass. Russian browser acceptance awaits the
+requested local test-pack approval. No other named scheme, per-surface setting, new reveal/lesson
+fading mode or A2 acceptance is claimed. The original A2 “done when” and all its feature entries
+remain open; Codex retains the A2 claim. A1's offline gap remains open separately.
+
+**A2.1 browser follow-up, Codex 2026-11-02:** the user approved the Russian test pack; both schemes,
+persistence, the actual reader and all three desktop sizes/themes were observed, plus Arabic
+interface/RTL text. [Evidence and stop](6-23-A2-VERIFICATION.md). Two ViewTransition AbortErrors
+appeared in browser logs, with no established A2 cause; shared transition files are unchanged from
+main. Stop under the user's rule, no workaround or A2.2 implementation. A2 remains claimed/open;
+this supersedes the pending approval above, not the original full acceptance criteria.
+
 - **A3 · Script conversion (F1299).** Chinese: OpenCC's phrase dictionaries (s2t, t2s, s2tw, s2twp, s2hk, tw2s, hk2s) compiled to a
   compact trie, lazy; conversion of text, of a whole book in the reader ("show in Traditional / Simplified / Taiwan"), of a card's
   fields on export; the many-to-one traps (发, 后, 干, 面) handled by phrases and listed. Serbian: Cyrillic ⇄ Latin with the
@@ -217,3 +237,38 @@ become generated drills, move into Grammatica topics, or are deleted when a deep
 
 Everything hand-written goes into `docs/review/6-23-<language>.md` the day it is written (the item, the claim, the source). Nothing is marked
 "checked" in the app until a reviewer has marked it. The existing Marks items are moved into those files first, as the plan's first content push.
+
+**Codex A2 transition stop resolved after the user's continuation, 2026-11-02:** observe the native
+ready promise at both existing theme/language transition callers. Expected AbortError cancellation
+is handled locally; other failures remain reported. Typecheck, 1,640 tests/one skipped and build
+pass; ordinary rebuilt-browser theme and Russian/Arabic switches completed with an empty warn/error
+log in that tab. [Evidence and scope](6-23-A2-VERIFICATION.md). No A2 audit ticks; continue remaining
+named schemes and per-surface controls under the existing Codex claim. A1 offline gap remains.
+
+**A2.2a Russian checkpoint, Codex 2026-11-03:** all four Russian choices implemented in Settings/
+reader. ALA-LC 2012's complete published Russian table and ICAO passport-letter spelling have
+independent primary-table goldens. Typecheck, 1,712 tests/one skipped and build pass before incoming
+main integration; both new choices inspected at all three desktop sizes in Paper/Nocturne, with
+persistence and source text intact and a clean tab log. [Scope and pending integration](6-23-A2-RUSSIAN.md).
+Other seven languages and per-surface/position/reveal/lesson fading remain; no full A2 acceptance.
+
+**A2.2a integrated, Codex 2026-11-03:** current main 3c519b6 safely merged into Codex; seven additive
+catalogue conflicts preserve both sides without reformatting. Typecheck, 1,712 tests/one skipped and
+build pass on the integrated tree. All four Russian choices and the real passport reader were
+rechecked in that build; tab log clean. [Detailed verification limits](6-23-A2-RUSSIAN.md). Russian
+named-scheme slice complete; A2 and its audit entries remain open for other languages and independent
+surface/position/reveal/lesson controls. A1 offline gap remains. No direct main push or deployment.
+
+**Codex Russian A2 publication integration, 2026-11-03:** subsequently merged main 07008c7 and
+62b703a while preserving published history and other sessions' claims. Final integrated typecheck,
+1,740 tests / one skipped and production build pass. Russian browser evidence predates these last
+two integrations; incoming graph/games/conversation UI not audited. Full A2 and A1 offline acceptance
+remain open. [Russian scope and verification](6-23-A2-RUSSIAN.md).
+
+**Codex A2.2b, 2026-11-03:** modern Greek ELOT 743 Type 2 / ISO 843:1997 Type 1 spelling choices
+are learner-reachable in Reading settings and the reader/shared transcript renderer. Typecheck,
+1,806 tests / one skipped and build pass; browser twelve size/theme views, both choices' reload
+persistence, literal source/unsupported-word checks, Russian setting isolation and empty warn/error
+log. [Exact evidence and limits](6-23-A2-GREEK.md). Synchronization/publication outcome follows there.
+No full-A2 audit tick; other named languages/surface controls and A1 offline gap remain open. Codex
+retains A2, no A3 claim. Native standards review, live transcript and a fresh Arabic pass not performed.

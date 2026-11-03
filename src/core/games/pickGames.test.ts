@@ -35,6 +35,9 @@ describe('memory', () => {
     expect(s.cards).toHaveLength(16);
     for (let p = 0; p < 8; p++) expect(s.cards.filter((c) => c.pair === p).map((c) => c.side).sort()).toEqual(['other', 'word']);
     expect(makeMemory(WORDS, 8, seededRandom(1), 'picture')).toBeNull();
+    const sound = makeMemory(WORDS, 8, seededRandom(1), 'sound')!;
+    expect(sound.cards.filter((c) => c.side === 'other').every((c) => c.face.sound)).toBe(true);
+    expect(sound.cards.filter((c) => c.side === 'other').map((c) => c.face.sound).sort()).toEqual(sound.cards.filter((c) => c.side === 'word').map((c) => c.face.text).sort());
     expect(makeMemory(WORDS.slice(0, 3).map((w) => ({ ...w, image: 'blob:x' })), 8, seededRandom(1), 'picture')!.cards).toHaveLength(6);
   });
   it('keeps a match, counts a move for each second card, and holds a miss until closed', () => {

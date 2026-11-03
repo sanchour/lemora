@@ -66,6 +66,9 @@ export const BACKUP_POLICIES: Record<TableName, Policy> = {
   evidenceDays: { policy: 'skip', key: 'id' },
   // What Max made: kept so nothing is paid for twice (6-6).
   generated: { policy: 'insertOnly', key: 'id' },
+  // The atlas's scene is rebuilt on the device; saved views and pins are the learner's (6-29).
+  graphLayouts: { policy: 'skip', key: '' },
+  graphViews: { policy: 'lww', key: 'id' },
   // Downloaded again from the site when needed.
   fullDict: { policy: 'skip', key: '' },
 };

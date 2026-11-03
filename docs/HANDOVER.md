@@ -9,6 +9,17 @@ Last updated 2026-10-27 (Lingua 6 · Features is step 23, next after 21; Lingua 
 
 ---
 
+## 2026-11-03 · Reading 6-8 and Writing 6-12
+
+- [x] Reconciled Reading’s complete row with all **72 assigned entries**, including the **47** still
+  open; finished/verified the remaining source, reader, comprehension and book-project controls.
+- [x] Finished Writing’s five open entries **F0617, F0657, F0676, F0684 and F0687**; all **55** assigned
+  entries are ticked. Existing W1–W4 are retained.
+- [x] Added [the per-entry audit](LINGUA-6-8-12-AUDIT.md), explicit spelling/storage/model boundaries,
+  regression checks and desktop interaction evidence. After integrating main: typecheck, 259 test files /
+  1,691 tests passing (one skipped) and production build pass. Version `0.6.0-alpha.187`; protected PR and
+  Pages verification in this chat’s end notes. No next step is claimed; stop after these two steps.
+
 ## Stitch design context · 2026-11-02
 
 - [x] Created [design-ios.md](../design-ios.md) after the user explicitly requested a phone-specific
@@ -101,7 +112,7 @@ read that part before starting.
 | 20 | [x] | *done 2026-10-25, with step 9 (a · typing, b · language touches: ROADMAP "Typing, and the language in the design")* **5.1-4 · Typing, and the language in the design,** one step in two parts: a · typing practice in Cursus; b · a touch of the language in the design. After the room steps above (b touches every room lightly). | 5.1-4a, b | L |
 | 21 | [x] | *done 2026-10-28: version 0.5.2; ROADMAP 5.2-10 says what was and wasn't checked* **Lingua 5 complete:** the full check; the version becomes 0.5.2 (`node scripts/version.ts --release`, docs/VERSIONS.md; 5.1-5, 5.1's own check, was done on 2026-10-25 at the user's ask: 0.5.1). Last, after 22. | 5.2-10 | S |
 | 22 | [x] | *done 2026-10-28 (0.5.2-alpha.28; extension unverified on real sites; Gemini transcript and the captions fallback built 0.5.3-alpha.7, unverified with a real key);* *claimed 2026-10-25; taken over 2026-10-27 (no commits since 2026-10-26; real marks and "From Mundus" done), with all of Lingua 5* **Visio, as Lingua 5.2-4:** YouTube inside Lingua with two subtitle lines; the streaming services' subtitles beside the show playing in its own app, with the same taps and translations; a Lingua browser extension for them (decided yes); the services' real marks. **Parallel** after 2. | 5.2-4 | L |
-| 23 | [~] | *6-0 done 2026-10-29 (docs/LINGUA-6-CONTRACTS.md), 6-4 done 2026-10-29 (0.6.0-alpha.6; 6-4b is the rest of its kinds); 6-1 done 2026-10-29 (0.6.0-alpha.8 the learner's half, 0.6.0-alpha.20 the language's half, dictionary version 3; 6-1c is what has no source); 6-2 done for the inbox and the first deck tools 2026-10-29 (0.6.0-alpha.10; 6-2b is the rest); 6-3 done for the memory controls 2026-10-29 (0.6.0-alpha.12; 6-3b is the rest); 6-5 done for the record and its first reader 2026-10-29 (0.6.0-alpha.15; 6-5b is the rest); 6-6 done for the pipeline 2026-10-29 (0.6.0-alpha.17; 6-6b is the screens and the other kinds). **Part A's b rows, 2026-10-29 (0.6.0-alpha.63; 8 of its audit entries stay open: British and American English, Brazilian Portuguese, false cognates, differences between similar words, and the drills and courses that need Max, listed by what they need in the plan rows): 6-1c, 6-2b, 6-3b, 6-4b and 6-6b are `[~]` with what is built and what is not in each row of the plan (select and bulk actions, tidy, decks from a list or text, sort by hand and six card orders, false friends, review by review, grammar links, Made by Max with stories, sentences, dialogues, quizzes, word lists and simplified texts); 6-5b is built apart from Diarium's evidence (Antigravity-2, 6-12 W4) and the error log (6-20, 6-24). Not tried: any of Max's output with a real key (the user's job). About 90 audit entries of Part A stay open.** **Part A (6-0 to 6-6) is done; 6-29 The word graph (the user's idea, 2026-10-29, Opus builds it, after Part A, beside Part B) is planned in full in docs/WORD-GRAPH-PLAN.md (seven pushes, G1 to G7; the tab is called Atlas; G1 and G2 done 2026-11-03: Thesaurus › Atlas shows a word's compass and its tree); next is Part B (6-7 to 6-13, in parallel, in the plan's table), where each step also has its own 'b' row for what Part A's steps left.*** **Lingua 6 · Features** (planned 2026-10-26; the user will most likely build it in other sessions): 28 steps in seven parts, from the word record and one exercise engine to exams, pronunciation and games. **Claim each step in the plan's own table** (LINGUA-6-PLAN.md section 2), as section 2 here says; tick its entries in LINGUA-6-FEATURES.md when done. Part A first. **Next after 21, before 24** (the user, 2026-10-26: "Do Lingua Features first, then Lingua Design"; the plan's section 6 has all six answers). | LINGUA-6-PLAN | XL |
+| 23 | [~] | *6-0 done 2026-10-29 (docs/LINGUA-6-CONTRACTS.md), 6-4 done 2026-10-29 (0.6.0-alpha.6; 6-4b is the rest of its kinds); 6-1 done 2026-10-29 (0.6.0-alpha.8 the learner's half, 0.6.0-alpha.20 the language's half, dictionary version 3; 6-1c is what has no source); 6-2 done for the inbox and the first deck tools 2026-10-29 (0.6.0-alpha.10; 6-2b is the rest); 6-3 done for the memory controls 2026-10-29 (0.6.0-alpha.12; 6-3b is the rest); 6-5 done for the record and its first reader 2026-10-29 (0.6.0-alpha.15; 6-5b is the rest); 6-6 done for the pipeline 2026-10-29 (0.6.0-alpha.17; 6-6b is the screens and the other kinds). **Part A's b rows, 2026-10-29 (0.6.0-alpha.63; 8 of its audit entries stay open: British and American English, Brazilian Portuguese, false cognates, differences between similar words, and the drills and courses that need Max, listed by what they need in the plan rows): 6-1c, 6-2b, 6-3b, 6-4b and 6-6b are `[~]` with what is built and what is not in each row of the plan (select and bulk actions, tidy, decks from a list or text, sort by hand and six card orders, false friends, review by review, grammar links, Made by Max with stories, sentences, dialogues, quizzes, word lists and simplified texts); 6-5b is built apart from Diarium's evidence (Antigravity-2, 6-12 W4) and the error log (6-20, 6-24). Not tried: any of Max's output with a real key (the user's job). About 90 audit entries of Part A stay open.** **Part A (6-0 to 6-6) is done; 6-29 The word graph (the user's idea, 2026-10-29, Opus builds it, after Part A, beside Part B) is planned in full in docs/WORD-GRAPH-PLAN.md (seven pushes, G1 to G7; the tab is called Atlas; G1 to G4 done 2026-11-03: Thesaurus › Atlas opens on the atlas of all your words, with each word's compass and tree); next is Part B (6-7 to 6-13, in parallel, in the plan's table), where each step also has its own 'b' row for what Part A's steps left.*** **Lingua 6 · Features** (planned 2026-10-26; the user will most likely build it in other sessions): 28 steps in seven parts, from the word record and one exercise engine to exams, pronunciation and games. **Claim each step in the plan's own table** (LINGUA-6-PLAN.md section 2), as section 2 here says; tick its entries in LINGUA-6-FEATURES.md when done. Part A first. **Next after 21, before 24** (the user, 2026-10-26: "Do Lingua Features first, then Lingua Design"; the plan's section 6 has all six answers). | LINGUA-6-PLAN | XL *6-21 done 2026-11-04 (branch claude/6-21-deep: all 69 entries, see its row in LINGUA-6-PLAN.md).* |
 | 24 | [ ] | **Lingua 7-1 · The first start, quieter and shorter** (Lingua 7 · Design's first step): a first name, no skip; clearer tiers, the core six as book covers, a country panel without tabs; the level as seven steps with a card that pops up; "You speak" and "Why" out; the goal without a forecast. Read the plan's section 0 (the user's notes) and section 4 (three readings to confirm) first, and the handbook's Part One and its chapter "The first start". **After 23** (Lingua 6 first, the user 2026-10-26). | LINGUA-7-PLAN 7-1 | M |
 | 25 | [ ] | **Lingua for Mac, a look** (the user, 2026-10-29: "i just want to build a lingua mac version now to see, check, get motivated and excited, i think i will like tauri a lot"): Tauri v2 around the app as it is, a `Lingua.app` and a `.dmg` on the user's own Mac, unsigned; six small steps M-0 to M-6, the check in WebKit (M-3) decides Tauri or Electron. **Parallel** with everything; M-0 (installing Rust) is the user's. Not a launch: signing and the App Store are a later plan. | MAC-PLAN | M |
 
@@ -285,3 +296,88 @@ Final local checks: typecheck; 239 test files, 1,594 passing tests, one skipped;
 - Not verified: browser/UI acceptance, screen readers, real AI/microphone, device voices/playback,
   human handwriting or native-speaker linguistic review. No runtime assets or feature ticks changed.
 - Next only on request: claim A1 from the deep plan. **Stop at T0 now; no active 6-23 claim.**
+
+## 2026-11-02 · Codex 6-23 A1 checkpoint, offline check blocked
+
+A1 was claimed alone in alpha.163. Alpha.164 contains the reachable Unicode reference, generated
+script data, source-based tests, offline-cache loader and six-language interface additions.
+[Evidence, screenshots and stop point](6-23-A1.md). Typecheck, 249 files/1,616 passing tests/one skipped
+and production build pass. Online checks: name/code/character inspection, CJK readings, Marks and
+letter-sheet links; 1280, 1366×768 and 1440 in Paper and Nocturne with Arabic text.
+
+**Stop:** offline production-preview reload failed after stopping the server; browser policy then
+blocked inspection of the internal error page. App versus browser cause is undetermined. No workaround
+or shared-shell fix attempted. Branch checkpoint only, not merged or deployed; F1306 remains open,
+Codex retains the A1 claim, A2 is not claimed. Resume only when requested to resolve this check.
+Screen readers, installed-PWA offline launch, native-speaker locale review, clipboard, real AI/audio/
+microphone and rare-font coverage remain unverified. No phone work.
+
+## 2026-11-02 · Codex 6-23 A2.1 checkpoint
+
+The user explicitly requested A2 after A1's diagnostic follow-up. Alpha.165 records the unresolved
+A1 offline gap; alpha.166 is the A2-only claim. A2.1 implements Russian BGN/PCGN 1947 and ISO
+9:1995 with primary-source tests, a saved Reading selector/preview and reader/transcript wiring.
+[Scope, sources and review limits](review/6-23-ru.md). Typecheck, 250 test files/1,637 passing tests/
+one skipped and production-path build pass. The ChapterBody regression this change caused was
+fixed at the caller boundary and covered without altering the existing test.
+
+Russian browser verification is pending the separately requested 2.6 MB local test-pack approval;
+the earlier 25 MB approval covers public romanization references, not app packs. Only Arabic
+Settings was opened after rebuild. No Russian UI, screen-reader, native linguistic review or
+live transcript playback certification. No new A2 audit tick, acceptance, merge or deployment.
+Next: finish Russian browser acceptance, then ALA-LC/passport and the other seven languages,
+shared per-surface controls, reveal and lesson fading. A2 claim stays with Codex; A1's offline
+acceptance remains open. Main stays protected; Codex checkpoint only.
+
+## 2026-11-02 · A2.1 browser follow-up, stopped at transition logs
+
+The user approved the Russian 2.6 MB test pack; installed storage showed 12 MB unpacked. Both new
+Russian schemes worked in Settings and the real reader, survived reload/language switching, and
+preserved source word text. Russian reader and Arabic interface/RTL text inspected at 1280×800,
+1366×768 and 1440×900, Paper/Nocturne. [Evidence and exact stop](6-23-A2-VERIFICATION.md).
+Typecheck, 250 test files/1,637 tests passing/one skipped and production build pass; no runtime code
+changed. Two skipped ViewTransition AbortErrors were logged; shared transition files are unchanged
+from main, exact caller not established. Stop per the user's rule: no shared fix or workaround,
+no clean-console/full-A2 acceptance, no audit ticks or A2.2 implementation. Three approved reference
+files now cached successfully, within 25 MB; source hashes updated. Codex retains A2; A1 offline gap
+remains open. Next only after this blocker is resolved/authorized: remaining schemes and controls.
+No main merge/deployment. No screen reader/native review, live playback or real AI/microphone.
+
+**Codex A2 transition stop resolved after the user's continuation, 2026-11-02:** observe the native
+ready promise at both existing theme/language transition callers. Expected AbortError cancellation
+is handled locally; other failures remain reported. Typecheck, 1,640 tests/one skipped and build
+pass; ordinary rebuilt-browser theme and Russian/Arabic switches completed with an empty warn/error
+log in that tab. [Evidence and scope](6-23-A2-VERIFICATION.md). No A2 audit ticks; continue remaining
+named schemes and per-surface controls under the existing Codex claim. A1 offline gap remains.
+
+## 2026-11-03 · A2.2a Russian resumed after interruption
+
+All four Russian choices implemented; ALA-LC 2012 and ICAO passport-letter spelling extend the
+existing Settings/reader path. Typecheck, 251 files/1,712 tests/one skipped and build pass. Both new
+choices inspected at the three required desktop sizes/themes; persistence/source text checked,
+no warn/error entries in that tab. [Exact scope, screenshots and integration result](6-23-A2-RUSSIAN.md).
+Integrate the newly fetched main/onboarding history without rewriting published commits before
+versioning/pushing. Codex retains A2; other languages and per-surface controls remain. No A3 claim,
+full-A2 audit tick, real AI/microphone, native/standards or screen-reader certification. A1 offline
+acceptance remains open; main stays protected and receives no direct push.
+
+**A2.2a integrated, Codex 2026-11-03:** current main 3c519b6 safely merged into Codex; seven additive
+catalogue conflicts preserve both sides without reformatting. Typecheck, 1,712 tests/one skipped and
+build pass on the integrated tree. All four Russian choices and the real passport reader were
+rechecked in that build; tab log clean. [Detailed verification limits](6-23-A2-RUSSIAN.md). Russian
+named-scheme slice complete; A2 and its audit entries remain open for other languages and independent
+surface/position/reveal/lesson controls. A1 offline gap remains. No direct main push or deployment.
+
+**Codex Russian A2 publication integration, 2026-11-03:** subsequently merged main 07008c7 and
+62b703a while preserving published history and other sessions' claims. Final integrated typecheck,
+1,740 tests / one skipped and production build pass. Russian browser evidence predates these last
+two integrations; incoming graph/games/conversation UI not audited. Full A2 and A1 offline acceptance
+remain open. [Russian scope and verification](6-23-A2-RUSSIAN.md).
+
+**Codex A2.2b, 2026-11-03:** modern Greek ELOT 743 Type 2 / ISO 843:1997 Type 1 spelling choices
+are learner-reachable in Reading settings and the reader/shared transcript renderer. Typecheck,
+1,806 tests / one skipped and build pass; browser twelve size/theme views, both choices' reload
+persistence, literal source/unsupported-word checks, Russian setting isolation and empty warn/error
+log. [Exact evidence and limits](6-23-A2-GREEK.md). Synchronization/publication outcome follows there.
+No full-A2 audit tick; other named languages/surface controls and A1 offline gap remain open. Codex
+retains A2, no A3 claim. Native standards review, live transcript and a fresh Arabic pass not performed.

@@ -2113,6 +2113,61 @@ native capability, deployment channel or minimum OS decision is introduced by th
   conversion still needs an engine and retained speech-level tags. CLDR Kazakh/Mongolian BGN rules
   are forward-only; do not promise reversible or current-official-orthography conversion from them.
 
+## 2026-11-02 · 6-23 A1 character reference checkpoint
+
+- Reuse the pinned T0 Unicode 17 inputs, with script shards and compact algorithmic ranges;
+  3,690,085 JSON bytes / 599,962 gzip bytes, excluding small provenance/notice files. No new downloads.
+  Preserve Unicode-3.0 and the original source fixture for alphabet-wide CI comparisons.
+- Keep the page free, linked from Cursus, Marks and the letter sheet; text stays local. Explain
+  unsupported names, surrogate encoding, device normalization and simple-case limits explicitly.
+  Lazy cache-first assets report storage failures; no generated Unicode JSON is precached.
+- [Verification](6-23-A1.md): typecheck, 1,616 tests/one skipped and production build pass; all three
+  desktop sizes in Paper/Nocturne and Arabic text inspected. Offline reload failed and browser
+  policy blocked error-page inspection. Stop with a branch checkpoint, retain A1, leave F1306 open;
+  do not alter the shared app shell or claim an unrelated root cause without evidence.
+
+## 2026-11-02 · 6-23 A2 begins with named, source-backed display conversions
+
+Keep the existing alphabet-lesson romanizer and fixtures intact. New named systems live under
+core/script/translit, and Russian BGN/PCGN 1947 and ISO 9:1995 are chosen per language in Reading
+settings. Pass the scheme to the memoized ChapterBody from the reader/transcript callers; this
+keeps it independently renderable and avoids making all chapter words subscribe to app context.
+Russian named conversion wins over an older supplied reading; source text, selection/copy and
+stored words stay intact. Do not drop ISO/BGN marks through the Arabic-only plain-letters switch.
+Refuse unmapped Cyrillic; do not infer an unwritten ё. Primary-source fixtures are distinguished
+from synthetic edge tests and human language review. A2's full acceptance is still open; this
+checkpoint does not claim the remaining schemes or five independent surface settings.
+
+## 2026-11-02 · A2 verification stops at shared transition errors
+
+Preserve successful Russian scheme/reader observations separately from clean-console acceptance.
+The browser logged two skipped ViewTransition AbortErrors; theme.ts/languageSwitch.ts are unchanged
+from main and the exact caller is not established. Under the user's explicit stop rule, record the
+log and leave A2 claimed, without changing shared transition code or disabling motion to hide it.
+The approved pack/download and desktop checks are recorded in 6-23-A2-VERIFICATION.md.
+
+## 2026-11-02 · Expected View Transition cancellation belongs at its API boundary
+
+Both callers now share startVisualTransition. Attach ready's rejection handler immediately, accepting
+only DOMException AbortError; report unexpected animation failures and preserve the native transition
+and callback promises. This follows CSS View Transitions §6.2, avoids a global suppression handler,
+and retains the user's motion preference. Forced-cancellation/update-error regressions and ordinary
+browser theme/language changes pass; A2 can continue without claiming A1's offline gap was fixed.
+
+## 2026-11-03 · Complete Russian named spelling choices without rewriting learner text
+
+ALA-LC 2012 follows the visually checked tied capitals and all 37 letters in LC's Russian table,
+including the obsolete letters and retained final hard sign. The ICAO passport choice is uppercase
+letter spelling with soft-sign omission, not MRZ serialization or individual passport validation.
+Keep existing alphabet fixtures intact, default unknown stored choices to BGN, and keep supplied old
+readings from overriding an explicit named Russian scheme. Sources/review limits are in the Russian
+ledger; browser verification and incoming-main integration status are in 6-23-A2-RUSSIAN.md.
+
+**Integration result:** preserve the published Codex line by merging incoming main (3c519b6), rather
+than rebasing its published commits. Only catalogue tails conflicted; retain each added line and
+verify the exact three-way JSON content/no duplicate keys without serializing/reformatting the
+files. Integrated typecheck, 1,712 tests/one skipped/build and scoped reader verification passed.
+
 Word-link and sorting games (6-21 G3): a crossword is laid out left to right and mirrored for a right-to-left script, so across words start at the right; it is one puzzle a round of up to 15×15 cells and 5 to 10 words (the ones that cross), accents are forgiving (a plain letter fills an accented cell) and every three letters shown cost a star. The races accept a typed word when the dictionary lists it as a synonym or opposite of the prompt, read from either word's entry (the learner's own links in `relatedWordIds` are not read yet); 45 seconds a word. Category sorting and odd one out group the learner's words by deck, tag or part of speech (groups of at least three, one kind at a time, a word in two chosen groups is left out). New game text goes through `UiText` and is registered in `sources.json` and the six catalogues, as 6-19 requires.
 
 ## 2026-11-03 — 6-29 G1: the word graph's model, and a third view, the tree
@@ -2136,4 +2191,56 @@ Antigravity-1 verified coverage of 5.2-6 and 6-11 conversation scenes against `d
 
 Thesaurus › Atlas is the fifth tab (Phrases came first), loaded only when opened. One word's compass or tree is worked out in one pass (`core/graph/scene.ts`), never simulated, so it is the same on every visit; only the rows that word needs are read (`data/atlas.ts`), on the main thread, because the whole atlas waits for G4's worker. The canvas draws only while something moves: the threads drawing out (280 ms, the second ring 60 ms later), a hover fade (150 ms), an eased zoom (120 ms). **Labels are placed by importance** (the word, the chosen one, the hovered one, the first ring, the second) and one that would touch a label already drawn is left out until hovered or zoomed into room: at 1366 × 768 the compass's crowded quarters overlapped otherwise. The tree's lines are a sharp T under the parent and a rounded bend down to each child (two rounded corners met in a small peak). A small tree is not blown up past 1.25. Look-alikes stay behind a switch. The zoom buttons sit on the canvas so the toolbar keeps one row at 1280. Not done in G2, said in the plan: fading by memory, the made-from index (the tree branches through `derived` only for now), Safari and a frame-time measurement.
 
+**Codex Russian A2 publication integration, 2026-11-03:** subsequently merged main 07008c7 and
+62b703a while preserving published history and other sessions' claims. Final integrated typecheck,
+1,740 tests / one skipped and production build pass. Russian browser evidence predates these last
+two integrations; incoming graph/games/conversation UI not audited. Full A2 and A1 offline acceptance
+remain open. [Russian scope and verification](6-23-A2-RUSSIAN.md).
+
+## 2026-11-03 · Distinguish Greek transcription from transliteration
+
+Name ELOT 743 Type 2 and ISO 843:1997 Type 1 explicitly, rather than treating the two as aliases.
+The former uses contextual consonant/vowel pairs, the latter preserves η/ω with macrons. Use one
+named-choice list for the existing Russian and new Greek selector/reader paths, including stale
+choice fallback; retain independent saved choices and old alphabet lessons. Refuse polytonic/archaic
+words and state the limit beside the selector. [Source/review ledger](review/6-23-el.md) records that
+this is modern word display, not full ISO text-conversion compliance; full A2 remains open.
+
 Daily, tournaments, stories and projects (6-21 G5 to G7): the daily puzzle and weekly challenge come from the language's own word list (the commonest 12,000 words of its pack, 4 to 8 letters, with a meaning where the list has one) and the local date, so they are the same for everyone with that pack; a daily can be played once and its result copied as text, a weekly theme is a word length or a first letter that the list has plenty of. A tournament draws three of the quick word games and keeps only the last and best total, on the device. Timed translation judges with the exercise engine's accepted-answer rule and lets the learner say a marked-wrong answer was as good (the engine's self-rating fallback); its sentences are the hand-made tasks (es, fr, de, it, ru, zh) and the dictionary's sentences for the learner's words. Stories are the 6-6b adventure with state (an item found on arriving, a choice that needs one) and `checkStory` searches every (scene, items) state: all choices lead somewhere, no scene is a trap, all scenes are reachable and one ending wins. Max's adventures play without items and every ending counts as finishing. Projects are one settings row per language (`games.projects:<lang>`), not a Dexie table, so the schema version stays free for other branches.
+
+Finishing 6-21: a story can have strength (`health` on the story, `cost` on a choice); at none it is lost, and the checker searches (scene, items, strength). Custom stories are written in a plain text format (title, start, items, health, `[scene] gives: x end: win`, `> words -> scene | needs: x | cost: 1`), read by `parseStory`, kept as text in one settings row per language, and only played when `checkStory` passes. A story Max writes from the learner's words is asked for in the topic, and the screen counts how many of the words are in it; it does not refuse a story that uses few. Finish it is hand-made for the six core languages (three dialogues and three stories each), so it needs no key; Practice has the Max version for any language.
+
+6-21 deepened: the weekly topic is the week's place in a fixed list of 52 (`core/games/topics.ts`), found in the language's word list by whole words of each word's English meaning, passing over a topic with fewer than 12 words; where no topic fits, a word length or first letter. A project keeps the chosen text, recording or video and a note for each step in its settings row; a step opens that very text or recording, and the next step shows the nearest earlier note (and reads it aloud on a speaking step). Every game that is not about the learner's own words still leaves a mark in the learner's record, as a pattern item (`translate:`, `dictation:`, `story:`, `complete:`). The word hunt tries a word with its glued-on beginning taken off (Arabic's al- and one-letter words, Hebrew's ha- and one-letter words), keeping three letters at least. Memory and bingo can be played by sound, with the device's voice.
+
+## 2026-11-03 — 6-29 G3: the word graph's tables are Dexie 46, and a typo is never a mix-up
+
+The contract push the plan asked for before any code that stores something: Dexie **46** (17 + 29, past 6-7 to 6-25's reserved 24 to 42; nothing else has used a number since 23, so the jump is harmless: a device at 23 opens at 46, tested). `graphLayouts` is a cache of the whole drawable scene, not only positions, so the atlas can draw its first frame from one row without reading the dictionary; it is `skip` in backups, which the contract's policy type now names (`backup.ts` had it already). `graphViews` is the learner's (views and the pins of the language's own map) and merges last write wins. Both are emptied when a language is removed and when its progress is reset, since they were made of its words. The mix-ups question lives in `core/learner`, as the contract's rule 4 says (no room reads `evidence` itself): a pair counts only when the word written is another word the learner has, so a typo (*comr* for *comer*) is never a mix-up. `Word.relatedWordIds` and `grammarTopics`, in the contract since 6-0 but never built, are now fields: optional and unindexed, so they need no version of their own.
+
+## 2026-11-03 · Finish Reading 6-8 and Writing 6-12 against the audit
+
+The user asked to reconcile Reading’s row and finish or tick its 47 open entries, then named Writing’s
+five open entries and asked to stop only after both steps were done. Earlier slice completion was not
+whole-step completion. [The final inventory](LINGUA-6-8-12-AUDIT.md) accounts for Reading’s 72 assigned
+entries and Writing’s five remaining entries (55 assigned in total).
+
+Reuse existing text/journal rows, marks, dictionary/forms/search, checked generators, exercise views,
+shared phrasebook templates, diff and backup/Undo. No dependency, table or migration. Reading source
+kinds remain explicit source searches/imports (including Wikivoyage/Wikibooks); everyday formats can
+also be generated as labelled fiction. No new hosted corpus, illustration licence or factual/linguistic
+certification is implied. Generated attribution stays attached when a text is kept.
+
+For F0676, use installed target-language dictionaries/forms with conservative missing-word candidates
+and existing fuzzy suggestions, plus the platform spellchecker marked with the entry language. This
+replaces the prospective second Hunspell engine/corpus: missing names/forms are not declared errors,
+and browser support remains conditional on its dictionaries. This is an explicit implementation choice,
+not a claim to have installed Hunspell or certified all native dictionaries.
+
+Pictures stay local and in media-inclusive backups; AI checks receive only writing/prompt. Snapshots
+are explicit (ten retained); restore saves the current draft first. Chapter vocabulary rebuilds happen
+before the atomic edit/Undo transaction; the transaction rechecks the book timestamp. A favourite flag
+must survive a note flushed on navigation. Source offsets/quotes continue to prevent false painting or
+silent matching of edited text. Completion and verification boundaries are recorded in the audit.
+
+## 2026-11-03 — 6-29 G4: the atlas, laid out without a physics library
+
+The plan named d3-force as 6-29's one new dependency. Built, the two-level layout needed none: regions are discs placed by 600 rounds of pulls along shared threads and pushes that keep them apart, then each region's words fill it like a sunflower (the most common in the middle) and settle by their own threads. In the 5,000-word Spanish profile that is well under a second in the worker, and nothing in it is random, so the map is the same everywhere. Two things only the browser showed: a push from every word in a region drove its words to the rim (only near words push now), and 1,193 loose words on a single ring read as a wall around the map (they fill a band, drawn lighter). **The cache holds the whole scene and is rebuilt only when the words, the dictionary or the pack change**; memory is worked out on every open and laid over it, so a review never moves the map. The first frame needs one row, one `words` query and a 7 ms scene (about 85 ms in all for 5,000 words). Drawing a frame costs 2 to 6 ms; at fit all only region names and a few landmarks are labelled, and the label budget grows with the zoom. A view kept over empty paper opens fitted instead (it happened in testing). The tree's made-from index is built in the worker once a session from the whole dictionary rather than stored: a stored copy would have been a hidden row in `fullDict`, which counts its rows as words.

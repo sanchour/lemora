@@ -1,0 +1,58 @@
+{
+  "version": "17.0.0",
+  "licence": "Unicode-3.0",
+  "sources": [
+    {
+      "name": "unicode-data.txt",
+      "url": "https://www.unicode.org/Public/17.0.0/ucd/UnicodeData.txt",
+      "finalUrl": "https://www.unicode.org/Public/17.0.0/ucd/UnicodeData.txt",
+      "bytes": 2198209,
+      "sha256": "2e1efc1dcb59c575eedf5ccae60f95229f706ee6d031835247d843c11d96470c",
+      "retrieved": "2026-11-02T09:45:29.238Z",
+      "etag": "\"218ac1-63c70d19d13c0-gzip\"",
+      "lastModified": "Sat, 16 Aug 2025 00:45:11 GMT"
+    },
+    {
+      "name": "blocks.txt",
+      "url": "https://www.unicode.org/Public/17.0.0/ucd/Blocks.txt",
+      "finalUrl": "https://www.unicode.org/Public/17.0.0/ucd/Blocks.txt",
+      "bytes": 11663,
+      "sha256": "c0edefaf1a19771e830a82735472716af6bf3c3975f6c2a23ffbe2580fbbcb15",
+      "retrieved": "2026-11-02T09:45:29.661Z",
+      "etag": "\"2d8f-63c70d19d13c0-gzip\"",
+      "lastModified": "Sat, 16 Aug 2025 00:45:11 GMT"
+    },
+    {
+      "name": "scripts.txt",
+      "url": "https://www.unicode.org/Public/17.0.0/ucd/Scripts.txt",
+      "finalUrl": "https://www.unicode.org/Public/17.0.0/ucd/Scripts.txt",
+      "bytes": 192460,
+      "sha256": "9f5e50d3abaee7d6ce09480f325c706f485ae3240912527e651954d2d6b035bf",
+      "retrieved": "2026-11-02T09:45:30.346Z",
+      "etag": "\"2efcc-63c70d19d13c0-gzip\"",
+      "lastModified": "Sat, 16 Aug 2025 00:45:11 GMT"
+    },
+    {
+      "name": "confusables.txt",
+      "url": "https://www.unicode.org/Public/17.0.0/security/confusables.txt",
+      "finalUrl": "https://www.unicode.org/Public/17.0.0/security/confusables.txt",
+      "bytes": 745683,
+      "sha256": "091c7f82fc39ef208faf8f94d29c244de99254675e09de163160c810d13ef22a",
+      "retrieved": "2026-11-02T09:46:55.802Z",
+      "etag": "\"b60d3-63c70d1ac5600-gzip\"",
+      "lastModified": "Sat, 16 Aug 2025 00:45:12 GMT"
+    },
+    {
+      "name": "unicode-license.txt",
+      "url": "https://www.unicode.org/license.txt",
+      "finalUrl": "https://www.unicode.org/license.txt",
+      "bytes": 1995,
+      "sha256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96",
+      "retrieved": "2026-11-02T09:50:15.809Z",
+      "etag": "\"7cb-647a58e573329-gzip\"",
+      "lastModified": "Mon, 05 Jan 2026 15:17:23 GMT"
+    }
+  ],
+  "rawBytes": 3690085,
+  "gzipBytes": 599962
+}
