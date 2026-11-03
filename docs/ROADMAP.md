@@ -4,6 +4,18 @@ A working plan for the next prompts. Each prompt is planned here first, then bui
 stopping, then committed and pushed. A push redeploys GitHub Pages, and installed apps update
 themselves. Ticks show what is done.
 
+## 2026-11-03 · 5.2 Conversation scenes audit & completion (F0514–F0547, 6-11)
+
+Antigravity-1 verified coverage of 5.2-6 and 6-11 conversation scenes against `docs/LINGUA-6-FEATURES.md` (F0514–F0547, plus F0833 and F1236):
+- 28 scenes and features were already built and verified in `src/core/colloquium/` and `src/features/colloquium/` from Lingua 5.2-6 and 6-11.
+- Built 4 dedicated scenes to guarantee 100% explicit scene coverage:
+  - `philosophy` (`src/core/colloquium/scenes/culture.ts`) for F0531 (Discussing philosophy & ethics).
+  - `seminar` (`src/core/colloquium/scenes/work.ts`) for F0535 (University seminar simulations & research debates).
+  - `awkward` (`src/core/colloquium/scenes/social.ts`) for F0539 (Handling an awkward situation & tactful resolution).
+  - `disagree` (`src/core/colloquium/scenes/practice.ts`) for F0541 (Expressing disagreement politely with diplomatic softening).
+- Ticked F0514–F0547, F0833, and F1236 in `docs/LINGUA-6-FEATURES.md`. Added unit test coverage in `src/core/colloquium/prompts.test.ts`.
+- Validated with typecheck, tests, and production build.
+
 ## 2026-11-02 · iOS design brief for Stitch
 
 The user now asks for a separate iOS app brief with appropriate Liquid Glass controls and a

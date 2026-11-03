@@ -2168,6 +2168,24 @@ than rebasing its published commits. Only catalogue tails conflicted; retain eac
 verify the exact three-way JSON content/no duplicate keys without serializing/reformatting the
 files. Integrated typecheck, 1,712 tests/one skipped/build and scoped reader verification passed.
 
+Word-link and sorting games (6-21 G3): a crossword is laid out left to right and mirrored for a right-to-left script, so across words start at the right; it is one puzzle a round of up to 15×15 cells and 5 to 10 words (the ones that cross), accents are forgiving (a plain letter fills an accented cell) and every three letters shown cost a star. The races accept a typed word when the dictionary lists it as a synonym or opposite of the prompt, read from either word's entry (the learner's own links in `relatedWordIds` are not read yet); 45 seconds a word. Category sorting and odd one out group the learner's words by deck, tag or part of speech (groups of at least three, one kind at a time, a word in two chosen groups is left out). New game text goes through `UiText` and is registered in `sources.json` and the six catalogues, as 6-19 requires.
+
 ## 2026-11-03 — 6-29 G1: the word graph's model, and a third view, the tree
 
 The user asked for G1 and "also add a tree view, like a word tree view". The tree is one word's family the way an etymological dictionary draws it: climbing through `parts` to what the word is made from (*deshacer* → *hacer*), the ancestor in another language above the top, then branching down through `derived` and every word whose `parts` name it (an index over the dictionary, since `derived` lists only some). Chinese and Japanese, whose dictionaries have no `parts`, grow one tree per character. It is drawn with the compass in G2, as elbows rather than curves so it reads as its own view ([WORD-GRAPH-PLAN.md](WORD-GRAPH-PLAN.md) section 2.4). **G1 is the pure model** (`src/core/graph`: `buildWeb`, `neighbourhood`, `regionsOf`, `wordTree`), tested on real v3 rows cut into fixtures. Run once at real scale it matches the plan's measurements (Spanish, 3,000 words: 3,086 nodes, 4,068 threads), in 130 ms plus 39 ms for the regions: over the main thread's 50 ms, so it runs in G4's worker as planned. Two things learned: a word's part of speech is the one with the most meanings (*de* is listed first as the letter), and 700 of 3,000 Spanish words end as loose threads, too many for a margin, so G4 lets small hubs vote in the regions. Lists shaped by grammar are lenses by their group in `STARTER_THEMES` (grammar, computed), not by a list of ids.
+
+## 2026-11-03 — 5.2 Conversation scenes audit & completion (F0514–F0547, 6-11)
+
+Antigravity-1 verified coverage of 5.2-6 and 6-11 conversation scenes against `docs/LINGUA-6-FEATURES.md` (F0514–F0547, plus F0833 and F1236):
+- 28 scenes and features were already built and verified in `src/core/colloquium/` and `src/features/colloquium/` from Lingua 5.2-6 and 6-11.
+- Built 4 dedicated scenes to guarantee 100% explicit scene coverage:
+  - `philosophy` (`src/core/colloquium/scenes/culture.ts`) for F0531 (Discussing philosophy & ethics).
+  - `seminar` (`src/core/colloquium/scenes/work.ts`) for F0535 (University seminar simulations & research debates).
+  - `awkward` (`src/core/colloquium/scenes/social.ts`) for F0539 (Handling an awkward situation & tactful resolution).
+  - `disagree` (`src/core/colloquium/scenes/practice.ts`) for F0541 (Expressing disagreement politely with diplomatic softening).
+- Ticked F0514–F0547, F0833, and F1236 in `docs/LINGUA-6-FEATURES.md`. Unit tests added in `src/core/colloquium/prompts.test.ts`.
+
+## 2026-11-03 — 6-29 G2: the compass and the tree on a canvas, labels placed by importance
+
+Thesaurus › Atlas is the fifth tab (Phrases came first), loaded only when opened. One word's compass or tree is worked out in one pass (`core/graph/scene.ts`), never simulated, so it is the same on every visit; only the rows that word needs are read (`data/atlas.ts`), on the main thread, because the whole atlas waits for G4's worker. The canvas draws only while something moves: the threads drawing out (280 ms, the second ring 60 ms later), a hover fade (150 ms), an eased zoom (120 ms). **Labels are placed by importance** (the word, the chosen one, the hovered one, the first ring, the second) and one that would touch a label already drawn is left out until hovered or zoomed into room: at 1366 × 768 the compass's crowded quarters overlapped otherwise. The tree's lines are a sharp T under the parent and a rounded bend down to each child (two rounded corners met in a small peak). A small tree is not blown up past 1.25. Look-alikes stay behind a switch. The zoom buttons sit on the canvas so the toolbar keeps one row at 1280. Not done in G2, said in the plan: fading by memory, the made-from index (the tree branches through `derived` only for now), Safari and a frame-time measurement.
+

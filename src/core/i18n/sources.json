@@ -15039,5 +15039,213 @@
   ],
   "Switch to Nox (dark)": [
     "src/features/sonus/CommutePage.tsx"
+  ],
+  "Solved": [
+    "src/features/games/Crossword.tsx"
+  ],
+  "Not finished: the answers are shown": [
+    "src/features/games/Crossword.tsx"
+  ],
+  "Crossword": [
+    "src/features/games/Crossword.tsx"
+  ],
+  "{0} Check this word": [
+    "src/features/games/Crossword.tsx"
+  ],
+  "{0} Show a letter": [
+    "src/features/games/Crossword.tsx"
+  ],
+  "Letters shown: {0}": [
+    "src/features/games/Crossword.tsx"
+  ],
+  "Across": [
+    "src/features/games/Crossword.tsx"
+  ],
+  "Down": [
+    "src/features/games/Crossword.tsx"
+  ],
+  "Puzzle": [
+    "src/features/games/Crossword.tsx"
+  ],
+  "Your words crossed on a grid. Each clue is a meaning: type the word.": [
+    "src/features/games/Crossword.tsx"
+  ],
+  "The words would not cross on a grid. Try again.": [
+    "src/features/games/Crossword.tsx"
+  ],
+  "Click a cell and type; click it again to turn the other way. Arrow keys move, Tab goes to the next word, Backspace clears. Showing a letter costs a star for every three; giving up earns none.": [
+    "src/features/games/Crossword.tsx"
+  ],
+  "Found {0}.{1}": [
+    "src/features/games/Race.tsx"
+  ],
+  " Also in the dictionary: {0}.": [
+    "src/features/games/Race.tsx"
+  ],
+  "Name synonyms of": [
+    "src/features/games/Race.tsx"
+  ],
+  "Name opposites of": [
+    "src/features/games/Race.tsx"
+  ],
+  "Name words that go with": [
+    "src/features/games/Race.tsx"
+  ],
+  "Time left: {0}": [
+    "src/features/games/Race.tsx"
+  ],
+  "Your word": [
+    "src/features/games/Race.tsx"
+  ],
+  "Already counted.": [
+    "src/features/games/Race.tsx"
+  ],
+  "Counted": [
+    "src/features/games/Race.tsx"
+  ],
+  "Not related in the dictionary: {0}": [
+    "src/features/games/Race.tsx"
+  ],
+  "Three of your words. For each you have 45 seconds to name the words the dictionary relates to it.": [
+    "src/features/games/Race.tsx"
+  ],
+  "Type a word and press Enter. It counts when the dictionary relates it to the prompt, read from either word. Three stars for naming three, or all there are.": [
+    "src/features/games/Race.tsx"
+  ],
+  "All sorted; {0} in the wrong place.": [
+    "src/features/games/Sorting.tsx"
+  ],
+  "All sorted.": [
+    "src/features/games/Sorting.tsx"
+  ],
+  "Pick a word, then the category it belongs to.": [
+    "src/features/games/Sorting.tsx"
+  ],
+  "Wrong places: {0}": [
+    "src/features/games/Sorting.tsx"
+  ],
+  "Right: {0} is the odd one out. The others are all {1}.": [
+    "src/features/games/Sorting.tsx"
+  ],
+  "It was {0}: the others are all {1}, and {0} is {2}.": [
+    "src/features/games/Sorting.tsx"
+  ],
+  "Which one does not belong?": [
+    "src/features/games/Sorting.tsx"
+  ],
+  "Round": [
+    "src/features/games/Sorting.tsx"
+  ],
+  "Words of yours, mixed. Sort each into the category it belongs to.": [
+    "src/features/games/Sorting.tsx"
+  ],
+  "Pick a word, then click its category. A wrong place costs nothing but counts: no mistakes is three stars, up to two is two, more is one.": [
+    "src/features/games/Sorting.tsx"
+  ],
+  "Question": [
+    "src/features/games/Sorting.tsx"
+  ],
+  "Four of your words: three belong together and one does not. Find it.": [
+    "src/features/games/Sorting.tsx"
+  ],
+  "Click the word that does not belong, or press its number. Right is three stars, wrong none.": [
+    "src/features/games/Sorting.tsx"
+  ],
+  "Needs at least two decks, tags or kinds of word with three of your words each.": [
+    "src/core/games/source.ts"
+  ],
+  "Needs {0} of your words that the dictionary gives {1} for; you have {2}.": [
+    "src/core/games/source.ts"
+  ],
+  "synonyms": [
+    "src/core/games/source.ts"
+  ],
+  "opposites": [
+    "src/core/games/source.ts"
+  ],
+  "related words": [
+    "src/core/games/source.ts"
+  ],
+  "Synonym race": [
+    "src/core/games/defs.ts"
+  ],
+  "Name as many synonyms of a word as you can before the time runs out.": [
+    "src/core/games/defs.ts"
+  ],
+  "Antonym race": [
+    "src/core/games/defs.ts"
+  ],
+  "Name the opposites of a word before the time runs out.": [
+    "src/core/games/defs.ts"
+  ],
+  "Word association": [
+    "src/core/games/defs.ts"
+  ],
+  "Name words that go with a word, its synonyms or its opposites, before the time runs out.": [
+    "src/core/games/defs.ts"
+  ],
+  "Category sorting": [
+    "src/core/games/defs.ts"
+  ],
+  "Sort words into the decks, tags or kinds of word they belong to.": [
+    "src/core/games/defs.ts"
+  ],
+  "Odd one out": [
+    "src/core/games/defs.ts"
+  ],
+  "Three of the four words belong together. Find the one that does not.": [
+    "src/core/games/defs.ts"
+  ],
+  "Your words crossed on a grid, clued by their meanings.": [
+    "src/core/games/defs.ts"
+  ],
+  "Atlas": [
+    "src/features/thesaurus/ThesaurusPage.tsx",
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Which word?": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Atlas view": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Compass": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Tree": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Look-alikes": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Fit": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Form": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Origin": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "The tree of {0}": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "The compass of {0}: {1} things around it": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "No word “{0}” here yet. Try another.": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Look up a word to see what is around it: its meanings, its family, where it comes from and how it is used.": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Synonyms, families and origins come with a full dictionary, which this language doesn’t have yet.": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Its neighbours, in words": [
+    "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "See its neighbours": [
+    "src/features/thesaurus/dictionary/Entry.tsx"
   ]
 }

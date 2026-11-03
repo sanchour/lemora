@@ -64,7 +64,7 @@ function Board({ entry, lang, settle }: BoardProps<HuntData>) {
             <li key={i} className={cx('font-serif text-lg', found.has(i) ? 'text-sage-text' : gaveUp ? 'text-accent-text' : '')}>
               <span className={found.has(i) ? 'line-through' : undefined}>{t.meaning ?? translateUi('one of your words')}</span>
               {(found.has(i) || gaveUp) && (
-                <bdi lang={lang} className="ms-2 text-[15px] text-ink-soft">
+                <bdi lang={lang} className="mx-2 text-[15px] text-ink-soft">
                   {t.term}
                 </bdi>
               )}
