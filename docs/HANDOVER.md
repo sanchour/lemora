@@ -347,3 +347,10 @@ Integrate the newly fetched main/onboarding history without rewriting published 
 versioning/pushing. Codex retains A2; other languages and per-surface controls remain. No A3 claim,
 full-A2 audit tick, real AI/microphone, native/standards or screen-reader certification. A1 offline
 acceptance remains open; main stays protected and receives no direct push.
+
+**A2.2a integrated, Codex 2026-11-03:** current main 3c519b6 safely merged into Codex; seven additive
+catalogue conflicts preserve both sides without reformatting. Typecheck, 1,712 tests/one skipped and
+build pass on the integrated tree. All four Russian choices and the real passport reader were
+rechecked in that build; tab log clean. [Detailed verification limits](6-23-A2-RUSSIAN.md). Russian
+named-scheme slice complete; A2 and its audit entries remain open for other languages and independent
+surface/position/reveal/lesson controls. A1 offline gap remains. No direct main push or deployment.

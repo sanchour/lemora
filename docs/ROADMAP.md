@@ -2601,7 +2601,7 @@ The previous transition stop is resolved for continuing A2, not A1's separate of
   ICAO 9303's Russian passport-letter spelling, keeping editions/limits explicit.
 - [x] Golden-check the primary tables independently, including tied capitals, terminal hard sign,
   soft-sign omission for the passport choice, case and unknown saved settings.
-- [ ] Reach both choices and the real reader in Settings; check required desktop sizes/themes,
+- [x] Reach both choices and the real reader in Settings; check required desktop sizes/themes,
   run typecheck/tests/build and publish separately. Keep the full A2 audit entries open.
 
 LC's PDF cells were visually inspected after Word text extraction omitted their equation-like glyphs.
@@ -2613,3 +2613,10 @@ skipped and production build pass. Both new choices and the actual reader inspec
 sizes in both themes, with persistence/source-word checks and an empty warn/error log. [Evidence](6-23-A2-RUSSIAN.md).
 Before versioning, integrate 74 incoming main commits (onboarding PR) by merge to preserve Codex's
 published history; rerun integrated checks. No broad A2 audit ticks; no A3 claim.
+
+**A2.2a integrated outcome:** incoming main 3c519b6 merged without rewriting published history.
+All seven additive catalogue conflicts retain the exact three-way content, without duplicates or
+reformatting. Integrated typecheck, 1,712 tests/one skipped and production build pass; browser loaded
+the integrated asset, kept all four choices and showed the real passport reader at 1366×768 with
+intact source text and a clean tab log. Russian slice complete; remaining languages/controls stay
+under A2. [Exact scope and limits](6-23-A2-RUSSIAN.md). No main push or A3 claim.

@@ -2162,3 +2162,8 @@ letter spelling with soft-sign omission, not MRZ serialization or individual pas
 Keep existing alphabet fixtures intact, default unknown stored choices to BGN, and keep supplied old
 readings from overriding an explicit named Russian scheme. Sources/review limits are in the Russian
 ledger; browser verification and incoming-main integration status are in 6-23-A2-RUSSIAN.md.
+
+**Integration result:** preserve the published Codex line by merging incoming main (3c519b6), rather
+than rebasing its published commits. Only catalogue tails conflicted; retain each added line and
+verify the exact three-way JSON content/no duplicate keys without serializing/reformatting the
+files. Integrated typecheck, 1,712 tests/one skipped/build and scoped reader verification passed.

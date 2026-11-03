@@ -251,3 +251,10 @@ independent primary-table goldens. Typecheck, 1,712 tests/one skipped and build 
 main integration; both new choices inspected at all three desktop sizes in Paper/Nocturne, with
 persistence and source text intact and a clean tab log. [Scope and pending integration](6-23-A2-RUSSIAN.md).
 Other seven languages and per-surface/position/reveal/lesson fading remain; no full A2 acceptance.
+
+**A2.2a integrated, Codex 2026-11-03:** current main 3c519b6 safely merged into Codex; seven additive
+catalogue conflicts preserve both sides without reformatting. Typecheck, 1,712 tests/one skipped and
+build pass on the integrated tree. All four Russian choices and the real passport reader were
+rechecked in that build; tab log clean. [Detailed verification limits](6-23-A2-RUSSIAN.md). Russian
+named-scheme slice complete; A2 and its audit entries remain open for other languages and independent
+surface/position/reveal/lesson controls. A1 offline gap remains. No direct main push or deployment.

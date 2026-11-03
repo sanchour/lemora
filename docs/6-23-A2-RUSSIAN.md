@@ -34,3 +34,16 @@ standards review, screen readers, clipboard round trip, live transcript playback
 or an additional Arabic browser pass. The earlier Arabic baseline is recorded separately. The other
 seven languages and independent surface/position/reveal/lesson-fading controls remain open; no
 full-A2 feature entry is closed, Codex keeps the A2 claim. A1's offline gap remains separate.
+
+## Integrated outcome · 2026-11-03
+
+Merged origin/main at 3c519b6 into Codex, preserving all published history. The seven catalogue
+conflicts were additive only: retained both sets of lines, checked the exact three-way content and
+rejected duplicate keys; no formatter or whole-file serialization was used. All integrated checks
+passed: typecheck, 251 test files/1,712 tests passing/one skipped and production build. Loaded the
+integrated main asset in the browser, observed all four saved choices, and rechecked the actual
+passport reader at 1366×768 in the light theme with source spans intact and an empty warn/error
+log. [Integrated reader screenshot](verification/6-23-a2-russian-merged-1366.png). The twelve new-
+scheme size/theme views above preceded integration; they were not all repeated after the merge.
+Incoming onboarding behavior was not audited. This finishes the Russian named-scheme slice only;
+continue A2 under the existing claim. No main merge/deployment, no full-A2 audit tick.

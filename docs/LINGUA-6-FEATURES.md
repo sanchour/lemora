@@ -2172,3 +2172,10 @@ named schemes and per-surface controls under the existing Codex claim. A1 offlin
 passport choices inspected at all three desktop sizes/themes. Tests/typecheck/build pass before
 incoming main integration. [Verification and remaining scope](6-23-A2-RUSSIAN.md). F1298/F1300/F1301/
 F1371 remain unticked until the full deep-plan acceptance; no claim about other surfaces/languages.
+
+**A2.2a integrated, Codex 2026-11-03:** current main 3c519b6 safely merged into Codex; seven additive
+catalogue conflicts preserve both sides without reformatting. Typecheck, 1,712 tests/one skipped and
+build pass on the integrated tree. All four Russian choices and the real passport reader were
+rechecked in that build; tab log clean. [Detailed verification limits](6-23-A2-RUSSIAN.md). Russian
+named-scheme slice complete; A2 and its audit entries remain open for other languages and independent
+surface/position/reveal/lesson controls. A1 offline gap remains. No direct main push or deployment.
