@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.5** · 2026-11-03 · Lingua's Home made for Lemora by default, the desk as a choice; Explora's hero, word decks and Discover; the website planned
 - **0.1.0-alpha.4** · 2026-11-03 · Lemora's Home, time per tool and goals, its icon, Things to try in Explora
 - **0.1.0-alpha.3** · 2026-11-03 · Rooms Lemora hasn't: hidden everywhere, never linked; Things to try for reading and writing
 - **0.1.0-alpha.2** · 2026-11-03 · Lemora's rooms: Alphabet, Diarium and Things to try; Lemora's routes only

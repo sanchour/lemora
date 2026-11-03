@@ -63,6 +63,35 @@ not afraid to make big changes, only these". Only those six rooms are redesigned
 Ludus, Diarium, Ratio, Settings) are redesigned in their shared files as `[shared]` commits, with no Lemora
 branding in them, so Lingua can take them later or leave them.
 
+## Lemora's website: `lemora-site` (the user, 2026-11-03)
+
+"A super duper, aesthetic, minimal, cute, visually impressive website, full of hand-drawn icons and elements, with a
+few of the demonstrations", in a new private GitHub repository, `sanchour/lemora-site` (local folder `../lemora-site`).
+
+**Shape.** One static page, no build step and no framework (plain HTML, CSS and a little JavaScript), so it opens
+from the folder and can be hosted anywhere. Literata and Plus Jakarta Sans as in the app; Paper by day and Nocturne
+at night (`prefers-color-scheme`), the same tokens. Hand-drawn throughout: the handbook's icons and empty-page art,
+pen-stroke underlines, dashed roads, small doodles in the margins; one terracotta thing per area. Motion only as
+transform and opacity, things rising into place as they scroll in, none at all with reduced motion. Phone to wide
+desktop with no horizontal scrolling.
+
+**Sections, top to bottom.**
+
+| # | Section | What it shows |
+|---|---------|---------------|
+| W1 | Hero | The bookmark mark dropping onto its line, "lemora." with its full stop, one sentence of what it is, *Open Lemora* (the live app) and *See it read* |
+| W2 | Demo: read | A short Spanish passage. Hover or tap a word for its meaning; click to cycle Unseen → Learning → Known, coloured as in Codex; words you mark gather in a little jar |
+| W3 | Demo: remember | The words from W2 as flashcards that flip (Thesaurus), with *Again* and *Good*; each card remembers the sentence it came from |
+| W4 | Demo: write | A Diarium line corrected in front of you: the word diff draws itself (crossed out, written in), with the reason beside it |
+| W5 | Demo: a new alphabet | Cyrillic letters as tiles that turn over to their sound and a word (Alphabet) |
+| W6 | Things to try | A row of hand-drawn challenge cards |
+| W7 | How it's made | Local-first, honest numbers, no streak guilt, your words follow you: four drawn icons with a line each |
+| W8 | Footer | An ornament, *Built from Lingua*, the data's attributions (Wiktionary via kaikki.org, FrequencyWords, CC BY-SA 4.0) |
+
+**Steps.** W-a plan (this section) · W-b the page and its demos · W-c check at 390, 1366 and 1440 wide, light and
+dark, every demo clicked · W-d push to the new private repository. Hosting is left to the user: GitHub Pages on a
+private repository needs a paid plan, so the site is not published anywhere yet.
+
 ## How a step is checked
 
 `npm run typecheck`, `npm test`, `npm run build`, and a look in a browser at 1280, 1440 and
