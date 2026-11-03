@@ -7,7 +7,7 @@ export interface GameDef {
   title: string;
   detail: string;
   /** What the learner's words must be: how many, with a meaning, spelled in letters (at most `maxLetters`). `texts`: a text in Codex to find them in; `list`: that many words of the language's own list (a ladder is not made of the learner's words). */
-  needs: { count: number; meaning?: true; letters?: true; maxLetters?: number; texts?: true; list?: number; synonyms?: number; antonyms?: number; related?: number; categories?: true };
+  needs: { count: number; meaning?: true; letters?: true; maxLetters?: number; texts?: true; list?: number; synonyms?: number; antonyms?: number; related?: number; categories?: true; image?: true; parts?: true };
   /** Words in one round. */
   round: number;
 }
@@ -31,6 +31,11 @@ export const GAMES: GameDef[] = [
   { id: 'association', group: 'word', title: 'Word association', detail: 'Name words that go with a word, its synonyms or its opposites, before the time runs out.', needs: { count: 3, related: 2 }, round: 3 },
   { id: 'sorting', group: 'word', title: 'Category sorting', detail: 'Sort words into the decks, tags or kinds of word they belong to.', needs: { count: 0, categories: true }, round: 2 },
   { id: 'odd', group: 'word', title: 'Odd one out', detail: 'Three of the four words belong together. Find the one that does not.', needs: { count: 0, categories: true }, round: 5 },
+  { id: 'definition', group: 'word', title: 'Guess the definition', detail: 'A word of yours, four meanings. Pick the right one.', needs: { count: 5, meaning: true }, round: 5 },
+  { id: 'picture', group: 'word', title: 'Picture vocabulary', detail: 'A picture from your cards, four words. Pick the one it shows.', needs: { count: 5, image: true }, round: 5 },
+  { id: 'memory', group: 'word', title: 'Memory', detail: 'Turn cards over to find each word and its meaning, or its picture.', needs: { count: 6, meaning: true }, round: 1 },
+  { id: 'bingo', group: 'word', title: 'Vocabulary bingo', detail: 'Meanings are called. Mark the word on your card until you have a line.', needs: { count: 9, meaning: true }, round: 1 },
+  { id: 'parts', group: 'word', title: 'Build from parts', detail: 'A word split into its parts, mixed up. Put the parts back in order from the meaning.', needs: { count: 4, meaning: true, parts: true }, round: 5 },
   { id: 'ladder', group: 'word', title: 'Word ladder', detail: 'Change one letter at a time to get from one word to another, every step a real word.', needs: { count: 0, letters: true, list: 300 }, round: 3 },
 ];
 

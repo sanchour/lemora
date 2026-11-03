@@ -3,6 +3,8 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.6.0-alpha.176** · 2026-11-03 · Merge main (6-29 G2) into 6-21 G4
+- **0.6.0-alpha.175** · 2026-11-03 · 6-21 G4: pick, match and parts games; merge main
 - **0.6.0-alpha.174** · 2026-11-03 · 6-29 G2: Thesaurus › Atlas, the compass and the tree on screen
 - **0.6.0-alpha.173** · 2026-11-03 · 5.2 conversation scenes audit (F0514-F0547, F0833, F1236)
 - **0.6.0-alpha.172** · 2026-11-03 · Merge main (6-29 G1) into 6-21 G3
