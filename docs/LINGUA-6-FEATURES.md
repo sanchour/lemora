@@ -1552,25 +1552,25 @@ each with its definition, private and exportable. Lingua 5.2-9 already expands R
 - [x] `F1200` Semantic category sorting · **6-21**
 - [x] `F1201` Odd-one-out challenges · **6-21**
 - [x] `F1202` Fill-the-gap races
-- [ ] `F1203` Story completion games · **6-21**
-- [ ] `F1204` Dialogue completion · **6-21**
-- [ ] `F1205` Interactive mysteries · **6-21**
+- [x] `F1203` Story completion games · **6-21**
+- [x] `F1204` Dialogue completion · **6-21**
+- [x] `F1205` Interactive mysteries · **6-21**
 - [x] `F1206` Text adventures · **6-21**
 - [x] `F1207` Choose-your-own-adventure stories · **6-21**
-- [ ] `F1208` Roleplaying quests · **6-21**
+- [x] `F1208` Roleplaying quests · **6-21**
 - [x] `F1209` Escape-room-style language puzzles · **6-21**
-- [ ] `F1210` Clue-based detective games · **6-21**
-- [ ] `F1211` Simulated travel adventures · **6-21**
-- [ ] `F1212` Virtual city exploration · **6-21**
-- [ ] `F1213` Survival-language challenges · **6-21**
-- [ ] `F1214` Conversation quests · **6-21**
+- [x] `F1210` Clue-based detective games · **6-21**
+- [x] `F1211` Simulated travel adventures · **6-21**
+- [x] `F1212` Virtual city exploration · **6-21**
+- [x] `F1213` Survival-language challenges · **6-21**
+- [x] `F1214` Conversation quests · **6-21**
 - [x] `F1215` Daily puzzles · **6-21**
 - [x] `F1216` Weekly themed challenges · **6-21**
 - [ ] `F1217` Cooperative multiplayer quizzes · **6-27** · needs the user's word
 - [ ] `F1218` Head-to-head vocabulary matches · **6-27** · needs the user's word
 - [ ] `F1219` Community tournaments · **6-27** · needs the user's word
-- [ ] `F1220` Custom game creation · **6-21**
-- [ ] `F1221` AI-generated games based on personal vocabulary · **6-21**
+- [x] `F1220` Custom game creation · **6-21**
+- [x] `F1221` AI-generated games based on personal vocabulary · **6-21**
 
 ## 17 · Reading, writing and speaking together
 
