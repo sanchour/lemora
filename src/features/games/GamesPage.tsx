@@ -18,10 +18,13 @@ import { PageHeader } from '@/app/PageHeader';
 import { buttonClasses, Card, EmptyState } from '@/design/primitives';
 import { Anagram } from './Anagram';
 import { Clues } from './Clues';
+import { Crossword } from './Crossword';
 import { Hangman } from './Hangman';
 import { Hunt } from './Hunt';
 import { Ladder } from './Ladder';
 import { MissingLetters } from './MissingLetters';
+import { Race } from './Race';
+import { OddOneOut, Sorting } from './Sorting';
 import { WordSearch } from './WordSearch';
 
 interface ScreenProps {
@@ -32,7 +35,7 @@ interface ScreenProps {
 }
 
 /** The screen of each game that has one; a game without one is not on the shelf yet. */
-const SCREENS: Record<string, ComponentType<ScreenProps>> = { hangman: Hangman, anagram: Anagram, missing: MissingLetters, clues: Clues, wordsearch: WordSearch, hunt: Hunt, ladder: Ladder };
+const SCREENS: Record<string, ComponentType<ScreenProps>> = { hangman: Hangman, anagram: Anagram, missing: MissingLetters, clues: Clues, wordsearch: WordSearch, hunt: Hunt, ladder: Ladder, crossword: Crossword, sorting: Sorting, odd: OddOneOut, synonyms: (p) => <Race {...p} relation="synonym" />, antonyms: (p) => <Race {...p} relation="antonym" />, association: (p) => <Race {...p} relation="any" /> };
 const GAMES = ALL_GAMES.filter((g) => g.id in SCREENS);
 
 export default function GamesPage() {

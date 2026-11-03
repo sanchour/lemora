@@ -8,13 +8,34 @@ import { itemsOfFacts } from '@/core/games/source';
 import type { GameItem, GameSource } from '@/core/games/source';
 import { db } from './db';
 import type { LinguaDB } from './db';
+import { normalizeWord } from '@/core/text/normalize';
+import { lookUpFull } from '@/services/dictionary/fullDict';
 import { recordEvidence } from './learner';
 import { practiceNotes, wordFacts } from './practice';
 
 /** The learner's words with what the dictionary says of them: the same source Practice draws on. */
 export async function gameItems(lang: string, database: LinguaDB = db): Promise<GameItem[]> {
   const notes = await practiceNotes(lang, database);
-  return itemsOfFacts(await wordFacts(lang, notes, database)).map((item, i) => ({ ...item, lemma: notes[i]?.lemma }));
+  const decks = new Map((await database.decks.where('lang').equals(lang).toArray()).map((d) => [d.id, d.name]));
+  return itemsOfFacts(await wordFacts(lang, notes, database)).map((item, i) => {
+    const n = notes[i];
+    const cats: NonNullable<GameItem['cats']> = [
+      ...(decks.has(n.deckId) ? [{ kind: 'deck' as const, name: decks.get(n.deckId)! }] : []),
+      ...n.tags.map((name) => ({ kind: 'tag' as const, name })),
+      ...(n.pos ? [{ kind: 'pos' as const, name: n.pos }] : []),
+    ];
+    return { ...item, lemma: n.lemma, cats };
+  });
+}
+
+/** Whether the dictionary, read from the typed word's side, also relates it to the prompt: a synonym is often listed under only one of the two. */
+export async function relatedBack(lang: string, typed: string, prompt: string, relation: 'synonym' | 'antonym' | 'any'): Promise<boolean> {
+  const row = await lookUpFull(lang, typed).catch(() => undefined);
+  const entries = row?.entries ?? [];
+  const syn = entries.flatMap((e) => [...(e.syn ?? []), ...e.senses.flatMap((x) => x.syn ?? [])]);
+  const ant = entries.flatMap((e) => [...(e.ant ?? []), ...e.senses.flatMap((x) => x.ant ?? [])]);
+  const forms = relation === 'synonym' ? syn : relation === 'antonym' ? ant : [...syn, ...ant];
+  return forms.some((f) => normalizeWord(f, lang) === normalizeWord(prompt, lang));
 }
 
 /** The commonest words of a language's list: a ladder is made of these, not of the learner's words. */
