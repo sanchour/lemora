@@ -4,6 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { afterRound } from '@/core/games/bests';
 import type { Best, Bests, RoundResult } from '@/core/games/bests';
 import { letterWord } from '@/core/games/letters';
+import { partsOf } from '@/core/games/parts';
 import { itemsOfFacts } from '@/core/games/source';
 import type { GameItem, GameSource } from '@/core/games/source';
 import { db } from './db';
@@ -17,15 +18,16 @@ import { practiceNotes, wordFacts } from './practice';
 export async function gameItems(lang: string, database: LinguaDB = db): Promise<GameItem[]> {
   const notes = await practiceNotes(lang, database);
   const decks = new Map((await database.decks.where('lang').equals(lang).toArray()).map((d) => [d.id, d.name]));
-  return itemsOfFacts(await wordFacts(lang, notes, database)).map((item, i) => {
+  return Promise.all(itemsOfFacts(await wordFacts(lang, notes, database)).map(async (item, i) => {
     const n = notes[i];
     const cats: NonNullable<GameItem['cats']> = [
       ...(decks.has(n.deckId) ? [{ kind: 'deck' as const, name: decks.get(n.deckId)! }] : []),
       ...n.tags.map((name) => ({ kind: 'tag' as const, name })),
       ...(n.pos ? [{ kind: 'pos' as const, name: n.pos }] : []),
     ];
-    return { ...item, lemma: n.lemma, cats };
-  });
+    const row = await lookUpFull(lang, n.lemma ?? n.term).catch(() => undefined);
+    return { ...item, lemma: n.lemma, cats, parts: partsOf(n.term, row?.entries.find((e) => e.parts)?.parts, lang) ?? undefined };
+  }));
 }
 
 /** Whether the dictionary, read from the typed word's side, also relates it to the prompt: a synonym is often listed under only one of the two. */

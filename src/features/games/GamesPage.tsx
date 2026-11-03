@@ -18,11 +18,15 @@ import { PageHeader } from '@/app/PageHeader';
 import { buttonClasses, Card, EmptyState } from '@/design/primitives';
 import { Anagram } from './Anagram';
 import { Clues } from './Clues';
+import { Bingo } from './Bingo';
+import { Choice } from './Choice';
 import { Crossword } from './Crossword';
 import { Hangman } from './Hangman';
 import { Hunt } from './Hunt';
 import { Ladder } from './Ladder';
+import { Memory } from './Memory';
 import { MissingLetters } from './MissingLetters';
+import { Parts } from './Parts';
 import { Race } from './Race';
 import { OddOneOut, Sorting } from './Sorting';
 import { WordSearch } from './WordSearch';
@@ -35,7 +39,7 @@ interface ScreenProps {
 }
 
 /** The screen of each game that has one; a game without one is not on the shelf yet. */
-const SCREENS: Record<string, ComponentType<ScreenProps>> = { hangman: Hangman, anagram: Anagram, missing: MissingLetters, clues: Clues, wordsearch: WordSearch, hunt: Hunt, ladder: Ladder, crossword: Crossword, sorting: Sorting, odd: OddOneOut, synonyms: (p) => <Race {...p} relation="synonym" />, antonyms: (p) => <Race {...p} relation="antonym" />, association: (p) => <Race {...p} relation="any" /> };
+const SCREENS: Record<string, ComponentType<ScreenProps>> = { hangman: Hangman, anagram: Anagram, missing: MissingLetters, clues: Clues, wordsearch: WordSearch, hunt: Hunt, ladder: Ladder, crossword: Crossword, definition: (p) => <Choice {...p} kind="definition" />, picture: (p) => <Choice {...p} kind="picture" />, memory: Memory, bingo: Bingo, parts: Parts, sorting: Sorting, odd: OddOneOut, synonyms: (p) => <Race {...p} relation="synonym" />, antonyms: (p) => <Race {...p} relation="antonym" />, association: (p) => <Race {...p} relation="any" /> };
 const GAMES = ALL_GAMES.filter((g) => g.id in SCREENS);
 
 export default function GamesPage() {
