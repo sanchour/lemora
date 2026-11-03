@@ -70,7 +70,7 @@
           var e = document.getElementById('boot-error');
           if (!b || !e || !message) return;
           b.className = 'slow';
-          e.textContent = 'Lingua couldn’t start: ' + message;
+          e.textContent = 'Lemora couldn’t start: ' + message;
         }
         window.addEventListener('error', function (e) { bootError(e.message || (e.target && e.target.tagName === 'SCRIPT' ? 'couldn’t load ' + e.target.src : '')); }, true);
         window.addEventListener('unhandledrejection', function (e) { bootError(String((e.reason && e.reason.message) || e.reason)); });

@@ -88,9 +88,14 @@ desktop with no horizontal scrolling.
 | W7 | How it's made | Local-first, honest numbers, no streak guilt, your words follow you: four drawn icons with a line each |
 | W8 | Footer | An ornament, *Built from Lingua*, the data's attributions (Wiktionary via kaikki.org, FrequencyWords, CC BY-SA 4.0) |
 
-**Steps.** W-a plan (this section) · W-b the page and its demos · W-c check at 390, 1366 and 1440 wide, light and
-dark, every demo clicked · W-d push to the new private repository. Hosting is left to the user: GitHub Pages on a
+**Steps.** ✅ W-a plan (this section) · ✅ W-b the page and its demos · ✅ W-c checked at 390, 1366 and 1440 wide, light
+and dark, reduced motion, from the folder (`file://`) and served, every demo clicked · ✅ W-d pushed to the private
+repository `sanchour/lemora-site` (v0.1.0). Hosting is left to the user: GitHub Pages on a
 private repository needs a paid plan, so the site is not published anywhere yet.
+
+**Pages (2026-11-03).** The repository's Pages was set to *deploy from a branch*, so a legacy build served the raw
+source `index.html` (`/src/main.tsx`) whenever it finished after the Actions deploy. It is now set to *GitHub Actions*
+only (`gh api -X PUT repos/sanchour/lemora/pages -f build_type=workflow`).
 
 ## How a step is checked
 
