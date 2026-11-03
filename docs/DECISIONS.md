@@ -2118,3 +2118,15 @@ Word-link and sorting games (6-21 G3): a crossword is laid out left to right and
 ## 2026-11-03 — 6-29 G1: the word graph's model, and a third view, the tree
 
 The user asked for G1 and "also add a tree view, like a word tree view". The tree is one word's family the way an etymological dictionary draws it: climbing through `parts` to what the word is made from (*deshacer* → *hacer*), the ancestor in another language above the top, then branching down through `derived` and every word whose `parts` name it (an index over the dictionary, since `derived` lists only some). Chinese and Japanese, whose dictionaries have no `parts`, grow one tree per character. It is drawn with the compass in G2, as elbows rather than curves so it reads as its own view ([WORD-GRAPH-PLAN.md](WORD-GRAPH-PLAN.md) section 2.4). **G1 is the pure model** (`src/core/graph`: `buildWeb`, `neighbourhood`, `regionsOf`, `wordTree`), tested on real v3 rows cut into fixtures. Run once at real scale it matches the plan's measurements (Spanish, 3,000 words: 3,086 nodes, 4,068 threads), in 130 ms plus 39 ms for the regions: over the main thread's 50 ms, so it runs in G4's worker as planned. Two things learned: a word's part of speech is the one with the most meanings (*de* is listed first as the letter), and 700 of 3,000 Spanish words end as loose threads, too many for a margin, so G4 lets small hubs vote in the regions. Lists shaped by grammar are lenses by their group in `STARTER_THEMES` (grammar, computed), not by a list of ids.
+
+## 2026-11-03 — 5.2 Conversation scenes audit & completion (F0514–F0547, 6-11)
+
+Antigravity-1 verified coverage of 5.2-6 and 6-11 conversation scenes against `docs/LINGUA-6-FEATURES.md` (F0514–F0547, plus F0833 and F1236):
+- 28 scenes and features were already built and verified in `src/core/colloquium/` and `src/features/colloquium/` from Lingua 5.2-6 and 6-11.
+- Built 4 dedicated scenes to guarantee 100% explicit scene coverage:
+  - `philosophy` (`src/core/colloquium/scenes/culture.ts`) for F0531 (Discussing philosophy & ethics).
+  - `seminar` (`src/core/colloquium/scenes/work.ts`) for F0535 (University seminar simulations & research debates).
+  - `awkward` (`src/core/colloquium/scenes/social.ts`) for F0539 (Handling an awkward situation & tactful resolution).
+  - `disagree` (`src/core/colloquium/scenes/practice.ts`) for F0541 (Expressing disagreement politely with diplomatic softening).
+- Ticked F0514–F0547, F0833, and F1236 in `docs/LINGUA-6-FEATURES.md`. Unit tests added in `src/core/colloquium/prompts.test.ts`.
+
