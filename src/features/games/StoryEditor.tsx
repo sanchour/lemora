@@ -10,6 +10,7 @@ import { saveCustom, useCustom } from '@/data/games';
 import { useApp } from '@/app/context';
 import { buttonClasses } from '@/design/primitives';
 import { UiText, useUi } from '@/design/i18n/UiText';
+import { useStudySession } from '@/features/lesson/useStudySession';
 
 interface Result {
   errors: ParseError[];
@@ -19,6 +20,8 @@ interface Result {
 
 export default function StoryEditorPage() {
   const { language } = useApp();
+  // Ludus's time, toward the day and Ludus's own goal (core/goals/tools).
+  useStudySession(language.id, 'ludus', 'story-editor');
   const lang = language.id;
   const t = useUi();
   const saved = useCustom(lang);

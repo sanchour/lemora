@@ -71,6 +71,7 @@ import { Timed } from './Timed';
 import { Tournament } from './Tournament';
 import { OddOneOut, Sorting } from './Sorting';
 import { WordSearch } from './WordSearch';
+import { useStudySession } from '@/features/lesson/useStudySession';
 
 interface ScreenProps {
   lang: string;
@@ -127,6 +128,8 @@ const GROUP_KEYS = Object.keys(GAME_GROUPS) as GameGroup[];
 export default function GamesPage() {
   const translateUi = useUi();
   const { language } = useApp();
+  // Ludus's time, toward the day and Ludus's own goal (core/goals/tools).
+  useStudySession(language.id, 'ludus', 'games');
   const lang = language.id;
   const name = getLanguage(lang)?.name ?? lang;
   const gameId = useParams().game;

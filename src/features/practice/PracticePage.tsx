@@ -27,6 +27,7 @@ import { affixesOfWords, itemsOf, practiceNotes, practiceTopics, verbGrids, word
 import { ArrowRight, Gamepad2, Layers } from 'lucide-react';
 import { buttonClasses, Segmented } from '@/design/primitives';
 import { ExerciseSession } from '@/features/exercise/ExerciseSession';
+import { useStudySession } from '@/features/lesson/useStudySession';
 
 interface Ctx {
   facts: WordFacts[];
@@ -358,6 +359,8 @@ function buildSets(lang: string, c: Ctx, level: Cefr): PracticeSet[] {
 export default function PracticePage() {
   const translateUi = useUi();
   const { language, settings } = useApp();
+  // Ludus's time, toward the day and Ludus's own goal (core/goals/tools).
+  useStudySession(language.id, 'ludus', 'practice');
   const lang = language.id;
   const level = (language.level === 'A0' ? 'A1' : language.level) as Cefr;
   const aiReady = aiBlock(settings, settings.llm.provider) === null;

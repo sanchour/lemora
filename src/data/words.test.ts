@@ -1,7 +1,7 @@
 import Dexie from 'dexie';
 import { afterEach, describe, expect, it } from 'vitest';
 import { localDateKey } from '@/lib/format';
-import { bumpDaily } from './activity';
+import { recordSession } from './activity';
 import { createDb } from './db';
 import type { LinguaDB } from './db';
 import { completeOnboarding } from './languages';
@@ -75,9 +75,11 @@ describe('daily goal', () => {
   it('is met once study minutes reach the language goal', async () => {
     const db = freshDb();
     await completeOnboarding({ target: 'sv', native: 'en', level: 'A0', seedKnown: false, theme: 'paper' }, db);
-    await bumpDaily('sv', { readMs: 10 * 60_000 }, db);
+    // Time reaches the day as recorded sessions (core/goals/tools counts them, as Home does).
+    const now = Date.now();
+    await recordSession({ lang: 'sv', type: 'read', startedAt: now - 25 * 60_000, endedAt: now - 15 * 60_000, activeMs: 10 * 60_000 }, db);
     expect((await db.dailyStats.get(`sv:${localDateKey()}`))?.goalMet).toBe(0);
-    await bumpDaily('sv', { readMs: 5 * 60_000 }, db);
+    await recordSession({ lang: 'sv', type: 'read', startedAt: now - 6 * 60_000, endedAt: now - 60_000, activeMs: 5 * 60_000 }, db);
     expect((await db.dailyStats.get(`sv:${localDateKey()}`))?.goalMet).toBe(1);
   });
 });

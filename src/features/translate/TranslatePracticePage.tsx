@@ -28,6 +28,7 @@ import { AlignmentView } from './AlignmentView';
 import { BackTranslationView } from './BackTranslationView';
 import { ReconstructView } from './ReconstructView';
 import { ContrastTableView } from './ContrastTableView';
+import { useStudySession } from '@/features/lesson/useStudySession';
 
 const CORE_LANGUAGES = [
   { id: 'es', label: 'Spanish', flag: '🇪🇸' },
@@ -43,6 +44,8 @@ type TranslateTab = 'practice' | 'align' | 'back' | 'reconstruct' | 'compare' | 
 export default function TranslatePracticePage() {
   const translateUi = useUi();
   const { language } = useApp();
+  // Ludus's time, toward the day and Ludus's own goal (core/goals/tools).
+  useStudySession(language.id, 'ludus', 'translate');
 
   // Active language
   const [selectedLang, setSelectedLang] = useState<string>(

@@ -3,6 +3,7 @@
 
 import type { CardTemplate, InboxState } from '@/core/contracts/word';
 import type { Cefr, Level } from '@/core/lang/levels';
+import type { ToolId } from '@/core/goals/tools';
 
 export type Lang = string;
 /** 0 Unseen · 1 Known · 2 Learning */
@@ -45,8 +46,11 @@ export interface LanguageProfile extends Synced {
   isActive: Bit;
   /** e.g. 'ru-en@1' once a dictionary pack is installed. */
   dictPackId?: string;
-  /** `codexMinutes`: Codex's own reading goal (4.0-2); `readMinutes` is Home's, for every kind of study. */
-  dailyGoal: { reviews: number; readMinutes: number; listenMinutes: number; codexMinutes?: number };
+  /**
+   * `codexMinutes`: Codex's own reading goal (4.0-2); `readMinutes` is Home's, for every kind of study; `tools`: the other
+   * tools' own goals in minutes (Lemora 3.8), 0 or missing for none. Every writer spreads the old value, so none is lost.
+   */
+  dailyGoal: { reviews: number; readMinutes: number; listenMinutes: number; codexMinutes?: number; tools?: Partial<Record<ToolId, number>> };
   /** Proficiency seeding: pre-mark the top-N frequency forms as Known (0 = off). */
   seededKnownTopN: number;
   /** Set once the seeding has been applied (it needs the language pack). */

@@ -12,6 +12,7 @@ import { PageHeader } from '@/app/PageHeader';
 import { buttonClasses, Card } from '@/design/primitives';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { cx } from '@/lib/cx';
+import { useStudySession } from '@/features/lesson/useStudySession';
 
 function Strip({ done, of }: { done: number; of: number }) {
   return (
@@ -25,6 +26,8 @@ function Strip({ done, of }: { done: number; of: number }) {
 
 export default function ProjectsPage() {
   const { language } = useApp();
+  // Ludus's time, toward the day and Ludus's own goal (core/goals/tools).
+  useStudySession(language.id, 'ludus', 'projects');
   const lang = language.id;
   const t = useUi();
   const navigate = useNavigate();
