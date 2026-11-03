@@ -1,5 +1,6 @@
 // The stories made by hand (6-21 G6): one for each of the six core languages, an escape room at A1. Max makes more (6-6b), and those play here too.
 import type { StoryGame } from './story';
+import { GENRES } from './storyGenres';
 
 type Texts = { title: string; room: string; note: string; rug: string; window: string; locked: string; win: string; note_: string; key_: string; desk: string; under: string; out: string; door: string; open: string; back: string };
 
@@ -16,6 +17,7 @@ const T: Record<string, Texts> = {
 export function readyStories(lang: string): StoryGame[] {
   const t = T[lang];
   if (!t) return [];
+  const more = GENRES.flatMap((g) => (g.text[lang] ? [{ id: `ready:${lang}:${g.id}`, ...g.build(g.text[lang]) }] : []));
   const back = { label: t.back, to: 'room' };
   return [
     {
@@ -33,5 +35,6 @@ export function readyStories(lang: string): StoryGame[] {
         win: { text: t.win, choices: [], end: 'win' },
       },
     },
+    ...more,
   ];
 }

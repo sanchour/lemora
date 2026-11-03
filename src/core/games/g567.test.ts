@@ -79,13 +79,29 @@ describe('tournament', () => {
 
 describe('stories', () => {
   it('the ready-made stories can all be won, and have no trap', () => {
+    const shortest: Record<string, number> = { room: 5, mystery: 6, detective: 5, travel: 5, city: 4, survival: 2, roleplay: 4, conversation: 5 };
     for (const lang of ['es', 'fr', 'de', 'ru', 'zh', 'ar']) {
-      const [story] = readyStories(lang);
-      const check = checkStory(story);
-      expect(check.problems, lang).toEqual([]);
-      expect(check.shortest).toBe(5);
+      const stories = readyStories(lang);
+      expect(stories.map((s) => s.id.split(':')[2]).sort()).toEqual(Object.keys(shortest).sort());
+      for (const story of stories) {
+        const check = checkStory(story);
+        expect(check.problems, `${lang} ${story.id}`).toEqual([]);
+        expect(check.shortest, `${lang} ${story.id}`).toBe(shortest[story.id.split(':')[2]]);
+      }
     }
+    const [first] = readyStories('es');
+    expect(first.id).toBe('ready:es:room');
     expect(readyStories('ja')).toEqual([]);
+  });
+  it('a survival story is lost when the strength runs out, and won with some left', () => {
+    const story = readyStories('es').find((x) => x.id.endsWith('survival'))!;
+    let s = startStory(story);
+    expect(s.health).toBe(2);
+    s = choose(story, choose(story, s, 0), 0);
+    expect([s.status, s.health]).toEqual(['lost', 0]);
+    expect(choose(story, s, 0)).toBe(s);
+    s = choose(story, choose(story, startStory(story), 1), 0);
+    expect([s.status, s.health, s.items]).toEqual(['won', 1, ['map']]);
   });
   it('hides a choice until its item is held, and finds items on arriving', () => {
     const story = readyStories('es')[0];

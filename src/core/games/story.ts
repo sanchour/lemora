@@ -8,6 +8,8 @@ export interface StoryChoice {
   to: string;
   /** The item that must be held to see this choice. */
   needs?: string;
+  /** Strength it takes (a cold walk, a long way): see `StoryGame.health`. */
+  cost?: number;
 }
 
 export interface StoryScene {
@@ -23,6 +25,8 @@ export interface StoryGame {
   title: string;
   level?: string;
   start: string;
+  /** For a survival story: the strength the learner starts with. At none the story is lost. */
+  health?: number;
   /** What each item is called, for the line that says what the learner holds. */
   items?: Record<string, string>;
   scenes: Record<string, StoryScene>;
@@ -42,18 +46,21 @@ export function fromAdventure(id: string, body: AdventureBody, level?: string): 
 export interface StoryState {
   at: string;
   items: string[];
+  /** Strength left, in a story that has it. */
+  health?: number;
   moves: number;
   status: 'playing' | 'won' | 'lost' | 'stuck';
 }
 
-const arrive = (story: StoryGame, at: string, items: string[]): Pick<StoryState, 'at' | 'items' | 'status'> => {
+const arrive = (story: StoryGame, at: string, items: string[], health?: number): Pick<StoryState, 'at' | 'items' | 'health' | 'status'> => {
   const scene = story.scenes[at];
   const held = scene.gives && !items.includes(scene.gives) ? [...items, scene.gives] : items;
   const open = scene.choices.some((c) => !c.needs || held.includes(c.needs));
-  return { at, items: held, status: scene.end === 'win' ? 'won' : scene.end === 'lose' ? 'lost' : open ? 'playing' : scene.choices.length ? 'stuck' : 'won' };
+  const spent = health !== undefined && health <= 0;
+  return { at, items: held, health, status: scene.end === 'win' ? 'won' : scene.end === 'lose' || spent ? 'lost' : open ? 'playing' : scene.choices.length ? 'stuck' : 'won' };
 };
 
-export const startStory = (story: StoryGame): StoryState => ({ ...arrive(story, story.start, []), moves: 0 });
+export const startStory = (story: StoryGame): StoryState => ({ ...arrive(story, story.start, [], story.health), moves: 0 });
 
 /** The choices the learner can see here: the ones whose item they hold. */
 export const visible = (story: StoryGame, s: StoryState): StoryChoice[] => story.scenes[s.at].choices.filter((c) => !c.needs || s.items.includes(c.needs));
@@ -61,7 +68,7 @@ export const visible = (story: StoryGame, s: StoryState): StoryChoice[] => story
 export function choose(story: StoryGame, s: StoryState, n: number): StoryState {
   const choice = visible(story, s)[n];
   if (s.status !== 'playing' || !choice) return s;
-  return { ...arrive(story, choice.to, s.items), moves: s.moves + 1 };
+  return { ...arrive(story, choice.to, s.items, s.health === undefined ? undefined : s.health - (choice.cost ?? 0)), moves: s.moves + 1 };
 }
 
 export interface StoryCheck {
@@ -78,7 +85,7 @@ export function checkStory(story: StoryGame): StoryCheck {
   if (!(story.start in story.scenes)) return { ok: false, problems: ['The start scene does not exist.'], shortest: Infinity };
   for (const id of ids) for (const c of story.scenes[id].choices) if (!(c.to in story.scenes)) problems.push(`${id}: a choice leads to ${c.to}, which does not exist.`);
   if (problems.length) return { ok: false, problems, shortest: Infinity };
-  const key = (st: Pick<StoryState, 'at' | 'items'>) => `${st.at}|${[...st.items].sort().join(',')}`;
+  const key = (st: Pick<StoryState, 'at' | 'items' | 'health'>) => `${st.at}|${[...st.items].sort().join(',')}|${st.health ?? ''}`;
   const first = startStory(story);
   const seen = new Map([[key(first), 0]]);
   const queue: StoryState[] = [first];
