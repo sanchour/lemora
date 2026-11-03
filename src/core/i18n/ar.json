@@ -7873,5 +7873,14 @@
   "Install this language’s dictionary before checking spelling.": "ثبّت قاموس هذه اللغة قبل التدقيق الإملائي.",
   "Use a name and an exact quote from this chapter.": "استخدم اسماً واقتباساً حرفياً من هذا الفصل.",
   "This book changed while its chapters were being prepared. Open it again before saving.": "تغيّر الكتاب أثناء تجهيز فصوله. افتحه مجدداً قبل الحفظ.",
-  "This picture is missing on this device. Restore a backup that includes images.": "هذه الصورة غير موجودة على هذا الجهاز. استعد نسخة احتياطية تتضمّن الصور."
+  "This picture is missing on this device. Restore a backup that includes images.": "هذه الصورة غير موجودة على هذا الجهاز. استعد نسخة احتياطية تتضمّن الصور.",
+  "Around {0}": "حول {0}",
+  "Laying out your words…": "نرتّب كلماتك…",
+  "Loose threads": "خيوط منفصلة",
+  "Mark words as Known or Learning while you read, and they appear here, joined to each other.": "علّم الكلمات بأنها معروفة أو قيد التعلّم أثناء القراءة، وستظهر هنا مترابطة.",
+  "Small groups of words joined only to each other, and words joined to nothing yet. Link one, or learn a word that would join it.": "مجموعات صغيرة من الكلمات مترابطة فيما بينها فقط، وكلمات لم ترتبط بشيء بعد. اربط واحدة، أو تعلّم كلمة تربطها.",
+  "The little words": "الكلمات الصغيرة",
+  "Your words: {0} in {1} regions": "كلماتك: {0} في {1} منطقة",
+  "{0} known · {1} learning · {2} regions": "{0} معروفة · {1} قيد التعلّم · {2} منطقة",
+  "{0} words joined to nothing yet": "{0} كلمة لم ترتبط بشيء بعد"
 }

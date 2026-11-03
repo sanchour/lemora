@@ -7873,5 +7873,14 @@
   "Install this language’s dictionary before checking spelling.": "Installiere vor der Rechtschreibprüfung das Wörterbuch dieser Sprache.",
   "Use a name and an exact quote from this chapter.": "Nutze einen Namen und ein genaues Zitat aus diesem Kapitel.",
   "This book changed while its chapters were being prepared. Open it again before saving.": "Das Buch wurde während der Vorbereitung der Kapitel geändert. Öffne es vor dem Speichern erneut.",
-  "This picture is missing on this device. Restore a backup that includes images.": "Dieses Bild fehlt auf dem Gerät. Stelle eine Sicherung mit Bildern wieder her."
+  "This picture is missing on this device. Restore a backup that includes images.": "Dieses Bild fehlt auf dem Gerät. Stelle eine Sicherung mit Bildern wieder her.",
+  "Around {0}": "Rund um {0}",
+  "Laying out your words…": "Ihre Wörter werden ausgelegt…",
+  "Loose threads": "Lose Fäden",
+  "Mark words as Known or Learning while you read, and they appear here, joined to each other.": "Markieren Sie beim Lesen Wörter als Bekannt oder Lernen, dann erscheinen sie hier, miteinander verbunden.",
+  "Small groups of words joined only to each other, and words joined to nothing yet. Link one, or learn a word that would join it.": "Kleine Gruppen von Wörtern, die nur miteinander verbunden sind, und Wörter, die noch mit nichts verbunden sind. Verknüpfen Sie eines oder lernen Sie ein Wort, das es anbinden würde.",
+  "The little words": "Die kleinen Wörter",
+  "Your words: {0} in {1} regions": "Ihre Wörter: {0} in {1} Regionen",
+  "{0} known · {1} learning · {2} regions": "{0} bekannt · {1} im Lernen · {2} Regionen",
+  "{0} words joined to nothing yet": "{0} Wörter, noch mit nichts verbunden"
 }

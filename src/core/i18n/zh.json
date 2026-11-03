@@ -7873,5 +7873,14 @@
   "Install this language’s dictionary before checking spelling.": "检查拼写前请先安装此语言的词典。",
   "Use a name and an exact quote from this chapter.": "请使用本章中的名字和原文引语。",
   "This book changed while its chapters were being prepared. Open it again before saving.": "准备章节时此书发生了变化。请重新打开后再保存。",
-  "This picture is missing on this device. Restore a backup that includes images.": "此设备上缺少这张图片。请恢复包含图片的备份。"
+  "This picture is missing on this device. Restore a backup that includes images.": "此设备上缺少这张图片。请恢复包含图片的备份。",
+  "Around {0}": "{0}周边",
+  "Laying out your words…": "正在排布你的词语…",
+  "Loose threads": "零散的线",
+  "Mark words as Known or Learning while you read, and they appear here, joined to each other.": "阅读时把词标为“已认识”或“学习中”，它们就会出现在这里，彼此相连。",
+  "Small groups of words joined only to each other, and words joined to nothing yet. Link one, or learn a word that would join it.": "只彼此相连的小组词语，以及还没有和任何词相连的词。连起一个，或学一个能把它连上的词。",
+  "The little words": "小词",
+  "Your words: {0} in {1} regions": "你的词：{0} 个，分布在 {1} 个区域",
+  "{0} known · {1} learning · {2} regions": "已认识 {0} · 学习中 {1} · {2} 个区域",
+  "{0} words joined to nothing yet": "{0} 个词还没有和任何词相连"
 }
