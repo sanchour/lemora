@@ -4,6 +4,7 @@
 import type { GeneratedRow } from '@/core/contracts/db';
 import { cacheKey, LEVEL_BEYOND_LIMIT, levelReport, readGenerated, textOf, unknownWords, wordsOf } from '@/core/generate/generate';
 import type { GeneratedBody, GeneratedKind, RewriteTask } from '@/core/generate/generate';
+import { hasCourse } from '@/core/course/load';
 import { getLanguage } from '@/core/lang/languages';
 import type { Cefr } from '@/core/lang/levels';
 import { packId } from '@/core/packs/format';
@@ -44,6 +45,25 @@ export interface GenerateDeps {
   database: LinguaDB;
   model: string;
   now: () => number;
+}
+
+/** The kinds with a text in the target language that a proofreader can read. */
+const PROOFREAD = new Set<GeneratedKind>(['story', 'sentences', 'dialogue', 'simplified']);
+
+/**
+ * The short grammar check (6-6b), for the core languages only: the model reads what was made as a proofreader and lists real errors. Claimed
+ * only when it answers with an empty list; an error, a failed call or any other answer claims nothing. (shortcut: the same model checks its own
+ * work, so it catches slips, not blind spots; upgrade to a second model if slips get through.)
+ */
+async function grammarChecked(d: GenerateDeps, req: GenerateRequest, body: GeneratedBody): Promise<boolean> {
+  if (!PROOFREAD.has(req.kind) || !hasCourse(req.lang)) return false;
+  const name = getLanguage(req.lang)?.name ?? req.lang;
+  try {
+    const answer = (await d.ask(`You proofread ${name}. Answer only with JSON: {"errors": [string]}. List each real grammar, agreement, conjugation or spelling error in the text, each in a few words; an empty list if there are none. Do not list style choices.`, JSON.stringify({ text: textOf(req.kind, body) }))) as { errors?: unknown };
+    return Array.isArray(answer?.errors) && answer.errors.length === 0;
+  } catch {
+    return false;
+  }
 }
 
 /** Tries a text, then makes it again (at most this many times in all) when it goes beyond the level. */
@@ -184,6 +204,8 @@ export async function generateMaterial(req: GenerateRequest, deps?: GenerateDeps
     if (checks.includes('level') || ranks.size === 0) break;
   }
   if (!best) throw new LlmError('The AI answer could not be read. Try again.', 'bad-response');
+  // Only a text already at its level is worth a second reading.
+  if (best.checks.includes('level') && (await grammarChecked(d, req, best.body))) best.checks.push('grammar');
 
   const row: GeneratedRow = {
     id: crypto.randomUUID(),
