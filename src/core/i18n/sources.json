@@ -15199,6 +15199,130 @@
   "Your words crossed on a grid, clued by their meanings.": [
     "src/core/games/defs.ts"
   ],
+  "Bingo!": [
+    "src/features/games/Bingo.tsx"
+  ],
+  "It is on your card.": [
+    "src/features/games/Bingo.tsx"
+  ],
+  "Not that square.": [
+    "src/features/games/Bingo.tsx"
+  ],
+  "The called word is not on your card.": [
+    "src/features/games/Bingo.tsx"
+  ],
+  "Call {0} of {1}": [
+    "src/features/games/Bingo.tsx"
+  ],
+  "Not on my card": [
+    "src/features/games/Bingo.tsx"
+  ],
+  "A card of your words. Meanings are called one at a time: mark the word, or say it is not on your card.": [
+    "src/features/games/Bingo.tsx"
+  ],
+  "Vocabulary bingo": [
+    "src/features/games/Bingo.tsx",
+    "src/core/games/defs.ts"
+  ],
+  "Click the word that matches the meaning called, or press Not on my card when it is not there. A full row, column or diagonal wins. One mistake is still three stars, up to three is two, more is one.": [
+    "src/features/games/Bingo.tsx"
+  ],
+  "Right: {0}": [
+    "src/features/games/Choice.tsx",
+    "src/features/games/Parts.tsx"
+  ],
+  "It was {0}": [
+    "src/features/games/Choice.tsx",
+    "src/features/games/Parts.tsx"
+  ],
+  "Which word does the picture show?": [
+    "src/features/games/Choice.tsx"
+  ],
+  "Which meaning is right?": [
+    "src/features/games/Choice.tsx"
+  ],
+  "Five pictures from your cards, each with four words. Pick the word the picture shows.": [
+    "src/features/games/Choice.tsx"
+  ],
+  "Five of your words, each with four meanings. Pick the right one.": [
+    "src/features/games/Choice.tsx"
+  ],
+  "Click an answer or press its number. Right the first time is three stars, the second time two, the third one; two wrong picks and it is lost.": [
+    "src/features/games/Choice.tsx"
+  ],
+  "Done in {0} moves.": [
+    "src/features/games/Memory.tsx"
+  ],
+  "Card": [
+    "src/features/games/Memory.tsx"
+  ],
+  "Moves: {0}": [
+    "src/features/games/Memory.tsx"
+  ],
+  "Pairs found: {0} of {1}": [
+    "src/features/games/Memory.tsx"
+  ],
+  "Cards face down. Find each word and its meaning.": [
+    "src/features/games/Memory.tsx"
+  ],
+  "Match words with pictures": [
+    "src/features/games/Memory.tsx"
+  ],
+  "Only words that have a picture are used.": [
+    "src/features/games/Memory.tsx"
+  ],
+  "The words would not make pairs. Try again.": [
+    "src/features/games/Memory.tsx"
+  ],
+  "Memory": [
+    "src/features/games/Memory.tsx",
+    "src/core/games/defs.ts"
+  ],
+  "Turn two cards over. A pair stays up; cards that do not match turn back. Three stars for a few moves more than pairs, two for up to twice as many.": [
+    "src/features/games/Memory.tsx"
+  ],
+  "Parts to put in order": [
+    "src/features/games/Parts.tsx"
+  ],
+  "{0} Place a part": [
+    "src/features/games/Parts.tsx"
+  ],
+  "Five of your words, split into their parts and mixed up. Put the parts back in order, from the meaning.": [
+    "src/features/games/Parts.tsx"
+  ],
+  "Click the parts in order. Three full tries that are wrong and the word is lost. Up to three stars: a hint costs one, so do two wrong tries.": [
+    "src/features/games/Parts.tsx"
+  ],
+  "Guess the definition": [
+    "src/core/games/defs.ts"
+  ],
+  "A word of yours, four meanings. Pick the right one.": [
+    "src/core/games/defs.ts"
+  ],
+  "Picture vocabulary": [
+    "src/core/games/defs.ts"
+  ],
+  "A picture from your cards, four words. Pick the one it shows.": [
+    "src/core/games/defs.ts"
+  ],
+  "Turn cards over to find each word and its meaning, or its picture.": [
+    "src/core/games/defs.ts"
+  ],
+  "Meanings are called. Mark the word on your card until you have a line.": [
+    "src/core/games/defs.ts"
+  ],
+  "Build from parts": [
+    "src/core/games/defs.ts"
+  ],
+  "A word split into its parts, mixed up. Put the parts back in order from the meaning.": [
+    "src/core/games/defs.ts"
+  ],
+  "Needs {0} of your words that have a picture; you have {1}. Add pictures to your cards.": [
+    "src/core/games/source.ts"
+  ],
+  "Needs {0} of your words that the dictionary splits into parts; you have {1}.": [
+    "src/core/games/source.ts"
+  ],
   "Atlas": [
     "src/features/thesaurus/ThesaurusPage.tsx",
     "src/features/thesaurus/atlas/AtlasTab.tsx"
