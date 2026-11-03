@@ -274,18 +274,18 @@ Vocabulary is much more than translating a word and flipping a flashcard. Learne
 - [x] `F0173` Anagrams · **6-21** · partly there
 - [x] `F0174` Sentence completion
 - [x] `F0175` Missing-letter puzzles · **6-21**
-- [ ] `F0176` Guess the definition · **6-21**
-- [ ] `F0177` Guess the word from a picture · **6-21**
+- [x] `F0176` Guess the definition · **6-21**
+- [x] `F0177` Guess the word from a picture · **6-21**
 - [x] `F0178` Guess the word from audio
 - [x] `F0179` Word association · **6-21**
 - [x] `F0180` Synonym races · **6-21**
 - [x] `F0181` Antonym races · **6-21**
 - [x] `F0182` Category sorting · **6-21**
 - [x] `F0183` Odd-one-out challenges · **6-21**
-- [ ] `F0184` Build a word from morphemes · **6-21**
+- [x] `F0184` Build a word from morphemes · **6-21**
 - [x] `F0185` Speed rounds
-- [ ] `F0186` Memory-matching cards · **6-21**
-- [ ] `F0187` Vocabulary bingo · **6-21**
+- [x] `F0186` Memory-matching cards · **6-21**
+- [x] `F0187` Vocabulary bingo · **6-21**
 - [ ] `F0188` Daily word challenges · **6-21** · partly there
 - [x] `F0189` Guess a word from progressively revealing clues · **6-21**
 - [ ] `F0190` Mini word tournaments · **6-21**
@@ -1393,24 +1393,24 @@ Think of this as a personal linguistic knowledge base.
 
 #### 13.2 Personal linguistic graph
 
-- [ ] `F1076` Synonym connections · **6-29**
-- [ ] `F1077` Antonym connections · **6-29**
-- [ ] `F1078` Cognate connections · **6-29**
-- [ ] `F1079` Word-family connections · **6-29**
-- [ ] `F1080` Root connections · **6-29**
-- [ ] `F1081` Collocation connections · **6-29**
+- [x] `F1076` Synonym connections · **6-29**
+- [x] `F1077` Antonym connections · **6-29**
+- [x] `F1078` Cognate connections · **6-29**
+- [x] `F1079` Word-family connections · **6-29**
+- [x] `F1080` Root connections · **6-29**
+- [x] `F1081` Collocation connections · **6-29**
 - [ ] `F1082` Semantic category connections · **6-29**
 - [ ] `F1083` Grammatical connections · **6-29**
 - [ ] `F1084` Topic connections · **6-29**
-- [ ] `F1085` Idiom connections · **6-29**
-- [ ] `F1086` Shared example sentence connections · **6-29**
-- [ ] `F1087` Connections between a word and a saved text · **6-29**
+- [x] `F1085` Idiom connections · **6-29**
+- [x] `F1086` Shared example sentence connections · **6-29**
+- [x] `F1087` Connections between a word and a saved text · **6-29**
 - [ ] `F1088` Connections between a word and a personal mistake · **6-29**
 - [ ] `F1089` Connections between words across multiple languages · **6-29**
 - [ ] `F1090` Visual graph exploration · **6-29**
 - [ ] `F1091` Filter by word type, topic or difficulty · **6-29**
 - [ ] `F1092` Identify isolated words with few connections · **6-29**
-- [ ] `F1093` Discover related vocabulary · **6-29**
+- [x] `F1093` Discover related vocabulary · **6-29**
 - [ ] `F1094` Build a personal semantic map · **6-29**
 - [ ] `F1095` Create a word cluster from a selected concept · **6-29**
 
@@ -1547,8 +1547,8 @@ each with its definition, private and exportable. Lingua 5.2-9 already expands R
 - [x] `F1195` Anagrams · **6-21**
 - [x] `F1196` Hangman-style spelling · **6-21**
 - [x] `F1197` Guess-the-word games · **6-21**
-- [ ] `F1198` Picture vocabulary quizzes · **6-21**
-- [ ] `F1199` Memory matching · **6-21**
+- [x] `F1198` Picture vocabulary quizzes · **6-21**
+- [x] `F1199` Memory matching · **6-21**
 - [x] `F1200` Semantic category sorting · **6-21**
 - [x] `F1201` Odd-one-out challenges · **6-21**
 - [x] `F1202` Fill-the-gap races

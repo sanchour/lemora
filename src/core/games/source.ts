@@ -10,6 +10,8 @@ export interface GameItem {
   term: string;
   lemma?: string;
   /** The deck, the tags and the kind of word it is: what sorting games group by. */
+  /** The dictionary's morphemes, when they put together spell the word (des-, hacer). */
+  parts?: string[];
   cats?: Array<{ kind: 'deck' | 'tag' | 'pos'; name: string }>;
   meaning?: string;
   example?: string;
@@ -23,9 +25,11 @@ export const itemsOfFacts = (facts: WordFacts[]): GameItem[] =>
 
 /** The items a game can really use. */
 export function usable(def: GameDef, items: GameItem[], lang: string): GameItem[] {
-  const { meaning, letters, maxLetters = 14, synonyms = 0, antonyms = 0, related = 0 } = def.needs;
+  const { meaning, letters, maxLetters = 14, synonyms = 0, antonyms = 0, related = 0, image, parts } = def.needs;
   return items.filter((i) => {
     if (meaning && !i.meaning) return false;
+    if (image && !i.image) return false;
+    if (parts && !i.parts) return false;
     if (i.synonyms.length < synonyms || i.antonyms.length < antonyms || i.synonyms.length + i.antonyms.length < related) return false;
     if (!letters) return true;
     const w = letterWord(i.term, { lang });
@@ -47,6 +51,11 @@ export function canPlay(def: GameDef, src: GameSource, lang: string, translate: 
   if (needs.letters && !hasLetters(lang)) return { ok: false, reason: translate(NO_LETTERS) };
   if (needs.list && src.listWords < needs.list) return { ok: false, reason: translate('Needs the language’s word list, which comes with its dictionary pack. Wait for the pack to finish installing, or install it.') };
   if (needs.texts && src.texts < 1) return { ok: false, reason: translate('Needs a text in Codex to hunt in. Add or open one first.') };
+  if (needs.image || needs.parts) {
+    const have = usable(def, src.items, lang).length;
+    if (have >= needs.count) return { ok: true };
+    return { ok: false, reason: translate(needs.image ? 'Needs {0} of your words that have a picture; you have {1}. Add pictures to your cards.' : 'Needs {0} of your words that the dictionary splits into parts; you have {1}.', [needs.count, have]) };
+  }
   if (needs.categories) return canSort(src.items) ? { ok: true } : { ok: false, reason: translate('Needs at least two decks, tags or kinds of word with three of your words each.') };
   if (!needs.count) return { ok: true };
   const have = usable(def, src.items, lang).length;

@@ -153,7 +153,7 @@ export function buildWeb(input: WebInput): Web {
 export type Quarter = 'meaning' | 'form' | 'origin' | 'use';
 export interface Neighbour {
   quarter: Quarter;
-  kind: 'syn' | 'ant' | 'theme' | 'link' | 'family' | 'affix' | 'char' | 'pair' | 'hom' | 'lookalike' | 'ancestor' | 'cognate' | 'phrase';
+  kind: 'syn' | 'ant' | 'theme' | 'link' | 'family' | 'affix' | 'char' | 'pair' | 'hom' | 'lookalike' | 'ancestor' | 'cognate' | 'phrase' | 'text' | 'sentence' | 'deck';
   label: string;
   /** A word of this language (yours or to discover). */
   key?: string;
