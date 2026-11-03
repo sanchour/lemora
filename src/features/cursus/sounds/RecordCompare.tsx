@@ -8,6 +8,7 @@ import { beatsOf, nPVI, strongestWord, syllablesIn } from '@/core/sounds/rhythm'
 import type { Beat } from '@/core/sounds/rhythm';
 import { contourInSemitones, endDirection, pitchContour, spectrogram, waveformPeaks, type Spectrogram } from '@/core/sounds/pitch';
 import { speechMatch } from '@/core/course/speech';
+import { recordEvidence } from '@/data/learner';
 import { canRecord, useRecorder } from '@/features/speech/useRecorder';
 import { recognitionSupported, listenOnce } from '@/services/speech/recognition';
 import { findRecording, recordingBlob } from '@/services/speech/recordings';
@@ -198,7 +199,17 @@ export function RecordCompare({ lang, words, expect, stress }: { lang: string; w
       if (recognitionSupported()) {
         const l = listenOnce(lang);
         recognition.current = l;
-        l.result.then((alts) => setHeard(alts[0] ?? ''), () => setHeard(null));
+        l.result.then(
+          (alts) => {
+            setHeard(alts[0] ?? '');
+            // One word said: it goes to the learner's record (6-5), as said and understood or not. A phrase is not one item, so it is not written.
+            if (!/\s/.test(word)) {
+              const right = understoodNow(alts[0] ?? '', word, lang);
+              void recordEvidence({ lang, at: Date.now(), skill: 'pronunciation', room: 'cursus', item: { type: 'word', wordId: `${lang}:${word.toLocaleLowerCase(lang)}` }, outcome: right ? 'right' : 'wrong', assisted: false, category: right ? undefined : 'pronunciation', given: alts[0]?.slice(0, 80), expected: word, kind: 'say-it' }).catch(() => undefined);
+            }
+          },
+          () => setHeard(null),
+        );
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : 'The microphone didn’t start.');

@@ -30,10 +30,16 @@ const pack = (): Lookup => ({
   ranks: new Map([...COMMON.map((w, i) => [w, 50 + i] as [string, number]), ...GRAND.map((w, i) => [w, 7000 + i] as [string, number])]),
 });
 
-function deps(db: LinguaDB, answers: unknown[], lookup: Lookup | null = pack()) {
+function deps(db: LinguaDB, answers: unknown[], lookup: Lookup | null = pack(), proofreader: unknown = { errors: [] }) {
   const prompts: Array<{ system: string; user: string }> = [];
+  const proofread: string[] = [];
   const d: GenerateDeps = {
     ask: async (system, user) => {
+      // The short grammar check is a question of its own, counted apart from the making.
+      if (system.startsWith('You proofread')) {
+        proofread.push(user);
+        return proofreader;
+      }
       prompts.push({ system, user });
       return answers[Math.min(prompts.length - 1, answers.length - 1)];
     },
@@ -42,7 +48,7 @@ function deps(db: LinguaDB, answers: unknown[], lookup: Lookup | null = pack()) 
     model: 'test-model',
     now: () => 1_000,
   };
-  return { d, prompts };
+  return { d, prompts, proofread };
 }
 
 describe('making a story, checked', () => {
@@ -51,7 +57,7 @@ describe('making a story, checked', () => {
     const { d, prompts } = deps(db, [EASY]);
     const first = await generateMaterial(REQ, d);
     expect(first.cached).toBe(false);
-    expect(first.row).toMatchObject({ lang: 'fr', kind: 'story', level: 'A2', checks: ['schema', 'dictionary', 'level'], model: 'test-model', content: EASY });
+    expect(first.row).toMatchObject({ lang: 'fr', kind: 'story', level: 'A2', checks: ['schema', 'dictionary', 'level', 'grammar'], model: 'test-model', content: EASY });
     // The name nobody lists is flagged, not hidden.
     expect(first.row.unknownWords).toEqual(['marie']);
     expect(labelFor(first.row).detail).toContain('checked at A2');
@@ -128,6 +134,30 @@ describe('making a story, checked', () => {
     expect(a.row.kind).toBe('sentences');
     expect(a.row.checks).toContain('level');
     expect((await generateMaterial(REQ, deps(db, [EASY]).d)).cached).toBe(false);
+  });
+});
+
+describe('the short grammar check', () => {
+  it('is claimed only when the proofreader finds nothing, and only for a core language', async () => {
+    const clean = deps(freshDb(), [EASY]);
+    expect((await generateMaterial(REQ, clean.d)).row.checks).toContain('grammar');
+    expect(clean.proofread).toHaveLength(1);
+
+    const flagged = deps(freshDb(), [EASY], pack(), { errors: ['elle achète: agreement'] });
+    const row = (await generateMaterial(REQ, flagged.d)).row;
+    expect(row.checks).toEqual(['schema', 'dictionary', 'level']);
+    expect(labelFor(row).detail).not.toContain('grammar double-checked');
+
+    const odd = deps(freshDb(), [EASY], pack(), 'not json shaped');
+    expect((await generateMaterial({ ...REQ, lang: 'it' }, odd.d)).row.checks).not.toContain('grammar');
+    // Italian has no course here, so it was not even asked.
+    expect(odd.proofread).toHaveLength(0);
+  });
+
+  it('asks for no second reading of a text that is beyond its level', async () => {
+    const x = deps(freshDb(), [HARD]);
+    await generateMaterial(REQ, x.d);
+    expect(x.proofread).toHaveLength(0);
   });
 });
 
