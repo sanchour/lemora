@@ -2116,3 +2116,29 @@ native capability, deployment channel or minimum OS decision is introduced by th
 ## 2026-11-03 — 6-29 G1: the word graph's model, and a third view, the tree
 
 The user asked for G1 and "also add a tree view, like a word tree view". The tree is one word's family the way an etymological dictionary draws it: climbing through `parts` to what the word is made from (*deshacer* → *hacer*), the ancestor in another language above the top, then branching down through `derived` and every word whose `parts` name it (an index over the dictionary, since `derived` lists only some). Chinese and Japanese, whose dictionaries have no `parts`, grow one tree per character. It is drawn with the compass in G2, as elbows rather than curves so it reads as its own view ([WORD-GRAPH-PLAN.md](WORD-GRAPH-PLAN.md) section 2.4). **G1 is the pure model** (`src/core/graph`: `buildWeb`, `neighbourhood`, `regionsOf`, `wordTree`), tested on real v3 rows cut into fixtures. Run once at real scale it matches the plan's measurements (Spanish, 3,000 words: 3,086 nodes, 4,068 threads), in 130 ms plus 39 ms for the regions: over the main thread's 50 ms, so it runs in G4's worker as planned. Two things learned: a word's part of speech is the one with the most meanings (*de* is listed first as the letter), and 700 of 3,000 Spanish words end as loose threads, too many for a margin, so G4 lets small hubs vote in the regions. Lists shaped by grammar are lenses by their group in `STARTER_THEMES` (grammar, computed), not by a list of ids.
+
+
+## 2026-11-03 · Finish Reading 6-8 and Writing 6-12 against the audit
+
+The user asked to reconcile Reading’s row and finish or tick its 47 open entries, then named Writing’s
+five open entries and asked to stop only after both steps were done. Earlier slice completion was not
+whole-step completion. [The final inventory](LINGUA-6-8-12-AUDIT.md) accounts for Reading’s 72 assigned
+entries and Writing’s five remaining entries (55 assigned in total).
+
+Reuse existing text/journal rows, marks, dictionary/forms/search, checked generators, exercise views,
+shared phrasebook templates, diff and backup/Undo. No dependency, table or migration. Reading source
+kinds remain explicit source searches/imports (including Wikivoyage/Wikibooks); everyday formats can
+also be generated as labelled fiction. No new hosted corpus, illustration licence or factual/linguistic
+certification is implied. Generated attribution stays attached when a text is kept.
+
+For F0676, use installed target-language dictionaries/forms with conservative missing-word candidates
+and existing fuzzy suggestions, plus the platform spellchecker marked with the entry language. This
+replaces the prospective second Hunspell engine/corpus: missing names/forms are not declared errors,
+and browser support remains conditional on its dictionaries. This is an explicit implementation choice,
+not a claim to have installed Hunspell or certified all native dictionaries.
+
+Pictures stay local and in media-inclusive backups; AI checks receive only writing/prompt. Snapshots
+are explicit (ten retained); restore saves the current draft first. Chapter vocabulary rebuilds happen
+before the atomic edit/Undo transaction; the transaction rechecks the book timestamp. A favourite flag
+must survive a note flushed on navigation. Source offsets/quotes continue to prevent false painting or
+silent matching of edited text. Completion and verification boundaries are recorded in the audit.

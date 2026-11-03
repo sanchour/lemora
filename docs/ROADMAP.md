@@ -5,13 +5,13 @@
 Reopen the stale complete row and account for all 72 assigned entries, including the 47 still unticked.
 Keep the existing reader, annotation storage, exercise views and checked material generator.
 
-- [ ] R5: verify existing stories, parallel/simplified reading, translation comparison and highlight export;
+- [x] R5: verify existing stories, parallel/simplified reading, translation comparison and highlight export;
   expose all promised reading kinds and open-source routes from the Graded shelf.
-- [ ] R6: finish comprehension kinds and explicit chapter-end practice; read a chapter aloud with
+- [x] R6: finish comprehension kinds and explicit chapter-end practice; read a chapter aloud with
   sentence following; make saved passages navigable bookmarks and a favourite-passages shelf.
-- [ ] R7: book-project chapter vocabulary/density, learner-confirmed character/place glossary and
+- [x] R7: book-project chapter vocabulary/density, learner-confirmed character/place glossary and
   chapter discussion, preserving exact source anchors and existing backup rows.
-- [ ] W5: finish F0617 image description, F0657 lower-level simplification, F0676 target-language
+- [x] W5: finish F0617 image description, F0657 lower-level simplification, F0676 target-language
   spellchecking, F0684 reusable sentence templates and F0687 saved draft comparison.
 - [ ] R8: regression tests, desktop light/dark browser review, typecheck, full tests and production build;
   reconcile the plan/audit/handover with specific evidence, then version and publish through a checked PR.
