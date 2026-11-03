@@ -109,6 +109,9 @@ export default defineConfig({
   },
   // Module workers: Whisper's engine loads its WebAssembly with dynamic imports.
   worker: { format: 'es' },
+  server: {
+    allowedHosts: ['sb-1stu1j9xhxst.vercel.run'],
+  },
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts', 'sandesigning/src/**/*.test.ts'],

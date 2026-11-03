@@ -23,6 +23,24 @@ describe('Language Contrast Engine (Step 6-13, Slice T3)', () => {
     expect(romance?.items.some((i) => i.dimension === 'false-friends')).toBe(true);
   });
 
+  it('has British and American English, and European and Brazilian Portuguese, each with words, spelling or sounds, and grammar', () => {
+    for (const [key, side1, side2] of [['en-gb-us', 'en-GB', 'en-US'], ['pt-pt-br', 'pt-PT', 'pt-BR']]) {
+      const pair = CONTRAST_PAIRS.find((p) => p.pairKey === key)!;
+      expect(pair, key).toBeDefined();
+      expect(pair.items.length, key).toBeGreaterThanOrEqual(6);
+      expect(pair.items.every((i) => i.lang1.lang === side1 && i.lang2.lang === side2), key).toBe(true);
+      expect(pair.items.some((i) => (i.falseFriends?.length ?? 0) >= 4), key).toBe(true);
+      expect(pair.items.some((i) => i.dimension === 'pronunciation'), key).toBe(true);
+    }
+    // They do not stand in for the language pairs.
+    expect(getContrastPair('en', 'pt')).toBeUndefined();
+  });
+
+  it('gives every item of every pair its own id', () => {
+    const ids = CONTRAST_PAIRS.flatMap((p) => p.items.map((i) => i.id));
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
   it('provides structural contrast dimensions', () => {
     const dimensions = new Set(
       CONTRAST_PAIRS.flatMap((p) => p.items.map((i) => i.dimension)),

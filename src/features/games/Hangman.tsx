@@ -20,13 +20,13 @@ import { LetterKeyboard, useLetterKeys } from './LetterKeyboard';
 import { RoundRunner, Stars, useSettleOnce } from './RoundRunner';
 import type { BoardProps } from './RoundRunner';
 
-interface Entry {
+export interface Entry {
   item: GameItem;
   state: HangmanState;
   exact: boolean;
 }
 
-function Board({ entry, lang, random, settle }: BoardProps<Entry>) {
+export function Board({ entry, lang, random, settle }: BoardProps<Entry>) {
   const translateUi = useUi();
   const rtl = isRtl(lang);
   const [s, setS] = useState(entry.state);

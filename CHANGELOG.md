@@ -3,6 +3,10 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.6.0-alpha.180** · 2026-11-03 · 6-21 G5 to G7: daily, tournaments, timed games, stories, projects
+- **0.6.0-alpha.179** · 2026-11-03 · F0124 and F0125: the two varieties; Part A done for the core languages
+- **0.6.0-alpha.178 (unpublished attempt; superseded by alpha.179)** · 2026-11-03 · F0124 and F0125: the two varieties; Part A done for the core languages
+- **0.6.0-alpha.177** · 2026-11-03 · Part A leftovers: grammar check for the core languages, Say it in the record
 - **0.6.0-alpha.178** · 2026-11-03 · 6-23 A2: four Russian schemes, browser evidence and checked main integration
 - **0.6.0-alpha.176** · 2026-11-03 · Merge main (6-29 G2) into 6-21 G4
 - **0.6.0-alpha.175** · 2026-11-03 · 6-21 G4: pick, match and parts games; merge main

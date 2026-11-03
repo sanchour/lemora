@@ -8,7 +8,7 @@ import { dailySeed, isoWeek, weekKey, weekSeed } from './seeds';
 import { canPlay, usable } from './source';
 import type { GameItem } from './source';
 
-const hangman = GAMES[0];
+const hangman = GAMES.find((g) => g.id === 'hangman')!;
 const src = (items: GameItem[], texts = 0, listWords = 0) => ({ items, texts, listWords });
 const item = (term: string, meaning: string | undefined = 'x'): GameItem => ({ term, meaning, synonyms: [], antonyms: [] });
 

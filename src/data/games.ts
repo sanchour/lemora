@@ -5,6 +5,14 @@ import { afterRound } from '@/core/games/bests';
 import type { Best, Bests, RoundResult } from '@/core/games/bests';
 import { letterWord } from '@/core/games/letters';
 import { partsOf } from '@/core/games/parts';
+import { dictationLines, translationPool } from '@/core/games/timed';
+import { fromAdventure } from '@/core/games/story';
+import type { StoryGame } from '@/core/games/story';
+import { readyStories } from '@/core/games/storyData';
+import { readAdventure } from '@/core/generate/generate';
+import type { ListWord, DailyStamp } from '@/core/games/daily';
+import type { Project } from '@/core/games/projects';
+import type { TournamentRecord } from '@/core/games/tournament';
 import { itemsOfFacts } from '@/core/games/source';
 import type { GameItem, GameSource } from '@/core/games/source';
 import { db } from './db';
@@ -26,7 +34,8 @@ export async function gameItems(lang: string, database: LinguaDB = db): Promise<
       ...(n.pos ? [{ kind: 'pos' as const, name: n.pos }] : []),
     ];
     const row = await lookUpFull(lang, n.lemma ?? n.term).catch(() => undefined);
-    return { ...item, lemma: n.lemma, cats, parts: partsOf(n.term, row?.entries.find((e) => e.parts)?.parts, lang) ?? undefined };
+    const pairs = (row?.tatoeba ?? []).slice(0, 3).map((t): [string, string] => [t[0], t[1]]);
+    return { ...item, lemma: n.lemma, cats, pairs, parts: partsOf(n.term, row?.entries.find((e) => e.parts)?.parts, lang) ?? undefined };
   }));
 }
 
@@ -47,8 +56,8 @@ const listRows = (database: LinguaDB, lang: string) => database.frequency.where(
 
 /** What the shelf needs to know, cheaply: the words, how many texts, how long the language's word list is. */
 export async function gameSource(lang: string, database: LinguaDB = db): Promise<GameSource> {
-  const [items, texts, listWords] = await Promise.all([gameItems(lang, database), database.texts.where('lang').equals(lang).filter((t) => !t.deletedAt).count(), listRows(database, lang).count()]);
-  return { items, texts, listWords };
+  const [items, texts, listWords, stories] = await Promise.all([gameItems(lang, database), database.texts.where('lang').equals(lang).filter((t) => !t.deletedAt).count(), listRows(database, lang).count(), storiesOf(lang, database)]);
+  return { items, texts, listWords, tasks: translationPool(lang, items).length, sentences: dictationLines(lang, items).length, stories: stories.length };
 }
 
 /** Words of 3 to 6 letters from the commonest of the language's list (a ladder's rungs), with their glosses where the list has them. */
@@ -105,3 +114,31 @@ export function recordGameWord(lang: string, term: string, game: string, won: bo
     database,
   ).then(() => undefined);
 }
+
+/** The language's list, as the daily and the weekly read it: 4 to 8 letters, with a meaning where the list has one. */
+export async function dailyWords(lang: string, database: LinguaDB = db): Promise<ListWord[]> {
+  return (await ladderWords(lang, database)).map((w) => ({ word: w.word, gloss: w.gloss })).filter((w) => w.word.length >= 4 && w.word.length <= 8);
+}
+
+const DAILY_KEY = (lang: string) => `games.daily:${lang}`;
+export const loadDaily = async (lang: string, database: LinguaDB = db): Promise<DailyStamp | undefined> => (await database.settings.get(DAILY_KEY(lang)))?.value as DailyStamp | undefined;
+export const useDaily = (lang: string): DailyStamp | undefined => useLiveQuery(() => loadDaily(lang), [lang]);
+export const saveDaily = (lang: string, stamp: DailyStamp, database: LinguaDB = db): Promise<unknown> => database.settings.put({ key: DAILY_KEY(lang), value: stamp, updatedAt: Date.now() });
+
+const TOURNAMENT_KEY = (lang: string) => `games.tournament:${lang}`;
+export const loadTournament = async (lang: string, database: LinguaDB = db): Promise<TournamentRecord | undefined> => (await database.settings.get(TOURNAMENT_KEY(lang)))?.value as TournamentRecord | undefined;
+export const saveTournament = (lang: string, record: TournamentRecord, database: LinguaDB = db): Promise<unknown> => database.settings.put({ key: TOURNAMENT_KEY(lang), value: record, updatedAt: Date.now() });
+
+/** The stories there are to play: the hand-made ones, and the adventures Max made for the language (6-6b). */
+export async function storiesOf(lang: string, database: LinguaDB = db): Promise<StoryGame[]> {
+  const made = (await database.generated.where('[lang+kind]').equals([lang, 'adventure']).toArray()).filter((r) => !r.reported).sort((a, b) => b.createdAt - a.createdAt).flatMap((r) => {
+    const body = readAdventure(r.content);
+    return body ? [fromAdventure(r.id, body, r.level)] : [];
+  });
+  return [...readyStories(lang), ...made];
+}
+
+const PROJECTS_KEY = (lang: string) => `games.projects:${lang}`;
+export const loadProjects = async (lang: string, database: LinguaDB = db): Promise<Project[]> => ((await database.settings.get(PROJECTS_KEY(lang)))?.value as Project[] | undefined) ?? [];
+export const useProjects = (lang: string): Project[] | undefined => useLiveQuery(() => loadProjects(lang), [lang]);
+export const saveProjects = (lang: string, projects: Project[], database: LinguaDB = db): Promise<unknown> => database.settings.put({ key: PROJECTS_KEY(lang), value: projects, updatedAt: Date.now() });

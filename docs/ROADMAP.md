@@ -2652,3 +2652,27 @@ remain open. [Russian scope and verification](6-23-A2-RUSSIAN.md).
 
 Scope reaches core display dispatch, Settings, the reader/shared transcript render, tests, catalogues
 and source/review ledgers. No learner data migration, protected exercise/editor/SRS changes or dependency.
+
+**A2.2b required stop:** local Greek commit 7065da6 is checked as above, but incoming main a76b749
+fails `git diff --check --cached` in unchanged incoming games/Story.tsx:107 (blank line at EOF).
+Resolved merge remains staged/uncommitted; no workaround, integrated checks, Greek version or push.
+The publication checkbox stays open. [Resume evidence](6-23-A2-GREEK.md).
+
+### A1 and A2 completion continuation · Codex · 2026-11-03
+
+The user explicitly requests completing both tracks, including resolving the known inherited
+whitespace blocker. Keep the existing A1/A2 claims and publish only codex/lingua.
+
+- [ ] Finish the pending main integration and checked Greek push; remove only the known blank EOF
+  line in incoming Story.tsx, without changing its behavior or any other session's claimed work.
+- [ ] Resolve A1's offline reload evidence using a supported browser; verify the real Unicode
+  page, cached script/data access and source-backed alphabet/name coverage. Record device limits.
+- [ ] Finish A2's named Arabic, Japanese, Korean, Mandarin, Georgian and Cantonese systems from
+  their sources, with independent fixtures, correct reading inputs and explicit unsupported cases.
+- [ ] Honor independent per-surface choices in reader, cards, dictionary, lessons and subtitles;
+  add over/under/hover, click-to-check and lesson/word-state fading through shared display code.
+- [ ] Verify learner-reachable controls and required desktop/light/dark/Arabic behavior; complete
+  checks and version each coherent push. Tick only the full applicable acceptance, then stop.
+
+No data migration/dependency planned. Preserve learner source text and existing lesson fixtures.
+Native linguistic review, actual screen-reader use and real AI/microphone are not implied by tests.

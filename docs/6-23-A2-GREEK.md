@@ -35,3 +35,26 @@ Full A2 feature entries stay unchecked; Codex retains A2. A1 offline acceptance 
 
 **Language isolation:** switching back to Russian retained all four options and the saved ICAO
 choice/preview; returning to Greek retained its separate ELOT choice. No Russian setting overwritten.
+
+## Required stop · incoming-main whitespace check
+
+Greek implementation/evidence is committed locally as 7065da6; last pushed Codex checkpoint remains
+v0.6.0-alpha.178 (5a47c2d, Russian; both GitHub verify runs passed). Integration of origin/main
+a76b749 is resolved and staged, but the merge is not committed. The staged whitespace check reports:
+
+```text
+src/features/games/Story.tsx:107: new blank line at EOF.
+```
+
+`git diff origin/main -- src/features/games/Story.tsx` is empty: the offending line is exactly the
+incoming main file, not a Greek edit. Under the user's explicit unrelated-check stop rule, leave it
+unchanged and stop. No integrated typecheck/tests/build were run after this failure; no Greek version,
+tag or push, no main push/deployment. Do not call the incoming-main integration or A2 complete.
+Next: have the incoming file corrected or obtain explicit authorization to fix that inherited line,
+finish the pending merge, run integrated checks, version/push Greek, then continue the remaining A2
+named languages and controls. Codex retains A2; no A3 claim.
+
+**Continuation authorised 2026-11-03:** the user now requests full A1/A2 completion. Resumed
+integrated baseline passes: typecheck, 257 files / 1,824 tests / one skipped and build. Remove only
+the known incoming blank EOF line, retain the resolved merge, then complete checks/publication.
+This supersedes the stop above, not the recorded verification limits or A2 acceptance criteria.

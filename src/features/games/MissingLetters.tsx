@@ -19,13 +19,13 @@ import { LetterKeyboard, useLetterKeys } from './LetterKeyboard';
 import { RoundRunner, useSettleOnce } from './RoundRunner';
 import type { BoardProps } from './RoundRunner';
 
-interface Entry {
+export interface Entry {
   item: GameItem;
   state: MissingState;
   exact: boolean;
 }
 
-function Board({ entry, lang, settle }: BoardProps<Entry>) {
+export function Board({ entry, lang, settle }: BoardProps<Entry>) {
   const translateUi = useUi();
   const rtl = isRtl(lang);
   const [s, setS] = useState(entry.state);
