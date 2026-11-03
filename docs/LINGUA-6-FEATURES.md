@@ -217,8 +217,8 @@ Vocabulary is much more than translating a word and flipping a flashcard. Learne
 - [x] `F0121` Formality and register labels · **6-1** · partly there
 - [x] `F0122` Slang and colloquial labels · **6-1** · partly there
 - [x] `F0123` Regional usage labels · **6-1** · partly there
-- [ ] `F0124` British versus American English distinctions · **6-1**
-- [ ] `F0125` European versus Brazilian Portuguese distinctions · **6-1** · partly there
+- [x] `F0124` British versus American English distinctions · **6-1**
+- [x] `F0125` European versus Brazilian Portuguese distinctions · **6-1** · partly there
 - [x] `F0126` Etymology and word origins
 - [x] `F0127` Word families · **6-1**
 - [x] `F0128` Roots and stems · **6-1**
