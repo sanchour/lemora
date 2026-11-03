@@ -7,7 +7,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useApp } from '@/app/context';
 import { SECTIONS, shownFor } from '@/app/sections';
 import type { Section } from '@/app/sections';
-import { progressOf } from '@/core/goals/tools';
+import { progressOf, TOOLS } from '@/core/goals/tools';
 import type { ToolId } from '@/core/goals/tools';
 import { getLanguage } from '@/core/lang/languages';
 import { tipsByReach } from '@/core/mundus/guide';
@@ -229,7 +229,7 @@ function ToolCard({ section, line, locked, ms, goal }: { section: Section; line?
         <ArrowRight size={16} className="shrink-0 text-ink-faint transition-transform group-hover:translate-x-0.5" aria-hidden />
       </span>
       {/* The tool's own goal: a hairline that fills, sage once it's met. Without a goal, just the time; locked, nothing. */}
-      {!locked && <span className="mt-4 flex items-center gap-3">
+      {!locked && (TOOLS as readonly string[]).includes(section.id) && <span className="mt-4 flex items-center gap-3">
         <span className="h-1 flex-1 overflow-hidden rounded-full bg-sunken" aria-hidden>
           {share !== undefined && <span className={cx('block h-full rounded-full transition-[width] duration-700', done ? 'bg-sage' : 'bg-ink-soft/60')} style={{ width: `${Math.max(share > 0 ? 3 : 0, share * 100)}%` }} />}
         </span>

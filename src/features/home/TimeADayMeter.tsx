@@ -7,6 +7,7 @@ import { useApp } from '@/app/context';
 import { DAILY_MINUTES } from '@/app/onboarding/GoalStep';
 import { updateLanguage } from '@/data/languages';
 import { useToolDays } from '@/data/toolGoals';
+import { TOOLS } from '@/core/goals/tools';
 import type { ToolId } from '@/core/goals/tools';
 import { useHomeTools } from './homeData';
 import { ToolDuotoneIcon } from './homeComponents';
@@ -118,7 +119,8 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
 
         {/* Each tool's minutes today, behind its own drawn circle. */}
         <span className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
-          {tools.map((tool) => {
+          {/* Only tools that record their time: the atlas has none, and a 0 there would never move. */}
+          {tools.filter((tool) => (TOOLS as readonly string[]).includes(tool.id === 'mentis' ? 'diarium' : tool.id)).map((tool) => {
             const ms = today?.byTool[(tool.id === 'mentis' ? 'diarium' : tool.id) as ToolId] ?? 0;
             return (
               <span key={tool.id} className={cx('inline-flex items-center gap-1.5', ms < 30_000 && 'opacity-45')} title={translateUi(tool.name)}>

@@ -136,3 +136,11 @@ What a learner can carry from Lemora into Lingua (via a backup):
 `src/product.ts`'s values, Lemora's sections and router, its Home, its onboarding (without the
 showcase, which went to Lingua-Launch), icons, manifest, `index.html`, and its docs. The *ideas*
 can go to Lingua (for example the 2-up tool cards) but as new Lingua work, not cherry-picks.
+
+## Commits to take apart when moving to Lingua
+
+- `3e43c3f` ([shared] Atlas as a room of its own) also carries the `src/product.ts` lines that put Atlas in Lemora's
+  rooms; leave that file's hunk out when cherry-picking (Lingua keeps Atlas as Thesaurus's tab, `shows('atlas')` false).
+- Ratio's `Overview.tsx`, `common.tsx`, `MonthlyReportModal.tsx` and Home's view files are redesigned here; expect
+  conflicts with Lingua's own changes to them and keep the data fixes (`overview.month`, `earnedStamps`) either way.
+
