@@ -2,37 +2,267 @@ import { UiText, useUi } from '@/design/i18n/UiText';
 import { ReferenceButton } from '@/features/culture/ReferenceHelp';
 import { Link } from 'react-router';
 import { useEffect, useRef, useState } from 'react';
+import { BookOpenCheck, Columns2, SlidersHorizontal } from 'lucide-react';
 import type { ReadingAids, ReadingMark } from '@/core/reading/aids';
 import type { Text } from '@/data/types';
 import { removeReadingMark, saveReadingMark } from '@/data/readingMarks';
-import { Button, Drawer } from '@/design/primitives';
+import { useLayout } from '@/design/hooks/useLayout';
+import { Button, Drawer, IconButton, Popover, Slider, Switch } from '@/design/primitives';
+import { cx } from '@/lib/cx';
 import { toast } from '@/state/ui';
 import { AddToDeck } from './AddToDeck';
 
-export function ReadingTools({ text, aids, onChange, onOpenChange, onJump, chapterIndex = 0 }: { onJump: (chapter: number, block: number) => void; chapterIndex?: number; text: Text; aids: ReadingAids; onChange: (next: ReadingAids) => void; onOpenChange: (open: boolean) => void }) {
+interface ReadingToolsProps {
+  onJump: (chapter: number, block: number) => void;
+  chapterIndex?: number;
+  text: Text;
+  aids: ReadingAids;
+  onChange: (next: ReadingAids) => void;
+  onOpenChange: (open: boolean) => void;
+  sideBySide?: boolean;
+  onToggleSideBySide?: () => void;
+}
+
+export function ReadingTools({
+  text,
+  aids,
+  onChange,
+  onOpenChange,
+  onJump,
+  chapterIndex = 0,
+  sideBySide = false,
+  onToggleSideBySide,
+}: ReadingToolsProps) {
   const translateUi = useUi();
+  const { layout } = useLayout();
   const [open, setOpen] = useState(false);
-  const changeOpen = (value: boolean) => { setOpen(value); onOpenChange(value); };
-  return <>
-    <button type="button" aria-haspopup="dialog" aria-expanded={open} onClick={() => changeOpen(!open)} className="rounded-xl px-3 py-2 text-sm font-semibold text-ink-soft hover:bg-surface"><UiText source={'Study tools'} /></button>
-    <Drawer open={open} onClose={() => changeOpen(false)} title={translateUi('Reading tools')}>
-    <div className="space-y-1 text-sm">
-      <ReferenceButton />
-      <Link className="my-4 block font-semibold underline underline-offset-4" to={`/codex/book/${text.id}`}><UiText source="Book project" /></Link>
-      <Link className="my-4 block font-semibold underline underline-offset-4" to="/settings/data#backup"><UiText source="Reading highlights (.md)" /></Link>
-      <Link className="my-4 block font-semibold underline underline-offset-4" to={`/codex/parallel/${text.id}/${chapterIndex}`}><UiText source={'Read side by side'} /></Link>
-      <Link className="my-4 block font-semibold underline underline-offset-4" to={`/codex/comprehension/${text.id}/${chapterIndex}`}><UiText source={'Check understanding of this chapter'} /></Link>
-      <p className="my-3 text-xs text-ink-faint"><UiText source={'Dictionary categories can differ in context. Endings mark only a changed suffix shared with the dictionary form. No syntax is inferred.'} /></p>
-      {([['pos', 'Colour parts of speech'], ['endings', 'Mark changed endings'], ['glosses', 'Interlinear glosses'], ['hideGlosses', 'Hide glosses until revealed'], ['ruler', 'Reading ruler']] as const).map(([key, label]) => <label key={key} className="flex items-center gap-2 py-2"><input type="checkbox" checked={aids[key]} onChange={(e) => onChange({ ...aids, [key]: e.target.checked })} /><UiText source={label} /></label>)}
-      <p className="text-xs text-ink-faint"><UiText source={'Noun: blue · Verb: terracotta · Adjective: sage · Adverb: amber. Other or missing categories keep their usual ink.'} /></p>
-      {aids.ruler && <label className="mt-3 block"><UiText source={'Ruler position{0}'} values={[<input className="mt-2 w-full" type="range" min="10" max="90" value={aids.rulerY} onChange={(e) => onChange({ ...aids, rulerY: Number(e.target.value) })} />]} /></label>}
-      <p className="my-4 text-xs text-ink-faint"><UiText source={'Drag across words, then choose Highlight in the selection bubble. These tools reset when you leave; highlights and notes stay with the text.'} /></p>
-      <h3 className="font-semibold"><UiText source={'Highlights and margin notes'} /></h3>
-      {(text.readingMarks ?? []).map((mark) => <SavedMark key={mark.id} mark={mark} text={text} onJump={() => { changeOpen(false); onJump(mark.chapterIndex, mark.blockIndex); }} />)}
-      {!text.readingMarks?.length && <p className="mt-2 text-ink-faint"><UiText source={'No highlights yet.'} /></p>}
+  const changeOpen = (value: boolean) => {
+    setOpen(value);
+    onOpenChange(value);
+  };
+
+  const hasActiveTool =
+    sideBySide || aids.pos || aids.endings || aids.glosses || aids.hideGlosses || aids.ruler;
+
+  return (
+    <>
+      {layout === 'wide' ? (
+        <Popover
+          label={translateUi('Reading tools')}
+          placement="bottom-end"
+          onOpenChange={changeOpen}
+          trigger={(props) => (
+            <button
+              {...props}
+              type="button"
+              aria-label={translateUi('Reading tools')}
+              title={translateUi('Reading tools')}
+              className={cx(
+                'grid size-10 place-items-center rounded-xl transition-colors hover:bg-surface hover:text-ink',
+                hasActiveTool ? 'bg-accent-soft/70 text-accent-text' : 'text-ink-soft',
+              )}
+            >
+              <SlidersHorizontal size={18} aria-hidden />
+            </button>
+          )}
+        >
+          {(close) => (
+            <ReadingToolsPanel
+              text={text}
+              aids={aids}
+              onChange={onChange}
+              chapterIndex={chapterIndex}
+              sideBySide={sideBySide}
+              onToggleSideBySide={() => {
+                onToggleSideBySide?.();
+                close();
+              }}
+              onJump={(chapter, block) => {
+                close();
+                onJump(chapter, block);
+              }}
+              onNavigate={close}
+            />
+          )}
+        </Popover>
+      ) : (
+        <>
+          <IconButton
+            icon={SlidersHorizontal}
+            label={translateUi('Reading tools')}
+            onClick={() => changeOpen(true)}
+            showTooltip={false}
+            className={hasActiveTool ? 'bg-accent-soft/70 text-accent-text' : undefined}
+          />
+          <Drawer open={open} onClose={() => changeOpen(false)} title={translateUi('Reading tools')}>
+            <div className="flex justify-center">
+              <ReadingToolsPanel
+                text={text}
+                aids={aids}
+                onChange={onChange}
+                chapterIndex={chapterIndex}
+                sideBySide={sideBySide}
+                onToggleSideBySide={() => {
+                  onToggleSideBySide?.();
+                  changeOpen(false);
+                }}
+                onJump={(chapter, block) => {
+                  changeOpen(false);
+                  onJump(chapter, block);
+                }}
+                onNavigate={() => changeOpen(false)}
+              />
+            </div>
+          </Drawer>
+        </>
+      )}
+    </>
+  );
+}
+
+function ReadingToolsPanel({
+  text,
+  aids,
+  onChange,
+  chapterIndex,
+  sideBySide,
+  onToggleSideBySide,
+  onJump,
+  onNavigate,
+}: {
+  text: Text;
+  aids: ReadingAids;
+  onChange: (next: ReadingAids) => void;
+  chapterIndex: number;
+  sideBySide: boolean;
+  onToggleSideBySide: () => void;
+  onJump: (chapter: number, block: number) => void;
+  onNavigate: () => void;
+}) {
+  const translateUi = useUi();
+
+  return (
+    <div className="w-[min(340px,calc(100vw-32px))] space-y-4 p-1 text-sm">
+      {/* Side-by-side & Chapter comprehension actions */}
+      <div className="grid grid-cols-1 gap-2">
+        <button
+          type="button"
+          onClick={onToggleSideBySide}
+          aria-pressed={sideBySide}
+          className={cx(
+            'flex items-center gap-3 rounded-xl border px-3.5 py-2.5 text-left font-semibold transition-colors',
+            sideBySide
+              ? 'border-accent bg-accent-soft text-accent-text'
+              : 'border-line bg-surface/60 text-ink hover:border-line-strong hover:bg-surface',
+          )}
+        >
+          <Columns2 size={17} className="shrink-0" aria-hidden />
+          <span className="min-w-0 flex-1 truncate">
+            <UiText source={'Read side by side'} />
+          </span>
+          <span
+            className={cx(
+              'size-2 rounded-full',
+              sideBySide ? 'bg-accent' : 'bg-line-strong',
+            )}
+            aria-hidden
+          />
+        </button>
+
+        <Link
+          to={`/codex/comprehension/${text.id}/${chapterIndex}`}
+          onClick={onNavigate}
+          className="flex items-center gap-3 rounded-xl border border-line bg-surface/60 px-3.5 py-2.5 font-semibold text-ink transition-colors hover:border-line-strong hover:bg-surface"
+        >
+          <BookOpenCheck size={17} className="shrink-0 text-ink-soft" aria-hidden />
+          <span className="min-w-0 flex-1 truncate">
+            <UiText source={'Check understanding of this chapter'} />
+          </span>
+        </Link>
+      </div>
+
+      {/* Reading aids switches */}
+      <div className="space-y-2.5 rounded-2xl border border-line bg-surface/40 p-3">
+        {(
+          [
+            ['pos', 'Colour parts of speech'],
+            ['endings', 'Mark changed endings'],
+            ['glosses', 'Interlinear glosses'],
+            ['hideGlosses', 'Hide glosses until revealed'],
+            ['ruler', 'Reading ruler'],
+          ] as const
+        ).map(([key, label]) => (
+          <div key={key} className="flex items-center justify-between gap-3 py-0.5">
+            <span className="text-[13.5px] font-semibold text-ink">
+              <UiText source={label} />
+            </span>
+            <Switch
+              label={translateUi(label)}
+              checked={aids[key]}
+              onChange={(checked) => onChange({ ...aids, [key]: checked })}
+            />
+          </div>
+        ))}
+
+        {aids.pos && (
+          <p className="pt-1 text-[11.5px] leading-relaxed text-ink-faint">
+            <UiText source={'Noun: blue · Verb: terracotta · Adjective: sage · Adverb: amber. Other or missing categories keep their usual ink.'} />
+          </p>
+        )}
+
+        {aids.ruler && (
+          <div className="pt-1">
+            <Slider
+              label={translateUi('Ruler position{0}', [''])}
+              value={aids.rulerY}
+              min={10}
+              max={90}
+              step={1}
+              onChange={(rulerY) => onChange({ ...aids, rulerY })}
+              format={(v) => `${v}%`}
+            />
+          </div>
+        )}
+      </div>
+
+      <p className="text-[11.5px] leading-relaxed text-ink-faint">
+        <UiText source={'Dictionary categories can differ in context. Endings mark only a changed suffix shared with the dictionary form. No syntax is inferred.'} />
+      </p>
+
+      <div className="flex flex-wrap items-center gap-3 text-xs font-semibold">
+        <ReferenceButton />
+        <Link className="text-ink-soft underline underline-offset-4 hover:text-ink" to={`/codex/book/${text.id}`} onClick={onNavigate}>
+          <UiText source="Book project" />
+        </Link>
+        <Link className="text-ink-soft underline underline-offset-4 hover:text-ink" to="/settings/data#backup" onClick={onNavigate}>
+          <UiText source="Reading highlights (.md)" />
+        </Link>
+      </div>
+
+      {/* Highlights & margin notes */}
+      <div className="border-t border-line pt-3">
+        <h3 className="text-[12px] font-bold tracking-[0.1em] text-ink-faint uppercase">
+          <UiText source={'Highlights and margin notes'} />
+        </h3>
+        <p className="mt-1 text-[11.5px] leading-relaxed text-ink-faint">
+          <UiText source={'Drag across words, then choose Highlight in the selection bubble. These tools reset when you leave; highlights and notes stay with the text.'} />
+        </p>
+        {(text.readingMarks ?? []).map((mark) => (
+          <SavedMark
+            key={mark.id}
+            mark={mark}
+            text={text}
+            onJump={() => onJump(mark.chapterIndex, mark.blockIndex)}
+          />
+        ))}
+        {!text.readingMarks?.length && (
+          <p className="mt-2 text-xs text-ink-faint">
+            <UiText source={'No highlights yet.'} />
+          </p>
+        )}
+      </div>
     </div>
-    </Drawer>
-  </>;
+  );
 }
 export function SavedMark({ mark, text, onJump }: { mark: ReadingMark; text: Text; onJump: () => void }) {
   const [note, setNote] = useState(mark.note);

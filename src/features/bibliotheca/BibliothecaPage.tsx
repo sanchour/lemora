@@ -18,17 +18,18 @@ import { useSavedSongs } from '@/data/songs';
 import { useTrackIndex } from '@/data/video';
 import { useHotkeys } from '@/design/hooks/useHotkeys';
 import { useLayout } from '@/design/hooks/useLayout';
-import { buttonClasses, Card, IconButton, SearchInput, searchKey, Segmented } from '@/design/primitives';
+import { buttonClasses, IconButton, SearchInput, searchKey, Segmented } from '@/design/primitives';
 import { spring } from '@/design/motion';
 import { cx } from '@/lib/cx';
 import { SongArt } from '@/features/cantus/SongArt';
 import { BookCard } from '@/features/codex/library/BookCard';
-import { BookCover } from '@/features/codex/library/BookCover';
 import { AddMenu } from '@/features/sonus/library/AddMenu';
 import { Artwork } from '@/features/sonus/library/Artwork';
 import { AddVideoMenu } from '@/features/visio/library/AddVideoMenu';
-import { Poster } from '@/features/visio/library/Poster';
 import { VideoCard } from '@/features/visio/library/VideoCard';
+import { AddLibraryMenu } from './AddLibraryMenu';
+import { ContinueShelf } from './ContinueShelf';
+import type { ContinueItem } from './types';
 import { attachEpub } from '@/services/import/importers';
 import { pickFile } from '@/services/files/files';
 import { toast } from '@/state/ui';
@@ -103,16 +104,7 @@ export default function BibliothecaPage() {
 
   // Items currently in progress across all tools.
   const continuing = useMemo(() => {
-    const items: Array<{
-      id: string;
-      to: string;
-      room: string;
-      title: string;
-      sub: string;
-      pct?: number;
-      at: number;
-      art: ReactNode;
-    }> = [];
+    const items: ContinueItem[] = [];
 
     for (const t of texts) {
       const p = progress?.get(t.id);
@@ -120,13 +112,16 @@ export default function BibliothecaPage() {
         const pct = Math.round((p?.percent ?? 0) * 100);
         items.push({
           id: `text:${t.id}`,
+          kind: 'text',
           to: `/codex/read/${t.id}`,
-          room: 'Codex · Read',
+          room: 'Codex',
           title: t.title,
-          sub: t.author ? `${t.author} · ${pct}%` : `${pct}% read`,
+          authorOrCollection: t.author,
+          detail: translateUi('{0}% read', [pct]),
           pct,
           at: t.lastOpenedAt ?? p?.updatedAt ?? t.createdAt,
-          art: <BookCover text={t} className="size-full object-cover" />,
+          text: t,
+          progress: p,
         });
       }
     }
@@ -136,15 +131,19 @@ export default function BibliothecaPage() {
       if (m.kind !== 'spotify' && m.lastPlayedAt && !p?.completed && (p?.positionMs ?? 0) > 5000) {
         const pct = m.durationMs && p ? Math.round((p.positionMs / m.durationMs) * 100) : undefined;
         const left = m.durationMs && p ? Math.max(0, m.durationMs - p.positionMs) : 0;
+        const title = m.bookId ? (m.collection ?? m.title) : m.title;
         items.push({
           id: `audio:${m.id}`,
+          kind: 'audio',
           to: `/sonus/play/${m.id}`,
-          room: 'Sonus · Listen',
-          title: m.title,
-          sub: left > 60_000 ? `${formatDuration(left)} left` : m.collection || 'Audio',
+          room: 'Sonus',
+          title,
+          authorOrCollection: m.artist || m.collection,
+          detail: left > 60_000 ? translateUi('{0} left', [formatDuration(left)]) : pct !== undefined ? `${pct}%` : m.collection || translateUi('Continue listening'),
           pct,
           at: m.lastPlayedAt,
-          art: <Artwork title={m.title} coverBlobId={m.coverBlobId} coverUrl={m.coverUrl} className="size-full" rounded="rounded-none" />,
+          media: m,
+          leftMs: left,
         });
       }
     }
@@ -153,21 +152,33 @@ export default function BibliothecaPage() {
       const p = playback?.get(v.id);
       if (v.lastPlayedAt && !p?.completed && (p?.positionMs ?? 0) > 5000) {
         const pct = v.durationMs && p ? Math.round((p.positionMs / v.durationMs) * 100) : undefined;
+        const left = v.durationMs && p ? Math.max(0, v.durationMs - p.positionMs) : 0;
         items.push({
           id: `video:${v.id}`,
+          kind: 'video',
           to: `/visio/watch/${v.id}`,
-          room: 'Visio · Watch',
+          room: 'Visio',
           title: v.title,
-          sub: v.collection || 'Continue watching',
+          authorOrCollection: v.collection,
+          detail: left > 60_000 ? translateUi('{0} left', [formatDuration(left)]) : pct !== undefined ? `${pct}%` : v.collection || translateUi('Continue watching'),
           pct,
           at: v.lastPlayedAt,
-          art: <Poster title={v.title} coverBlobId={v.coverBlobId} coverUrl={v.coverUrl} className="size-full rounded-none shadow-none" />,
+          video: v,
+          leftMs: left,
         });
       }
     }
 
     return items.sort((a, b) => b.at - a.at).slice(0, 10);
-  }, [texts, progress, listening, videos, playback]);
+  }, [texts, progress, listening, videos, playback, translateUi]);
+
+  const visibleContinuing = useMemo(() => {
+    if (filter === 'all') return continuing;
+    if (filter === 'read') return continuing.filter((i) => i.kind === 'text');
+    if (filter === 'listen') return continuing.filter((i) => i.kind === 'audio');
+    if (filter === 'watch') return continuing.filter((i) => i.kind === 'video');
+    return [];
+  }, [continuing, filter]);
 
   const attach = async (item: Text) => {
     const file = await pickFile('.epub,application/epub+zip');
@@ -195,7 +206,7 @@ export default function BibliothecaPage() {
         actions={
           <div className="flex flex-wrap items-center gap-2">
             <Link to="/explora" className={buttonClasses('secondary', 'md')}><UiText source={'{0} Explora'} values={[<Compass size={17} aria-hidden />]} /></Link>
-            <Link to="/codex/new" className={buttonClasses('primary', 'md')}><UiText source={'{0} Add text'} values={[<Plus size={17} aria-hidden />]} /></Link>
+            <AddLibraryMenu lang={lang} />
           </div>
         }
       />
@@ -230,38 +241,10 @@ export default function BibliothecaPage() {
         </div>
       )}
 
-      {!q && filter === 'all' && continuing.length > 0 && (
-        <motion.section {...enter(0)} aria-label={translateUi('Continue learning')} className="mb-10">
-          <div className="mb-3.5 flex items-baseline justify-between">
-            <h2 className="font-serif text-[22px] font-semibold tracking-tight"><UiText source={'Continue learning'} /></h2>
-            <span className="text-xs font-semibold text-ink-faint tabular-nums"><UiText source={'{0} active'} values={[continuing.length]} /></span>
-          </div>
-          <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-            {continuing.map((item) => (
-              <Link
-                key={item.id}
-                to={item.to}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-line/70 bg-surface shadow-elev-1 transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-elev-2"
-              >
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-sunken">
-                  {item.art}
-                  {item.pct !== undefined && item.pct > 0 && (
-                    <span className="absolute inset-x-0 bottom-0 h-1 bg-black/25" aria-hidden>
-                      <span className="block h-full origin-left bg-accent" style={{ transform: `scaleX(${Math.max(0.04, item.pct / 100)})` }} />
-                    </span>
-                  )}
-                </div>
-                <div className="flex flex-1 flex-col p-3">
-                  <span className="text-[10.5px] font-bold tracking-[0.1em] text-ink-faint uppercase">{item.room}</span>
-                  <span lang={lang} className="mt-1 line-clamp-2 font-serif text-[15px] leading-snug font-semibold">
-                    {item.title}
-                  </span>
-                  <span className="mt-auto pt-1.5 truncate text-[12px] text-ink-soft">{item.sub}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </motion.section>
+      {!q && visibleContinuing.length > 0 && (
+        <motion.div {...enter(0)}>
+          <ContinueShelf items={visibleContinuing} lang={lang} />
+        </motion.div>
       )}
 
       <div className="space-y-12">
@@ -464,15 +447,6 @@ export default function BibliothecaPage() {
           </motion.section>
         )}
       </div>
-
-      <Card className="mt-12 flex flex-col items-start justify-between gap-4 border-dashed p-5 sm:flex-row sm:items-center sm:p-6">
-        <div>
-          <p className="text-[12px] font-bold tracking-[0.12em] text-accent-text uppercase"><UiText source={'Looking for something new?'} /></p>
-          <p className="mt-1 font-serif text-xl font-semibold"><UiText source={'Discover books, podcasts, series, films and word decks in Explora'} /></p>
-          <p className="mt-1 text-[14px] text-ink-soft"><UiText source={'Picked for {0} and your level, ready to add to the right tool in one click.'} values={[langName]} /></p>
-        </div>
-        <Link to="/explora" className={cx(buttonClasses('primary', 'md'), 'shrink-0')}><UiText source={'Open Explora {0}'} values={[<ArrowRight size={16} aria-hidden />]} /></Link>
-      </Card>
     </>
   );
 }

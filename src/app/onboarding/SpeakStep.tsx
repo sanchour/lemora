@@ -12,16 +12,18 @@ import { cx } from '@/lib/cx';
 import { LevelIcon } from './LevelStep';
 import { StepTitle } from './StepTitle';
 
-/** A language the learner already speaks: native, or a level. */
+export type SpokenLevel = 'native' | Exclude<CefrLevel, 'A0'>;
+
+/** A language the learner already speaks: native, or a level (null until chosen). */
 export interface Spoken {
   /** An ISO 639 code (Lingua's own where it has the language). */
   code: string;
-  level: 'native' | Exclude<CefrLevel, 'A0'>;
+  level: SpokenLevel | null;
 }
 
 /** The levels below native, as signal bars from A1 up. */
-const BARS: Array<Exclude<Spoken['level'], 'native'>> = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-const LEVEL_NAME: Record<Spoken['level'], string> = {
+const BARS: Array<Exclude<SpokenLevel, 'native'>> = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+const LEVEL_NAME: Record<SpokenLevel, string> = {
   A1: 'Beginner',
   A2: 'Elementary',
   B1: 'Intermediate',
@@ -112,14 +114,14 @@ export function SpeakStep({ spoken, target, level: targetLevel, onSpoken }: Spea
     return [...own, ...ALL.filter((l) => !taken(l.code) && !ownIds.has(l.code) && !getLanguage(l.code) && searchKey(l.name).includes(q)).slice(0, 4)];
   }, [q, spoken, target]);
 
-  const setLevel = (code: string, level: Spoken['level']) => onSpoken(spoken.map((s) => (s.code === code ? { ...s, level } : s)));
+  const setLevel = (code: string, level: SpokenLevel) => onSpoken(spoken.map((s) => (s.code === code ? { ...s, level } : s)));
   const remove = (code: string) => onSpoken(spoken.filter((s) => s.code !== code));
   const pick = (code: string) => {
     setPending(code);
     setOpen(false);
     setQuery('');
   };
-  const add = (level: Spoken['level']) => {
+  const add = (level: SpokenLevel) => {
     if (pending) onSpoken([...spoken, { code: pending, level }]);
     setPending(null);
   };
@@ -167,7 +169,7 @@ export function SpeakStep({ spoken, target, level: targetLevel, onSpoken }: Spea
           {spoken.map((s) => {
             const name = spokenName(s.code);
             const native = s.level === 'native';
-            const at = s.level === 'native' ? BARS.length : BARS.indexOf(s.level) + 1;
+            const at = s.level === null ? 0 : s.level === 'native' ? BARS.length : BARS.indexOf(s.level) + 1;
             return (
               <motion.li
                 key={s.code}
@@ -215,8 +217,12 @@ export function SpeakStep({ spoken, target, level: targetLevel, onSpoken }: Spea
                     ))}
                   </div>
                   <p className="min-w-0 flex-1 truncate text-[12.5px] leading-tight">
-                    <span className="font-semibold">{native ? translateUi('Native') : s.level}</span>
-                    {!native && <span className="text-ink-soft"> · {LEVEL_NAME[s.level]}</span>}
+                    {s.level && (
+                      <>
+                        <span className="font-semibold">{native ? translateUi('Native') : s.level}</span>
+                        {!native && <span className="text-ink-soft"> · {LEVEL_NAME[s.level]}</span>}
+                      </>
+                    )}
                   </p>
                   <button
                     type="button"

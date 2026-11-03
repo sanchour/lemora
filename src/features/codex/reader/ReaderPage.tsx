@@ -3,7 +3,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import type { CSSProperties, MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Columns2, LoaderCircle, X } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { resolveTheme, syncThemeColor } from '@/app/theme';
 import { READING_LANGS } from '@/core/lang/languages';
@@ -24,6 +24,7 @@ import { toast } from '@/state/ui';
 import { sentencesOf } from '@/core/text/tokenizer';
 import { makeChecks } from '@/core/text/checks';
 import { translateAhead } from '@/services/translate/ahead';
+import { translatePhrase } from '@/services/translate/phrase';
 import { wordStyleVars } from './wordStyles';
 import { codexGoal, useReadToday } from './readingGoal';
 import { ChapterBody } from './ChapterBody';
@@ -65,6 +66,7 @@ export default function ReaderPage() {
   const reader = settings.reader;
   const [aids, setAids] = useState(READING_AIDS);
   const [toolsOpen, setToolsOpen] = useState(false);
+  const [sideBySide, setSideBySide] = useState(false);
   const [narrating, setNarrating] = useState(false);
   const [aidLayout, setAidLayout] = useState(0);
   const onAidLayout = useCallback(() => setAidLayout((v) => v + 1), []);
@@ -222,7 +224,7 @@ export default function ReaderPage() {
     if (reader.endCheck && index === (chapterIndex ?? 0) + 1 && text && index < text.chapterCount) setChapterEnd({ index, landing });
     else goChapter(index, landing);
   };
-  const layoutKey = `${model?.chapter.id ?? 'none'}|${reader.font}|${reader.sizePx}|${reader.lineHeight}|${reader.letterSpacing ?? 0}|${reader.wordSpacing ?? 0}|${reader.justify}|${aids.glosses}|${aids.hideGlosses}|${text?.updatedAt}|${aidLayout}`;
+  const layoutKey = `${model?.chapter.id ?? 'none'}|${reader.font}|${reader.sizePx}|${reader.lineHeight}|${reader.letterSpacing ?? 0}|${reader.wordSpacing ?? 0}|${reader.justify}|${aids.glosses}|${aids.hideGlosses}|${text?.updatedAt}|${aidLayout}|${sideBySide}`;
   const pager = usePager({
     enabled: paged && Boolean(ready),
     viewportRef,
@@ -243,6 +245,99 @@ export default function ReaderPage() {
       }
     },
   });
+
+  // ── Side-by-side auto-translation of the current page / chapter ─────────
+  const translationCacheRef = useRef<Map<string, string>>(new Map());
+  const [pageBlocks, setPageBlocks] = useState<Array<{ index: number; type: 'p' | 'h' | 'quote'; text: string }>>([]);
+  const [translatedMap, setTranslatedMap] = useState<Record<string, string>>({});
+  const [translating, setTranslating] = useState(false);
+
+  useEffect(() => {
+    if (!sideBySide || !ready || !model) {
+      setPageBlocks((prev) => (prev.length === 0 ? prev : []));
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      if (paged && flowRef.current) {
+        const els = pager.onPage(pager.page, '[data-b]');
+        let indices = els.map((el) => Number(el.dataset.b)).filter((n) => !Number.isNaN(n));
+        if (indices.length === 0) {
+          // Fallback if a long block started on the previous page
+          const allEls = [...flowRef.current.querySelectorAll<HTMLElement>('[data-b]')];
+          const flowLeft = flowRef.current.getBoundingClientRect().left;
+          const g = pager.geometry();
+          const pageStart = g ? pager.page * g.step : 0;
+          const overlapping = allEls.filter((el) => {
+            const r = el.getBoundingClientRect();
+            return r.right - flowLeft > pageStart + 1 && (!g || r.left - flowLeft < pageStart + g.width - 1);
+          });
+          indices = overlapping.map((el) => Number(el.dataset.b)).filter((n) => !Number.isNaN(n));
+        }
+        const blocks = indices.flatMap((idx) => {
+          const b = model.blocks[idx]?.block;
+          return b && b.t !== 'img' ? [{ index: idx, type: b.t, text: b.text }] : [];
+        });
+        setPageBlocks(blocks);
+      } else {
+        const blocks = model.blocks.flatMap((item, idx) =>
+          item.block.t !== 'img' ? [{ index: idx, type: item.block.t, text: item.block.text }] : [],
+        );
+        setPageBlocks(blocks);
+      }
+    }, 40);
+    return () => window.clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sideBySide, ready, model, paged, pager.page, pager.pageCount, layoutKey]);
+
+  useEffect(() => {
+    if (!sideBySide || pageBlocks.length === 0) {
+      setTranslating(false);
+      return;
+    }
+    let cancelled = false;
+    const chapterId = model?.chapter.id ?? 'ch';
+    const initial: Record<string, string> = {};
+    const pending: Array<{ key: string; text: string }> = [];
+
+    for (const b of pageBlocks) {
+      const key = `${lang}:${chapterId}:${b.index}`;
+      const cached = translationCacheRef.current.get(key);
+      if (cached !== undefined) {
+        initial[key] = cached;
+      } else {
+        pending.push({ key, text: b.text });
+      }
+    }
+    if (Object.keys(initial).length > 0) {
+      setTranslatedMap((prev) => {
+        const hasNew = Object.keys(initial).some((k) => prev[k] !== initial[k]);
+        return hasNew ? { ...prev, ...initial } : prev;
+      });
+    }
+    if (pending.length === 0) {
+      setTranslating(false);
+      return;
+    }
+
+    setTranslating(true);
+    void (async () => {
+      for (const item of pending) {
+        if (cancelled) return;
+        const res = await translatePhrase(lang, item.text).catch(() => null);
+        if (cancelled) return;
+        const translatedText = res?.text ?? '';
+        if (translatedText) {
+          translationCacheRef.current.set(item.key, translatedText);
+          setTranslatedMap((prev) => ({ ...prev, [item.key]: translatedText }));
+        }
+      }
+      if (!cancelled) setTranslating(false);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [sideBySide, pageBlocks, lang, model?.chapter.id]);
 
   useEffect(() => {
     if (!paged || !ready || !flowRef.current) return;
@@ -546,15 +641,48 @@ export default function ReaderPage() {
     >
       <h1 className="sr-only" lang={lang}>{text.title}</h1>
       <ReaderChrome
-        tools={<>{ready && <ReadAloud key={model.chapter.id} chapter={model.chapter} lang={lang} onPlaying={setNarrating} follow={(block, start, end) => {
-          flowRef.current?.querySelectorAll('.is-narrated').forEach((el) => el.classList.remove('is-narrated'));
-          const words = [...(flowRef.current?.querySelectorAll<HTMLElement>(`[data-b="${block}"] .w`) ?? [])].filter((el) => Number(el.dataset.o) >= start && Number(el.dataset.o) < end);
-          words.forEach((el) => el.classList.add('is-narrated'));
-          if (words[0]) { if (paged) pager.goTo(pager.pageOf(words[0])); else words[0].scrollIntoView({ block: 'center' }); }
-        }} />}<ReadingTools chapterIndex={chapterIndex ?? 0} text={text} aids={aids} onChange={setAids} onOpenChange={setToolsOpen} onJump={(chapter, block) => {
-          if (chapter !== chapterIndex) goChapter(chapter, block);
-          else { const el = flowRef.current?.querySelector(`[data-b="${block}"]`); if (el) { if (paged) pager.goTo(pager.pageOf(el)); else el.scrollIntoView({ block: 'center' }); } }
-        }} /></>}
+        tools={
+          <>
+            {ready && (
+              <ReadAloud
+                key={model.chapter.id}
+                chapter={model.chapter}
+                lang={lang}
+                onPlaying={setNarrating}
+                follow={(block, start, end) => {
+                  flowRef.current?.querySelectorAll('.is-narrated').forEach((el) => el.classList.remove('is-narrated'));
+                  const words = [...(flowRef.current?.querySelectorAll<HTMLElement>(`[data-b="${block}"] .w`) ?? [])].filter(
+                    (el) => Number(el.dataset.o) >= start && Number(el.dataset.o) < end,
+                  );
+                  words.forEach((el) => el.classList.add('is-narrated'));
+                  if (words[0]) {
+                    if (paged) pager.goTo(pager.pageOf(words[0]));
+                    else words[0].scrollIntoView({ block: 'center' });
+                  }
+                }}
+              />
+            )}
+            <ReadingTools
+              chapterIndex={chapterIndex ?? 0}
+              text={text}
+              aids={aids}
+              onChange={setAids}
+              onOpenChange={setToolsOpen}
+              sideBySide={sideBySide}
+              onToggleSideBySide={() => setSideBySide((v) => !v)}
+              onJump={(chapter, block) => {
+                if (chapter !== chapterIndex) goChapter(chapter, block);
+                else {
+                  const el = flowRef.current?.querySelector(`[data-b="${block}"]`);
+                  if (el) {
+                    if (paged) pager.goTo(pager.pageOf(el));
+                    else el.scrollIntoView({ block: 'center' });
+                  }
+                }
+              }}
+            />
+          </>
+        }
         visible={chrome || toolsOpen || narrating}
         text={text}
         chapterTitle={chapterTitle}
@@ -605,7 +733,11 @@ export default function ReaderPage() {
               top: wide ? 76 : 'calc(env(safe-area-inset-top) + 58px)',
               bottom: wide ? 64 : 'calc(env(safe-area-inset-bottom) + 46px)',
               left: wide ? 'max(72px, calc((100vw - 1260px) / 2))' : 'max(24px, env(safe-area-inset-left))',
-              right: wide ? 'max(72px, calc((100vw - 1260px) / 2))' : 'max(24px, env(safe-area-inset-right))',
+              right: sideBySide
+                ? 'calc(50% + 20px)'
+                : wide
+                  ? 'max(72px, calc((100vw - 1260px) / 2))'
+                  : 'max(24px, env(safe-area-inset-right))',
               touchAction: 'pan-y',
             }}
             onPointerDown={onPointerDown}
@@ -618,13 +750,35 @@ export default function ReaderPage() {
               {body}
             </motion.div>
           </div>
-          {pager.spread && (
-            // The book's gutter: a soft fold between the two pages.
+          {(pager.spread || sideBySide) && (
+            // The book's gutter: a soft fold between the two pages (or between original and translation).
             <div
               className="pointer-events-none absolute top-[64px] bottom-[52px] left-1/2 w-16 -translate-x-1/2"
-              style={{ background: 'linear-gradient(90deg, transparent, color-mix(in oklab, var(--ink) 5%, transparent) 50%, transparent)' }}
+              style={{ background: 'linear-gradient(90deg, transparent, color-mix(in oklab, var(--ink) 6%, transparent) 50%, transparent)' }}
               aria-hidden
             />
+          )}
+          {sideBySide && (
+            <div
+              className="absolute overflow-y-auto overscroll-contain pr-2 [scrollbar-width:thin]"
+              style={{
+                top: wide ? 76 : 'calc(env(safe-area-inset-top) + 58px)',
+                bottom: wide ? 64 : 'calc(env(safe-area-inset-bottom) + 46px)',
+                left: 'calc(50% + 20px)',
+                right: wide ? 'max(72px, calc((100vw - 1260px) / 2))' : 'max(24px, env(safe-area-inset-right))',
+              }}
+            >
+              <SideBySidePane
+                chapterId={model?.chapter.id ?? 'ch'}
+                lang={lang}
+                blocks={pageBlocks}
+                translatedMap={translatedMap}
+                translating={translating}
+                flowStyle={flowStyle}
+                justify={reader.justify}
+                onClose={() => setSideBySide(false)}
+              />
+            </div>
           )}
           {wide && (
             <>
@@ -650,8 +804,29 @@ export default function ReaderPage() {
           onPointerCancel={onPointerCancel}
           onContextMenu={onContextMenu}
         >
-          <div ref={flowRef} key={model?.chapter.id} className={cx(flowClass, 'mx-auto')} lang={lang} style={{ ...flowStyle, maxWidth: `${reader.maxWidthCh}ch` }}>
-            {body}
+          <div
+            className={cx(
+              'mx-auto',
+              sideBySide && 'grid max-w-6xl grid-cols-1 items-start gap-8 lg:grid-cols-2 lg:gap-12',
+            )}
+          >
+            <div ref={flowRef} key={model?.chapter.id} className={cx(flowClass, !sideBySide && 'mx-auto')} lang={lang} style={{ ...flowStyle, maxWidth: `${reader.maxWidthCh}ch` }}>
+              {body}
+            </div>
+            {sideBySide && (
+              <div className="border-t border-line pt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10">
+                <SideBySidePane
+                  chapterId={model?.chapter.id ?? 'ch'}
+                  lang={lang}
+                  blocks={pageBlocks}
+                  translatedMap={translatedMap}
+                  translating={translating}
+                  flowStyle={flowStyle}
+                  justify={reader.justify}
+                  onClose={() => setSideBySide(false)}
+                />
+              </div>
+            )}
           </div>
           {ready && (
             <div className="mx-auto mt-14 flex max-w-md justify-between gap-3">
@@ -717,6 +892,77 @@ export default function ReaderPage() {
         </div>
       </Dialog>
     </motion.div>
+  );
+}
+
+function SideBySidePane({
+  chapterId,
+  lang,
+  blocks,
+  translatedMap,
+  translating,
+  flowStyle,
+  justify,
+  onClose,
+}: {
+  chapterId: string;
+  lang: string;
+  blocks: Array<{ index: number; type: 'p' | 'h' | 'quote'; text: string }>;
+  translatedMap: Record<string, string>;
+  translating: boolean;
+  flowStyle: CSSProperties;
+  justify: boolean;
+  onClose: () => void;
+}) {
+  const translateUi = useUi();
+
+  return (
+    <div>
+      <div className="mb-4 flex items-center justify-between gap-2 border-b border-line/60 pb-2.5">
+        <div className="flex items-center gap-2 text-xs font-bold tracking-[0.1em] text-accent-text uppercase">
+          <Columns2 size={14} aria-hidden />
+          <span>
+            <UiText source={'Read side by side'} />
+          </span>
+          {translating && <LoaderCircle size={13} className="animate-spin text-ink-faint" aria-hidden />}
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label={translateUi('Close')}
+          title={translateUi('Close')}
+          className="grid size-7 place-items-center rounded-lg text-ink-faint transition-colors hover:bg-surface hover:text-ink"
+        >
+          <X size={15} aria-hidden />
+        </button>
+      </div>
+
+      <div
+        lang="en"
+        style={flowStyle}
+        className={cx('reader-flow text-ink-soft', justify && 'is-justified')}
+      >
+        {blocks.map((b) => {
+          const key = `${lang}:${chapterId}:${b.index}`;
+          const translated = translatedMap[key];
+          if (translated === undefined) {
+            return (
+              <div key={b.index} className="mb-4 space-y-2 py-1" aria-hidden>
+                <div className="h-3.5 w-11/12 animate-pulse rounded bg-sunken" />
+                <div className="h-3.5 w-4/5 animate-pulse rounded bg-sunken" />
+              </div>
+            );
+          }
+          if (b.type === 'h') {
+            return <h2 key={b.index}>{translated}</h2>;
+          }
+          if (b.type === 'quote') {
+            return <blockquote key={b.index}>{translated}</blockquote>;
+          }
+          return <p key={b.index}>{translated}</p>;
+        })}
+      </div>
+    </div>
   );
 }
 

@@ -4,14 +4,14 @@ import type { DragEvent, ReactNode } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { BackLink } from '@/app/BackLink';
 import { AnimatePresence, motion } from 'motion/react';
-import { BookUp, ClipboardPaste, Library, Newspaper, PanelsTopLeft, Sparkles } from 'lucide-react';
+import { BookUp, PanelsTopLeft, Sparkles } from 'lucide-react';
 import { useApp } from '@/app/context';
 import type { Cefr } from '@/core/lang/levels';
 import { countWords } from '@/core/text/tokenizer';
 import { db } from '@/data/db';
 import type { CoverDesign, Text } from '@/data/types';
 import { useLayout } from '@/design/hooks/useLayout';
-import { Button, Card, Segmented } from '@/design/primitives';
+import { Button, Card } from '@/design/primitives';
 import { fade, spring } from '@/design/motion';
 import { cx } from '@/lib/cx';
 import { EpubError } from '@/services/import/epub';
@@ -31,49 +31,36 @@ import { NewsPanel } from './library/NewsPanel';
 type Way = 'write' | 'book' | 'comic' | 'news' | 'goodreads';
 const WAYS: Way[] = ['write', 'book', 'comic', 'news', 'goodreads'];
 /** `?way=file` was the one import tab before 4.0-2. */
-const asWay = (v: string | null): Way => (v === 'file' ? 'book' : WAYS.includes(v as Way) ? (v as Way) : 'write');
+const asWay = (v: string | null): Way => (v === 'file' ? 'book' : WAYS.includes(v as Way) ? (v as Way) : 'book');
 
-/** Adding to the library, on a page of its own: write or paste, import a book or a comic, news, or Goodreads shelves. */
+/** Adding to the library, on a page of its own: shows only the chosen way to add without headers to other ways. */
 export default function NewTextPage() {
-  const translateUi = useUi();
   const { language } = useApp();
-  const compact = useLayout().layout === 'compact';
   const lang = language.id;
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const [way, setWay] = useState<Way>(() => asWay(params.get('way')));
+  const way = asWay(params.get('way'));
 
   return (
     <>
       <BackLink to="/codex"><UiText source={'Codex'} /></BackLink>
       <header className="mb-7">
         <p className="mb-1.5 text-[12px] font-bold tracking-[0.14em] text-sage-text uppercase"><UiText source={'New on the shelf'} /></p>
-        <h1 className="font-serif text-[34px] leading-tight font-semibold tracking-tight sm:text-[40px]"><UiText source={'Add to your library'} /></h1>
+        <h1 className="font-serif text-[34px] leading-tight font-semibold tracking-tight sm:text-[40px]">
+          {way === 'write' && <UiText source={'Write or paste'} />}
+          {way === 'book' && <UiText source={'Import a book'} />}
+          {way === 'comic' && <UiText source={'Import a comic'} />}
+          {way === 'news' && <UiText source={'News & links'} />}
+          {way === 'goodreads' && <UiText source={'Goodreads'} />}
+        </h1>
       </header>
-
-      <div className="mb-7">
-        <Segmented<Way>
-          label={translateUi('How to add')}
-          value={way}
-          onChange={setWay}
-          block={compact}
-          // On a phone the five ways fit as words alone.
-          options={[
-            { value: 'write', label: compact ? translateUi('Write') : translateUi('Write or paste'), icon: compact ? undefined : ClipboardPaste },
-            { value: 'book', label: compact ? translateUi('Book') : translateUi('Import a book'), icon: compact ? undefined : BookUp },
-            { value: 'comic', label: compact ? translateUi('Comic') : translateUi('Import a comic'), icon: compact ? undefined : PanelsTopLeft },
-            { value: 'news', label: compact ? translateUi('News') : translateUi('News & links'), icon: compact ? undefined : Newspaper },
-            { value: 'goodreads', label: translateUi('Goodreads'), icon: compact ? undefined : Library },
-          ]}
-        />
-      </div>
 
       <AnimatePresence mode="wait" initial={false}>
         <motion.div key={way} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={fade}>
           {way === 'write' && <WriteOrPaste lang={lang} onDone={(id) => navigate(`/codex/read/${id}`)} />}
           {(way === 'book' || way === 'comic') && <ImportFile key={way} kind={way} lang={lang} onDone={(id) => navigate(`/codex/book/${id}?new=1`)} onComic={(id) => navigate(`/codex/read/${id}`)} />}
-          {way === 'news' && <NewsPanel lang={lang} onDone={(id) => navigate(`/codex/read/${id}`)} onPaste={() => setWay('write')} />}
-          {way === 'goodreads' && <GoodreadsImport lang={lang} onDone={() => navigate('/codex/goodreads')} />}
+          {way === 'news' && <NewsPanel lang={lang} onDone={(id) => navigate(`/codex/read/${id}`)} onPaste={() => navigate('/codex/new?way=write')} />}
+          {way === 'goodreads' && <GoodreadsImport lang={lang} onDone={() => navigate('/codex')} />}
         </motion.div>
       </AnimatePresence>
     </>

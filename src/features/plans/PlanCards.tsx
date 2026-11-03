@@ -22,7 +22,7 @@ export const PLAN_LISTS: Record<PlanKind, string[]> = {
     'Mentis: Mundus the guide and Diarium',
     'Ratio and every setting',
   ],
-  plus: ['Ludus, the games for your decks', 'Sonus+: music to sing, podcasts, song games', 'Streaming: your services’ shows with study subtitles', 'Cursus: the course, Grammatica and typing', 'Sermo: scenes to talk through in your AI app', 'Every update, for life'],
+  plus: ['Ludus, the games for your decks', 'Cantus: music to sing, podcasts, song games', 'Streaming: your services’ shows with study subtitles', 'Cursus: the course, Grammatica and typing', 'Sermo: scenes to talk through in your AI app', 'Every update, for life'],
   max: ['Everything in Lingua+', 'AI translation and Explain in context', 'Diary checking and feedback on your writing', 'Automatic dictation for audio and video', 'Natural AI voices', 'With your own free Groq or Gemini key'],
 };
 

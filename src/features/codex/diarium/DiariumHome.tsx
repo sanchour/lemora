@@ -92,69 +92,71 @@ export function DiariumHome() {
   };
 
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-8 sm:space-y-10">
       {/* Today */}
-      <div className="grid grid-cols-[minmax(0,1fr)_340px] items-start gap-6">
-      <Card className="relative overflow-hidden p-5 sm:p-6">
-        <span aria-hidden className="pointer-events-none absolute -top-6 right-5 font-serif text-[160px] leading-none text-sage/15 select-none">
-          {quote(lang, '').trim().charAt(0)}
-        </span>
-        <p className="text-[12px] font-bold tracking-[0.14em] text-sage-text uppercase">
-          {new Date().toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}
-        </p>
-        {today && today.words > 0 ? (
-          <>
-            <h2 className="mt-2 font-serif text-2xl font-semibold"><UiText source={'You wrote today'} /></h2>
-            <p lang={lang} className="mt-2 line-clamp-2 max-w-xl font-serif text-[17px] leading-relaxed text-ink-soft">
-              {toPlain(today.text).replace(/\s*\n+\s*/g, ' · ')}
+      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <Card className="relative overflow-hidden rounded-3xl border-line/75 p-6 sm:p-7">
+          <span aria-hidden className="pointer-events-none absolute -top-6 right-5 font-serif text-[140px] leading-none text-sage/12 select-none">
+            {quote(lang, '').trim().charAt(0)}
+          </span>
+          <div className="flex items-center gap-2">
+            <span className="size-1.5 rounded-full bg-sage-text" aria-hidden />
+            <p className="text-[11px] font-bold tracking-[0.14em] text-sage-text uppercase">
+              {new Date().toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}
             </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <Link to={`/mentis/diarium/${today.id}`} className="inline-flex h-10 items-center gap-2 rounded-xl bg-inverse px-4 text-sm font-semibold text-on-inverse shadow-elev-1"><UiText source={'{0} Open today’s entry'} values={[<PenLine size={16} aria-hidden />]} /></Link>
-              <Button variant="ghost" onClick={() => void start(false)} loading={starting}><UiText source={'Write another'} /></Button>
-            </div>
-          </>
-        ) : (
-          <>
-            <motion.p key={prompt.text} lang={lang} className="relative mt-3 max-w-xl font-serif text-[22px] leading-snug font-medium sm:text-[26px]" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={spring.soft}>
-              {prompt.text}
-            </motion.p>
-            {prompt.en && <p className="relative mt-2 text-[14px] text-ink-faint italic">{prompt.en}</p>}
-            <p className="relative mt-2 text-[13px] text-ink-faint"><UiText source={'A few sentences a day is plenty.'} /></p>
-            <div className="relative mt-4 sm:mt-5 flex flex-wrap items-center gap-2">
-              <Button icon={PenLine} onClick={() => void start(true)} loading={starting}>
-                {today ? translateUi('Continue writing') : translateUi('Write about this')}
-              </Button>
-              <Button variant="ghost" icon={Shuffle} onClick={() => setPrompt(otherPrompt(lang, language.level, prompt.text))}><UiText source={'Another prompt'} /></Button>
-              <Button variant="ghost" onClick={() => void start(false)}><UiText source={'Write freely'} /></Button>
-            </div>
-          </>
-        )}
-      </Card>
-      <WritingTasks key={lang} lang={lang} />
-      </div>
+          </div>
+          {today && today.words > 0 ? (
+            <>
+              <h2 className="mt-2.5 font-serif text-2xl font-semibold tracking-tight"><UiText source={'You wrote today'} /></h2>
+              <p lang={lang} className="mt-2 line-clamp-2 max-w-xl font-serif text-[17px] leading-relaxed text-ink-soft">
+                {toPlain(today.text).replace(/\s*\n+\s*/g, ' · ')}
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                <Link to={`/mentis/diarium/${today.id}`} className="inline-flex h-9 items-center gap-2 rounded-lg bg-inverse px-3.5 text-[13px] font-semibold text-on-inverse shadow-elev-1"><UiText source={'{0} Open today’s entry'} values={[<PenLine size={15} aria-hidden />]} /></Link>
+                <Button size="sm" variant="secondary" onClick={() => void start(false)} loading={starting}><UiText source={'Write another'} /></Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <motion.p key={prompt.text} lang={lang} className="relative mt-3 max-w-xl font-serif text-[21px] leading-snug font-medium sm:text-[24px]" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={spring.soft}>
+                {prompt.text}
+              </motion.p>
+              {prompt.en && <p className="relative mt-2 text-[13.5px] text-ink-faint italic">{prompt.en}</p>}
+              <p className="relative mt-1.5 text-[12.5px] text-ink-faint"><UiText source={'A few sentences a day is plenty.'} /></p>
+              <div className="relative mt-5 flex flex-wrap items-center gap-2">
+                <Button size="sm" icon={PenLine} onClick={() => void start(true)} loading={starting}>
+                  {today ? translateUi('Continue writing') : translateUi('Write about this')}
+                </Button>
+                <Button size="sm" variant="secondary" icon={Shuffle} onClick={() => setPrompt(otherPrompt(lang, language.level, prompt.text))}><UiText source={'Another prompt'} /></Button>
+                <Button size="sm" variant="ghost" onClick={() => void start(false)}><UiText source={'Write freely'} /></Button>
+              </div>
+            </>
+          )}
 
-      {/* Numbers */}
-      {stats.count > 0 && (
-        <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {[
-            ['Entries', stats.count.toLocaleString()],
-            ['Words written', stats.words.toLocaleString()],
-            ['Writing streak', `${stats.streak} ${stats.streak === 1 ? 'day' : 'days'}`],
-            ['Recent grade', stats.grade === null ? '—' : String(stats.grade)],
-          ].map(([label, value]) => (
-            <div key={label} className="rounded-2xl bg-surface px-4 py-3.5">
-              <dd className="font-serif text-2xl font-semibold tabular-nums">{value}</dd>
-              <dt className="mt-0.5 text-[12px] font-bold tracking-wide text-ink-faint uppercase">{label}</dt>
-            </div>
-          ))}
-        </dl>
-      )}
+          {stats.count > 0 && (
+            <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-line/60 pt-4 sm:grid-cols-4">
+              {[
+                ['Entries', stats.count.toLocaleString()],
+                ['Words written', stats.words.toLocaleString()],
+                ['Writing streak', `${stats.streak} ${stats.streak === 1 ? 'day' : 'days'}`],
+                ['Recent grade', stats.grade === null ? '—' : String(stats.grade)],
+              ].map(([label, value]) => (
+                <div key={label}>
+                  <dd className="font-serif text-lg leading-tight font-semibold tabular-nums">{value}</dd>
+                  <dt className="mt-0.5 text-[10.5px] font-bold tracking-[0.12em] text-ink-faint uppercase">{label}</dt>
+                </div>
+              ))}
+            </dl>
+          )}
+        </Card>
+        <WritingTasks key={lang} lang={lang} />
+      </div>
 
       {/* Entries */}
       {entries && entries.length === 0 && (
-        <div className="flex flex-col items-center py-6 text-center text-ink-soft">
-          <Sparkles size={22} className="mb-3 text-sage-text" aria-hidden />
-          <p className="max-w-sm text-[15px] leading-relaxed"><UiText source={'A few sentences a day is plenty. Write, then let the AI correct and explain{0}; your mistakes become flashcards.'} values={[hasAi ? '' : block === 'max' ? <UiText source={' (with Lingua+ Max)'} /> : <UiText source={' (add a free key in Settings › AI)'} />]} /></p>
+        <div className="flex flex-col items-center rounded-2xl border border-dashed border-line/80 bg-surface/40 py-8 text-center text-ink-soft">
+          <Sparkles size={20} className="mb-2.5 text-sage-text" aria-hidden />
+          <p className="max-w-sm text-[14.5px] leading-relaxed"><UiText source={'A few sentences a day is plenty. Write, then let the AI correct and explain{0}; your mistakes become flashcards.'} values={[hasAi ? '' : block === 'max' ? <UiText source={' (with Lingua+ Max)'} /> : <UiText source={' (add a free key in Settings › AI)'} />]} /></p>
         </div>
       )}
       {entries && <Entries entries={entries} lang={lang} />}

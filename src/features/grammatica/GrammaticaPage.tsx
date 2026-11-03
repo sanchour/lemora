@@ -2,15 +2,14 @@ import { interpolate } from '@/core/i18n/messages';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router';
-import { ArrowRight, BookA, Bookmark, Check, Compass, RotateCcw, Search, X, Zap } from 'lucide-react';
+import { BookA, Bookmark, Compass, RotateCcw, Search, X, Zap } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { PageHeader } from '@/app/PageHeader';
 import { getLanguage } from '@/core/lang/languages';
-import { grammarLevel, ladder, levelPath, weakSpots, whyNext } from '@/core/grammar/path';
-import type { PathStatus } from '@/core/grammar/path';
-import { nextTopic, STEPS, topicState } from '@/core/grammar/progress';
+import { grammarLevel, ladder, weakSpots, whyNext } from '@/core/grammar/path';
+import { nextTopic, topicState } from '@/core/grammar/progress';
 import type { TopicState } from '@/core/grammar/progress';
-import type { GrammarLevel, Topic } from '@/core/grammar/types';
+import type { Topic } from '@/core/grammar/types';
 import { topicsOf } from '@/core/grammar/types';
 import { GRAMMAR_CATEGORIES, GRAMMAR_POS_LIST, POS_LABELS, topicCategory, topicPos } from '@/core/grammar/categories';
 import { searchTopics } from '@/core/grammar/search';
@@ -22,6 +21,7 @@ import { eyebrow, TopicRing, useGrammar } from './parts';
 import { LettersCard } from './letters/LettersCard';
 import { TopicMap } from './TopicMap';
 import { SentenceExplainer } from './SentenceExplainer';
+import { GrammarHorizontalPath } from './GrammarHorizontalPath';
 
 type ViewMode = 'path' | 'map' | 'explainer' | 'category' | 'pos' | 'all';
 
@@ -40,7 +40,6 @@ export default function GrammaticaPage() {
   const items = useGrammarItems(lang);
   const bookmarks = useGrammarBookmarks(lang);
   const [tab, setTab] = useState<ViewMode>('path');
-  const [picked, setPicked] = useState<GrammarLevel>();
   const [query, setQuery] = useState('');
 
   const ready = Boolean(grammar && progress && items);
@@ -57,8 +56,6 @@ export default function GrammaticaPage() {
   const next = grammar && progress ? nextTopic(grammar, progress, language.level) : undefined;
   const rungs = useMemo(() => (grammar ? ladder(grammar, learned) : []), [grammar, learned]);
   const weak = useMemo(() => (grammar && items ? weakSpots(grammar, items, Date.now()) : []), [grammar, items]);
-  const level = picked ?? next?.level ?? grammarLevel(language.level);
-  const path = useMemo(() => (grammar ? levelPath(grammar, level, learned, next?.id) : []), [grammar, level, learned, next?.id]);
   const placed = Boolean(progress && progress.size > 0);
 
   const searchResults = useMemo(() => {
@@ -127,26 +124,15 @@ export default function GrammaticaPage() {
                 </div>
 
                 {tab === 'path' && (
-                  <>
-                    {next ? (
-                      <NextStep topic={next} state={states.get(next.id)} why={ready ? whyNext(grammar, next, states.get(next.id), language.level, learned) : ''} />
-                    ) : (
-                      ready && (
-                        <Card className="p-6">
-                          <p className="font-serif text-[20px] font-semibold"><UiText source={'Every topic is learned.'} /></p>
-                          <p className="mt-1 text-[14.5px] text-ink-soft"><UiText source={'Reviews keep them fresh; a Lightning round is a good way to use them.'} /></p>
-                        </Card>
-                      )
-                    )}
-                    <Ladder rungs={rungs} learnerLevel={grammarLevel(language.level)} picked={level} onPick={setPicked} />
-                    <ol className="mt-4 grid gap-2" aria-label={translateUi('{0} topics', [level])}>
-                      {path.map((stop) => (
-                        <li key={stop.topic.id}>
-                          <PathRow topic={stop.topic} status={stop.status} state={states.get(stop.topic.id)} />
-                        </li>
-                      ))}
-                    </ol>
-                  </>
+                  <GrammarHorizontalPath
+                    grammar={grammar}
+                    states={states}
+                    learnedIds={learned}
+                    nextTopic={next}
+                    whyNextText={ready && next ? whyNext(grammar, next, states.get(next.id), language.level, learned) : ''}
+                    rungs={rungs}
+                    learnerLevel={grammarLevel(language.level)}
+                  />
                 )}
 
                 {tab === 'map' && (
@@ -330,99 +316,6 @@ function TopicsByPos({ topics, states, nextId }: { topics: Topic[]; states: Map<
         );
       })}
     </div>
-  );
-}
-
-/** The next topic, large: why it is next, its five steps, and Start. */
-function NextStep({ topic, state, why }: { topic: Topic; state?: TopicState; why: string }) {
-  const translateUi = useUi();
-  const step = state?.step ?? 1;
-  return (
-    <div className="rounded-3xl border border-line/70 bg-surface p-5 sm:p-7">
-      <div className="flex items-start gap-5">
-        <TopicRing state={state} size={72} />
-        <div className="min-w-0 flex-1">
-          <p className={cx(eyebrow, 'text-sage-text')}>
-            {state?.started ? translateUi('Carry on') : translateUi('Your next step')} · {topic.level}
-          </p>
-          <h2 className="mt-1 font-serif text-[clamp(1.5rem,2.4vw,1.9rem)] leading-tight font-semibold">{topic.title}</h2>
-          <p className="mt-1.5 text-[15.5px] leading-snug text-ink-soft">{topic.summary}</p>
-          {why && <p className="mt-3 text-[14.5px] leading-snug text-ink-faint">{why}</p>}
-        </div>
-      </div>
-      <ol className="mt-5 grid grid-cols-5 gap-2" aria-label={translateUi('The five steps')}>
-        {STEPS.map((s) => (
-          <li key={s.n} title={s.hint}>
-            <div className={cx('h-1.5 rounded-full', s.n < step ? 'bg-sage' : s.n === step ? 'bg-sage/40' : 'bg-sunken')} />
-            <p className={cx('mt-1.5 text-[12.5px] font-semibold', s.n === step ? 'text-ink' : 'text-ink-faint')}>{s.name}</p>
-          </li>
-        ))}
-      </ol>
-      <div className="mt-5 flex flex-wrap items-center gap-2.5">
-        <Link to={`/cursus/grammatica/${topic.id}/lesson`} className={buttonClasses('primary', 'lg')}>
-          {state?.started ? translateUi('Continue: step {0}', [Math.min(step, 5)]) : translateUi('Start')}
-          <ArrowRight size={18} aria-hidden />
-        </Link>
-        <Link to={`/cursus/grammatica/${topic.id}`} className={buttonClasses('ghost', 'lg')}><UiText source={'Read the topic first'} /></Link>
-      </div>
-    </div>
-  );
-}
-
-/** The levels the grammar has, with how many topics are learned; a level can be picked to see its path. */
-function Ladder({ rungs, learnerLevel, picked, onPick }: { rungs: ReturnType<typeof ladder>; learnerLevel: GrammarLevel; picked: GrammarLevel; onPick: (l: GrammarLevel) => void }) {
-  const translateUi = useUi();
-  return (
-    <div className="mt-6 grid gap-2.5" style={{ gridTemplateColumns: `repeat(${Math.max(1, rungs.length)}, minmax(0, 1fr))` }} role="group" aria-label={translateUi('Levels')}>
-      {rungs.map((r) => (
-        <button
-          key={r.level}
-          type="button"
-          aria-pressed={r.level === picked}
-          onClick={() => onPick(r.level)}
-          className={cx('no-callout rounded-2xl border p-3 text-left transition-colors', r.level === picked ? 'border-sage/60 bg-sage-soft/30' : 'border-line/60 bg-surface hover:border-line-strong')}
-        >
-          <span className="flex items-baseline justify-between gap-2">
-            <span className="font-serif text-[18px] font-semibold">{r.level}</span>
-            {r.level === learnerLevel && <span className="text-[11.5px] font-bold tracking-wide text-accent-text uppercase"><UiText source={'You'} /></span>}
-          </span>
-          <span className="mt-2 block h-1.5 overflow-hidden rounded-full bg-sunken">
-            <span className="block h-full rounded-full bg-sage" style={{ width: `${(r.learned / r.total) * 100}%` }} />
-          </span>
-          <span className="mt-1.5 block text-[12.5px] text-ink-faint tabular-nums"><UiText source={'{0} of {1}'} values={[r.learned, r.total]} /></span>
-        </button>
-      ))}
-    </div>
-  );
-}
-
-const STATUS_LABEL: Record<PathStatus, string> = { done: 'Learned', current: 'Now', next: 'Next', later: '' };
-
-function PathRow({ topic, status, state }: { topic: Topic; status: PathStatus; state?: TopicState }) {
-  return (
-    <Link
-      to={`/cursus/grammatica/${topic.id}`}
-      className={cx(
-        'flex items-center gap-3.5 rounded-2xl border p-3 transition-colors active:scale-[0.995]',
-        status === 'current' ? 'border-sage/50 bg-sage-soft/30' : 'border-line/60 bg-surface hover:border-line-strong',
-        status === 'later' && 'opacity-80',
-      )}
-    >
-      <TopicRing state={state} size={42} />
-      <span className="min-w-0 flex-1">
-        <span className="flex items-center gap-2">
-          <span className="min-w-0 truncate text-[15.5px] font-semibold">{topic.title}</span>
-          {state && state.due > 0 && <Badge tone="accent"><UiText source={'{0} due'} values={[state.due]} /></Badge>}
-        </span>
-        <span className="mt-0.5 line-clamp-1 block text-[13.5px] text-ink-soft">{topic.summary}</span>
-      </span>
-      {STATUS_LABEL[status] && (
-        <span className={cx('inline-flex shrink-0 items-center gap-1 text-[12.5px] font-bold tracking-wide uppercase', status === 'done' ? 'text-sage-text' : status === 'current' ? 'text-accent-text' : 'text-ink-faint')}>
-          {status === 'done' && <Check size={13} strokeWidth={2.6} aria-hidden />}
-          {STATUS_LABEL[status]}
-        </span>
-      )}
-    </Link>
   );
 }
 

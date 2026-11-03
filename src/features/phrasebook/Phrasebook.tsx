@@ -35,15 +35,215 @@ export function Phrasebook({ lang }: { lang: string }) {
     void saveFile(`phrasebook-${lang}.${csv ? 'csv' : 'md'}`, new Blob([csv ? phrasebookToCsv(items) : phrasebookToMarkdown(items, lang)], { type: csv ? 'text/csv;charset=utf-8' : 'text/markdown;charset=utf-8' }));
   };
   if (practice) return <PhraseRecall phrases={practice} onDone={() => setPractice(null)} />;
-  return <section className="space-y-5" aria-label={t('Phrasebook')}>
-    <header className="flex flex-wrap items-start justify-between gap-3"><div><h2 className="font-serif text-2xl"><UiText source="Your phrasebook" /></h2><p className="mt-1 text-sm text-ink-soft"><UiText source="Phrases, replies and templates you choose. Text and attached audio stay on this device and work offline." /></p></div><Button icon={Plus} onClick={() => edit(newPhrase(lang))}><UiText source="New phrase" /></Button></header>
-    <div className="grid grid-cols-[minmax(220px,1fr)_220px_220px] items-end gap-3"><Field title={t('Search phrases')}><div className="relative"><Search className="pointer-events-none absolute top-3 left-3 text-ink-faint" size={16} /><input aria-label={t('Search phrases')} value={query} onChange={(e) => setQuery(e.target.value)} className={inputClass + ' pl-9'} /></div></Field><Field title={t('Folder or trip')}><select className={inputClass} value={folder} onChange={(e) => setFolder(e.target.value)}><option value="">{t('Every folder')}</option>{folders.map((f) => <option key={f}>{f}</option>)}</select></Field><Field title={t('Kind')}><select className={inputClass} value={kind} onChange={(e) => setKind(e.target.value)}><option value="">{t('Every kind')}</option>{PHRASE_KINDS.map((k) => <option key={k} value={k}>{t(k)}</option>)}</select></Field></div>
-    {data?.error && <p role="alert">{data.error}</p>}
-    <div className="flex items-center gap-3 text-sm text-ink-soft"><span>{list.length} <UiText source="saved phrases" /></span><Button size="sm" variant="secondary" disabled={!phrasebookSpecs(list).length} onClick={() => setPractice(list)}><UiText source="Practise recall" /></Button><Button size="sm" variant="ghost" disabled={!list.length} onClick={() => exportList(false)}><UiText source="Export Markdown" /></Button><Button size="sm" variant="ghost" disabled={!list.length} onClick={() => exportList(true)}><UiText source="Export CSV" /></Button></div>
-    {!phrase ? <p className="rounded-2xl border border-dashed border-line p-8 text-ink-soft"><UiText source="Save your first phrase, or change the filters." /></p> : <div className="grid grid-cols-[minmax(220px,300px)_minmax(0,1fr)] items-start gap-6"><ul aria-label={t('Saved phrases')} className="max-h-[65vh] space-y-2 overflow-y-auto">{list.map((p) => <li key={p.id}><button type="button" aria-pressed={phrase.id === p.id} onClick={() => select(p.id)} className={'w-full rounded-xl border p-3 text-left ' + (phrase.id === p.id ? 'border-accent bg-accent-soft' : 'border-line bg-raised')}><span lang={lang} className="block font-serif text-lg">{p.text}</span><span className="text-xs text-ink-soft">{p.translation}</span></button></li>)}</ul><article className="min-w-0 rounded-2xl border border-line bg-raised p-6"><h3 lang={lang} dir="auto" className="font-serif text-3xl">{phrase.text}</h3><p className="mt-3 whitespace-pre-wrap text-lg">{phrase.translation}</p><p className="mt-3 text-xs text-ink-faint">{[t(phrase.kind), phrase.folder, phrase.situation, phrase.topic, ...phrase.tags].filter(Boolean).join(' · ')}</p><div className="mt-4 flex flex-wrap gap-3"><SpeakButton lang={lang} text={phrase.text} /><Button size="sm" variant="secondary" disabled={makingCard || !phrase.translation.trim()} onClick={() => { setMakingCard(true); void phraseToCard(phrase).then((id) => toast('Phrase card is ready.', { action: { label: 'Open deck', onClick: () => navigate('/thesaurus/deck/' + id) } })).catch((e: unknown) => toast(e instanceof Error ? e.message : 'Could not make the card.', { tone: 'error' })).finally(() => setMakingCard(false)); }}><UiText source="Make a card" /></Button>{templateSlots(phrase.text).length > 0 && <Button size="sm" variant="secondary" onClick={() => setTemplate(phrase)}><UiText source="Use template" /></Button>}<Button size="sm" variant="secondary" onClick={() => edit(phrase)}><UiText source="Edit phrase" /></Button></div>{phrase.audioBlobId && <AudioClip id={phrase.audioBlobId} />}{phrase.formal && <p className="mt-4"><strong><UiText source="Formal" />: </strong><span lang={lang}>{phrase.formal}</span></p>}{phrase.informal && <p className="mt-2"><strong><UiText source="Informal" />: </strong><span lang={lang}>{phrase.informal}</span></p>}<p className="mt-4 whitespace-pre-wrap text-sm">{phrase.notes}</p>{phrase.source && <p className="mt-4 break-words text-xs text-ink-faint"><UiText source="Source" />: {phrase.source.startsWith('/') && !phrase.source.startsWith('//') ? <Link className="underline" to={phrase.source}>{phrase.source}</Link> : phrase.source}</p>}<p className="mt-4 text-xs text-ink-faint"><UiText source="Available offline. Include media when backing up attached audio." /></p><Button variant="ghost" size="sm" onClick={() => void removeLibrary('phrasebook', phrase).then(() => toast('Phrase removed.', { action: { label: 'Undo', onClick: () => { void saveLibrary('phrasebook', phrase); } } })).catch((e: unknown) => toast(e instanceof Error ? e.message : 'Could not remove the phrase.', { tone: 'error' }))}><UiText source="Remove phrase" /></Button></article></div>}
-    {template && <TemplateForm phrase={template} onClose={() => setTemplate(null)} onMake={(p) => { setTemplate(null); edit(p); }} />}
-    {editing && <PhraseEditor initial={editing} onClose={() => edit(null)} onSaved={(p) => { select(p.id); edit(null); }} />}
-  </section>;
+  return (
+    <section className="space-y-6" aria-label={t('Phrasebook')}>
+      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-3">
+        <div className="flex items-baseline gap-2.5">
+          <h2 className="font-serif text-xl font-semibold"><UiText source="Your phrasebook" /></h2>
+          <span className="text-sm font-bold text-ink-faint tabular-nums">{list.length}</span>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button size="sm" variant="secondary" disabled={!phrasebookSpecs(list).length} onClick={() => setPractice(list)}>
+            <UiText source="Practise recall" />
+          </Button>
+          <Button size="sm" variant="ghost" disabled={!list.length} onClick={() => exportList(false)}>
+            <UiText source="Export Markdown" />
+          </Button>
+          <Button size="sm" variant="ghost" disabled={!list.length} onClick={() => exportList(true)}>
+            <UiText source="Export CSV" />
+          </Button>
+          <Button size="sm" icon={Plus} onClick={() => edit(newPhrase(lang))}>
+            <UiText source="New phrase" />
+          </Button>
+        </div>
+      </header>
+
+      <div className="grid grid-cols-1 items-end gap-3 sm:grid-cols-[minmax(200px,1fr)_190px_190px]">
+        <Field title={t('Search phrases')}>
+          <div className="relative">
+            <Search className="pointer-events-none absolute top-3 left-3 text-ink-faint" size={16} />
+            <input
+              aria-label={t('Search phrases')}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className={inputClass + ' pl-9'}
+            />
+          </div>
+        </Field>
+        <Field title={t('Folder or trip')}>
+          <select className={inputClass} value={folder} onChange={(e) => setFolder(e.target.value)}>
+            <option value="">{t('Every folder')}</option>
+            {folders.map((f) => (
+              <option key={f}>{f}</option>
+            ))}
+          </select>
+        </Field>
+        <Field title={t('Kind')}>
+          <select className={inputClass} value={kind} onChange={(e) => setKind(e.target.value)}>
+            <option value="">{t('Every kind')}</option>
+            {PHRASE_KINDS.map((k) => (
+              <option key={k} value={k}>
+                {t(k)}
+              </option>
+            ))}
+          </select>
+        </Field>
+      </div>
+
+      {data?.error && <p role="alert">{data.error}</p>}
+
+      {!phrase ? (
+        <div className="rounded-3xl border border-dashed border-line/80 bg-surface/50 p-10 text-center text-ink-soft">
+          <p className="font-serif text-lg font-semibold text-ink"><UiText source="Save your first phrase, or change the filters." /></p>
+          <p className="mx-auto mt-1 max-w-md text-sm text-ink-soft">
+            <UiText source="Phrases, replies and templates you choose. Text and attached audio stay on this device and work offline." />
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[320px_minmax(0,1fr)]">
+          <ul aria-label={t('Saved phrases')} className="max-h-[68vh] space-y-2 overflow-y-auto pr-1 [scrollbar-width:thin]">
+            {list.map((p) => (
+              <li key={p.id}>
+                <button
+                  type="button"
+                  aria-pressed={phrase.id === p.id}
+                  onClick={() => select(p.id)}
+                  className={
+                    'w-full rounded-2xl border p-3.5 text-left transition-colors ' +
+                    (phrase.id === p.id
+                      ? 'border-accent/60 bg-accent-soft/40 shadow-2xs'
+                      : 'border-line/70 bg-surface hover:border-line-strong hover:bg-raised/60')
+                  }
+                >
+                  <span lang={lang} className="block font-serif text-[17px] leading-snug font-semibold text-ink">
+                    {p.text}
+                  </span>
+                  {p.translation && <span className="mt-0.5 block truncate text-[13px] text-ink-soft">{p.translation}</span>}
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          <article className="min-w-0 rounded-3xl border border-line/70 bg-surface p-6 shadow-elev-1 sm:p-8">
+            <p className="text-[11.5px] font-bold tracking-[0.12em] text-ink-faint uppercase">
+              {[t(phrase.kind), phrase.folder, phrase.situation, phrase.topic, ...phrase.tags].filter(Boolean).join(' · ')}
+            </p>
+            <h3 lang={lang} dir="auto" className="mt-2 font-serif text-2xl leading-snug font-semibold sm:text-3xl">
+              {phrase.text}
+            </h3>
+            {phrase.translation && (
+              <p className="mt-2 whitespace-pre-wrap font-serif text-lg text-ink-soft">{phrase.translation}</p>
+            )}
+
+            <div className="mt-5 flex flex-wrap items-center gap-2 border-y border-line/60 py-3.5">
+              <SpeakButton lang={lang} text={phrase.text} />
+              <Button
+                size="sm"
+                variant="secondary"
+                disabled={makingCard || !phrase.translation.trim()}
+                onClick={() => {
+                  setMakingCard(true);
+                  void phraseToCard(phrase)
+                    .then((id) =>
+                      toast('Phrase card is ready.', {
+                        action: { label: 'Open deck', onClick: () => navigate('/thesaurus/deck/' + id) },
+                      }),
+                    )
+                    .catch((e: unknown) => toast(e instanceof Error ? e.message : 'Could not make the card.', { tone: 'error' }))
+                    .finally(() => setMakingCard(false));
+                }}
+              >
+                <UiText source="Make a card" />
+              </Button>
+              {templateSlots(phrase.text).length > 0 && (
+                <Button size="sm" variant="secondary" onClick={() => setTemplate(phrase)}>
+                  <UiText source="Use template" />
+                </Button>
+              )}
+              <Button size="sm" variant="secondary" onClick={() => edit(phrase)}>
+                <UiText source="Edit phrase" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() =>
+                  void removeLibrary('phrasebook', phrase)
+                    .then(() =>
+                      toast('Phrase removed.', {
+                        action: {
+                          label: 'Undo',
+                          onClick: () => {
+                            void saveLibrary('phrasebook', phrase);
+                          },
+                        },
+                      }),
+                    )
+                    .catch((e: unknown) => toast(e instanceof Error ? e.message : 'Could not remove the phrase.', { tone: 'error' }))
+                }
+              >
+                <UiText source="Remove phrase" />
+              </Button>
+            </div>
+
+            {phrase.audioBlobId && <AudioClip id={phrase.audioBlobId} />}
+
+            {(phrase.formal || phrase.informal) && (
+              <div className="mt-5 space-y-2 rounded-2xl bg-sunken/50 p-4 text-sm">
+                {phrase.formal && (
+                  <p>
+                    <strong className="font-semibold text-ink-soft"><UiText source="Formal" />: </strong>
+                    <span lang={lang} className="font-serif text-[16px]">{phrase.formal}</span>
+                  </p>
+                )}
+                {phrase.informal && (
+                  <p>
+                    <strong className="font-semibold text-ink-soft"><UiText source="Informal" />: </strong>
+                    <span lang={lang} className="font-serif text-[16px]">{phrase.informal}</span>
+                  </p>
+                )}
+              </div>
+            )}
+
+            {phrase.notes && <p className="mt-4 whitespace-pre-wrap text-[14.5px] leading-relaxed text-ink-soft">{phrase.notes}</p>}
+
+            {phrase.source && (
+              <p className="mt-4 break-words text-xs text-ink-faint">
+                <UiText source="Source" />:{' '}
+                {phrase.source.startsWith('/') && !phrase.source.startsWith('//') ? (
+                  <Link className="underline" to={phrase.source}>
+                    {phrase.source}
+                  </Link>
+                ) : (
+                  phrase.source
+                )}
+              </p>
+            )}
+          </article>
+        </div>
+      )}
+
+      {template && (
+        <TemplateForm
+          phrase={template}
+          onClose={() => setTemplate(null)}
+          onMake={(p) => {
+            setTemplate(null);
+            edit(p);
+          }}
+        />
+      )}
+      {editing && (
+        <PhraseEditor
+          initial={editing}
+          onClose={() => edit(null)}
+          onSaved={(p) => {
+            select(p.id);
+            edit(null);
+          }}
+        />
+      )}
+    </section>
+  );
 }
 export function AudioClip({ id }: { id: string }) {
   const t = useUi();

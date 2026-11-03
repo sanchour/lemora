@@ -56,7 +56,6 @@ interface LibraryProps {
  * know), on shelves by kind or by level, sorted and searched (by name or by any word inside).
  */
 export function StarterLibrary({ lang, query, sort, group, onOpen }: LibraryProps) {
-  const translateUi = useUi();
   const list = useStarterList(lang);
   const added = useStarterDecks(lang);
   const stats = useThemeStats(lang);
@@ -139,17 +138,15 @@ export function StarterLibrary({ lang, query, sort, group, onOpen }: LibraryProp
 
   let shown = 0;
   return (
-    <div className="space-y-9">
+    <div className="space-y-10">
       {shelves.map((shelf) => (
         <section key={shelf.id} aria-label={shelf.name}>
-          <div className="mb-3 flex items-baseline gap-3">
-            <h3 className="font-serif text-[21px] font-semibold">{shelf.name}</h3>
-            {shelf.blurb && <p className="truncate text-[13px] text-ink-faint">{shelf.blurb}</p>}
-            <span className="ml-auto shrink-0 text-[12px] font-semibold text-ink-faint tabular-nums">
-              {shelf.entries.length} {shelf.entries.length === 1 ? translateUi('deck') : translateUi('decks')}
-            </span>
-          </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+          <header className="mb-4 flex items-baseline gap-2.5 border-b border-line pb-2">
+            <h3 className="font-serif text-xl font-semibold">{shelf.name}</h3>
+            <span className="text-sm font-bold text-ink-faint tabular-nums">{shelf.entries.length}</span>
+            {shelf.blurb && <p className="ml-auto hidden truncate text-[12.5px] text-ink-faint sm:block">{shelf.blurb}</p>}
+          </header>
+          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {shelf.entries.map((e) => (
               <Tile key={starterKey(e.spec)} entry={e} lang={lang} index={shown++} added={Boolean(added?.get(starterKey(e.spec)))} onOpen={onOpen} />
             ))}
@@ -160,7 +157,7 @@ export function StarterLibrary({ lang, query, sort, group, onOpen }: LibraryProp
   );
 }
 
-/** One ready-made deck: a picture in its colour, the name, the size and how much of it you know. */
+/** One ready-made deck: a bookish lexicon card with its emblem, name, blurb, word count and mastery bar. */
 function Tile({ entry, lang, index, added, onOpen }: { entry: Entry; lang: string; index: number; added: boolean; onOpen: (spec: StarterSpec) => void }) {
   const translateUi = useUi();
   const { Icon } = entry;
@@ -168,6 +165,7 @@ function Tile({ entry, lang, index, added, onOpen }: { entry: Entry; lang: strin
   const pct = Math.round(share * 100);
   const size = `${entry.size.toLocaleString('en')} ${entry.size === 1 ? 'word' : 'words'}`;
   const meta = entry.empty ? 'Look words up while listening' : entry.spec.kind === 'frequency' ? `Top ${entry.spec.milestone.toLocaleString('en')} · ${pct}% known` : pct ? `${size} · ${pct}% known` : size;
+  const lvl = levelOf(entry.rank);
   return (
     <motion.div
       className="group relative min-w-0"
@@ -181,38 +179,50 @@ function Tile({ entry, lang, index, added, onOpen }: { entry: Entry; lang: strin
         disabled={entry.empty}
         title={entry.empty ? translateUi('Words you look up in songs, videos and podcasts gather here.') : entry.blurb}
         onClick={() => onOpen(entry.spec)}
-        className="no-callout flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line/70 bg-raised text-left shadow-elev-1 transition-[translate,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--hue)_42%,var(--line))] hover:shadow-elev-2 active:translate-y-0 active:scale-[0.98] disabled:cursor-default disabled:opacity-70 disabled:hover:translate-y-0 disabled:hover:shadow-elev-1"
+        className="no-callout flex h-full w-full flex-col justify-between rounded-2xl border border-line/70 bg-surface p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-elev-2 active:translate-y-0 active:scale-[0.99] disabled:cursor-default disabled:opacity-70 disabled:hover:translate-y-0 disabled:hover:shadow-none"
       >
-        <span className="relative block h-[86px] overflow-hidden bg-[color-mix(in_oklab,var(--hue)_15%,var(--surface))]">
-          <span aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,color-mix(in_oklab,var(--hue)_26%,transparent),transparent_62%)]" />
-          {Icon ? (
-            <Icon
-              aria-hidden
-              size={70}
-              strokeWidth={1.3}
-              className="absolute -right-1.5 -bottom-4 rotate-[-10deg] text-[color-mix(in_oklab,var(--hue)_64%,var(--ink))] opacity-75 transition-transform duration-300 group-hover:rotate-[-3deg] group-hover:scale-105"
-            />
-          ) : (
-            <span aria-hidden className="absolute bottom-1.5 left-3 font-serif text-[38px] leading-none font-semibold tracking-tight text-[color-mix(in_oklab,var(--hue)_70%,var(--ink))] tabular-nums">
-              {entry.label}
+        <div>
+          <div className="flex items-start justify-between gap-2 pr-8">
+            <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-line/50 bg-[color-mix(in_oklab,var(--hue)_14%,var(--raised))] text-[color-mix(in_oklab,var(--hue)_72%,var(--ink))] transition-transform duration-200 group-hover:scale-105">
+              {Icon ? (
+                <Icon aria-hidden size={19} strokeWidth={1.75} />
+              ) : (
+                <span aria-hidden className="font-serif text-[14.5px] leading-none font-bold tracking-tight tabular-nums">
+                  {entry.label}
+                </span>
+              )}
             </span>
-          )}
-        </span>
-        {/* Names may take two lines; the bars of a row still line up at the bottom. */}
-        <span className="flex min-w-0 flex-1 flex-col px-3 pt-2.5 pb-3">
-          <span className="line-clamp-2 font-serif text-[16px] leading-tight font-semibold">{entry.name}</span>
-          <span className="mt-1 block truncate text-[12px] font-semibold text-ink-faint">{meta}</span>
-          <span aria-hidden className="min-h-2 flex-1" />
-          <span className="block h-1 shrink-0 overflow-hidden rounded-full bg-sunken">
+            <div className="flex items-center gap-1.5">
+              {added && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-sage-soft px-2 py-0.5 text-[10.5px] font-bold text-sage-text">
+                  <UiText source={'{0} Added'} values={[<Check size={10} strokeWidth={3} aria-hidden />]} />
+                </span>
+              )}
+              <span className="rounded-md bg-raised px-1.5 py-0.5 text-[10.5px] font-bold text-ink-soft tabular-nums">
+                {lvl}
+              </span>
+            </div>
+          </div>
+
+          <span className="mt-3 block line-clamp-1 font-serif text-[16.5px] leading-snug font-semibold text-ink transition-colors group-hover:text-accent-text">
+            {entry.name}
+          </span>
+          <span className="mt-1 line-clamp-2 block text-[12.5px] leading-relaxed text-ink-soft">
+            {entry.blurb}
+          </span>
+        </div>
+
+        <div className="mt-3.5 border-t border-line/50 pt-2.5">
+          <div className="flex items-center justify-between gap-2 text-[11.5px] font-semibold text-ink-faint tabular-nums">
+            <span className="truncate">{meta}</span>
+          </div>
+          <span className="mt-2 block h-1 shrink-0 overflow-hidden rounded-full bg-sunken">
             <span className="block h-full origin-left rounded-full bg-sage transition-transform duration-500" style={{ transform: `scaleX(${share})` }} />
           </span>
-        </span>
+        </div>
       </button>
-      {added && (
-        <span className="pointer-events-none absolute top-2 left-2 flex items-center gap-1 rounded-full bg-sage px-2 py-0.5 text-[11px] font-bold text-bg"><UiText source={'{0} Added'} values={[<Check size={11} strokeWidth={3} aria-hidden />]} /></span>
-      )}
       {!entry.empty && (
-        <div className="absolute top-2 right-2">
+        <div className="absolute top-3 right-3">
           <AddStarterMenu lang={lang} spec={entry.spec} trigger="icon" />
         </div>
       )}

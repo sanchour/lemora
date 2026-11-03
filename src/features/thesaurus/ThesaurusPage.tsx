@@ -4,7 +4,7 @@ import { lazy, Suspense, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
-import { BookA, Compass, Layers, LayoutGrid, List, Plus, Search, SearchX, Sparkles, Waypoints } from 'lucide-react';
+import { BookA, Compass, Layers, LayoutGrid, List, MessageSquareQuote, Plus, Search, SearchX, Sparkles, Waypoints } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { PageHeader } from '@/app/PageHeader';
 import { RoomTabs } from '@/app/RoomTabs';
@@ -20,7 +20,8 @@ import type { Deck, Folder } from '@/data/types';
 import { useHotkeys } from '@/design/hooks/useHotkeys';
 import { useLayout } from '@/design/hooks/useLayout';
 import { Button, Card, IconButton, SearchInput, searchKey, Segmented, SortMenu } from '@/design/primitives';
-import { spring } from '@/design/motion';
+import { fade, spring } from '@/design/motion';
+import { cx } from '@/lib/cx';
 import { THEME_ICONS } from './common/DeckIcon';
 import { CsvImportDrawer } from './library/CsvImportDrawer';
 import { DeckCards, DeckResults, DeckTree, deckOrder, sumCounts } from './library/DeckTree';
@@ -61,12 +62,66 @@ const DISCOVER_GROUPS: Array<{ value: DiscoverGroup; label: string }> = [
   { value: 'level', label: 'Level' },
 ];
 
+function ViewToggle({ view, onChange }: { view: 'list' | 'cards'; onChange: (v: 'list' | 'cards') => void }) {
+  const translateUi = useUi();
+  return (
+    <div
+      role="radiogroup"
+      aria-label={translateUi('Show as')}
+      className="inline-flex h-9 items-center rounded-xl border border-line bg-sunken/60 p-0.5"
+    >
+      <button
+        type="button"
+        role="radio"
+        aria-checked={view === 'cards'}
+        aria-label={translateUi('Cards')}
+        title={translateUi('Cards')}
+        onClick={() => onChange('cards')}
+        className={cx(
+          'relative grid size-8 place-items-center rounded-lg text-ink-soft transition-colors hover:text-ink',
+          view === 'cards' && 'text-ink font-semibold',
+        )}
+      >
+        {view === 'cards' && (
+          <motion.span
+            layoutId="thesaurus-view-glider"
+            className="absolute inset-0 rounded-lg bg-surface shadow-elev-1"
+            transition={spring.soft}
+          />
+        )}
+        <LayoutGrid size={15} className="relative z-10" aria-hidden />
+      </button>
+      <button
+        type="button"
+        role="radio"
+        aria-checked={view === 'list'}
+        aria-label={translateUi('List')}
+        title={translateUi('List')}
+        onClick={() => onChange('list')}
+        className={cx(
+          'relative grid size-8 place-items-center rounded-lg text-ink-soft transition-colors hover:text-ink',
+          view === 'list' && 'text-ink font-semibold',
+        )}
+      >
+        {view === 'list' && (
+          <motion.span
+            layoutId="thesaurus-view-glider"
+            className="absolute inset-0 rounded-lg bg-surface shadow-elev-1"
+            transition={spring.soft}
+          />
+        )}
+        <List size={15} className="relative z-10" aria-hidden />
+      </button>
+    </div>
+  );
+}
+
 export default function ThesaurusPage() {
   const translateUi = useUi();
   const { language, settings } = useApp();
   const lang = language.id;
   const navigate = useNavigate();
-  const { layout, pointer } = useLayout();
+  const { pointer } = useLayout();
   const allDecks = useDecks(lang);
   // Archived decks are out of the way until asked for (6-2).
   const [showArchived, setShowArchived] = useState(false);
@@ -81,10 +136,10 @@ export default function ThesaurusPage() {
 
   const [params, setParams] = useSearchParams();
   const hasDecks = Boolean(allDecks?.length);
-  // The tab you pick wins; with nothing chosen, an empty treasury opens on Discover.
+  // The tab you pick wins; with nothing chosen, Thesaurus opens on My decks with the Lexicon desk.
   const picked = params.get('tab');
   // "memory" was the word memory's own tab before it joined the dictionary.
-  const tab: Tab = picked === 'decks' || picked === 'discover' || picked === 'dictionary' || picked === 'phrases' || picked === 'atlas' ? picked : picked === 'memory' ? 'dictionary' : allDecks && !hasDecks ? 'discover' : 'decks';
+  const tab: Tab = picked === 'decks' || picked === 'discover' || picked === 'dictionary' || picked === 'phrases' || picked === 'atlas' ? picked : picked === 'memory' ? 'dictionary' : 'decks';
   const browse = () => {
     setSearching(false);
     setQuery('');
@@ -95,14 +150,14 @@ export default function ThesaurusPage() {
     { id: 'decks', label: 'My decks', to: '/thesaurus?tab=decks', icon: Layers },
     { id: 'discover', label: 'Discover', to: '/thesaurus?tab=discover', icon: Compass },
     { id: 'dictionary', label: 'Dictionary', to: '/thesaurus?tab=dictionary', icon: BookA },
-    { id: 'phrases', label: 'Phrases', to: '/thesaurus?tab=phrases', icon: BookA },
+    { id: 'phrases', label: 'Phrases', to: '/thesaurus?tab=phrases', icon: MessageSquareQuote },
     { id: 'atlas', label: 'Atlas', to: '/thesaurus?tab=atlas', icon: Waypoints },
   ];
 
   const [searching, setSearching] = useState(false);
   const [query, setQuery] = useState('');
   const searchRef = useRef<HTMLInputElement>(null);
-  useHotkeys({ '/': () => (searching ? searchRef.current?.focus() : setSearching(true)) }, pointer === 'fine' && tab !== 'dictionary' && tab !== 'atlas');
+  useHotkeys({ '/': () => (searching ? searchRef.current?.focus() : setSearching(true)) }, pointer === 'fine' && (tab === 'decks' || tab === 'discover'));
 
   const openStarter = (spec: StarterSpec) => navigate('/thesaurus/ready/' + starterKey(spec));
   const [naming, setNaming] = useState<NameRequest | null>(null);
@@ -150,56 +205,14 @@ export default function ThesaurusPage() {
     setSearching(false);
   };
 
-  // Search, sort (with list or cards) and New, at the end of the tab strip.
-  const tools = (
-    <>
-      {tab !== 'dictionary' &&
-        (searching ? (
-          <SearchInput
-            ref={searchRef}
-            value={query}
-            onChange={setQuery}
-            placeholder={tab === 'discover' ? translateUi('Search ready-made decks and words') : translateUi('Search decks, folders and themes')}
-            onClose={closeSearch}
-            autoFocus
-            className="h-10! w-72"
-          />
-        ) : (
-          <IconButton icon={Search} label={translateUi('Search')} shortcut="/" onClick={() => setSearching(true)} />
-        ))}
-      {tab === 'decks' && hasDecks && (
-        <SortMenu value={sort} options={SORTS} onChange={(deckSort) => void patchSetting('ui', { deckSort })}>
-          <Segmented<'list' | 'cards'>
-            label={translateUi('Show as')}
-            block
-            value={view}
-            onChange={(deckView) => void patchSetting('ui', { deckView })}
-            options={[
-              { value: 'list', label: translateUi('List'), icon: List },
-              { value: 'cards', label: translateUi('Cards'), icon: LayoutGrid },
-            ]}
-          />
-        </SortMenu>
-      )}
-      {tab === 'discover' && (
-        <SortMenu
-          value={discoverSort}
-          options={DISCOVER_SORTS}
-          onChange={(value) => void patchSetting('ui', { discoverSort: value })}
-          group={{ value: discoverGroup, options: DISCOVER_GROUPS, onChange: (value) => void patchSetting('ui', { discoverGroup: value }) }}
-        />
-      )}
-      <NewMenu busy={imports.apkgProgress !== null} onChoose={choose} />
-    </>
-  );
-
-  // On a wide window the Today card stands in a sticky rail beside the decks.
-  const rail = layout === 'wide' && hasDecks;
-
   return (
     <>
-      <PageHeader title={translateUi('Thesaurus')} englishTitle={'Thesaurus'} />
-      <RoomTabs label={translateUi('Thesaurus sections')} tabs={tabs} active={tab} keys={!searching} end={tools} />
+      <PageHeader
+        title={translateUi('Thesaurus')}
+        englishTitle={'Thesaurus'}
+        actions={<NewMenu busy={imports.apkgProgress !== null} onChoose={choose} />}
+      />
+      <RoomTabs label={translateUi('Thesaurus sections')} tabs={tabs} active={tab} keys={!searching} />
 
       {imports.apkgProgress !== null && (
         <div className="mb-4 flex items-center gap-3 rounded-2xl bg-surface px-4 py-3 text-sm font-semibold text-ink-soft" role="status"><UiText source={'Importing the Anki deck…{0}'} values={[<span className="h-1.5 flex-1 overflow-hidden rounded-full bg-sunken">
@@ -207,23 +220,11 @@ export default function ThesaurusPage() {
           </span>]} /></div>
       )}
 
-      {hasDecks && !rail && tab !== 'atlas' && (
-        <div className="mb-5">
-          <TodayCard lang={lang} totals={totals} forecast={outlook?.forecast} />
-        </div>
-      )}
-
       <AnimatePresence mode="wait" initial={false}>
         {tab === 'phrases' ? <Phrasebook key={lang} lang={lang} /> : tab === 'atlas' ? (
           <Suspense key="atlas" fallback={null}>
             <AtlasTab key={lang} lang={lang} />
           </Suspense>
-        ) : query.trim() && tab !== 'discover' ? (
-          <motion.div key="results" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
-            <SearchResults lang={lang} query={query} decks={decks ?? []} folders={folders ?? []} order={order.decks} onOpenStarter={openStarter}>
-              {(found) => <DeckResults decks={found} folders={folders ?? []} counts={counts} lastStudied={outlook?.lastStudied} actions={actions} />}
-            </SearchResults>
-          </motion.div>
         ) : tab === 'decks' ? (
           <motion.div
             key="decks"
@@ -231,27 +232,70 @@ export default function ThesaurusPage() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -10 }}
             transition={spring.snappy}
-            className={rail ? 'grid grid-cols-[minmax(0,1fr)_296px] items-start gap-6' : undefined}
+            className="mt-2 space-y-8"
           >
-            <section aria-label={translateUi('My decks')} className="min-w-0">
-              {hasDecks &&
-                folders &&
-                (view === 'cards' ? (
-                  <DeckCards decks={decks!} folders={folders} counts={counts} lastStudied={outlook?.lastStudied} actions={actions} order={order} />
-                ) : (
-                  <DeckTree decks={decks!} folders={folders} counts={counts} lastStudied={outlook?.lastStudied} actions={actions} order={order} />
-                ))}
-              {archivedCount > 0 && (
-                <button type="button" onClick={() => setShowArchived((v) => !v)} className="mt-5 text-[13.5px] font-semibold text-ink-soft underline decoration-line-strong underline-offset-4"><UiText source={'{0} {1} archived {2}'} values={[showArchived ? <UiText source={'Hide'} /> : <UiText source={'Show'} />, archivedCount, archivedCount === 1 ? <UiText source={'deck'} /> : <UiText source={'decks'} />]} /></button>
-              )}
-              {decks && !hasDecks && <NoDecks onBrowse={browse} onNew={() => newDeck(null)} onImport={(kind) => choose(kind)} />}
-              <JourneySection lang={lang} onOpen={openStarter} />
-            </section>
-            {rail && (
-              <aside aria-label={translateUi('Today')} className="sticky top-8">
-                <TodayCard lang={lang} totals={totals} forecast={outlook?.forecast} rail />
-              </aside>
+            {!query.trim() && (
+              <section aria-label={translateUi('Today')} className="pb-1">
+                <TodayCard lang={lang} totals={totals} forecast={outlook?.forecast} onDiscover={browse} />
+              </section>
             )}
+
+            <section
+              aria-label={translateUi('My decks')}
+              className={!query.trim() ? 'border-t border-line/60 pt-6' : undefined}
+            >
+              <div className="mb-5 flex h-11 items-center gap-2 border-b border-line pb-2.5">
+                <div className="relative h-full min-w-0 flex-1">
+                  <AnimatePresence mode="popLayout" initial={false}>
+                    {searching ? (
+                      <motion.div key="search" className="absolute inset-0" initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 12 }} transition={fade}>
+                        <SearchInput
+                          ref={searchRef}
+                          value={query}
+                          onChange={setQuery}
+                          placeholder={translateUi('Search decks, folders and themes')}
+                          onClose={closeSearch}
+                          autoFocus
+                        />
+                      </motion.div>
+                    ) : (
+                      <motion.div key="title" className="flex h-full items-baseline gap-2.5" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={fade}>
+                        <h2 className="font-serif text-xl font-semibold"><UiText source={'My decks'} /></h2>
+                        <span className="text-sm font-bold text-ink-faint tabular-nums">{decks?.length ?? 0}</span>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+                {hasDecks && (
+                  <>
+                    {!searching && <IconButton icon={Search} label={translateUi('Search')} shortcut="/" onClick={() => setSearching(true)} />}
+                    <SortMenu value={sort} options={SORTS} onChange={(deckSort) => void patchSetting('ui', { deckSort })} />
+                    <ViewToggle view={view} onChange={(deckView) => void patchSetting('ui', { deckView })} />
+                  </>
+                )}
+              </div>
+
+              {query.trim() ? (
+                <SearchResults lang={lang} query={query} decks={decks ?? []} folders={folders ?? []} order={order.decks} onOpenStarter={openStarter}>
+                  {(found) => <DeckResults decks={found} folders={folders ?? []} counts={counts} lastStudied={outlook?.lastStudied} actions={actions} />}
+                </SearchResults>
+              ) : (
+                <>
+                  {hasDecks &&
+                    folders &&
+                    (view === 'cards' ? (
+                      <DeckCards decks={decks!} folders={folders} counts={counts} lastStudied={outlook?.lastStudied} actions={actions} order={order} />
+                    ) : (
+                      <DeckTree decks={decks!} folders={folders} counts={counts} lastStudied={outlook?.lastStudied} actions={actions} order={order} />
+                    ))}
+                  {archivedCount > 0 && (
+                    <button type="button" onClick={() => setShowArchived((v) => !v)} className="mt-5 text-[13.5px] font-semibold text-ink-soft underline decoration-line-strong underline-offset-4"><UiText source={'{0} {1} archived {2}'} values={[showArchived ? <UiText source={'Hide'} /> : <UiText source={'Show'} />, archivedCount, archivedCount === 1 ? <UiText source={'deck'} /> : <UiText source={'decks'} />]} /></button>
+                  )}
+                  {decks && !hasDecks && <NoDecks onBrowse={browse} onNew={() => newDeck(null)} onImport={(kind) => choose(kind)} />}
+                  <JourneySection lang={lang} onOpen={openStarter} />
+                </>
+              )}
+            </section>
           </motion.div>
         ) : tab === 'dictionary' ? (
           <motion.section key="dictionary" aria-label={translateUi('Dictionary')} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} transition={spring.snappy}>
@@ -259,6 +303,39 @@ export default function ThesaurusPage() {
           </motion.section>
         ) : (
           <motion.section key="discover" aria-label={translateUi('Ready-made decks')} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} transition={spring.snappy}>
+            <div className="mb-6 flex h-11 items-center gap-2">
+              <div className="relative h-full min-w-0 flex-1">
+                <AnimatePresence mode="popLayout" initial={false}>
+                  {searching ? (
+                    <motion.div key="search" className="absolute inset-0" initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 12 }} transition={fade}>
+                      <SearchInput
+                        ref={searchRef}
+                        value={query}
+                        onChange={setQuery}
+                        placeholder={translateUi('Search ready-made decks and words')}
+                        onClose={closeSearch}
+                        autoFocus
+                      />
+                    </motion.div>
+                  ) : (
+                    <motion.div key="group" className="flex h-full items-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={fade}>
+                      <Segmented<DiscoverGroup>
+                        label={translateUi('Kind of deck')}
+                        value={discoverGroup}
+                        onChange={(value) => void patchSetting('ui', { discoverGroup: value })}
+                        options={DISCOVER_GROUPS.map((g) => ({ value: g.value, label: translateUi(g.label) }))}
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+              {!searching && <IconButton icon={Search} label={translateUi('Search')} shortcut="/" onClick={() => setSearching(true)} />}
+              <SortMenu
+                value={discoverSort}
+                options={DISCOVER_SORTS}
+                onChange={(value) => void patchSetting('ui', { discoverSort: value })}
+              />
+            </div>
             <StarterLibrary lang={lang} query={query} sort={discoverSort} group={discoverGroup} onOpen={openStarter} />
           </motion.section>
         )}

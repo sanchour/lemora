@@ -59,31 +59,84 @@ export const BookCover = memo(function BookCover({ text, className, size = 'md',
     };
   }, [text.coverBlobId]);
 
-  const frame = cx('relative aspect-[2/3] overflow-hidden rounded-[6px] shadow-elev-2', className);
+  const { cloth, ornament, binding } = coverOf(text);
+  const bindingRadius = binding === 'paperback' ? 'rounded-[3px]' : binding === 'linen' ? 'rounded-[4px]' : 'rounded-[5px]';
+  const bindingShadow = binding === 'paperback' ? 'shadow-elev-1' : binding === 'leather' ? 'shadow-elev-3' : 'shadow-elev-2';
+  const frame = cx('relative aspect-[2/3] overflow-hidden select-none', bindingRadius, bindingShadow, className);
+
   const picture = url ?? (text.coverUrl && !remoteFailed ? text.coverUrl : null);
   if (picture) {
     return (
       <div className={frame}>
         <img src={picture} alt="" loading={lazy && !url ? 'lazy' : undefined} className="size-full object-cover" draggable={false} referrerPolicy="no-referrer" onError={url ? undefined : () => setRemoteFailed(true)} onLoad={url ? undefined : (e) => e.currentTarget.naturalWidth < 8 && setRemoteFailed(true)} />
-        <span className="pointer-events-none absolute inset-y-0 left-0 w-[6%] bg-gradient-to-r from-black/20 to-transparent" aria-hidden />
+        <span className="pointer-events-none absolute inset-y-0 left-0 w-[6%] bg-gradient-to-r from-black/25 to-transparent" aria-hidden />
+        {binding !== 'paperback' && (
+          <span className="pointer-events-none absolute left-[6.5%] inset-y-0 w-px bg-black/35 shadow-[1px_0_0_rgba(255,255,255,0.14)]" aria-hidden />
+        )}
       </div>
     );
   }
 
-  const { cloth, ornament } = coverOf(text);
   const titleSize = size === 'sm' ? 'text-[11px]' : size === 'lg' ? 'text-[19px]' : 'text-[14px]';
+
+  // Inner frame styling according to binding craft
+  const innerFrameBorder =
+    binding === 'leather'
+      ? 'border border-[#d4af37]/75 shadow-[inset_0_0_0_1px_rgba(212,175,55,0.35)]'
+      : binding === 'linen'
+        ? 'border border-black/25 shadow-[inset_0_1px_1px_rgba(0,0,0,0.18),0_1px_0_rgba(255,255,255,0.15)]'
+        : 'border border-current/35';
+
   return (
-    <div className={frame} style={{ backgroundColor: cloth.bg, color: cloth.ink }}>
-      <div className={cx('absolute inset-[7%] flex flex-col items-center rounded-[3px] border border-current/35 px-[8%] py-[12%] text-center', ornament === 'frame' && 'outline outline-1 outline-offset-[3px] outline-current/25')}>
+    <div
+      className={frame}
+      style={{
+        backgroundColor: cloth.bg,
+        color: binding === 'leather' ? '#fdf3d0' : cloth.ink,
+      }}
+    >
+      {/* Linen woven cloth texture overlay */}
+      {binding === 'linen' && (
+        <span
+          className="pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay"
+          style={{
+            backgroundImage:
+              'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px), repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.14) 2px, rgba(255,255,255,0.14) 4px)',
+          }}
+          aria-hidden
+        />
+      )}
+
+      {/* Antiquarian leather patina warmth */}
+      {binding === 'leather' && (
+        <>
+          <span className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-black/35 via-transparent to-amber-950/20 mix-blend-multiply" aria-hidden />
+          {/* Raised horizontal spine ribs / bands */}
+          <span className="pointer-events-none absolute left-0 top-[24%] h-[2.5px] w-[7%] bg-white/20 shadow-[0_1px_1px_rgba(0,0,0,0.6)]" aria-hidden />
+          <span className="pointer-events-none absolute left-0 top-[50%] h-[2.5px] w-[7%] bg-white/20 shadow-[0_1px_1px_rgba(0,0,0,0.6)]" aria-hidden />
+          <span className="pointer-events-none absolute left-0 top-[76%] h-[2.5px] w-[7%] bg-white/20 shadow-[0_1px_1px_rgba(0,0,0,0.6)]" aria-hidden />
+        </>
+      )}
+
+      {/* Inner panel */}
+      <div className={cx('absolute inset-[7%] flex flex-col items-center rounded-[3px] px-[8%] py-[12%] text-center', innerFrameBorder, ornament === 'frame' && 'outline outline-1 outline-offset-[3px] outline-current/25')}>
         <span className="mb-auto text-[9px] font-bold tracking-[0.2em] uppercase opacity-70">{text.lang}</span>
         <Ornament kind={ornament} place="top" />
-        <span lang={text.lang} className={cx('line-clamp-4 font-serif leading-tight font-semibold', titleSize)}>
+        <span lang={text.lang} className={cx('line-clamp-4 font-serif leading-tight font-semibold', titleSize, binding === 'leather' && 'drop-shadow-[0_1px_1px_rgba(0,0,0,0.4)]')}>
           {text.title}
         </span>
         <Ornament kind={ornament} place="middle" />
         {text.author && <span className="mt-auto line-clamp-2 text-[9px] font-semibold tracking-[0.12em] uppercase opacity-80">{text.author}</span>}
       </div>
-      <span className="pointer-events-none absolute inset-y-0 left-0 w-[6%] bg-gradient-to-r from-black/20 to-transparent" aria-hidden />
+
+      {/* Spine hinge crease & edge shadow */}
+      <span className="pointer-events-none absolute inset-y-0 left-0 w-[6%] bg-gradient-to-r from-black/25 to-transparent" aria-hidden />
+      {binding !== 'paperback' && (
+        <span className="pointer-events-none absolute left-[6.5%] inset-y-0 w-px bg-black/35 shadow-[1px_0_0_rgba(255,255,255,0.12)]" aria-hidden />
+      )}
+      {binding === 'paperback' && (
+        <span className="pointer-events-none absolute right-0 inset-y-0 w-[1.5px] bg-white/25" aria-hidden />
+      )}
     </div>
   );
 });

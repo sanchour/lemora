@@ -24,7 +24,8 @@ import { getLanguage } from '@/core/lang/languages';
 import { seededRandom, shuffle } from '@/core/srs/ludus';
 import { trickyNotes } from '@/data/memoryViews';
 import { affixesOfWords, itemsOf, practiceNotes, practiceTopics, verbGrids, wordFacts } from '@/data/practice';
-import { buttonClasses, Card } from '@/design/primitives';
+import { ArrowRight, Gamepad2, Layers } from 'lucide-react';
+import { buttonClasses, Segmented } from '@/design/primitives';
 import { ExerciseSession } from '@/features/exercise/ExerciseSession';
 
 interface Ctx {
@@ -362,6 +363,7 @@ export default function PracticePage() {
   const aiReady = aiBlock(settings, settings.llm.provider) === null;
   const [error, setError] = useState<string | null>(null);
   const [ctx, setCtx] = useState<Ctx | null>(null);
+  const [filter, setFilter] = useState<'all' | PracticeSet['group']>('all');
   const navigate = useNavigate();
   const chosen = useParams().set;
   // A set's own address takes the whole screen; it is made when it opens, so each go is a fresh mix.
@@ -423,38 +425,114 @@ export default function PracticePage() {
   if (running) return <ExerciseSession title={running.title} lang={lang} specs={running.specs} onClose={() => navigate('/thesaurus/practice')} />;
 
   const name = getLanguage(lang)?.name ?? lang;
-  const section = (group: PracticeSet['group'], title: string) => (
-    <section className="mt-8" aria-label={title}>
-      <h2 className="mb-3 text-[12px] font-bold tracking-[0.12em] text-ink-faint uppercase"><UiText source={title} /></h2>
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        {sets
-          .filter((s) => s.group === group)
-          .map((s) => (
-            <Card key={s.id} className="flex flex-col p-5">
-              <p className="font-serif text-lg font-semibold"><UiText source={s.title} /></p>
-              <p className="mt-1 flex-1 text-[14px] leading-snug text-ink-soft"><UiText source={s.detail} /></p>
-              {ready.get(s.id) ? (
-                <Link to={`/thesaurus/practice/${s.id}`} className={buttonClasses('primary', 'sm') + ' mt-4 self-start'}><UiText source={'Start'} /></Link>
-              ) : (
-                <p className="mt-4 text-[12.5px] text-ink-faint"><UiText source={'Needs {0}.'} values={[translateUi(s.needs)]} /></p>
-              )}
-            </Card>
-          ))}
-      </div>
-    </section>
-  );
+
+  const section = (group: PracticeSet['group'], title: string) => {
+    const groupSets = sets.filter((s) => s.group === group);
+    if (!groupSets.length) return null;
+    return (
+      <section key={group} aria-label={title}>
+        <header className="mb-4 flex items-baseline gap-2.5 border-b border-line pb-2">
+          <h2 className="font-serif text-xl font-semibold">
+            <UiText source={title} />
+          </h2>
+          <span className="text-sm font-bold text-ink-faint tabular-nums">{groupSets.length}</span>
+        </header>
+        <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+          {groupSets.map((s) => {
+            const isReady = ready.get(s.id);
+            if (isReady) {
+              return (
+                <Link
+                  key={s.id}
+                  to={`/thesaurus/practice/${s.id}`}
+                  className="group flex flex-col justify-between rounded-2xl border border-line/70 bg-surface p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-elev-2"
+                >
+                  <div>
+                    <h3 className="font-serif text-[17.5px] leading-snug font-semibold text-ink transition-colors group-hover:text-accent-text">
+                      <UiText source={s.title} />
+                    </h3>
+                    <p className="mt-1.5 text-[13.5px] leading-relaxed text-ink-soft">
+                      <UiText source={s.detail} />
+                    </p>
+                  </div>
+                  <div className="mt-4 flex items-center justify-between border-t border-line/50 pt-3 text-[12.5px] font-semibold text-ink transition-colors group-hover:text-accent-text">
+                    <span><UiText source={'Start'} /></span>
+                    <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden />
+                  </div>
+                </Link>
+              );
+            }
+
+            return (
+              <div
+                key={s.id}
+                className="flex flex-col justify-between rounded-2xl border border-line/50 bg-surface/45 p-5 opacity-70"
+              >
+                <div>
+                  <h3 className="font-serif text-[17.5px] leading-snug font-semibold text-ink">
+                    <UiText source={s.title} />
+                  </h3>
+                  <p className="mt-1.5 text-[13.5px] leading-relaxed text-ink-soft">
+                    <UiText source={s.detail} />
+                  </p>
+                </div>
+                <p className="mt-4 border-t border-line/40 pt-3 text-[12px] leading-snug text-ink-faint">
+                  <UiText source={'Needs {0}.'} values={[translateUi(s.needs)]} />
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    );
+  };
 
   return (
     <>
-      <PageHeader title={translateUi('Practice')} englishTitle={'Practice'} eyebrow={translateUi('{0}, in every kind of exercise', [translateUi(name)])} englishEyebrow={interpolate('{0}, in every kind of exercise', [name])} />
-      <p className="max-w-2xl text-[15px] leading-relaxed text-ink-soft"><UiText source={'Sets made from your own words and from Grammatica. Missed ones come back once with another example; in the options (top right) you can ask to be asked how sure you are, or to see the answers only at the end.{0}{1}'} values={[' ', <Link to="/thesaurus" className="font-semibold text-ink underline decoration-line-strong underline-offset-4"><UiText source={'Back to Thesaurus'} /></Link>]} /></p>
-      {!ctx ? <p className="mt-8 text-ink-soft"><UiText source={'Looking at your words…'} /></p> : (
-        <>
-          {section('words', 'Your words')}
-          {section('grammar', 'Grammar')}
-          {section('listening', 'Listening')}
-        </>
-      )}
+      <PageHeader
+        title={translateUi('Practice')}
+        englishTitle={'Practice'}
+        eyebrow={translateUi('{0}, in every kind of exercise', [translateUi(name)])}
+        englishEyebrow={interpolate('{0}, in every kind of exercise', [name])}
+        actions={
+          <div className="flex flex-wrap items-center gap-2">
+            <Link to="/thesaurus/games" className={buttonClasses('secondary', 'md')}>
+              <Gamepad2 size={16} aria-hidden />
+              <UiText source={'Ludus'} />
+            </Link>
+            <Link to="/thesaurus" className={buttonClasses('secondary', 'md')}>
+              <Layers size={16} aria-hidden />
+              <UiText source={'Thesaurus'} />
+            </Link>
+          </div>
+        }
+      />
+
+      <div className="mt-6">
+        <div className="mb-7 flex flex-wrap items-center justify-between gap-3">
+          <Segmented<'all' | PracticeSet['group']>
+            label={translateUi('Practice')}
+            value={filter}
+            onChange={setFilter}
+            options={[
+              { value: 'all', label: translateUi('All') },
+              { value: 'words', label: translateUi('Your words') },
+              { value: 'grammar', label: translateUi('Grammar') },
+              { value: 'listening', label: translateUi('Listening') },
+            ]}
+          />
+        </div>
+
+        {!ctx ? (
+          <p className="mt-8 text-ink-soft"><UiText source={'Looking at your words…'} /></p>
+        ) : (
+          <div className="space-y-10">
+            {(filter === 'all' || filter === 'words') && section('words', 'Your words')}
+            {(filter === 'all' || filter === 'grammar') && section('grammar', 'Grammar')}
+            {(filter === 'all' || filter === 'listening') && section('listening', 'Listening')}
+          </div>
+        )}
+      </div>
     </>
   );
 }

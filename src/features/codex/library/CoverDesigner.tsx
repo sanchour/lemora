@@ -5,7 +5,7 @@ import type { CoverDesign, Text } from '@/data/types';
 import { cx } from '@/lib/cx';
 import { pickFile } from '@/services/files/files';
 import { BookCover } from './BookCover';
-import { CLOTHS, ORNAMENTS } from './covers';
+import { BINDINGS, CLOTHS, ORNAMENTS } from './covers';
 
 interface CoverDesignerProps {
   text: Pick<Text, 'id' | 'title' | 'author' | 'lang'> & { coverBlobId?: string };
@@ -64,6 +64,33 @@ export function CoverDesigner({ text, design, onDesign, image, onImage, hasStore
                 {design.cloth === c.id && <Check size={14} strokeWidth={3} aria-hidden />}
               </button>
             ))}
+          </div>
+        </div>
+
+        <div className={cx('transition-opacity', showsPicture && 'pointer-events-none opacity-40')}>
+          <Label>{translateUi('Style')}</Label>
+          <div role="radiogroup" aria-label={translateUi('Style')} className="flex flex-wrap gap-1.5">
+            {BINDINGS.map((b) => {
+              const active = (design.binding ?? 'hardcover') === b.id;
+              return (
+                <button
+                  key={b.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={active}
+                  onClick={() => onDesign({ ...design, binding: b.id })}
+                  className={cx(
+                    'rounded-full border px-3 py-1.5 text-[13px] font-semibold transition-colors',
+                    active ? 'border-accent/40 bg-accent-soft text-accent-text' : 'border-line bg-raised text-ink-soft hover:border-line-strong',
+                  )}
+                >
+                  {b.id === 'paperback' && translateUi('Paperback')}
+                  {b.id === 'hardcover' && translateUi('Hardcover')}
+                  {b.id === 'leather' && translateUi('Leather')}
+                  {b.id === 'linen' && translateUi('Linen')}
+                </button>
+              );
+            })}
           </div>
         </div>
 

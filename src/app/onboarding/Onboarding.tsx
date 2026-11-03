@@ -70,7 +70,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const [target, setTarget] = useState<string | null>(replaying ? (active?.id ?? null) : null);
   const [level, setLevel] = useState<Level>('A0');
   const [seedKnown, setSeedKnown] = useState(true);
-  const [spoken, setSpoken] = useState<Spoken[]>(() => [{ code: 'en', level: 'native' }]);
+  const [spoken, setSpoken] = useState<Spoken[]>(() => [{ code: 'en', level: null }]);
   const [reasons, setReasons] = useState<LearningReason[] | null>(null);
   const [goal, setGoal] = useState<CefrLevel | null>(null);
   const [minutes, setMinutes] = useState(15);
@@ -97,7 +97,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const canContinue =
     page === 'name' ? nameNow.trim().length > 0
     : page === 'language' ? target !== null
-    : page === 'speak' ? spoken.length > 0
+    : page === 'speak' ? spoken.length > 0 && spoken.every((s) => s.level !== null)
     : page === 'why' ? reasonsNow.length > 0
     : page === 'goal' ? goalStage === 1 || goalPicked
     : true;
@@ -131,7 +131,9 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
         learner: { reasons: reasonsNow, enjoys: enjoysNow, name: nameNow.trim() || undefined },
         spoken: canCancel
           ? undefined
-          : spoken.map((s) => ({ id: getLanguage(s.code) ? s.code : codeForLanguage(spokenName(s.code)), name: spokenName(s.code), level: s.level === 'native' ? 'C2' : s.level, native: s.level === 'native' })),
+          : spoken
+              .filter((s): s is Spoken & { level: NonNullable<Spoken['level']> } => s.level !== null)
+              .map((s) => ({ id: getLanguage(s.code) ? s.code : codeForLanguage(spokenName(s.code)), name: spokenName(s.code), level: s.level === 'native' ? 'C2' : s.level, native: s.level === 'native' })),
       });
       void requestPersistence();
       navigate('/', { replace: true });

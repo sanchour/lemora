@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, BookOpen, Check, Clapperboard, Copy, Dices, Exte
 import type { LucideIcon } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { PageHeader } from '@/app/PageHeader';
+import { useInRoom } from '@/app/room';
 import { AIS } from '@/core/colloquium/ais';
 import type { Ai } from '@/core/colloquium/ais';
 import { asScene, buildPrompt, getScene, promptInLanguage } from '@/core/colloquium/prompts';
@@ -52,6 +53,7 @@ interface WeekItem {
  */
 export default function ColloquiumPage() {
   const translateUi = useUi();
+  const inRoom = useInRoom();
   const { language } = useApp();
   const lang = language.id;
   const level = language.level;
@@ -110,9 +112,11 @@ export default function ColloquiumPage() {
 
   return (
     <div ref={top} className="scroll-mt-24">
-      <PageHeader title={translateUi('Sermo')} englishTitle={'Sermo'} eyebrow={translateUi('Talk in {0}', [translateUi(name)])} englishEyebrow={interpolate('Talk in {0}', [name])} />
+      {!inRoom && (
+        <PageHeader title={translateUi('Sermo')} englishTitle={'Sermo'} eyebrow={translateUi('Talk in {0}', [translateUi(name)])} englishEyebrow={interpolate('Talk in {0}', [name])} />
+      )}
 
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b border-line/60 pb-4">
         <Segmented<SermoTab>
           label={translateUi('Speaking mode')}
           value={tab}
@@ -123,6 +127,28 @@ export default function ColloquiumPage() {
             { value: 'review', label: translateUi('“How Did It Go?”') },
           ]}
         />
+
+        {tab === 'prompts' && (
+          <ol className="flex flex-wrap items-center gap-1.5 text-[13px] font-semibold" aria-label={translateUi('Steps')}>
+            {steps.map((s, i) => (
+              <li key={s.id} className="flex items-center gap-1.5">
+                {i > 0 && <span className="h-px w-5 bg-line" aria-hidden />}
+                <button
+                  type="button"
+                  disabled={i > at}
+                  aria-current={i === at ? 'step' : undefined}
+                  onClick={() => go(s.id)}
+                  className={cx('flex items-center gap-2 rounded-full py-1 pr-2.5 pl-1 transition-colors', i === at ? 'text-ink' : i < at ? 'text-ink-soft hover:bg-surface hover:text-ink' : 'text-ink-faint')}
+                >
+                  <span className={cx('grid size-5.5 place-items-center rounded-full text-[11px] tabular-nums', i === at ? 'bg-inverse text-on-inverse' : i < at ? 'bg-sage-soft text-sage-text' : 'bg-sunken')}>
+                    {i < at ? <Check size={12} aria-hidden /> : i + 1}
+                  </span>
+                  {s.text}
+                </button>
+              </li>
+            ))}
+          </ol>
+        )}
       </div>
 
       {tab === 'solo' && (
@@ -140,26 +166,6 @@ export default function ColloquiumPage() {
 
       {tab === 'prompts' && (
         <>
-          <ol className="-mt-1 mb-6 flex items-center gap-2 text-[13.5px] font-semibold" aria-label={translateUi('Steps')}>
-            {steps.map((s, i) => (
-              <li key={s.id} className="flex items-center gap-2">
-                {i > 0 && <span className="h-px w-8 bg-line" aria-hidden />}
-                <button
-                  type="button"
-                  disabled={i > at}
-                  aria-current={i === at ? 'step' : undefined}
-                  onClick={() => go(s.id)}
-                  className={cx('flex items-center gap-2 rounded-full py-1 pr-3 pl-1 transition-colors', i === at ? 'text-ink' : i < at ? 'text-ink-soft hover:bg-surface hover:text-ink' : 'text-ink-faint')}
-                >
-                  <span className={cx('grid size-6 place-items-center rounded-full text-[12px]', i === at ? 'bg-inverse text-on-inverse' : i < at ? 'bg-sage-soft text-sage-text' : 'bg-sunken')}>
-                    {i < at ? <Check size={13} aria-hidden /> : i + 1}
-                  </span>
-                  {s.text}
-                </button>
-              </li>
-            ))}
-          </ol>
-
           {step === 'scene' && (
             <ScenePicker
               lang={lang}
@@ -177,141 +183,143 @@ export default function ColloquiumPage() {
             />
           )}
 
-      {step === 'how' && (
-        <section aria-label={translateUi('How you’ll talk')} className="max-w-4xl">
-          <Picked scene={scene} about={about} onChange={() => go('scene')} />
-          <h2 className={cx(label, 'mt-7 mb-3')}><UiText source={'Voice or text'} /></h2>
-          <div className="grid grid-cols-2 gap-3">
-            {(
-              [
-                { id: 'voice', icon: Mic, title: 'Voice', detail: 'Talk out loud with the AI’s voice mode. Short turns, like a real conversation.' },
-                { id: 'text', icon: Type, title: 'Text', detail: 'Type and read. Time to think, look words up, and see every correction.' },
-              ] as const
-            ).map((m) => (
-              <button
-                key={m.id}
-                type="button"
-                aria-pressed={choices.mode === m.id}
-                onClick={() => choose({ mode: m.id })}
-                className={cx('flex items-start gap-4 rounded-3xl border p-5 text-left transition-colors', choices.mode === m.id ? 'border-accent/50 bg-accent-soft' : 'border-line bg-raised hover:border-line-strong')}
-              >
-                <span className={cx('grid size-12 shrink-0 place-items-center rounded-2xl', choices.mode === m.id ? 'bg-accent-fill text-on-accent' : 'bg-sunken text-ink-soft')}>
-                  <m.icon size={22} aria-hidden />
-                </span>
-                <span>
-                  <span className="block font-serif text-[20px] font-semibold">{m.title}</span>
-                  <span className="mt-1 block text-[14px] leading-snug text-ink-soft">{m.detail}</span>
-                </span>
-              </button>
-            ))}
-          </div>
+          {step === 'how' && (
+            <section aria-label={translateUi('How you’ll talk')} className="max-w-4xl">
+              <Picked scene={scene} about={about} onChange={() => go('scene')} />
+              <h2 className={cx(label, 'mt-7 mb-3')}><UiText source={'Voice or text'} /></h2>
+              <div className="grid gap-3.5 sm:grid-cols-2">
+                {(
+                  [
+                    { id: 'voice', icon: Mic, title: 'Voice', detail: 'Talk out loud with the AI’s voice mode. Short turns, like a real conversation.' },
+                    { id: 'text', icon: Type, title: 'Text', detail: 'Type and read. Time to think, look words up, and see every correction.' },
+                  ] as const
+                ).map((m) => (
+                  <button
+                    key={m.id}
+                    type="button"
+                    aria-pressed={choices.mode === m.id}
+                    onClick={() => choose({ mode: m.id })}
+                    className={cx('flex items-start gap-4 rounded-2xl border p-5 text-left transition-all', choices.mode === m.id ? 'border-accent/50 bg-accent-soft/50 shadow-elev-1' : 'border-line/70 bg-surface hover:border-line-strong')}
+                  >
+                    <span className={cx('grid size-11 shrink-0 place-items-center rounded-xl', choices.mode === m.id ? 'bg-accent-fill text-on-accent' : 'bg-sunken text-ink-soft')}>
+                      <m.icon size={20} aria-hidden />
+                    </span>
+                    <span>
+                      <span className="block font-serif text-[18.5px] font-semibold">{m.title}</span>
+                      <span className="mt-1 block text-[13.5px] leading-relaxed text-ink-soft">{m.detail}</span>
+                    </span>
+                  </button>
+                ))}
+              </div>
 
-          <div className="mt-7 grid gap-x-10 gap-y-6 md:grid-cols-2">
-            <Option title={translateUi('Conversation mode')} detail={choices.conversationMode === 'free' ? translateUi('Talk about anything spontaneously without a predefined script.') : choices.conversationMode === 'tutor' ? translateUi('The AI actively guides, teaches, and explains mistakes.') : choices.conversationMode === 'immersion' ? translateUi('Total immersion in the language with minimal assistance.') : translateUi('A real-world scenario with a clear goal and character roles.')}>
-              <Segmented<ConversationMode>
-                label={translateUi('Conversation mode')}
-                value={choices.conversationMode ?? 'scenario'}
-                onChange={(conversationMode) => choose({ conversationMode })}
-                options={[
-                  { value: 'scenario', label: translateUi('Scenario') },
-                  { value: 'free', label: translateUi('Free') },
-                  { value: 'tutor', label: translateUi('Tutor') },
-                  { value: 'immersion', label: translateUi('Immersion') },
-                ]}
-              />
-            </Option>
-            <Option title={translateUi('Correct my mistakes')} detail={choices.correct === 'end' ? translateUi('All together when you finish, so the talk keeps flowing.') : choices.correct === 'live' ? translateUi('Briefly, after each of your answers.') : translateUi('No corrections, just talking.')}>
-              <Segmented<SermoChoices['correct']>
-                label={translateUi('Correct my mistakes')}
-                value={choices.correct}
-                onChange={(correct) => choose({ correct })}
-                options={[
-                  { value: 'live', label: translateUi('As I go') },
-                  { value: 'end', label: translateUi('At the end') },
-                  { value: 'off', label: translateUi('Not at all') },
-                ]}
-              />
-            </Option>
-            <Option title={translateUi('How long')} detail={translateUi('The AI wraps the scene up and tells you how you did.')}>
-              <Segmented<'5' | '10' | '20'>
-                label={translateUi('How long')}
-                value={String(choices.minutes) as '5' | '10' | '20'}
-                onChange={(m) => choose({ minutes: Number(m) as SermoChoices['minutes'] })}
-                options={[
-                  { value: '5', label: translateUi('5 min') },
-                  { value: '10', label: translateUi('10 min') },
-                  { value: '20', label: translateUi('20 min') },
-                ]}
-              />
-            </Option>
-          </div>
+              <div className="mt-6 rounded-2xl border border-line/70 bg-surface p-5 sm:p-6">
+                <div className="grid gap-x-10 gap-y-6 md:grid-cols-2">
+                  <Option title={translateUi('Conversation mode')} detail={choices.conversationMode === 'free' ? translateUi('Talk about anything spontaneously without a predefined script.') : choices.conversationMode === 'tutor' ? translateUi('The AI actively guides, teaches, and explains mistakes.') : choices.conversationMode === 'immersion' ? translateUi('Total immersion in the language with minimal assistance.') : translateUi('A real-world scenario with a clear goal and character roles.')}>
+                    <Segmented<ConversationMode>
+                      label={translateUi('Conversation mode')}
+                      value={choices.conversationMode ?? 'scenario'}
+                      onChange={(conversationMode) => choose({ conversationMode })}
+                      options={[
+                        { value: 'scenario', label: translateUi('Scenario') },
+                        { value: 'free', label: translateUi('Free') },
+                        { value: 'tutor', label: translateUi('Tutor') },
+                        { value: 'immersion', label: translateUi('Immersion') },
+                      ]}
+                    />
+                  </Option>
+                  <Option title={translateUi('Correct my mistakes')} detail={choices.correct === 'end' ? translateUi('All together when you finish, so the talk keeps flowing.') : choices.correct === 'live' ? translateUi('Briefly, after each of your answers.') : translateUi('No corrections, just talking.')}>
+                    <Segmented<SermoChoices['correct']>
+                      label={translateUi('Correct my mistakes')}
+                      value={choices.correct}
+                      onChange={(correct) => choose({ correct })}
+                      options={[
+                        { value: 'live', label: translateUi('As I go') },
+                        { value: 'end', label: translateUi('At the end') },
+                        { value: 'off', label: translateUi('Not at all') },
+                      ]}
+                    />
+                  </Option>
+                  <Option title={translateUi('How long')} detail={translateUi('The AI wraps the scene up and tells you how you did.')}>
+                    <Segmented<'5' | '10' | '20'>
+                      label={translateUi('How long')}
+                      value={String(choices.minutes) as '5' | '10' | '20'}
+                      onChange={(m) => choose({ minutes: Number(m) as SermoChoices['minutes'] })}
+                      options={[
+                        { value: '5', label: translateUi('5 min') },
+                        { value: '10', label: translateUi('10 min') },
+                        { value: '20', label: translateUi('20 min') },
+                      ]}
+                    />
+                  </Option>
+                </div>
 
-          <div className="mt-6">
-            <h2 className={cx(label, 'mb-2.5')}><UiText source={'Style & constraints'} /></h2>
-            <div className="flex flex-wrap gap-2">
-              <Toggle
-                on={Boolean(choices.styles?.interruptions)}
-                onClick={() => choose({ styles: { ...choices.styles, interruptions: !choices.styles?.interruptions } })}
-                text="Interruptions & follow-ups"
-              />
-              <Toggle
-                on={Boolean(choices.styles?.feignMisunderstanding)}
-                onClick={() => choose({ styles: { ...choices.styles, feignMisunderstanding: !choices.styles?.feignMisunderstanding } })}
-                text="Ask for clarification on errors"
-              />
-              <Toggle
-                on={Boolean(choices.styles?.limitedAssistance)}
-                onClick={() => choose({ styles: { ...choices.styles, limitedAssistance: !choices.styles?.limitedAssistance } })}
-                text="Limited English assistance"
-              />
-              <Toggle
-                on={Boolean(choices.styles?.cappedVocabulary)}
-                onClick={() => choose({ styles: { ...choices.styles, cappedVocabulary: !choices.styles?.cappedVocabulary } })}
-                text="Cap vocabulary to my level"
-              />
-              <Toggle
-                on={Boolean(choices.styles?.gradualNewWords)}
-                onClick={() => choose({ styles: { ...choices.styles, gradualNewWords: !choices.styles?.gradualNewWords } })}
-                text="Gradual new expressions"
-              />
-              <Toggle
-                on={Boolean(choices.styles?.multiCharacter)}
-                onClick={() => choose({ styles: { ...choices.styles, multiCharacter: !choices.styles?.multiCharacter } })}
-                text="Multi-character simulation"
-              />
-              <Toggle
-                on={Boolean(choices.styles?.branchingOutcomes)}
-                onClick={() => choose({ styles: { ...choices.styles, branchingOutcomes: !choices.styles?.branchingOutcomes } })}
-                text="Branching outcomes"
-              />
-              <Toggle
-                on={Boolean(choices.styles?.pronunciationFocus)}
-                onClick={() => choose({ styles: { ...choices.styles, pronunciationFocus: !choices.styles?.pronunciationFocus } })}
-                text="Pronunciation clinic"
-              />
-              <Toggle
-                on={Boolean(choices.styles?.oralGrammarFocus)}
-                onClick={() => choose({ styles: { ...choices.styles, oralGrammarFocus: !choices.styles?.oralGrammarFocus } })}
-                text="Oral grammar drills"
-              />
-            </div>
-          </div>
+                <div className="mt-6 border-t border-line/60 pt-5">
+                  <h2 className={cx(label, 'mb-2.5')}><UiText source={'Style & constraints'} /></h2>
+                  <div className="flex flex-wrap gap-2">
+                    <Toggle
+                      on={Boolean(choices.styles?.interruptions)}
+                      onClick={() => choose({ styles: { ...choices.styles, interruptions: !choices.styles?.interruptions } })}
+                      text="Interruptions & follow-ups"
+                    />
+                    <Toggle
+                      on={Boolean(choices.styles?.feignMisunderstanding)}
+                      onClick={() => choose({ styles: { ...choices.styles, feignMisunderstanding: !choices.styles?.feignMisunderstanding } })}
+                      text="Ask for clarification on errors"
+                    />
+                    <Toggle
+                      on={Boolean(choices.styles?.limitedAssistance)}
+                      onClick={() => choose({ styles: { ...choices.styles, limitedAssistance: !choices.styles?.limitedAssistance } })}
+                      text="Limited English assistance"
+                    />
+                    <Toggle
+                      on={Boolean(choices.styles?.cappedVocabulary)}
+                      onClick={() => choose({ styles: { ...choices.styles, cappedVocabulary: !choices.styles?.cappedVocabulary } })}
+                      text="Cap vocabulary to my level"
+                    />
+                    <Toggle
+                      on={Boolean(choices.styles?.gradualNewWords)}
+                      onClick={() => choose({ styles: { ...choices.styles, gradualNewWords: !choices.styles?.gradualNewWords } })}
+                      text="Gradual new expressions"
+                    />
+                    <Toggle
+                      on={Boolean(choices.styles?.multiCharacter)}
+                      onClick={() => choose({ styles: { ...choices.styles, multiCharacter: !choices.styles?.multiCharacter } })}
+                      text="Multi-character simulation"
+                    />
+                    <Toggle
+                      on={Boolean(choices.styles?.branchingOutcomes)}
+                      onClick={() => choose({ styles: { ...choices.styles, branchingOutcomes: !choices.styles?.branchingOutcomes } })}
+                      text="Branching outcomes"
+                    />
+                    <Toggle
+                      on={Boolean(choices.styles?.pronunciationFocus)}
+                      onClick={() => choose({ styles: { ...choices.styles, pronunciationFocus: !choices.styles?.pronunciationFocus } })}
+                      text="Pronunciation clinic"
+                    />
+                    <Toggle
+                      on={Boolean(choices.styles?.oralGrammarFocus)}
+                      onClick={() => choose({ styles: { ...choices.styles, oralGrammarFocus: !choices.styles?.oralGrammarFocus } })}
+                      text="Oral grammar drills"
+                    />
+                  </div>
+                </div>
 
-          <div className="mt-6 flex flex-wrap gap-2">
-            <Toggle on={choices.help} onClick={() => choose({ help: !choices.help })} text="Help me when I’m stuck" />
-            <Toggle on={slow} onClick={() => choose({ slow: !slow })} text="Slowly and simply" />
-            {Boolean(due?.length) && <Toggle on={useWords} onClick={() => setUseWords(!useWords)} text={`Use my ${due!.length} words due`} />}
-            {grammar && scene.id !== 'grammar' && <Toggle on={useTopic} onClick={() => setUseTopic(!useTopic)} text={`Practise ${grammar.topic.title}`} />}
-          </div>
+                <div className="mt-5 flex flex-wrap gap-2 border-t border-line/60 pt-5">
+                  <Toggle on={choices.help} onClick={() => choose({ help: !choices.help })} text="Help me when I’m stuck" />
+                  <Toggle on={slow} onClick={() => choose({ slow: !slow })} text="Slowly and simply" />
+                  {Boolean(due?.length) && <Toggle on={useWords} onClick={() => setUseWords(!useWords)} text={`Use my ${due!.length} words due`} />}
+                  {grammar && scene.id !== 'grammar' && <Toggle on={useTopic} onClick={() => setUseTopic(!useTopic)} text={`Practise ${grammar.topic.title}`} />}
+                </div>
+              </div>
 
-          <div className="mt-8 flex items-center gap-2">
-            <Button variant="ghost" icon={ArrowLeft} onClick={() => go('scene')}><UiText source={'Back'} /></Button>
-            <Button size="lg" onClick={() => go('prompt')}><UiText source={'Write my prompt {0}'} values={[<ArrowRight size={17} aria-hidden />]} /></Button>
-          </div>
-        </section>
-      )}
+              <div className="mt-6 flex items-center gap-2">
+                <Button variant="ghost" icon={ArrowLeft} onClick={() => go('scene')}><UiText source={'Back'} /></Button>
+                <Button size="lg" onClick={() => go('prompt')}><UiText source={'Write my prompt {0}'} values={[<ArrowRight size={17} aria-hidden />]} /></Button>
+              </div>
+            </section>
+          )}
 
-      {step === 'prompt' && <PromptStep lang={lang} name={name} prompt={prompt} voice={choices.mode === 'voice'} scene={scene} about={about} onBack={() => go('how')} onRestart={() => go('scene')} />}
+          {step === 'prompt' && <PromptStep lang={lang} name={name} prompt={prompt} voice={choices.mode === 'voice'} scene={scene} about={about} onBack={() => go('how')} onRestart={() => go('scene')} />}
         </>
       )}
 
@@ -367,8 +375,8 @@ function ScenePicker({ lang, level, picked, onScene, onAbout }: { lang: string; 
 
   return (
     <section aria-label={translateUi('Your scene')}>
-      <div className="sticky top-0 z-10 -mx-1 flex flex-wrap items-center gap-2 bg-bg/90 px-1 py-2 backdrop-blur">
-        <SearchInput ref={search} value={query} onChange={setQuery} placeholder={translateUi('Search scenes   /')} className="w-80" />
+      <div className="mb-6 flex flex-wrap items-center gap-2.5">
+        <SearchInput ref={search} value={query} onChange={setQuery} placeholder={translateUi('Search scenes   /')} className="w-72 sm:w-80" />
         <Segmented<'mine' | 'all'>
           label={translateUi('Levels')}
           value={all ? 'all' : 'mine'}
@@ -408,12 +416,12 @@ function ScenePicker({ lang, level, picked, onScene, onAbout }: { lang: string; 
 
 function Group({ title, detail, children }: { title: string; detail: string; children: React.ReactNode }) {
   return (
-    <section className="mt-7">
-      <h2 className="flex items-baseline gap-3">
-        <span className="font-serif text-[21px] font-semibold">{title}</span>
-        <span className="text-[13.5px] text-ink-soft">{detail}</span>
-      </h2>
-      <ul className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-3 xl:grid-cols-4">{children}</ul>
+    <section className="mt-8 first:mt-0">
+      <header className="mb-4 flex flex-wrap items-baseline gap-2.5 border-b border-line pb-2">
+        <h2 className="font-serif text-xl font-semibold">{title}</h2>
+        <span className="text-[13px] text-ink-soft">{detail}</span>
+      </header>
+      <ul className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">{children}</ul>
     </section>
   );
 }
@@ -424,15 +432,20 @@ function SceneCard({ title, detail, icon: Icon, tone, level, active, onClick }: 
       <button
         type="button"
         onClick={onClick}
-        className={cx('group flex h-full w-full flex-col overflow-hidden rounded-3xl border text-left transition-[border-color,transform] hover:-translate-y-0.5', active ? 'border-accent/60' : 'border-line hover:border-line-strong')}
+        className={cx(
+          'group flex h-full w-full items-start gap-3.5 rounded-2xl border bg-surface p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-elev-1',
+          active ? 'border-accent/60 bg-accent-soft/20' : 'border-line/70 hover:border-line-strong',
+        )}
       >
-        <span className={cx('relative grid h-24 place-items-center', tone)}>
-          <Icon size={38} strokeWidth={1.5} aria-hidden />
-          {level && <span className="absolute top-2.5 right-3 rounded-full bg-raised/80 px-2 py-0.5 text-[11.5px] font-bold text-ink-soft">{level}</span>}
+        <span className={cx('grid size-11 shrink-0 place-items-center rounded-xl transition-transform duration-200 group-hover:scale-105', tone)}>
+          <Icon size={20} strokeWidth={1.7} aria-hidden />
         </span>
-        <span className="flex flex-1 flex-col bg-raised px-4 py-3">
-          <span className="line-clamp-2 text-[15.5px] leading-snug font-semibold">{title}</span>
-          <span className="mt-0.5 line-clamp-2 text-[13px] leading-snug text-ink-soft">{detail}</span>
+        <span className="flex min-w-0 flex-1 flex-col">
+          <span className="flex items-start justify-between gap-2">
+            <span className="line-clamp-1 font-serif text-[16.5px] leading-snug font-semibold text-ink transition-colors group-hover:text-accent-text">{title}</span>
+            {level && <span className="shrink-0 rounded-full bg-raised px-2 py-0.5 text-[11px] font-bold text-ink-soft tabular-nums">{level}</span>}
+          </span>
+          <span className="mt-1 line-clamp-2 text-[13px] leading-relaxed text-ink-soft">{detail}</span>
         </span>
       </button>
     </li>
@@ -444,17 +457,17 @@ function Picked({ scene, about, onChange }: { scene: Scene; about: string; onCha
   const translateUi = useUi();
   const Icon = about ? NotebookPen : (SCENE_ICONS[scene.icon] ?? Keyboard);
   return (
-    <Card className="flex items-center gap-4 p-4">
-      <span className={cx('grid size-14 shrink-0 place-items-center rounded-2xl', about ? GROUP_TONE.week : GROUP_TONE[scene.group])}>
-        <Icon size={26} strokeWidth={1.6} aria-hidden />
+    <Card className="flex items-center gap-4 rounded-2xl border-line/70 p-4 sm:p-5">
+      <span className={cx('grid size-12 shrink-0 place-items-center rounded-xl', about ? GROUP_TONE.week : GROUP_TONE[scene.group])}>
+        <Icon size={22} strokeWidth={1.7} aria-hidden />
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block font-serif text-[20px] leading-snug font-semibold">{about ? translateUi('Talk about {0}', [about]) : scene.title}</span>
-        <span className="mt-0.5 block text-[13.5px] leading-snug text-ink-soft">
+        <span className="block font-serif text-[19px] leading-snug font-semibold">{about ? translateUi('Talk about {0}', [about]) : scene.title}</span>
+        <span className="mt-0.5 block text-[13px] leading-relaxed text-ink-soft">
           {about ? translateUi('The AI asks what it is about and what you thought of it.') : translateUi('You: {0}. The AI: {1}. Goals: {2}.', [scene.you === 'yourself' ? 'yourself' : scene.you, scene.ai, scene.goals.join(' · ')])}
         </span>
       </span>
-      <Button variant="ghost" size="sm" onClick={onChange}><UiText source={'Change'} /></Button>
+      <Button variant="secondary" size="sm" onClick={onChange}><UiText source={'Change'} /></Button>
     </Card>
   );
 }
@@ -516,43 +529,45 @@ function PromptStep({ lang, name, prompt, voice, scene, about, onBack, onRestart
     <section aria-label={translateUi('Your prompt')} className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
       <div className="min-w-0">
         <Picked scene={scene} about={about} onChange={onRestart} />
-        <Card className="mt-4 p-6">
-          <div className="flex items-center gap-2">
+        <Card className="mt-4 rounded-2xl border-line/70 p-6 sm:p-7">
+          <div className="flex items-center gap-2 border-b border-line/60 pb-3">
             <h2 className={cx(label, 'flex-1')}><UiText source={'Your prompt{0}'} values={[promptInLanguage(lang) ? ` · in ${name}` : '']} /></h2>
-            <Button variant="ghost" size="sm" icon={copied ? Check : Copy} onClick={() => void copy()}>
+            <Button variant="secondary" size="sm" icon={copied ? Check : Copy} onClick={() => void copy()}>
               {copied ? translateUi('Copied') : translateUi('Copy')}
             </Button>
           </div>
-          <p lang={promptInLanguage(lang) ? lang : 'en'} className="mt-3 font-serif text-[18px] leading-[1.65] select-text">
+          <p lang={promptInLanguage(lang) ? lang : 'en'} className="mt-4 font-serif text-[18px] leading-[1.68] select-text">
             {prompt}
           </p>
         </Card>
-        <div className="mt-6">
+        <div className="mt-5">
           <Button variant="ghost" icon={ArrowLeft} onClick={onBack}><UiText source={'Back'} /></Button>
         </div>
       </div>
 
       <aside aria-label={translateUi('Open it in')} className="lg:sticky lg:top-6 lg:self-start">
-        <h2 className={cx(label, 'mb-3')}><UiText source={'Open it in'} /></h2>
-        <ul className="flex flex-col gap-2">
+        <header className="mb-3 border-b border-line pb-2">
+          <h2 className={label}><UiText source={'Open it in'} /></h2>
+        </header>
+        <ul className="flex flex-col gap-2.5">
           {AIS.map((ai) => (
             <li key={ai.id}>
               <button
                 type="button"
                 onClick={() => open(ai)}
-                className="flex h-16 w-full items-center gap-3.5 rounded-2xl border border-line bg-raised px-3.5 text-left transition-colors hover:border-line-strong hover:bg-surface"
+                className="flex h-15 w-full items-center gap-3.5 rounded-2xl border border-line/70 bg-surface px-4 text-left transition-all hover:border-line-strong hover:shadow-elev-1"
               >
-                <img src={appIconUrl(ai.icon, 80)} alt="" width={40} height={40} className="size-10 rounded-[11px] shadow-elev-1" />
+                <img src={appIconUrl(ai.icon, 80)} alt="" width={36} height={36} className="size-9 rounded-[10px] shadow-elev-1" />
                 <span className="min-w-0 flex-1">
-                  <span className="block text-[16px] font-semibold">{ai.name}</span>
-                  <span className="block text-[12.5px] text-ink-soft">{ai.fills ? translateUi('Opens with the prompt filled in') : translateUi('Opens; paste with Ctrl+V')}</span>
+                  <span className="block font-serif text-[15.5px] font-semibold">{ai.name}</span>
+                  <span className="block text-[12px] text-ink-soft">{ai.fills ? translateUi('Opens with the prompt filled in') : translateUi('Opens; paste with Ctrl+V')}</span>
                 </span>
-                <ExternalLink size={15} className="text-ink-faint" aria-hidden />
+                <ExternalLink size={14} className="text-ink-faint" aria-hidden />
               </button>
             </li>
           ))}
         </ul>
-        <p className="mt-3 text-[13px] leading-snug text-ink-soft">
+        <p className="mt-3 text-[12.5px] leading-relaxed text-ink-soft">
           {last
             ? `${last.fills ? `${last.name} opened with your prompt. If it isn’t filled in, paste it with Ctrl+V` : `Paste the prompt in ${last.name} with Ctrl+V`}${voice ? `, send it, then use ${last.voice}` : ', and send it'}.`
             : translateUi('It opens where you’re signed in, and the prompt is copied too. Nothing is sent from Lingua.')}

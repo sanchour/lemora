@@ -1,4 +1,4 @@
-import { BookOpen, ChartNoAxesColumn, Clapperboard, Compass, Gamepad2, GraduationCap, Headphones, House, Lamp, Library, Settings2 } from 'lucide-react';
+import { BookOpen, ChartNoAxesColumn, Clapperboard, Compass, Gamepad2, GraduationCap, Headphones, House, Lamp, Library, Music, Settings2 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { DeckIcon } from './DeckIcon';
 
@@ -11,6 +11,7 @@ export type SectionId =
   | 'thesaurus'
   | 'ludus'
   | 'sonus'
+  | 'cantus'
   | 'visio'
   | 'mentis'
   | 'ratio'
@@ -46,6 +47,7 @@ export const SECTIONS: Section[] = [
   { id: 'thesaurus', path: '/thesaurus', name: 'Thesaurus', role: 'Vocabulary', icon: DeckIcon, group: 'tool', placement: 'side' },
   { id: 'ludus', path: '/thesaurus/games', name: 'Ludus', role: 'Games', icon: Gamepad2, group: 'tool', placement: 'side', noShortcut: true },
   { id: 'sonus', path: '/sonus', name: 'Sonus', role: 'Listen', icon: Headphones, group: 'tool', placement: 'side' },
+  { id: 'cantus', path: '/cantus', name: 'Cantus', role: 'Music & lyrics', icon: Music, group: 'tool', placement: 'side', noShortcut: true, tint: 'var(--cantus-text)' },
   { id: 'visio', path: '/visio', name: 'Visio', role: 'Watch', icon: Clapperboard, group: 'tool', placement: 'side' },
   { id: 'mentis', path: '/mentis', name: 'Mentis', role: 'Guide, talk & write', icon: Lamp, group: 'tool', placement: 'side' },
   { id: 'ratio', path: '/ratio', name: 'Ratio', role: 'Stats', icon: ChartNoAxesColumn, group: 'bottom', placement: 'header' },

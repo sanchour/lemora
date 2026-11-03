@@ -1,88 +1,103 @@
 import { interpolate } from '@/core/i18n/messages';
-import { useUi } from '@/design/i18n/UiText';
+import { UiText, useUi } from '@/design/i18n/UiText';
 import { useEffect } from 'react';
-import { Link, Navigate, useParams } from 'react-router';
-import { AudioLines, BookA, Keyboard, Languages, Route, Type } from 'lucide-react';
+import { Link, Navigate, useParams, useSearchParams } from 'react-router';
 import { useApp } from '@/app/context';
 import { PageHeader } from '@/app/PageHeader';
 import { InRoom } from '@/app/room';
-import { RoomTabs } from '@/app/RoomTabs';
-import type { RoomTab } from '@/app/RoomTabs';
 import { getLanguage } from '@/core/lang/languages';
-import { hasScript } from '@/core/script/load';
-import { patchSetting } from '@/data/settings';
-import type { Settings } from '@/data/settings';
-import GrammaticaPage from '@/features/grammatica/GrammaticaPage';
-import LettersPage from '@/features/grammatica/letters/LettersPage';
-import { PlusChip, RequirePlan } from '@/features/plans/Locked';
-import { usePlan } from '@/features/plans/usePlan';
-import { can } from '@/data/plan';
-import type { Feature, PlanKind } from '@/data/plan';
-import { hasMarks, MarksTab } from './marks/MarksTab';
 import { CourseTab } from './course/CourseTab';
+import GrammaticaPage from '@/features/grammatica/GrammaticaPage';
 import { SoundsTab } from './sounds/SoundsTab';
 import { TypingTab } from './TypingTab';
-
-type Tab = Exclude<Settings['ui']['cursusTab'], ''>;
-
-/** The tabs a language has: the course and typing for the six core languages, alphabets where there is a script to learn. */
-export function cursusTabs(lang: string, plan: PlanKind = 'max'): Array<RoomTab<Tab>> {
-  const core = getLanguage(lang)?.tier === 1;
-  const chip = (feature: Feature) => (can(feature, plan) ? undefined : <PlusChip feature={feature} />);
-  const tabs: Array<RoomTab<Tab> | false> = [
-    core && { id: 'course', label: 'Course', to: '/cursus/course', icon: Route, badge: chip('course') },
-    { id: 'grammatica', label: 'Grammatica', to: '/cursus/grammatica', icon: BookA, badge: chip('grammatica') },
-    core && { id: 'sounds', label: 'Sounds', to: '/cursus/sounds', icon: AudioLines },
-    hasScript(lang) && { id: 'alphabets', label: 'Alphabets', to: '/cursus/alphabets', icon: Languages },
-    hasMarks(lang) && { id: 'marks', label: 'Marks', to: '/cursus/marks', icon: Type },
-    core && { id: 'typing', label: 'Typing', to: '/cursus/typing', icon: Keyboard, badge: chip('typing') },
-  ];
-  return tabs.filter((t): t is RoomTab<Tab> => Boolean(t));
-}
+import { ScriptMarksTab } from './studio/ScriptMarksTab';
+import type { StudioToolId } from './studio/StudioDuotoneIcon';
+import { RequirePlan } from '@/features/plans/Locked';
 
 /**
- * Cursus (Lingua 5.1-1), the room for learning the language step by step: the course, Grammatica,
- * the alphabet and typing. It opens on the tab used last.
+ * Cursus:
+ * Clean, unified language curriculum with the course adventure trail at its center,
+ * and the foundational studio workshops (Grammar, Sounds, Special letters, Typing)
+ * presented directly as hand-drawn icons in the same Scriptorium duotone aesthetic as Home.
  */
 export default function CursusPage() {
   const translateUi = useUi();
-  const { language, settings } = useApp();
+  const { language } = useApp();
   const lang = language.id;
   const asked = useParams().tab;
-  const plan = usePlan();
-  const tabs = cursusTabs(lang, plan);
-  const tab = tabs.find((t) => t.id === asked)?.id;
-  const remembered = settings.ui.cursusTab;
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
-    if (tab && tab !== remembered) void patchSetting('ui', { cursusTab: tab });
-  }, [tab, remembered]);
-
-  if (!tab) {
-    const to = tabs.find((t) => t.id === remembered) ?? tabs[0];
-    return <Navigate to={to.to} replace />;
+  // Backward-compatible redirects for legacy URLs
+  if (asked === 'grammatica') {
+    return <Navigate to="/cursus?tool=grammar" replace />;
   }
+  if (asked === 'sounds') {
+    return <Navigate to="/cursus?tool=sounds" replace />;
+  }
+  if (asked === 'alphabets' || asked === 'marks') {
+    return <Navigate to="/cursus?tool=script" replace />;
+  }
+  if (asked === 'typing') {
+    return <Navigate to="/cursus?tool=typing" replace />;
+  }
+  if (asked === 'studio') {
+    const t = searchParams.get('tool') ?? 'grammar';
+    return <Navigate to={`/cursus?tool=${t}`} replace />;
+  }
+  if (asked === 'course') {
+    return <Navigate to="/cursus" replace />;
+  }
+
+  const activeTool = (searchParams.get('tool') as StudioToolId | null) ?? null;
   const name = getLanguage(lang)?.name ?? lang;
+
+  // Always start screen all the way up when navigating to Cursus
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [asked]);
 
   return (
     <>
-      <PageHeader title={translateUi('Cursus')} englishTitle={'Cursus'} eyebrow={translateUi('Learn {0} step by step', [translateUi(name)])} englishEyebrow={interpolate('Learn {0} step by step', [name])} actions={<Link to="/cursus/characters" className="text-[14px] font-semibold text-accent-text hover:underline">{translateUi('Character reference')}</Link>} />
-      <RoomTabs label={translateUi('Cursus')} tabs={tabs} active={tab} />
+      <PageHeader
+        title={translateUi('Cursus')}
+        englishTitle={'Cursus'}
+        eyebrow={translateUi('Learn {0} step by step', [translateUi(name)])}
+        englishEyebrow={interpolate('Learn {0} step by step', [name])}
+        actions={
+          <Link to="/cursus/characters" className="text-[14px] font-semibold text-accent-text hover:underline">
+            {translateUi('Character reference')}
+          </Link>
+        }
+      />
       <InRoom.Provider value>
-        {tab === 'course' && (
+        {activeTool ? (
+          <div className="mb-6 flex items-center justify-between border-b border-line/60 pb-3">
+            <button
+              type="button"
+              onClick={() => setSearchParams({}, { replace: true })}
+              className="inline-flex items-center gap-1.5 font-sans text-sm font-semibold text-accent-text transition-colors hover:underline"
+            >
+              ← <UiText source={'Course'} />
+            </button>
+            <p className="font-sans text-xs font-bold tracking-[0.12em] text-ink-faint uppercase">
+              <UiText source={'Studio'} />
+            </p>
+          </div>
+        ) : null}
+
+        {!activeTool && (
           <RequirePlan feature="course">
             <CourseTab />
           </RequirePlan>
         )}
-        {tab === 'grammatica' && (
+        {activeTool === 'grammar' && (
           <RequirePlan feature="grammatica">
             <GrammaticaPage />
           </RequirePlan>
         )}
-        {tab === 'alphabets' && <LettersPage />}
-        {tab === 'marks' && <MarksTab />}
-        {tab === 'sounds' && <SoundsTab />}
-        {tab === 'typing' && (
+        {activeTool === 'sounds' && <SoundsTab />}
+        {activeTool === 'script' && <ScriptMarksTab />}
+        {activeTool === 'typing' && (
           <RequirePlan feature="typing">
             <TypingTab />
           </RequirePlan>

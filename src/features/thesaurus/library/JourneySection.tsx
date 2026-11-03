@@ -13,15 +13,17 @@ export function JourneySection({ lang, onOpen }: { lang: string; onOpen: (spec: 
 
   const milestones = FREQUENCY_MILESTONES.filter((_, i) => i === 0 || FREQUENCY_MILESTONES[i - 1] < list.lemmaFreq.length);
   return (
-    <section className="mt-10">
-      <h3 className="mb-1 font-serif text-[22px] font-semibold"><UiText source={'Your vocabulary journey'} /></h3>
+    <section className="mt-10 border-t border-line/60 pt-7">
+      <header className="mb-3 flex items-baseline justify-between gap-3">
+        <h3 className="font-serif text-xl font-semibold tracking-tight"><UiText source={'Your vocabulary journey'} /></h3>
+        <span className="hidden text-[12.5px] text-ink-faint sm:inline"><UiText source={'Each stop adds the next band of words, so you never see a word twice.'} /></span>
+      </header>
       <VocabularyJourney
         milestones={milestones}
         progress={progress}
         added={(m) => Boolean(added?.get(starterKey({ kind: 'frequency', milestone: m })))}
         onOpen={(m) => onOpen({ kind: 'frequency', milestone: m })}
       />
-      <p className="mt-1 text-[12.5px] text-ink-faint"><UiText source={'Each stop adds the next band of words, so you never see a word twice.'} /></p>
     </section>
   );
 }

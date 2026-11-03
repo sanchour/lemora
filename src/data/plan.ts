@@ -36,7 +36,7 @@ export const FEATURE_PLAN: Record<Feature, Exclude<PlanKind, 'free'>> = {
 /** How each locked feature is named on its "+" chip and in the plans sheet. */
 export const FEATURE_NAME: Record<Feature, string> = {
   ludus: 'Ludus',
-  sonusPlus: 'Sonus+',
+  sonusPlus: 'Cantus',
   streaming: 'Streaming',
   course: 'The course',
   grammatica: 'Grammatica',

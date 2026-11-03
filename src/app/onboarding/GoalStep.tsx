@@ -91,9 +91,11 @@ export function GoalStep({ level, goal, minutes, onGoal, onMinutes, stage, onPic
         <svg viewBox="0 0 600 20" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-1/2 h-5 -translate-y-1/2 overflow-visible text-line-strong" aria-hidden>
           <path d={WOBBLE} fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeDasharray="1 7" vectorEffect="non-scaling-stroke" />
         </svg>
-        <motion.svg viewBox="0 0 600 20" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-1/2 h-5 -translate-y-1/2 overflow-visible" aria-hidden initial={false} animate={{ clipPath: crop(goalAt / lastStop) }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
-          <path d={WOBBLE} fill="none" stroke="var(--accent)" strokeWidth={2.4} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-        </motion.svg>
+        <motion.div className="pointer-events-none absolute inset-x-0 top-1/2 h-5 -translate-y-1/2" aria-hidden initial={false} animate={{ clipPath: crop(goalAt / lastStop) }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
+          <svg viewBox="0 0 600 20" preserveAspectRatio="none" className="size-full overflow-visible">
+            <path d={WOBBLE} fill="none" stroke="var(--accent)" strokeWidth={2.4} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+          </svg>
+        </motion.div>
         {stops.map((l, i) => {
           const you = i === 0;
           const on = i === goalAt;
@@ -110,10 +112,10 @@ export function GoalStep({ level, goal, minutes, onGoal, onMinutes, stage, onPic
                 onGoal(l);
                 onPick();
               }}
-              className="group absolute top-1/2 grid size-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-bg disabled:cursor-default"
+              className="group absolute top-1/2 grid size-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full disabled:cursor-default"
               style={{ left: `${(i / lastStop) * 100}%` }}
             >
-              <LevelIcon level={l} className={cx('size-11 transition-[opacity,transform] duration-300', on ? 'scale-110' : !you && 'group-hover:-translate-y-0.5')} style={{ opacity: inside ? 1 : 0.4 }} />
+              <LevelIcon level={l} halo className={cx('size-11 transition-[opacity,transform] duration-300', on ? 'scale-110' : !you && 'group-hover:-translate-y-0.5')} style={{ opacity: inside ? 1 : 0.4 }} />
               {on && (
                 <motion.svg layoutId="goal-flag" transition={spring.snappy} viewBox="0 0 24 32" className="pointer-events-none absolute -top-9 left-1/2 h-9 w-7 -translate-x-[22%]" fill="none" aria-hidden>
                   <path d="M5 30V3" stroke="var(--ink)" strokeWidth={1.5} strokeLinecap="round" />
@@ -159,9 +161,11 @@ export function GoalStep({ level, goal, minutes, onGoal, onMinutes, stage, onPic
           <svg viewBox="0 0 600 20" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-1/2 h-5 -translate-y-1/2 overflow-visible text-line-strong" aria-hidden>
             <path d={WOBBLE} fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
           </svg>
-          <motion.svg viewBox="0 0 600 20" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-1/2 h-5 -translate-y-1/2 overflow-visible" aria-hidden initial={false} animate={{ clipPath: crop(index / last) }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
-            <path d={WOBBLE} fill="none" stroke="var(--accent)" strokeWidth={2.4} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-          </motion.svg>
+          <motion.div className="pointer-events-none absolute inset-x-0 top-1/2 h-5 -translate-y-1/2" aria-hidden initial={false} animate={{ clipPath: crop(index / last) }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}>
+            <svg viewBox="0 0 600 20" preserveAspectRatio="none" className="size-full overflow-visible">
+              <path d={WOBBLE} fill="none" stroke="var(--accent)" strokeWidth={2.4} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+            </svg>
+          </motion.div>
           {DAILY_MINUTES.map((d, i) => (
             <span key={d.minutes} className={cx('pointer-events-none absolute top-1/2 h-3 w-px -translate-x-1/2 -translate-y-1/2 rounded-full', i <= index ? 'bg-accent' : 'bg-line-strong')} style={{ left: `${(i / last) * 100}%` }} />
           ))}

@@ -248,11 +248,11 @@ export interface Settings {
     /** Home's "first steps" list, once put away. */
     firstStepsHidden: boolean;
     /** Cursus opens on the tab used last (none yet: Course for tier 1, Grammatica otherwise). */
-    cursusTab: '' | 'course' | 'grammatica' | 'alphabets' | 'marks' | 'sounds' | 'typing';
+    cursusTab: '' | 'course' | 'grammatica' | 'alphabets' | 'marks' | 'sounds' | 'typing' | 'studio';
     /** Sonus et Visio's library filter. */
     sonusShow: MediaShow;
-    /** Home's layout: Today (5.1-2c) or the one before it. */
-    homeLayout: 'today' | 'classic';
+    /** Home's layout: Topline tools, Right rail, Bottom shelf, Today (5.1-2c) or Classic. */
+    homeLayout: 'today' | 'classic' | 'topline' | 'rail' | 'shelf';
     /** A touch of the studied language in the design (5.1-4b, design/flavours.ts). */
     flavour: boolean;
     /** Settings › Lab › Design notes (7-0b): click any element to pin a note. Off for learners. */

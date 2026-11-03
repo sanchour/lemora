@@ -10,6 +10,7 @@ import type { FreeBook, SourceWork } from '@/services/discover/discover';
 import { toast } from '@/state/ui';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '@/data/db';
+import { BookCover } from './BookCover';
 import { FavouritePassages } from './FavouritePassages';
 import { ReadingMaker } from './ReadingMaker';
 
@@ -29,11 +30,17 @@ export function GradedTab({ lang, texts }: { lang: string; texts: Text[] }) {
       <Select label={translateUi('Familiar words')} value={String(filter.minKnown)} onChange={(min) => setFilter({ ...filter, minKnown: Number(min) })} options={[{ value: '0', label: translateUi('Any share') }, { value: '0.5', label: translateUi('At least 50%') }, { value: '0.8', label: translateUi('At least 80%') }, { value: '0.95', label: translateUi('At least 95%') }]} />
     </div>
     <p className="text-sm text-ink-faint" role="status">{shown.length} {shown.length === 1 ? translateUi('text matches') : translateUi('texts match')}.</p>
-    <div className="grid grid-cols-2 gap-5">{shown.map((text) => <Card key={text.id} className="p-5">
-      <p className="text-xs font-semibold text-sage-text"><UiText source={'Measured {0} · {1} words · {2}'} values={[(hasWordData ? text.stats?.level : undefined) ?? <UiText source={'— unmeasured'} />, text.wordCount.toLocaleString(), text.stats ? `${Math.round(text.stats.knownShare * 100)}% familiar` : <UiText source={'familiarity unmeasured'} />]} /></p>
-      <Link to={`/codex/read/${text.id}`} lang={lang} className="mt-2 block font-serif text-xl font-semibold text-accent-text">{text.title}</Link>
-      <p className="mt-2 text-sm text-ink-soft">{text.readingTopic || translateUi('No topic yet')} · {text.readingGenre ? translateUi(READING_GENRE_LABELS[text.readingGenre as keyof typeof READING_GENRE_LABELS] ?? text.readingGenre) : translateUi('kind not assigned')}</p>
-      <TextLabels text={text} />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">{shown.map((text) => <Card key={text.id} className="p-5 flex gap-4 items-start">
+      <Link to={`/codex/read/${text.id}`} className="group relative shrink-0 block" aria-label={translateUi('Read {0}', [text.title])}>
+        <BookCover text={text} size="sm" className="w-14 sm:w-16 shadow-elev-1 ring-2 ring-transparent ring-offset-2 ring-offset-raised transition-shadow duration-200 group-hover:ring-accent/65 group-hover:shadow-[0_0_0_3px_var(--accent-soft)]" />
+      </Link>
+      <div className="min-w-0 flex-1">
+        <p className="text-xs font-semibold text-sage-text"><UiText source={'Measured {0} · {1} words · {2}'} values={[(hasWordData ? text.stats?.level : undefined) ?? <UiText source={'— unmeasured'} />, text.wordCount.toLocaleString(), text.stats ? `${Math.round(text.stats.knownShare * 100)}% familiar` : <UiText source={'familiarity unmeasured'} />]} /></p>
+        <Link to={`/codex/read/${text.id}`} lang={lang} className="mt-1 block font-serif text-lg font-semibold text-ink hover:text-accent-text transition-colors line-clamp-1">{text.title}</Link>
+        {text.author && <p className="truncate text-xs text-ink-soft">{text.author}</p>}
+        <p className="mt-1 text-xs text-ink-faint">{text.readingTopic || translateUi('No topic yet')} · {text.readingGenre ? translateUi(READING_GENRE_LABELS[text.readingGenre as keyof typeof READING_GENRE_LABELS] ?? text.readingGenre) : translateUi('kind not assigned')}</p>
+        <TextLabels text={text} />
+      </div>
     </Card>)}</div>
     {!shown.length && <p className="rounded-xl bg-surface p-5 text-ink-soft"><UiText source={'No texts match. Adjust the filters, add a text, or find an open edition below.'} /></p>}
     <OpenSources key={lang} lang={lang} texts={texts} />
