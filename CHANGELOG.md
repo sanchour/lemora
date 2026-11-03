@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.6.0-alpha.182** · 2026-11-03 · 6-21 finished: Finish it, story editor, Max story from words, more stories
 - **0.6.0-alpha.181** · 2026-11-03 · 6-21 finish: checkpoint, more stories and strength in the story engine
 - **0.6.0-alpha.180** · 2026-11-03 · 6-21 G5 to G7: daily, tournaments, timed games, stories, projects
 - **0.6.0-alpha.179** · 2026-11-03 · F0124 and F0125: the two varieties; Part A done for the core languages
