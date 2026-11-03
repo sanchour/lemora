@@ -425,7 +425,8 @@
   ],
   "Tools": [
     "src/app/shells/desktop/Sidebar.tsx",
-    "src/app/shells/touch/TopBar.tsx"
+    "src/app/shells/touch/TopBar.tsx",
+    "src/core/games/topics.ts"
   ],
   "Statistics and settings": [
     "src/app/shells/desktop/Sidebar.tsx",
@@ -1138,7 +1139,8 @@
   ],
   "Music": [
     "src/features/cantus/room/pages.tsx",
-    "src/features/ordo/sections/MusicSection.tsx"
+    "src/features/ordo/sections/MusicSection.tsx",
+    "src/core/games/topics.ts"
   ],
   "Your songs": [
     "src/features/cantus/room/pages.tsx"
@@ -9152,7 +9154,8 @@
     "src/features/culture/CultureShelf.tsx"
   ],
   "Choose a video": [
-    "src/features/culture/ImmersionPage.tsx"
+    "src/features/culture/ImmersionPage.tsx",
+    "src/features/games/Projects.tsx"
   ],
   "Pinyin, letter by letter": [
     "src/features/cursus/typing/TypingPractice.tsx"
@@ -9441,7 +9444,8 @@
     "src/features/generate/MakePage.tsx"
   ],
   "Sound": [
-    "src/features/generate/MakePage.tsx"
+    "src/features/generate/MakePage.tsx",
+    "src/core/games/topics.ts"
   ],
   "the preterite, ser or estar, the subjunctive…": [
     "src/features/generate/MakePage.tsx"
@@ -10795,7 +10799,8 @@
     "src/features/culture/CultureShelf.tsx"
   ],
   "Food": [
-    "src/features/culture/CultureShelf.tsx"
+    "src/features/culture/CultureShelf.tsx",
+    "src/core/games/topics.ts"
   ],
   "Traditions": [
     "src/features/culture/CultureShelf.tsx"
@@ -13308,7 +13313,8 @@
     "src/features/games/RoundRunner.tsx"
   ],
   "Time": [
-    "src/features/games/RoundRunner.tsx"
+    "src/features/games/RoundRunner.tsx",
+    "src/core/games/topics.ts"
   ],
   "Best": [
     "src/features/games/RoundRunner.tsx"
@@ -13505,7 +13511,8 @@
     "src/core/notebook/library.ts"
   ],
   "Travel": [
-    "src/core/notebook/library.ts"
+    "src/core/notebook/library.ts",
+    "src/core/games/topics.ts"
   ],
   "Free note": [
     "src/core/notebook/library.ts"
@@ -15733,5 +15740,434 @@
   ],
   "Needs sentences to dictate: some languages have hand-made ones, and the dictionary’s sentences and your own examples count too.": [
     "src/core/games/source.ts"
+  ],
+  "The line that fits is marked.": [
+    "src/features/games/Complete.tsx"
+  ],
+  "Which line fits?": [
+    "src/features/games/Complete.tsx"
+  ],
+  "Which ending fits?": [
+    "src/features/games/Complete.tsx"
+  ],
+  "A dialogue with a line missing, or a story without its ending. Pick the line that fits.": [
+    "src/features/games/Complete.tsx"
+  ],
+  "For any language, with Max: Practice has dialogues to complete.": [
+    "src/features/games/Complete.tsx"
+  ],
+  "Open Practice": [
+    "src/features/games/Complete.tsx"
+  ],
+  "Click a line or press its number. Right the first time is three stars, the second time two, the third one; two wrong picks and it is lost.": [
+    "src/features/games/Complete.tsx"
+  ],
+  "Strength: {0}": [
+    "src/features/games/Story.tsx"
+  ],
+  "Strength": [
+    "src/features/games/Story.tsx"
+  ],
+  "Add at least three words to a deck first.": [
+    "src/features/games/Story.tsx"
+  ],
+  "Max’s story could not be played. Try again.": [
+    "src/features/games/Story.tsx"
+  ],
+  "{0} of your {1} words are in it.": [
+    "src/features/games/Story.tsx"
+  ],
+  "Write your own": [
+    "src/features/games/Story.tsx"
+  ],
+  "Make a story from my words": [
+    "src/features/games/Story.tsx"
+  ],
+  "Needs Lingua+ Max, and your AI key (Settings › AI)": [
+    "src/features/games/Story.tsx"
+  ],
+  "Back to the story game": [
+    "src/features/games/StoryEditor.tsx"
+  ],
+  "Write a story": [
+    "src/features/games/StoryEditor.tsx"
+  ],
+  "Scenes go in [square brackets]. A choice starts with >, then its words, then -> and the scene it leads to. A choice can need something (| needs: key), a scene can give it (gives: key) or end the story (end: win or end: lose), and health: 3 gives a story strength that a choice can use up (| cost: 1).": [
+    "src/features/games/StoryEditor.tsx"
+  ],
+  "Your stories": [
+    "src/features/games/StoryEditor.tsx"
+  ],
+  "The story": [
+    "src/features/games/StoryEditor.tsx"
+  ],
+  "It can be played: the shortest way is {0} choices.": [
+    "src/features/games/StoryEditor.tsx"
+  ],
+  "Kept. It is in the story game now.": [
+    "src/features/games/StoryEditor.tsx"
+  ],
+  "Finish it": [
+    "src/core/games/defs.ts"
+  ],
+  "A dialogue with a line missing, or a story without its ending: pick what fits.": [
+    "src/core/games/defs.ts"
+  ],
+  "Needs a language with hand-made dialogues and stories to finish: the six core languages have them.": [
+    "src/core/games/source.ts"
+  ],
+  "A scene needs some text: {0}": [
+    "src/core/games/customStory.ts"
+  ],
+  "A choice must come after a scene: {0}": [
+    "src/core/games/customStory.ts"
+  ],
+  "This choice is not written as > words -> scene: {0}": [
+    "src/core/games/customStory.ts"
+  ],
+  "This line is not a scene, a choice or text: {0}": [
+    "src/core/games/customStory.ts"
+  ],
+  "The story needs a title: title: …": [
+    "src/core/games/customStory.ts"
+  ],
+  "Add at least one scene, written [name].": [
+    "src/core/games/customStory.ts"
+  ],
+  "The start scene does not exist: {0}": [
+    "src/core/games/customStory.ts"
+  ],
+  "The word so far": [
+    "src/features/games/Anagram.tsx"
+  ],
+  "Letters to put in order": [
+    "src/features/games/Anagram.tsx"
+  ],
+  "Five of your words, their letters mixed up. Put each back in order, from its meaning.": [
+    "src/features/games/Anagram.tsx"
+  ],
+  "Click the letters in order, or type them; Backspace takes one back. Three full tries that are wrong and the word is lost. Up to three stars a word: a hint costs one, so do two wrong tries.": [
+    "src/features/games/Anagram.tsx"
+  ],
+  "{0} characters": [
+    "src/features/games/Clues.tsx"
+  ],
+  "Your guess": [
+    "src/features/games/Clues.tsx"
+  ],
+  "Type the word": [
+    "src/features/games/Clues.tsx"
+  ],
+  "Five of your words, each given in clues, the hardest first. Guess it as early as you can.": [
+    "src/features/games/Clues.tsx"
+  ],
+  "Type the word and press Enter. A wrong guess gives the next clue; you can also ask for one. Three stars with two clues or fewer, two with three or four, one after that.": [
+    "src/features/games/Clues.tsx"
+  ],
+  "In a sentence": [
+    "src/features/games/Clues.tsx"
+  ],
+  "Similar to": [
+    "src/features/games/Clues.tsx"
+  ],
+  "The opposite of": [
+    "src/features/games/Clues.tsx"
+  ],
+  "A picture": [
+    "src/features/games/Clues.tsx"
+  ],
+  "Its length": [
+    "src/features/games/Clues.tsx"
+  ],
+  "Its start": [
+    "src/features/games/Clues.tsx"
+  ],
+  "Its meaning": [
+    "src/features/games/Clues.tsx"
+  ],
+  "Starts with": [
+    "src/features/games/Clues.tsx"
+  ],
+  "Five of your words, each asked by its meaning. Name the letters before the drawing is done.": [
+    "src/features/games/Hangman.tsx"
+  ],
+  "Type a letter or click it. Six wrong letters and the word is lost. A word is worth up to three stars: a hint costs one, so do three wrong letters.": [
+    "src/features/games/Hangman.tsx"
+  ],
+  "All {0} found": [
+    "src/features/games/Hunt.tsx"
+  ],
+  "Found {0} of {1}.": [
+    "src/features/games/Hunt.tsx"
+  ],
+  "Passage": [
+    "src/features/games/Hunt.tsx"
+  ],
+  "Passages from your own texts, with some of your words hidden in them. Click each word as you spot it.": [
+    "src/features/games/Hunt.tsx"
+  ],
+  "None of your texts has a passage with three of your words in it yet. Read a text in Codex, or add words that are in one.": [
+    "src/features/games/Hunt.tsx"
+  ],
+  "Click the words in the passage that are your words, in any form. Three wrong clicks cost a star, and so does showing a word. Giving up earns none.": [
+    "src/features/games/Hunt.tsx"
+  ],
+  "Reached {0} in {1} steps (the shortest is {2})": [
+    "src/features/games/Ladder.tsx"
+  ],
+  "Not reached. One way: {0}": [
+    "src/features/games/Ladder.tsx"
+  ],
+  "The next word": [
+    "src/features/games/Ladder.tsx"
+  ],
+  "is not on the word list.": [
+    "src/features/games/Ladder.tsx"
+  ],
+  "is not one letter away from the last word.": [
+    "src/features/games/Ladder.tsx"
+  ],
+  "is already on your ladder.": [
+    "src/features/games/Ladder.tsx"
+  ],
+  "Ladder": [
+    "src/features/games/Ladder.tsx"
+  ],
+  "Three ladders. Each starts at one word and has to reach another, changing one letter at a time.": [
+    "src/features/games/Ladder.tsx"
+  ],
+  "The language’s word list has no ladders in it yet.": [
+    "src/features/games/Ladder.tsx"
+  ],
+  "Type the next word and press Enter. A word that is not on the language’s list, not one letter away, or already used is a wrong try; five and the ladder is lost. Three stars: a hint costs one, so does going two steps over the shortest way.": [
+    "src/features/games/Ladder.tsx"
+  ],
+  "The word with letters missing": [
+    "src/features/games/MissingLetters.tsx"
+  ],
+  "Missing letter": [
+    "src/features/games/MissingLetters.tsx"
+  ],
+  "Five of your words with some letters missing. Fill them in from the meaning.": [
+    "src/features/games/MissingLetters.tsx"
+  ],
+  "The highlighted gap takes the next letter; click another gap to choose it. Four wrong letters and the word is lost. Up to three stars: a hint costs one, so do two wrong letters.": [
+    "src/features/games/MissingLetters.tsx"
+  ],
+  "Hear it": [
+    "src/features/games/Story.tsx"
+  ],
+  "A grid of letters with seven of your words hidden in it. Drag across a word to find it.": [
+    "src/features/games/WordSearch.tsx"
+  ],
+  "Show meanings, not the words": [
+    "src/features/games/WordSearch.tsx"
+  ],
+  "You get what each word means and have to find the word itself.": [
+    "src/features/games/WordSearch.tsx"
+  ],
+  "The words are listed, and you find them in the grid.": [
+    "src/features/games/WordSearch.tsx"
+  ],
+  "Words can run backwards": [
+    "src/features/games/WordSearch.tsx"
+  ],
+  "Also upwards and the other way along.": [
+    "src/features/games/WordSearch.tsx"
+  ],
+  "The words would not fit in a grid. Try again.": [
+    "src/features/games/WordSearch.tsx"
+  ],
+  "Drag from the first letter of a word to its last, or click the two ends. Words run across, down and slanting{0}. Three stars for a grid found without help; showing a start costs one. Giving up earns none.": [
+    "src/features/games/WordSearch.tsx"
+  ],
+  ", starting from the right": [
+    "src/features/games/WordSearch.tsx"
+  ],
+  "Call by sound": [
+    "src/features/games/Bingo.tsx"
+  ],
+  "The word is read aloud by your device’s voice, and you find it on your card.": [
+    "src/features/games/Bingo.tsx"
+  ],
+  "Click the word that matches the meaning called (or the word you hear), or press Not on my card when it is not there. A full row, column or diagonal wins. One mistake is still three stars, up to three is two, more is one.": [
+    "src/features/games/Bingo.tsx"
+  ],
+  "Picture: {0}": [
+    "src/features/games/Choice.tsx"
+  ],
+  "Pictures: {0}": [
+    "src/features/games/Memory.tsx"
+  ],
+  "Choose a text": [
+    "src/features/games/Projects.tsx"
+  ],
+  "Choose a recording": [
+    "src/features/games/Projects.tsx"
+  ],
+  "Nothing to choose from yet: add one in its room.": [
+    "src/features/games/Projects.tsx"
+  ],
+  "From the step before": [
+    "src/features/games/Projects.tsx"
+  ],
+  "What you wrote or made": [
+    "src/features/games/Projects.tsx"
+  ],
+  "Animals": [
+    "src/core/games/topics.ts"
+  ],
+  "Drinks": [
+    "src/core/games/topics.ts"
+  ],
+  "Family": [
+    "src/core/games/topics.ts"
+  ],
+  "The body": [
+    "src/core/games/topics.ts"
+  ],
+  "Clothes": [
+    "src/core/games/topics.ts"
+  ],
+  "Colours": [
+    "src/core/games/topics.ts"
+  ],
+  "Numbers": [
+    "src/core/games/topics.ts"
+  ],
+  "Weather": [
+    "src/core/games/topics.ts"
+  ],
+  "The home": [
+    "src/core/games/topics.ts"
+  ],
+  "Furniture": [
+    "src/core/games/topics.ts"
+  ],
+  "School": [
+    "src/core/games/topics.ts"
+  ],
+  "Work": [
+    "src/core/games/topics.ts"
+  ],
+  "Jobs": [
+    "src/core/games/topics.ts"
+  ],
+  "Transport": [
+    "src/core/games/topics.ts"
+  ],
+  "The city": [
+    "src/core/games/topics.ts"
+  ],
+  "Nature": [
+    "src/core/games/topics.ts"
+  ],
+  "Plants": [
+    "src/core/games/topics.ts"
+  ],
+  "The sea": [
+    "src/core/games/topics.ts"
+  ],
+  "Sport": [
+    "src/core/games/topics.ts"
+  ],
+  "Art": [
+    "src/core/games/topics.ts"
+  ],
+  "Health": [
+    "src/core/games/topics.ts"
+  ],
+  "Feelings": [
+    "src/core/games/topics.ts"
+  ],
+  "People": [
+    "src/core/games/topics.ts"
+  ],
+  "Shopping": [
+    "src/core/games/topics.ts"
+  ],
+  "Money": [
+    "src/core/games/topics.ts"
+  ],
+  "Talking": [
+    "src/core/games/topics.ts"
+  ],
+  "Technology": [
+    "src/core/games/topics.ts"
+  ],
+  "The kitchen": [
+    "src/core/games/topics.ts"
+  ],
+  "The garden": [
+    "src/core/games/topics.ts"
+  ],
+  "The farm": [
+    "src/core/games/topics.ts"
+  ],
+  "Belief": [
+    "src/core/games/topics.ts"
+  ],
+  "The law": [
+    "src/core/games/topics.ts"
+  ],
+  "The state": [
+    "src/core/games/topics.ts"
+  ],
+  "Conflict": [
+    "src/core/games/topics.ts"
+  ],
+  "Science": [
+    "src/core/games/topics.ts"
+  ],
+  "Maths": [
+    "src/core/games/topics.ts"
+  ],
+  "The land": [
+    "src/core/games/topics.ts"
+  ],
+  "Directions": [
+    "src/core/games/topics.ts"
+  ],
+  "Materials": [
+    "src/core/games/topics.ts"
+  ],
+  "Shapes": [
+    "src/core/games/topics.ts"
+  ],
+  "Sizes": [
+    "src/core/games/topics.ts"
+  ],
+  "Moving": [
+    "src/core/games/topics.ts"
+  ],
+  "Light and dark": [
+    "src/core/games/topics.ts"
+  ],
+  "Fire and water": [
+    "src/core/games/topics.ts"
+  ],
+  "Birds and insects": [
+    "src/core/games/topics.ts"
+  ],
+  "Qualities": [
+    "src/core/games/topics.ts"
+  ],
+  "What goes with each word": [
+    "src/features/games/Memory.tsx"
+  ],
+  "Its picture": [
+    "src/features/games/Memory.tsx"
+  ],
+  "Its sound": [
+    "src/features/games/Memory.tsx"
+  ],
+  "The word, read aloud": [
+    "src/features/games/Memory.tsx"
+  ],
+  "A podcast into a deck": [
+    "src/core/games/projects.ts"
+  ],
+  "Listen to a podcast, write what you heard, turn its words into a deck and review it.": [
+    "src/core/games/projects.ts"
   ]
 }

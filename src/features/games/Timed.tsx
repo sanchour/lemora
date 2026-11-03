@@ -11,6 +11,7 @@ import { isRtl } from '@/core/lang/languages';
 import { shuffle } from '@/core/srs/ludus';
 import { buttonClasses } from '@/design/primitives';
 import { UiText, useUi } from '@/design/i18n/UiText';
+import { recordGameSkill } from '@/data/games';
 import { speak } from '@/services/speech/voice';
 import { RoundRunner, useSettleOnce } from './RoundRunner';
 import type { BoardProps } from './RoundRunner';
@@ -18,12 +19,14 @@ import type { BoardProps } from './RoundRunner';
 const SECONDS = 90;
 
 interface Line {
+  id: string;
   /** Shown: the English to translate. Absent in a dictation, where the line is heard. */
   prompt?: string;
   expected: string;
   judge: (typed: string) => Verdict;
 }
 interface Entry {
+  kind: 'translate' | 'dictation';
   lines: Line[];
 }
 
@@ -61,6 +64,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
     e.preventDefault();
     if (!typed.trim() || over || miss) return;
     const verdict = line.judge(typed);
+    void recordGameSkill(lang, entry.kind, entry.kind === 'translate' ? 'translating' : 'listening', `${entry.kind}:${line.id}`, verdict !== 'wrong').catch(() => undefined);
     if (verdict === 'wrong') setMiss(line);
     else {
       setRight((n) => n + 1);
@@ -118,9 +122,9 @@ export function Timed({ lang, def, items, best, kind }: { lang: string; def: Gam
       make={(random) => {
         const lines: Line[] =
           kind === 'translate'
-            ? shuffle(translationPool(lang, items), random).slice(0, 25).map((s) => ({ prompt: s.source, expected: s.expected, judge: (typed) => judgeTranslation(s, typed, lang) }))
-            : shuffle(dictationLines(lang, items), random).slice(0, 25).map((l) => ({ expected: l, judge: (typed) => judgeDictation(l, typed, lang) }));
-        return lines.length ? [{ lines }] : [];
+            ? shuffle(translationPool(lang, items), random).slice(0, 25).map((s) => ({ id: s.id, prompt: s.source, expected: s.expected, judge: (typed) => judgeTranslation(s, typed, lang) }))
+            : shuffle(dictationLines(lang, items), random).slice(0, 25).map((l) => ({ id: l.slice(0, 40), expected: l, judge: (typed) => judgeDictation(l, typed, lang) }));
+        return lines.length ? [{ kind, lines }] : [];
       }}
       empty={t('This could not be made from what you have yet.')}
       terms={() => []}

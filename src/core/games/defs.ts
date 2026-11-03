@@ -7,7 +7,7 @@ export interface GameDef {
   title: string;
   detail: string;
   /** What the learner's words must be: how many, with a meaning, spelled in letters (at most `maxLetters`). `texts`: a text in Codex to find them in; `list`: that many words of the language's own list (a ladder is not made of the learner's words). */
-  needs: { count: number; meaning?: true; letters?: true; maxLetters?: number; texts?: true; list?: number; synonyms?: number; antonyms?: number; related?: number; categories?: true; image?: true; parts?: true; tasks?: number; sentences?: number; stories?: number };
+  needs: { count: number; meaning?: true; letters?: true; maxLetters?: number; texts?: true; list?: number; synonyms?: number; antonyms?: number; related?: number; categories?: true; image?: true; parts?: true; tasks?: number; sentences?: number; stories?: number; completions?: number };
   /** Words in one round. */
   round: number;
 }
@@ -43,6 +43,7 @@ export const GAMES: GameDef[] = [
   { id: 'translate', group: 'word', title: 'Timed translation', detail: 'Translate as many sentences as you can before the time runs out.', needs: { count: 0, tasks: 8 }, round: 1 },
   { id: 'dictation', group: 'word', title: 'Dictation race', detail: 'Hear a line and type it, as many as you can before the time runs out.', needs: { count: 0, sentences: 6 }, round: 1 },
   { id: 'story', group: 'story', title: 'Escape and adventure stories', detail: 'A story to play through: choose what to do, find things, use them.', needs: { count: 0, stories: 1 }, round: 1 },
+  { id: 'complete', group: 'story', title: 'Finish it', detail: 'A dialogue with a line missing, or a story without its ending: pick what fits.', needs: { count: 0, completions: 1 }, round: 5 },
   { id: 'projects', group: 'project', title: 'Project chains', detail: 'Read, talk and write in a chain, each step opening the room that does it.', needs: { count: 0 }, round: 1 },
   { id: 'ladder', group: 'word', title: 'Word ladder', detail: 'Change one letter at a time to get from one word to another, every step a real word.', needs: { count: 0, letters: true, list: 300 }, round: 3 },
 ];

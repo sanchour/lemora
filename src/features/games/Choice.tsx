@@ -43,7 +43,12 @@ function Board({ entry, lang, settle }: BoardProps<ChoiceData>) {
     <div className="max-w-xl">
       <div className="rounded-3xl border border-line/70 bg-surface p-6">
         <p className="text-[12px] font-bold tracking-[0.12em] text-ink-faint uppercase">{picture ? <UiText source={'Which word does the picture show?'} /> : <UiText source={'Which meaning is right?'} />}</p>
-        {picture ? <img src={entry.item.image} alt="" className="mt-3 max-h-56 rounded-2xl" /> : <p className="mt-2 font-serif text-4xl font-semibold" lang={lang} dir={rtl ? 'rtl' : undefined}>{term}</p>}
+        {picture ? (
+          <>
+            <img src={entry.item.image} alt="" className="mt-3 max-h-56 rounded-2xl" />
+            {entry.item.credit && <p className="mt-1 text-[12px] text-ink-faint"><UiText source={'Picture: {0}'} values={[entry.item.credit]} /></p>}
+          </>
+        ) : <p className="mt-2 font-serif text-4xl font-semibold" lang={lang} dir={rtl ? 'rtl' : undefined}>{term}</p>}
       </div>
       <div className="mt-4 grid gap-2">
         {entry.options.map((o, i) => (

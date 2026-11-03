@@ -5,7 +5,8 @@ import { reportGenerated } from '@/data/generated';
 import { LlmError } from './client';
 import { generateMaterial, MAX_ATTEMPTS } from './generate';
 import type { GenerateDeps, GenerateRequest, Lookup } from './generate';
-import { labelFor } from '@/core/generate/generate';
+import { labelFor, readAdventure } from '@/core/generate/generate';
+import { checkStory, fromAdventure, wordsUsed } from '@/core/games/story';
 
 const open: LinguaDB[] = [];
 function freshDb(): LinguaDB {
@@ -186,5 +187,19 @@ describe('dialogues and rewrites, checked and kept', () => {
     expect(prompts[1].system).toContain('question');
     // "combine" needs two sentences to start from: this answer has one, so there is nothing usable.
     await expect(generateMaterial({ ...REQ, kind: 'rewrites', task: 'combine' }, deps(db, [items(3)]).d)).rejects.toBeInstanceOf(LlmError);
+  });
+});
+
+describe('a story game from the learner’s words (6-21, F1221)', () => {
+  it('asks for the words, and what comes back is a story that can be played and says how many words it used', async () => {
+    const db = freshDb();
+    const adventure = { title: 'Au marché', start: 'a', scenes: { a: { text: 'Marie voit du pain et du lait au marché.', choices: [{ label: 'Acheter le pain', to: 'b' }] }, b: { text: 'Elle rentre à la maison avec le pain.', choices: [{ label: 'Manger', to: 'c' }] }, c: { text: 'Le pain est très bon.', choices: [{ label: 'Encore', to: 'a' }, { label: 'Fin', to: 'd' }] }, d: { text: 'Fin de la journée.', choices: [] } } };
+    const { d, prompts } = deps(db, [adventure]);
+    const { row } = await generateMaterial({ lang: 'fr', kind: 'adventure', level: 'A2', topic: 'a short adventure that uses these words: pain, lait, maison' }, d);
+    expect(prompts[0].user).toContain('pain, lait, maison');
+    const body = readAdventure(row.content)!;
+    const story = fromAdventure(row.id, body, 'A2');
+    expect(checkStory(story).ok).toBe(true);
+    expect(wordsUsed(story, ['pain', 'lait', 'maison', 'cheval'])).toBe(3);
   });
 });

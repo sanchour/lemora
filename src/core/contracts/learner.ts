@@ -106,6 +106,16 @@ export interface LearnerRecord {
   history: (lang: Lang, item: EvidenceItem, limit?: number) => Promise<EvidenceRow[]>;
   /** Per-day summaries between two days, inclusive (YYYY-MM-DD). Rebuilt from `evidence` when missing. */
   days: (lang: Lang, from: string, to: string) => Promise<EvidenceDay[]>;
+  /** Pairs of the learner's own words written one for the other (6-29: the word graph's mix-up threads), most often first. */
+  mixUps: (lang: Lang, limit?: number) => Promise<MixUp[]>;
   /** Deletes everything for a language (the language is removed). */
   forgetLanguage: (lang: Lang) => Promise<void>;
+}
+
+/** Two words of the learner's mixed up: `given` was written where `expected` was asked for. Word ids (`${lang}:${norm}`). */
+export interface MixUp {
+  expected: string;
+  given: string;
+  times: number;
+  last: number;
 }

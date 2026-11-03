@@ -4,10 +4,17 @@ import { Link } from 'react-router';
 import type { Best } from '@/core/games/bests';
 import type { GameDef } from '@/core/games/defs';
 import type { GameItem } from '@/core/games/source';
-import { checkStory, choose, startStory, storyStars, visible } from '@/core/games/story';
+import { checkStory, choose, fromAdventure, startStory, storyStars, visible, wordsUsed } from '@/core/games/story';
 import type { StoryGame } from '@/core/games/story';
 import { isRtl } from '@/core/lang/languages';
-import { storiesOf } from '@/data/games';
+import { reportGenerated } from '@/data/generated';
+import { aiBlock } from '@/data/plan';
+import { gameItems, recordGameSkill, storiesOf } from '@/data/games';
+import { generateMaterial } from '@/services/llm/generate';
+import { readAdventure } from '@/core/generate/generate';
+import type { Cefr } from '@/core/lang/levels';
+import { useApp } from '@/app/context';
+import { buttonClasses } from '@/design/primitives';
 import { Kbd } from '@/design/primitives';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { SpeakButton } from '@/features/speech/SpeakButton';
@@ -26,6 +33,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
   const [s, setS] = useState(() => startStory(story));
   const choices = visible(story, s);
   const over = s.status !== 'playing';
+  useSettleOnce(over, () => void recordGameSkill(lang, 'story', 'reading', `story:${story.id}`, s.status === 'won').catch(() => undefined));
   useSettleOnce(over, () => settle({ won: s.status === 'won', stars: storyStars(s, entry.shortest), hints: 0, message: s.status === 'won' ? t('You made it in {0} choices.', [s.moves]) : t('You are stuck here.') }));
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -40,8 +48,13 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
     <div className="max-w-2xl">
       <div className="rounded-3xl border border-line/70 bg-surface p-6">
         <p className="font-serif text-2xl leading-relaxed" lang={lang} dir={rtl ? 'rtl' : undefined}>{story.scenes[s.at].text}</p>
-        <div className="mt-3"><SpeakButton lang={lang} text={story.scenes[s.at].text} size={20} label="Hear it" className="size-10 rounded-full bg-sunken text-ink" /></div>
+        <div className="mt-3"><SpeakButton lang={lang} text={story.scenes[s.at].text} size={20} label={t('Hear it')} className="size-10 rounded-full bg-sunken text-ink" /></div>
       </div>
+      {s.health !== undefined && (
+        <p className="mt-3 text-[14px] text-ink-soft" aria-label={t('Strength: {0}', [s.health])}>
+          <UiText source={'Strength'} /> {'♥'.repeat(Math.max(0, s.health))}<span className="opacity-30">{'♥'.repeat(Math.max(0, (story.health ?? 0) - s.health))}</span>
+        </p>
+      )}
       <p className="mt-3 text-[14px] text-ink-soft">{held.length ? <UiText source={'You have: {0}'} values={[<bdi lang={lang}>{held.join(', ')}</bdi>]} /> : <UiText source={'You have nothing yet.'} />}</p>
       {!over && (
         <div className="mt-4 grid gap-2">
@@ -59,8 +72,12 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
 
 export function Story({ lang, def, best }: { lang: string; def: GameDef; items: GameItem[]; best?: Best }) {
   const t = useUi();
+  const { settings, language } = useApp();
   const [stories, setStories] = useState<StoryGame[]>([]);
   const [chosen, setChosen] = useState(0);
+  const [making, setMaking] = useState<'idle' | 'busy'>('idle');
+  const [note, setNote] = useState('');
+  const reload = () => storiesOf(lang).then(setStories);
   useEffect(() => {
     let alive = true;
     void storiesOf(lang).then((s) => alive && setStories(s));
@@ -68,6 +85,37 @@ export function Story({ lang, def, best }: { lang: string; def: GameDef; items: 
       alive = false;
     };
   }, [lang]);
+  const maxReady = aiBlock(settings, settings.llm.provider) === null;
+  /** A story from the learner's own words (6-21, F1221): Max writes it, and it is checked that it can be played and how many of the words are in it. */
+  const makeFromWords = async () => {
+    setMaking('busy');
+    setNote('');
+    try {
+      const words = (await gameItems(lang)).slice(0, 6).map((i) => i.term);
+      if (words.length < 3) return setNote(t('Add at least three words to a deck first.'));
+      // Max is asked up to three times for a story that uses at least most of the words (a different topic line each time, so it is made anew), and the best is kept.
+      let best: { id: string; story: StoryGame; used: number } | null = null;
+      const tried: string[] = [];
+      for (let attempt = 1; attempt <= 3 && (!best || best.used < Math.min(words.length, 4)); attempt++) {
+        const row = (await generateMaterial({ lang, kind: 'adventure', level: (language.level === 'A0' ? 'A1' : language.level) as Cefr, topic: `a short adventure that uses these words: ${words.join(', ')}${attempt > 1 ? ` (try ${attempt}: every word must appear)` : ''}` })).row;
+        const body = readAdventure(row.content);
+        if (!body) continue;
+        const story = fromAdventure(row.id, body);
+        const used = wordsUsed(story, words);
+        tried.push(row.id);
+        if (!best || used > best.used) best = { id: row.id, story, used };
+      }
+      if (!best) return setNote(t('Max’s story could not be played. Try again.'));
+      // The tries that used fewer of the words are put away, so the list has the one that fits.
+      for (const id of tried) if (id !== best.id) await reportGenerated(id);
+      setNote(t('{0} of your {1} words are in it.', [best.used, words.length]));
+      await reload();
+    } catch (e) {
+      setNote(e instanceof Error ? e.message : t('Max’s story could not be played. Try again.'));
+    } finally {
+      setMaking('idle');
+    }
+  };
   return (
     <RoundRunner<Entry>
       lang={lang}
@@ -86,8 +134,16 @@ export function Story({ lang, def, best }: { lang: string; def: GameDef; items: 
             </select>
           )}
           <p className="text-[13px] text-ink-soft">
-            <UiText source={'More stories come from Max.'} /> <Link to="/thesaurus/make" className="font-semibold text-ink underline decoration-line-strong underline-offset-4"><UiText source={'Make one'} /></Link>
+            <UiText source={'More stories come from Max.'} /> <Link to="/thesaurus/make" className="font-semibold text-ink underline decoration-line-strong underline-offset-4"><UiText source={'Make one'} /></Link>{' · '}
+            <Link to="/thesaurus/games/story-editor" className="font-semibold text-ink underline decoration-line-strong underline-offset-4"><UiText source={'Write your own'} /></Link>
           </p>
+          <div className="flex flex-wrap items-center gap-3">
+            <button type="button" disabled={!maxReady || making === 'busy'} onClick={() => void makeFromWords()} className={buttonClasses('secondary', 'sm') + ' disabled:opacity-50'}>
+              {making === 'busy' ? <UiText source={'Max is writing…'} /> : <UiText source={'Make a story from my words'} />}
+            </button>
+            {!maxReady && <span className="text-[12.5px] text-ink-faint"><UiText source={'Needs Lingua+ Max, and your AI key (Settings › AI)'} /></span>}
+            {note && <span className="text-[13px] text-ink-soft" role="status">{note}</span>}
+          </div>
         </div>
       }
       make={() => {

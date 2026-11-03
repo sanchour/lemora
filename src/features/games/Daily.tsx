@@ -97,7 +97,7 @@ export function Daily({ lang, def, best }: { lang: string; def: GameDef; items: 
         return entry ? [entry] : [];
       }}
       onRound={(r) => void saveDaily(lang, { day, stars: r.stars })}
-      terms={() => []}
+      terms={(e) => [e.item.term]}
       label={(e) => ({ title: e.item.term, detail: e.item.meaning })}
       Board={DailyBoard}
       rules={<UiText source={'The word comes from the language’s own list, with its meaning. Three stars at most; hints cost one each.'} />}
@@ -106,6 +106,7 @@ export function Daily({ lang, def, best }: { lang: string; def: GameDef; items: 
 }
 
 function themeLine(t: ReturnType<typeof useUi>, theme: WeeklyTheme): string {
+  if (theme.kind === 'topic') return t(theme.topic.label);
   return theme.kind === 'length' ? t('Words of {0} letters', [theme.value]) : t('Words that start with “{0}”', [theme.value]);
 }
 
@@ -133,7 +134,7 @@ export function Weekly({ lang, def, best }: { lang: string; def: GameDef; items:
       rtl={isRtl(lang)}
       intro={<UiText source={'This week: {0}. Five words, the same all week, played as hangman.'} values={[themeLine(t, theme)]} />}
       make={() => weeklyWords(list, theme, lang, day).flatMap((w) => entryOf('hangman', w, lang, seededRandom(seedOf(w.word))) ?? [])}
-      terms={() => []}
+      terms={(e) => [e.item.term]}
       label={(e) => ({ title: e.item.term, detail: e.item.meaning })}
       Board={DailyBoard}
       rules={<UiText source={'Type a letter or click it. Six wrong letters and the word is lost. Up to three stars a word.'} />}
