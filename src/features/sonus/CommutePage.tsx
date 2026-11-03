@@ -85,7 +85,7 @@ export default function CommutePage() {
       <p className="min-w-0 flex-1 truncate text-center text-[13px] font-bold tracking-[0.12em] text-ink-faint uppercase"><UiText source={'Commute'} /></p>
       <button
         type="button"
-        aria-label={dark ? translateUi('Switch to Paper (light)') : translateUi('Switch to Nocturne (dark)')}
+        aria-label={dark ? translateUi('Switch to Lux (light)') : translateUi('Switch to Nox (dark)')}
         title={dark ? translateUi('Paper') : translateUi('Nocturne')}
         onClick={flipTheme}
         className="grid size-12 place-items-center rounded-2xl text-ink-soft transition-colors hover:bg-sunken"

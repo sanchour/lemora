@@ -67,13 +67,13 @@ export function SimpleSettings() {
           onChange={(value) => void setSetting('theme', value)}
           block
           options={[
-            { value: 'paper', label: translateUi('Paper') },
-            { value: 'nocturne', label: translateUi('Nocturne') },
+            { value: 'paper', label: translateUi('Lux') },
+            { value: 'nocturne', label: translateUi('Nox') },
             { value: 'system', label: translateUi('Device') },
           ]}
         />
-        <PaletteRow title={translateUi('Paper')} palettes={PAPER_PALETTES} value={settings.palette.paper} onChange={(id) => void patchSetting('palette', { paper: id as Settings['palette']['paper'] })} />
-        <PaletteRow title={translateUi('Nocturne')} palettes={NOCTURNE_PALETTES} value={settings.palette.nocturne} onChange={(id) => void patchSetting('palette', { nocturne: id as Settings['palette']['nocturne'] })} />
+        <PaletteRow title={translateUi('Lux')} palettes={PAPER_PALETTES} value={settings.palette.paper} onChange={(id) => void patchSetting('palette', { paper: id as Settings['palette']['paper'] })} />
+        <PaletteRow title={translateUi('Nox')} palettes={NOCTURNE_PALETTES} value={settings.palette.nocturne} onChange={(id) => void patchSetting('palette', { nocturne: id as Settings['palette']['nocturne'] })} />
       </Block>
 
       <Block icon={BookOpenText} color="#c98a6b" title={translateUi('Reading')}>

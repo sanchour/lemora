@@ -338,7 +338,7 @@ function useSummaries(hidden: ReadonlySet<SectionId>): Summaries {
   const languages = useLanguages();
   const { reader, study, audio, llm, apiKeys, theme, ui, meta } = settings;
   const names = (languages ?? [language]).map((l) => getLanguage(l.id)?.name ?? l.id);
-  const themeName = { paper: 'Paper', nocturne: 'Nocturne', system: 'Follows the device' }[theme];
+  const themeName = { paper: 'Lux', nocturne: 'Nox', system: 'Follows the device' }[theme];
   const motionName = { system: 'system motion', reduced: 'reduced motion', full: 'full motion' }[ui.motion];
   const block = aiBlock(settings, llm.provider);
   return {

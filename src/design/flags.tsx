@@ -697,6 +697,43 @@ const BETA_FLAGS: Record<string, { name: string; draw: () => ReactNode }> = {
       </>
     ),
   },
+  az: {
+    name: 'Azerbaijan',
+    draw: () => (
+      <>
+        {hStripes([C.sky, C.red, C.green])}
+        {crescent(16.4, 12, 2.9, C.white, C.red, 0.3)}
+        <Star x={20.6} y={12} r={1.4} rotate={-18} />
+      </>
+    ),
+  },
+  tm: {
+    name: 'Turkmenistan',
+    draw: () => (
+      <>
+        <rect width={36} height={24} fill={C.green} />
+        <rect x={3} width={6.4} height={24} fill={C.deepRed} />
+        {[4.5, 12, 19.5].map((y) => (
+          <path key={y} d={`M6.2 ${y - 2}l2 2l-2 2l-2 -2z`} fill={C.gold} />
+        ))}
+        {crescent(17, 7, 3.6, C.white, C.green, 0.3)}
+        {[0, 1, 2].map((i) => (
+          <Star key={i} x={22.4 + i * 2.6} y={6.4 + (i === 1 ? 0.8 : 0)} r={0.9} />
+        ))}
+      </>
+    ),
+  },
+  gl: {
+    name: 'Greenland',
+    draw: () => (
+      <>
+        <rect width={36} height={24} fill={C.white} />
+        <rect y={12} width={36} height={12} fill={C.red} />
+        <path d="M6.5 12A6.5 6.5 0 0 1 19.5 12Z" fill={C.red} />
+        <path d="M6.5 12A6.5 6.5 0 0 0 19.5 12Z" fill={C.white} />
+      </>
+    ),
+  },
   hk: {
     name: 'Hong Kong',
     draw: () => (
