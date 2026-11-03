@@ -7873,5 +7873,14 @@
   "Install this language’s dictionary before checking spelling.": "Перед проверкой орфографии установите словарь этого языка.",
   "Use a name and an exact quote from this chapter.": "Укажите имя и точную цитату из этой главы.",
   "This book changed while its chapters were being prepared. Open it again before saving.": "Книга изменилась во время подготовки глав. Откройте её заново перед сохранением.",
-  "This picture is missing on this device. Restore a backup that includes images.": "На устройстве нет этого изображения. Восстановите резервную копию с изображениями."
+  "This picture is missing on this device. Restore a backup that includes images.": "На устройстве нет этого изображения. Восстановите резервную копию с изображениями.",
+  "Around {0}": "Вокруг слова {0}",
+  "Laying out your words…": "Раскладываем ваши слова…",
+  "Loose threads": "Свободные нити",
+  "Mark words as Known or Learning while you read, and they appear here, joined to each other.": "Отмечайте слова как «Знаю» или «Учу» во время чтения — они появятся здесь, связанные друг с другом.",
+  "Small groups of words joined only to each other, and words joined to nothing yet. Link one, or learn a word that would join it.": "Небольшие группы слов, связанных только между собой, и слова, пока ни с чем не связанные. Свяжите одно из них или выучите слово, которое его присоединит.",
+  "The little words": "Маленькие слова",
+  "Your words: {0} in {1} regions": "Ваши слова: {0} в {1} областях",
+  "{0} known · {1} learning · {2} regions": "{0} знаю · {1} учу · {2} областей",
+  "{0} words joined to nothing yet": "{0} слов пока ни с чем не связаны"
 }
