@@ -168,6 +168,10 @@ describe('buildPrompt', () => {
     expect(getScene('oral-grammar')).toBeDefined();
     expect(getScene('group-dinner')).toBeDefined();
     expect(getScene('branching-adventure')).toBeDefined();
+    expect(getScene('philosophy')).toBeDefined();
+    expect(getScene('seminar')).toBeDefined();
+    expect(getScene('awkward')).toBeDefined();
+    expect(getScene('disagree')).toBeDefined();
   });
 });
 

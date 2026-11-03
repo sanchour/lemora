@@ -690,40 +690,40 @@ This is where an AI-powered app can become especially valuable. Learners often h
 - [x] `F0511` ⭐ Open-ended text conversations
 - [x] `F0512` ⭐ Voice conversations
 - [x] `F0513` Free conversation without a fixed script
-- [ ] `F0514` Beginner-friendly guided conversation · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0515` Conversation by topic · **5.2-6** · planned in Lingua 5.2
+- [x] `F0514` Beginner-friendly guided conversation · **5.2-6**
+- [x] `F0515` Conversation by topic · **5.2-6**
 - [x] `F0516` Conversation by CEFR level
 - [x] `F0517` Conversation based on saved vocabulary
-- [ ] `F0518` Conversation based on recent lessons · **5.2-6** · planned in Lingua 5.2
+- [x] `F0518` Conversation based on recent lessons · **5.2-6**
 - [x] `F0519` Conversation focused on a grammar point
 - [x] `F0520` Conversation focused on pronunciation · **6-11**
-- [ ] `F0521` Casual conversation with an informal persona · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0522` Formal professional conversation · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0523` Travel conversations · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0524` Restaurant conversations · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0525` Shopping conversations · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0526` Hotel check-in simulations · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0527` Airport and train station simulations · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0528` Meeting new people · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0529` Talking about hobbies · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0530` Discussing books and films · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0531` Discussing philosophy · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0532` Talking about current events · **5.2-6** · planned in Lingua 5.2
+- [x] `F0521` Casual conversation with an informal persona · **5.2-6**
+- [x] `F0522` Formal professional conversation · **5.2-6**
+- [x] `F0523` Travel conversations · **5.2-6**
+- [x] `F0524` Restaurant conversations · **5.2-6**
+- [x] `F0525` Shopping conversations · **5.2-6**
+- [x] `F0526` Hotel check-in simulations · **5.2-6**
+- [x] `F0527` Airport and train station simulations · **5.2-6**
+- [x] `F0528` Meeting new people · **5.2-6**
+- [x] `F0529` Talking about hobbies · **5.2-6**
+- [x] `F0530` Discussing books and films · **5.2-6**
+- [x] `F0531` Discussing philosophy · **5.2-6** · **6-11**
+- [x] `F0532` Talking about current events · **5.2-6**
 - [x] `F0533` Debate practice
-- [ ] `F0534` Job interview simulations · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0535` University seminar simulations · **5.2-6** · planned in Lingua 5.2
+- [x] `F0534` Job interview simulations · **5.2-6**
+- [x] `F0535` University seminar simulations · **5.2-6** · **6-11**
 - [x] `F0536` Negotiation practice · **6-11**
-- [ ] `F0537` Giving a presentation · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0538` Making a phone call · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0539` Handling an awkward situation · **5.2-6** · planned in Lingua 5.2
+- [x] `F0537` Giving a presentation · **5.2-6**
+- [x] `F0538` Making a phone call · **5.2-6**
+- [x] `F0539` Handling an awkward situation · **5.2-6** · **6-11**
 - [x] `F0540` Asking for clarification · **6-11**
-- [ ] `F0541` Expressing disagreement politely · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0542` Telling a story · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0543` Explaining an opinion · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0544` Talking about past experiences · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0545` Talking about future plans · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0546` Roleplay with a fictional character · **5.2-6** · planned in Lingua 5.2
-- [ ] `F0547` Interactive mystery conversations · **5.2-6** · planned in Lingua 5.2
+- [x] `F0541` Expressing disagreement politely · **5.2-6** · **6-11**
+- [x] `F0542` Telling a story · **5.2-6**
+- [x] `F0543` Explaining an opinion · **5.2-6**
+- [x] `F0544` Talking about past experiences · **5.2-6**
+- [x] `F0545` Talking about future plans · **5.2-6**
+- [x] `F0546` Roleplay with a fictional character · **5.2-6**
+- [x] `F0547` Interactive mystery conversations · **5.2-6**
 - [x] `F0548` Conversation with branching outcomes · **6-11**
 - [x] `F0549` Multi-character conversations · **6-11**
 - [x] `F0550` Group conversation simulation · **6-11**
@@ -1089,7 +1089,7 @@ Immersion is not just watching foreign films. It is building a life in which the
 - [x] `F0830` Simulate ordering food
 - [x] `F0831` Simulate travel
 - [x] `F0832` Read local advertisements and signs · **6-19** · partly there
-- [ ] `F0833` Practice common phone calls · **5.2-6** · planned in Lingua 5.2
+- [x] `F0833` Practice common phone calls · **5.2-6**
 - [x] `F0834` Write real messages with feedback · **6-12** · partly there
 - [x] `F0835` Maintain a personal phrasebook · **6-20**
 - [x] `F0836` Set a daily target-language challenge
@@ -1592,7 +1592,7 @@ These are integrated activities that combine skills instead of training each one
 - [x] `F1233` Read a text, then retell it without looking
 - [ ] `F1234` Write a paragraph, then read it aloud · **6-21** · partly there
 - [ ] `F1235` Record a spoken response, then transcribe it · **6-21**
-- [ ] `F1236` Discuss a book with an AI tutor · **5.2-6** · planned in Lingua 5.2
+- [x] `F1236` Discuss a book with an AI tutor · **5.2-6**
 - [ ] `F1237` Debate an issue after reading about it · **6-21**
 - [ ] `F1238` Create a presentation from a text · **6-21**
 - [x] `F1239` Turn a podcast into a vocabulary deck · **6-2** · partly there
