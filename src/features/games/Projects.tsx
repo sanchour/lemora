@@ -46,22 +46,24 @@ export default function ProjectsPage() {
     const tpl = templateOf(project.template)!;
     const p = progress(project);
     return (
-      <div className="mx-auto w-full max-w-3xl px-6 py-6">
-        <Link to="/thesaurus/games/projects" className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-ink-soft hover:text-ink"><ArrowLeft size={15} aria-hidden /> <UiText source={'All projects'} /></Link>
-        <h1 className="mt-4 font-display text-3xl font-semibold">{t(tpl.title)}{project.topic ? ` · ${project.topic}` : ''}</h1>
-        <p className="mt-1 text-ink-soft">{t(tpl.detail)}</p>
+      <div className="mx-auto w-full max-w-3xl">
+        <div className="mb-5 flex items-center justify-between border-b border-line/60 pb-3">
+          <Link to="/thesaurus/games/projects" className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-ink-soft hover:text-ink"><ArrowLeft size={15} aria-hidden /> <UiText source={'All projects'} /></Link>
+          <p className="text-[13px] text-ink-soft tabular-nums">{p.finished ? <UiText source={'Finished.'} /> : <UiText source={'{0} of {1} steps done'} values={[p.done, p.of]} />}</p>
+        </div>
+        <h1 className="font-serif text-2xl font-semibold tracking-tight">{t(tpl.title)}{project.topic ? ` · ${project.topic}` : ''}</h1>
+        <p className="mt-1 text-[14.5px] text-ink-soft">{t(tpl.detail)}</p>
         <div className="mt-4"><Strip done={p.done} of={p.of} /></div>
-        <p className="mt-2 text-[14px] text-ink-soft">{p.finished ? <UiText source={'Finished.'} /> : <UiText source={'{0} of {1} steps done'} values={[p.done, p.of]} />}</p>
-        <ol className="mt-6 space-y-3">
+        <ol className="mt-6 space-y-2.5">
           {tpl.steps.map((k, i) => {
             const step = STEPS[k];
             const done = project.done.includes(i);
             return (
-              <li key={i} className="flex items-center gap-4 rounded-2xl border border-line/70 bg-surface px-5 py-4">
-                <button type="button" onClick={() => save(projects!.map((x) => (x.id === project.id ? toggleStep(x, i) : x)))} aria-pressed={done} aria-label={t(step.label)} className={cx('grid size-8 shrink-0 place-items-center rounded-full border', done ? 'border-sage-text bg-sage-soft text-sage-text' : 'border-line-strong')}>
-                  {done && <Check size={16} aria-hidden />}
+              <li key={i} className="flex items-center gap-4 rounded-2xl border border-line/70 bg-surface px-5 py-3.5 transition-colors hover:border-line-strong">
+                <button type="button" onClick={() => save(projects!.map((x) => (x.id === project.id ? toggleStep(x, i) : x)))} aria-pressed={done} aria-label={t(step.label)} className={cx('grid size-7 shrink-0 place-items-center rounded-full border transition-colors', done ? 'border-sage-text bg-sage-soft text-sage-text' : 'border-line-strong hover:border-ink')}>
+                  {done && <Check size={15} aria-hidden />}
                 </button>
-                <span className={cx('min-w-0 flex-1 text-[16px] font-semibold', done && 'text-ink-soft line-through')}>
+                <span className={cx('min-w-0 flex-1 text-[15px] font-semibold', done && 'text-ink-soft line-through')}>
                   {i + 1}. {t(step.label)}{step.max && <span className="ms-2 text-[12px] font-normal text-ink-faint"><UiText source={'Needs Max; skip it without.'} /></span>}
                 </span>
                 <Link to={step.to} className={buttonClasses('secondary', 'sm')}><UiText source={'{0} Open'} values={[<ExternalLink size={14} aria-hidden />]} /></Link>
@@ -84,18 +86,30 @@ export default function ProjectsPage() {
   };
   return (
     <>
-      <PageHeader title={t('Projects')} eyebrow={t('{0}, in chains', [name])} />
-      <p className="max-w-2xl text-[15px] leading-relaxed text-ink-soft"><UiText source={'Small chains across rooms: each step opens the room that does it. Tick a step when you have done it.'} /></p>
+      <PageHeader
+        title={t('Projects')}
+        eyebrow={t('{0}, in chains', [name])}
+        actions={
+          <Link to="/thesaurus/games" className={buttonClasses('secondary', 'md')}>
+            <ArrowLeft size={16} aria-hidden />
+            <UiText source={'Ludus'} />
+          </Link>
+        }
+      />
+      <p className="mt-2 max-w-2xl text-[14.5px] leading-relaxed text-ink-soft"><UiText source={'Small chains across rooms: each step opens the room that does it. Tick a step when you have done it.'} /></p>
       {!!projects?.length && (
         <section className="mt-8" aria-label={t('Your projects')}>
-          <h2 className="mb-3 text-[12px] font-bold tracking-[0.12em] text-ink-faint uppercase"><UiText source={'Your projects'} /></h2>
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          <header className="mb-4 flex items-baseline gap-2.5 border-b border-line pb-2">
+            <h2 className="font-serif text-xl font-semibold"><UiText source={'Your projects'} /></h2>
+            <span className="text-sm font-bold text-ink-faint tabular-nums">{projects.length}</span>
+          </header>
+          <div className="grid gap-3.5 sm:grid-cols-2 xl:grid-cols-3">
             {projects.map((p) => {
               const tpl = templateOf(p.template);
               const pr = progress(p);
               return tpl ? (
-                <Link key={p.id} to={`/thesaurus/games/projects/${p.id}`} className="block rounded-3xl border border-line/70 bg-surface p-5 transition-colors hover:border-line-strong">
-                  <p className="font-serif text-lg font-semibold">{t(tpl.title)}{p.topic ? ` · ${p.topic}` : ''}</p>
+                <Link key={p.id} to={`/thesaurus/games/projects/${p.id}`} className="block rounded-2xl border border-line/70 bg-surface p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-elev-1">
+                  <p className="font-serif text-[17.5px] font-semibold">{t(tpl.title)}{p.topic ? ` · ${p.topic}` : ''}</p>
                   <div className="mt-3"><Strip done={pr.done} of={pr.of} /></div>
                   <p className="mt-2 text-[13px] text-ink-soft">{pr.finished ? <UiText source={'Finished.'} /> : <UiText source={'{0} of {1} steps done'} values={[pr.done, pr.of]} />}</p>
                 </Link>
@@ -104,14 +118,17 @@ export default function ProjectsPage() {
           </div>
         </section>
       )}
-      <section className="mt-8" aria-label={t('Start a project')}>
-        <h2 className="mb-3 text-[12px] font-bold tracking-[0.12em] text-ink-faint uppercase"><UiText source={'Start a project'} /></h2>
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+      <section className="mt-9" aria-label={t('Start a project')}>
+        <header className="mb-4 flex items-baseline gap-2.5 border-b border-line pb-2">
+          <h2 className="font-serif text-xl font-semibold"><UiText source={'Start a project'} /></h2>
+          <span className="text-sm font-bold text-ink-faint tabular-nums">{TEMPLATES.length}</span>
+        </header>
+        <div className="grid gap-3.5 sm:grid-cols-2 xl:grid-cols-3">
           {TEMPLATES.map((tpl) => (
-            <Card key={tpl.id} className="flex flex-col p-5">
-              <p className="font-serif text-lg font-semibold">{t(tpl.title)}</p>
-              <p className="mt-1 flex-1 text-[14px] leading-snug text-ink-soft">{t(tpl.detail)}</p>
-              <p className="mt-2 text-[12.5px] text-ink-faint">{tpl.steps.map((k) => t(STEPS[k].label)).join(' → ')}</p>
+            <Card key={tpl.id} className="flex flex-col rounded-2xl border-line/70 p-5">
+              <p className="font-serif text-[17.5px] font-semibold">{t(tpl.title)}</p>
+              <p className="mt-1.5 flex-1 text-[13.5px] leading-relaxed text-ink-soft">{t(tpl.detail)}</p>
+              <p className="mt-3 border-t border-line/50 pt-3 text-[12px] text-ink-faint">{tpl.steps.map((k) => t(STEPS[k].label)).join(' → ')}</p>
               {tpl.topic && <input value={topic} onChange={(e) => setTopic(e.target.value)} aria-label={t('The topic')} placeholder={t('The topic')} className="mt-3 h-9 rounded-lg border border-line bg-raised px-3 text-[14px] outline-none focus:border-line-strong" />}
               <button type="button" onClick={() => begin(tpl)} className={buttonClasses('primary', 'sm') + ' mt-4 self-start'}><UiText source={'Start'} /></button>
             </Card>

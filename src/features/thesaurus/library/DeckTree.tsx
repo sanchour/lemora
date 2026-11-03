@@ -243,17 +243,17 @@ export function DeckCards({ decks, folders, counts, lastStudied, actions, order 
     .forEach((f) => walk(f, ''));
 
   return (
-    <div className="space-y-7">
+    <div className="space-y-8">
       {sections.map((s) => (
         <section key={s.folder?.id ?? 'loose'} aria-label={s.title || translateUi('Decks')}>
           {s.folder && (
-            <div className="group mb-2.5 flex items-center gap-2 pl-1">
+            <div className="group mb-3.5 flex items-center gap-2 border-b border-line/60 pb-2">
               <FolderIcon size={15} className="text-ink-faint" aria-hidden />
-              <p className="min-w-0 truncate text-[13px] font-bold text-ink-soft">{s.title}</p>
+              <p className="min-w-0 flex-1 truncate font-serif text-[15.5px] font-semibold text-ink">{s.title}</p>
               <FolderMenu folder={s.folder} folders={folders} actions={actions} />
             </div>
           )}
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(232px,1fr))] gap-3">
+          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {s.decks.map((d) => (
               <DeckCard key={d.id} deck={d} counts={counts?.get(d.id)} last={lastStudied?.get(d.id)} folders={folders} actions={actions} />
             ))}
@@ -268,19 +268,21 @@ function DeckCard({ deck, counts, last, folders, actions }: Omit<RowProps, 'dept
   const translateUi = useUi();
   const ludusGate = useGate('ludus');
   return (
-    <div className="group relative flex min-w-0 flex-col rounded-2xl border border-line/70 bg-surface p-4 transition-[border-color,box-shadow,translate] duration-200 focus-within:border-line-strong hover:-translate-y-0.5 hover:border-line-strong hover:shadow-elev-2">
-      <div className="flex items-start justify-between gap-2">
-        <DeckGlyph deck={deck} size="lg" />
-        <DeckMenu deck={deck} folders={folders} actions={actions} />
+    <div className="group relative flex min-w-0 flex-col justify-between rounded-2xl border border-line/70 bg-surface p-4 transition-[border-color,box-shadow,translate] duration-200 focus-within:border-line-strong hover:-translate-y-0.5 hover:border-line-strong hover:shadow-elev-2">
+      <div>
+        <div className="flex items-start justify-between gap-2">
+          <DeckGlyph deck={deck} size="lg" />
+          <DeckMenu deck={deck} folders={folders} actions={actions} />
+        </div>
+        <Link to={`/thesaurus/deck/${deck.id}`} className="no-callout mt-3 block min-w-0 before:absolute before:inset-0 before:rounded-2xl">
+          <span className="block truncate font-serif text-[17px] leading-snug font-semibold text-ink transition-colors group-hover:text-accent-text">
+            {deck.name}
+            <DeckMarks deck={deck} />
+          </span>
+          <span className="mt-0.5 block truncate text-[12.5px] text-ink-soft">{[cardCount(counts), last ? `studied ${studiedAgo(last).toLowerCase()}` : 'not studied yet'].filter(Boolean).join(' · ')}</span>
+        </Link>
       </div>
-      <Link to={`/thesaurus/deck/${deck.id}`} className="no-callout mt-3 min-w-0 before:absolute before:inset-0 before:rounded-2xl">
-        <span className="block truncate font-serif text-[17px] leading-tight font-semibold">
-          {deck.name}
-          <DeckMarks deck={deck} />
-        </span>
-        <span className="mt-0.5 block truncate text-[12.5px] text-ink-faint">{[cardCount(counts), last ? `studied ${studiedAgo(last).toLowerCase()}` : 'not studied yet'].filter(Boolean).join(' · ')}</span>
-      </Link>
-      <div className="mt-4 flex items-center justify-between gap-2">
+      <div className="mt-4 flex items-center justify-between gap-2 border-t border-line/50 pt-3">
         <Counts counts={counts} />
         <span className="relative z-[1] flex gap-1">
           <Link to={`/thesaurus/study/${deck.id}?mode=ludus`} onClick={ludusGate ?? undefined} aria-label={translateUi('Ludus')} title={translateUi('Ludus')} className={cx(buttonClasses('ghost', 'sm'), 'w-8 px-0 opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100')}>

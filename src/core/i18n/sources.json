@@ -1060,11 +1060,12 @@
   "Song games": [
     "src/features/cantus/room/CantusRoom.tsx"
   ],
-  "Leave Sonus+": [
+  "Leave Cantus": [
     "src/features/cantus/room/CantusRoom.tsx"
   ],
-  "Sonus+": [
-    "src/features/cantus/room/CantusRoom.tsx"
+  "Cantus": [
+    "src/features/cantus/room/CantusRoom.tsx",
+    "src/app/sections.ts"
   ],
   "{0} Songs and artists": [
     "src/features/cantus/room/CantusRoom.tsx"
@@ -1078,7 +1079,7 @@
     "src/features/sonus/library/Discover.tsx",
     "src/features/sonus/radio/RadioTab.tsx"
   ],
-  "Sonus+ settings": [
+  "Cantus settings": [
     "src/features/cantus/room/RoomSettings.tsx"
   ],
   "Speed for episodes and books": [
@@ -6669,10 +6670,10 @@
   "Follow {0}": [
     "src/features/sonus/library/Discover.tsx"
   ],
-  "More music in Sonus+": [
+  "More music in Cantus": [
     "src/features/sonus/library/LibraryHome.tsx"
   ],
-  "Find podcasts in Sonus+": [
+  "Find podcasts in Cantus": [
     "src/features/sonus/library/LibraryHome.tsx"
   ],
   "Recently played": [
@@ -11274,7 +11275,7 @@
   "Up to date.": [
     "src/features/sonus/FeedPage.tsx"
   ],
-  "Back in Lingua. Sonus+ closed; the song keeps its place.": [
+  "Back in Lingua. Cantus closed; the song keeps its place.": [
     "src/features/sonus/SonusPage.tsx"
   ],
   "{0} audio this device can play.": [

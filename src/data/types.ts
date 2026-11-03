@@ -98,11 +98,14 @@ export interface Text extends Synced {
 }
 
 export type CoverOrnament = 'rule' | 'stars' | 'sprig' | 'moon' | 'frame';
+export type CoverBinding = 'paperback' | 'hardcover' | 'leather' | 'linen';
 
 export interface CoverDesign {
   /** Cloth colour id (features/codex/library/covers.ts). */
   cloth: string;
   ornament: CoverOrnament;
+  /** Binding / cover style: paperback, hardcover, leather, linen */
+  binding?: CoverBinding;
 }
 
 export interface TextStats {

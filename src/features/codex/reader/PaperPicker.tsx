@@ -37,7 +37,7 @@ export function PaperPicker({ reader, theme, labelled = false }: PaperPickerProp
             <span
               className={cx(
                 'grid aspect-[4/5] w-full place-items-center rounded-lg border font-serif text-[13px] font-semibold transition-[transform,box-shadow] duration-150 group-active:scale-90',
-                on ? 'shadow-elev-1 ring-2 ring-accent ring-offset-2 ring-offset-raised' : 'group-hover:-translate-y-0.5',
+                on ? 'shadow-elev-1 ring-2 ring-accent ring-offset-2 ring-offset-raised' : 'group-hover:ring-2 group-hover:ring-accent/55 group-hover:ring-offset-1 group-hover:ring-offset-raised',
               )}
               style={{ background: p.vars.bg, color: p.vars.ink, borderColor: p.vars['line-strong'] }}
             ><UiText source={'Aa'} /></span>

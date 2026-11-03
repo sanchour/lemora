@@ -3,7 +3,7 @@ import { UiText, useUi } from '@/design/i18n/UiText';
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router';
 import { motion } from 'motion/react';
-import { ChevronLeft, Music2, Search, SearchX } from 'lucide-react';
+import { ChevronLeft, Search, SearchX } from 'lucide-react';
 import type { LeftCantusState } from '@/features/cantus/room/nav';
 import { useApp } from '@/app/context';
 import { PageHeader } from '@/app/PageHeader';
@@ -19,7 +19,6 @@ import { IconButton, SearchInput, searchKey, SortMenu } from '@/design/primitive
 import { getLanguage } from '@/core/lang/languages';
 import { spring } from '@/design/motion';
 import { toast } from '@/state/ui';
-import { useGate } from '@/features/plans/PlanRoute';
 import { AddMenu } from './library/AddMenu';
 import { LIBRARY_VIEWS, LibraryHome } from './library/LibraryHome';
 import type { LibraryView } from './library/LibraryHome';
@@ -61,8 +60,8 @@ function sorter(sort: MediaSort): (a: Media, b: Media) => number {
 const enter = (i: number) => ({ initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { ...spring.soft, delay: 0.05 * i } });
 
 /**
- * Sonus: the listening room for podcasts, audiobooks, radio and your own audio; Sonus+ (music and
- * podcasts to find) opens from the end of the tab strip. Watching has its own room in Visio.
+ * Sonus: the listening room for podcasts, audiobooks, radio and your own audio. Watching
+ * has its own room in Visio, and songs live in Cantus.
  */
 export default function SonusPage() {
   const translateUi = useUi();
@@ -77,7 +76,7 @@ export default function SonusPage() {
 
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
-  // Music and podcasts live in Sonus+; streaming and watch links go to Visio.
+  // Music and podcasts live in Cantus; streaming and watch links go to Visio.
   const requested = params.get('tab');
   const asked = params.get('q');
   const askedShow = params.get('show');
@@ -95,10 +94,10 @@ export default function SonusPage() {
               : null;
     if (to) navigate(to, { replace: true });
   }, [requested, asked, askedShow, navigate]);
-  // Back from Sonus+ (its X): say the room is closed and the song keeps its place.
+  // Back from Cantus (its X): say the room is closed and the song keeps its place.
   const leftRoom = Boolean((useLocation().state as LeftCantusState | null)?.leftCantus);
   useEffect(() => {
-    if (leftRoom) toast('Back in Lingua. Sonus+ closed; the song keeps its place.');
+    if (leftRoom) toast('Back in Lingua. Cantus closed; the song keeps its place.');
   }, [leftRoom]);
   const findPodcasts = () => navigate('/cantus/podcasts');
   const tab: Tab = requested === 'radio' || requested === 'books' ? requested : requested === 'audiobooks' ? 'books' : 'library';
@@ -187,7 +186,7 @@ export default function SonusPage() {
         actions={<AddMenu lang={lang} onDiscover={findPodcasts} label="Add" />}
       />
 
-      <RoomTabs label={translateUi('Sonus')} tabs={TABS} active={tab} keys={!searching} end={<SonusPlusLink />} />
+      <RoomTabs label={translateUi('Sonus')} tabs={TABS} active={tab} keys={!searching} />
 
       {tab === 'library' && !view && (
         <p className="-mt-2 mb-4 text-[13.5px] text-ink-soft"><UiText source={'{0}{1}for the commute.'} values={[<Link to="/sonus/words" className="font-semibold text-ink underline decoration-line-strong underline-offset-4"><UiText source={'Your words, read aloud'} /></Link>, ' ']} /></p>
@@ -226,26 +225,5 @@ export default function SonusPage() {
         </motion.section>
       )}
     </>
-  );
-}
-
-/** The way into Sonus+, dark like the room, at the end of the tab strip. */
-function SonusPlusLink() {
-  const translateUi = useUi();
-  const gate = useGate('sonusPlus');
-  return (
-    <Link
-      to="/cantus"
-      onClick={gate ?? undefined}
-      aria-label={translateUi('Open Sonus+: songs to sing and learn, and podcasts')}
-      className="group relative inline-flex h-9 items-center gap-2 overflow-hidden rounded-full bg-[#120e10] pr-3.5 pl-1.5 text-[#f6eef0] shadow-elev-1 transition-transform active:scale-[0.98]"
-    >
-      <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_120%_at_0%_0%,rgb(180_88_126/0.5),transparent_60%)]" aria-hidden />
-      <span className="relative grid size-6.5 place-items-center rounded-full bg-[linear-gradient(135deg,#e8a0bf,#b4587e)] text-[#1a1215]">
-        <Music2 size={14} aria-hidden />
-      </span>
-      <span className="relative text-[14px] font-extrabold tracking-[-0.01em]"><UiText source={'Sonus{0}'} values={[<span className="text-[#e8a0bf]">+</span>]} /></span>
-      {gate && <span className="relative ml-0.5 rounded-full bg-[#f6eef0]/15 px-1.5 text-[11px] font-bold"><UiText source={'Lingua+'} /></span>}
-    </Link>
   );
 }

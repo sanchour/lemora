@@ -1,6 +1,6 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useSettings } from '@/data/settings';
-import { History, LayoutDashboard, Monitor, Moon, Sparkles, SlidersHorizontal, Sun, Waves, Wind } from 'lucide-react';
+import { History, LayoutGrid, LayoutList, Monitor, Moon, PanelRight, Sparkles, SlidersHorizontal, Sun, Waves, Wind } from 'lucide-react';
 import { getLanguage } from '@/core/lang/languages';
 import { flavourOf } from '@/design/flavours';
 import { AnimatePresence, motion as m } from 'motion/react';
@@ -123,15 +123,17 @@ export function AppearanceSection({
         <p className="mb-2 text-[15px] font-semibold"><UiText source={'Home layout'} /></p>
         <Segmented<Settings['ui']['homeLayout']>
           label={translateUi('Home layout')}
-          value={homeLayout}
+          value={homeLayout === 'today' ? 'topline' : homeLayout}
           onChange={(value) => void patchSetting('ui', { homeLayout: value })}
           block
           options={[
-            { value: 'today', label: translateUi('Today'), icon: LayoutDashboard },
+            { value: 'topline', label: translateUi('Topline'), icon: LayoutList },
+            { value: 'rail', label: translateUi('Right rail'), icon: PanelRight },
+            { value: 'shelf', label: translateUi('Bottom shelf'), icon: LayoutGrid },
             { value: 'classic', label: translateUi('Classic'), icon: History },
           ]}
         />
-        <p data-hint="" className="mt-2 text-[13px] text-ink-soft"><UiText source={'Today puts the day\'s goal and what\'s next up first, beside the week and your numbers, with Cursus and Mundus below. Classic is Home as it was before Lingua 5.'} /></p>
+        <p data-hint="" className="mt-2 text-[13px] text-ink-soft"><UiText source={'Choose between Topline tools, Right rail, Bottom shelf, or Classic.'} /></p>
       </div>
 
       <div className="mt-6 flex items-start gap-4">

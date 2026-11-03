@@ -153,11 +153,25 @@ export const BookCard = memo(function BookCard({ text, progress, onAttach }: Boo
   return (
     <div className="group relative">
       <BookLink text={text} onAttach={onAttach} className="block w-full text-left">
-        <div className="relative transition-transform duration-200 ease-out group-hover:-translate-y-1 group-active:scale-[0.98]">
+        <div className="relative rounded-r-md rounded-l-xs ring-2 ring-transparent ring-offset-2 ring-offset-bg transition-[box-shadow,transform] duration-200 ease-out group-hover:ring-accent/65 group-hover:shadow-[0_0_0_4px_var(--accent-soft)] group-active:scale-[0.98]">
           <BookCover text={text} className={shelfOnly ? 'opacity-70 saturate-[0.85]' : undefined} />
+          {/* Obi-strip (Belly-band) for books with reading progress */}
           {!shelfOnly && pct > 0 && !text.finishedAt && (
-            <div className="absolute inset-x-[10%] bottom-[5%] h-[3px] overflow-hidden rounded-full bg-black/25" aria-hidden>
-              <div className="h-full origin-left bg-[#f8efe0]/90" style={{ transform: `scaleX(${pct / 100})` }} />
+            <div className="absolute inset-x-0 bottom-2.5 border-y border-line-strong/30 bg-surface/95 px-2 py-1 shadow-xs backdrop-blur-xs" aria-hidden>
+              <div className="flex items-center justify-between text-[10.5px] font-semibold text-ink">
+                <span><UiText source={'{0}% read'} values={[pct]} /></span>
+                {text.stats && (
+                  <span className="text-sage-text tabular-nums"><UiText source={'· {0}% known'} values={[Math.round(text.stats.knownShare * 100)]} /></span>
+                )}
+              </div>
+              <div className="mt-0.5 h-1 w-full overflow-hidden rounded-full bg-sunken">
+                <div className="h-full origin-left rounded-full bg-accent" style={{ transform: `scaleX(${pct / 100})` }} />
+              </div>
+            </div>
+          )}
+          {text.finishedAt && (
+            <div className="absolute inset-x-0 bottom-2.5 border-y border-line-strong/30 bg-surface/95 px-2 py-0.5 text-center shadow-xs backdrop-blur-xs" aria-hidden>
+              <span className="text-[10px] font-bold tracking-wider text-sage-text uppercase"><UiText source={'Finished'} /></span>
             </div>
           )}
         </div>
@@ -184,7 +198,7 @@ export const BookRow = memo(function BookRow({ text, progress, onAttach }: BookP
   const shelfOnly = text.kind === 'shelfItem';
   const pct = progress ? progress.percent : 0;
   return (
-    <div className="group flex items-center gap-3.5 rounded-2xl px-2 py-2 transition-colors hover:bg-surface/70">
+    <div className="group flex items-center gap-3.5 rounded-2xl border border-transparent px-2 py-2 transition-[background-color,border-color,box-shadow] duration-200 hover:border-accent/55 hover:bg-accent-soft/20 hover:shadow-[0_0_0_3px_var(--accent-soft)]">
       <BookLink text={text} onAttach={onAttach} className="flex min-w-0 flex-1 items-center gap-3.5 text-left">
         <BookCover text={text} size="sm" className={shelfOnly ? 'w-11 shrink-0 opacity-70 saturate-[0.85]' : 'w-11 shrink-0'} />
         <span className="min-w-0 flex-1">

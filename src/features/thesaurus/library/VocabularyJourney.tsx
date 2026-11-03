@@ -63,8 +63,8 @@ export function VocabularyJourney({ milestones, progress, added, onOpen }: Journ
   }, [progress === undefined, hereIndex]);
 
   return (
-    <div>
-      <p className="mb-1 max-w-xl text-[15px] leading-relaxed text-ink-soft">
+    <div className="rounded-2xl border border-line/70 bg-surface p-5 sm:p-6">
+      <p className="mb-3 max-w-2xl text-[14px] leading-relaxed text-ink-soft">
         {progress === undefined ? (
           ' '
         ) : allDone ? (
@@ -74,7 +74,7 @@ export function VocabularyJourney({ milestones, progress, added, onOpen }: Journ
         )}
       </p>
 
-      <div ref={scrollRef} className="-mx-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:px-0">
+      <div ref={scrollRef} className="-mx-2 overflow-x-auto px-2 pb-1 [scrollbar-width:none]">
         <div className="relative" style={{ width, height: HEIGHT + 40 }}>
           <svg width={width} height={HEIGHT} className="absolute inset-x-0 top-0" aria-hidden>
             <defs>

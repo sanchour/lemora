@@ -2,7 +2,7 @@ import { Notebook } from '@/features/notebook/Notebook';
 import { interpolate } from '@/core/i18n/messages';
 import { useUi } from '@/design/i18n/UiText';
 import { Navigate, useParams } from 'react-router';
-import { Feather, Earth, MessagesSquare } from 'lucide-react';
+import { BookMarked, Feather, Earth, MessagesSquare } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { PageHeader } from '@/app/PageHeader';
 import { InRoom } from '@/app/room';
@@ -21,7 +21,7 @@ const TABS: Array<RoomTab<Tab>> = [
   { id: 'mundus', label: 'Mundus', to: '/mentis', icon: Earth },
   { id: 'sermo', label: 'Sermo', to: '/mentis/sermo', icon: MessagesSquare },
   { id: 'diarium', label: 'Diarium', to: '/mentis/diarium', icon: Feather },
-  { id: 'notebook', label: 'Notebook', to: '/mentis/notebook', icon: Feather },
+  { id: 'notebook', label: 'Notebook', to: '/mentis/notebook', icon: BookMarked },
 ];
 const MUNDUS_TABS = new Set(['', 'try', 'culture', 'immerse']);
 
@@ -38,12 +38,13 @@ export default function MentisPage() {
   if (!tab) return <Navigate to="/mentis" replace />;
   const name = getLanguage(language.id)?.name ?? language.id;
   const tabs = sermoOpen ? TABS : TABS.map((t) => (t.id === 'sermo' ? { ...t, badge: <PlusChip feature="sermo" /> } : t));
+  const showTodayRail = sub === '';
 
   return (
     <>
       <PageHeader title={translateUi('Mentis')} englishTitle={'Mentis'} eyebrow={translateUi('Think, talk and write in {0}', [translateUi(name)])} englishEyebrow={interpolate('Think, talk and write in {0}', [name])} actions={tab === 'diarium' ? <NewEntryButton /> : undefined} />
       <RoomTabs label={translateUi('Mentis')} tabs={tabs} active={tab} />
-      <div className={(sub === 'culture' || sub === 'immerse' || sub === 'notebook') ? '' : 'grid gap-10 lg:grid-cols-[minmax(0,1fr)_288px]'}>
+      <div className={showTodayRail ? 'grid gap-10 lg:grid-cols-[minmax(0,1fr)_288px]' : ''}>
         <div className="min-w-0">
           <InRoom.Provider value>
             {tab === 'mundus' && <MundusPage />}
@@ -56,7 +57,7 @@ export default function MentisPage() {
             {tab === 'notebook' && <Notebook />}
           </InRoom.Provider>
         </div>
-        {sub !== 'culture' && sub !== 'immerse' && sub !== 'notebook' && <TodayRail inDiarium={tab === 'diarium'} />}
+        {showTodayRail && <TodayRail inDiarium={tab === 'diarium'} />}
       </div>
     </>
   );

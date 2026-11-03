@@ -13,10 +13,10 @@ export function WritingPortfolio({ entries }: { entries: JournalEntry[] }) {
   const portfolio = entries.filter((e) => e.portfolio && !e.deletedAt);
   const shown = portfolio.filter((e) => (level === 'all' || e.portfolio!.level === level) && `${e.portfolio!.topic} ${WRITING_TASKS.find((t) => t.id === e.writingTaskId)?.title ?? 'Free entry'}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()));
   return (
-    <details className="rounded-xl border border-line p-5">
-      <summary className="cursor-pointer font-serif text-xl font-semibold"><UiText source={'Your writing portfolio · {0}'} values={[portfolio.length]} /></summary>
-      <p className="mt-3 text-sm text-ink-soft"><UiText source={'Keep your best pieces from an entry’s portfolio controls. Levels are the study level you chose when keeping the piece, not an assessment.'} /></p>
-      <div className="my-4 grid grid-cols-[180px_1fr] gap-4">
+    <details className="rounded-2xl border border-line/70 bg-surface p-5">
+      <summary className="cursor-pointer font-serif text-lg font-semibold"><UiText source={'Your writing portfolio · {0}'} values={[portfolio.length]} /></summary>
+      <p className="mt-3 text-[13.5px] leading-relaxed text-ink-soft"><UiText source={'Keep your best pieces from an entry’s portfolio controls. Levels are the study level you chose when keeping the piece, not an assessment.'} /></p>
+      <div className="my-4 grid gap-3 sm:grid-cols-[180px_1fr]">
         <Select label={translateUi('Portfolio level')} value={level} onChange={setLevel} options={[{ value: 'all', label: translateUi('All levels') }, ...['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'].map((value) => ({ value, label: value }))]} />
         <SearchInput placeholder={translateUi('Search portfolio topic or kind')} value={query} onChange={setQuery} />
       </div>

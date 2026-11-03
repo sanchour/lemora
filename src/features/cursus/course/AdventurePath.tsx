@@ -7,7 +7,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { Link } from 'react-router';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { CalendarDays, Check, Coffee, Flag, Hand, HeartPulse, House, Lock, MapPin, MessageCircle, Mountain, ShoppingBag, Sun, Tent, Trophy, User, Users } from 'lucide-react';
+import { CalendarDays, Check, Coffee, Compass, Flag, Hand, HeartPulse, House, Lock, MapPin, MessageCircle, Mountain, ShoppingBag, Sun, Tent, Trophy, User, Users } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { LESSONS, OUTLINE } from '@/core/course/outline';
 import type { CourseLevel, LessonId, UnitId, UnitOutline } from '@/core/course/outline';
@@ -35,6 +35,50 @@ export const UNIT_LOOK: Record<UnitId, { hue: string; icon: LucideIcon }> = {
 
 const LEVEL_NAME: Record<CourseLevel, string> = { A1: 'Beginner', A2: 'Elementary', B1: 'Intermediate' };
 
+export interface LevelTheme {
+  level: CourseLevel;
+  sectionNumber: number;
+  hue: string;
+  edge: string;
+  softBg: string;
+  badgeBg: string;
+  badgeText: string;
+  icon: LucideIcon;
+}
+
+export const LEVEL_THEMES: Record<CourseLevel, LevelTheme> = {
+  A1: {
+    level: 'A1',
+    sectionNumber: 1,
+    hue: '#b86142', // Terracotta
+    edge: '#7d3822',
+    softBg: 'rgba(184, 97, 66, 0.09)',
+    badgeBg: 'rgba(184, 97, 66, 0.18)',
+    badgeText: '#934027',
+    icon: Flag,
+  },
+  A2: {
+    level: 'A2',
+    sectionNumber: 2,
+    hue: '#4e8264', // Calm Sage
+    edge: '#2d543e',
+    softBg: 'rgba(78, 130, 100, 0.09)',
+    badgeBg: 'rgba(78, 130, 100, 0.18)',
+    badgeText: '#2e5a40',
+    icon: Compass,
+  },
+  B1: {
+    level: 'B1',
+    sectionNumber: 3,
+    hue: '#5b6a9c', // Dusk Slate / Indigo
+    edge: '#37436b',
+    softBg: 'rgba(91, 106, 156, 0.09)',
+    badgeBg: 'rgba(91, 106, 156, 0.18)',
+    badgeText: '#37436b',
+    icon: Mountain,
+  },
+};
+
 /** The trail swings left and right, like a path up a hill. */
 const SWING = [0, 52, 84, 52, 0, -52, -84, -52];
 const ROW = 104;
@@ -60,9 +104,9 @@ export function AdventurePath({ progress, lessonsOf, next }: { progress: Map<str
   const [open, setOpen] = useState<string | null>(null);
   const here = useRef<HTMLDivElement>(null);
 
-  // Start where you are on the trail.
+  // Always start the screen all the way up when opening Cursus.
   useLayoutEffect(() => {
-    here.current?.scrollIntoView({ block: 'center' });
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
 
   // A click anywhere else closes the lesson card; so does Escape.
@@ -93,7 +137,11 @@ export function AdventurePath({ progress, lessonsOf, next }: { progress: Map<str
         }));
         const firstOfLevel = OUTLINE.findIndex((u) => u.level === unit.level) === index;
         return (
-          <section key={unit.id} aria-label={translateUi('Unit {0}: {1}', [index + 1, unit.title])}>
+          <section
+            key={unit.id}
+            className="relative pb-10"
+            aria-label={translateUi('Unit {0}: {1}', [index + 1, unit.title])}
+          >
             {firstOfLevel && <Landmark level={unit.level} reached={index <= nextUnit} first={index === 0} />}
             <UnitBanner unit={unit} number={index + 1} done={lessons.filter((l) => row?.lessons[l]).length} of={lessons.length} complete={Boolean(row?.doneAt)} locked={index > nextUnit} />
             <Trail stops={stops} open={open} setOpen={setOpen} here={here} />
@@ -108,20 +156,84 @@ export function AdventurePath({ progress, lessonsOf, next }: { progress: Map<str
 /** A level reached along the way: A1 at the start, then A2 and B1, and the summit at the end. */
 function Landmark({ level, reached, first }: { level: CourseLevel | null; reached: boolean; first: boolean }) {
   const translateUi = useUi();
-  const Icon = level ? (first ? Flag : Mountain) : Trophy;
+
+  if (!level) {
+    return (
+      <div className="my-14 flex flex-col items-center text-center">
+        <span
+          className={cx(
+            'grid size-16 place-items-center rounded-3xl transition-transform duration-200',
+            reached ? 'bg-[#d4a33c] text-[#fffaf2]' : 'bg-sunken text-ink-faint',
+          )}
+          style={reached ? { boxShadow: `0 6px 0 ${edge('#d4a33c')}` } : undefined}
+          aria-hidden
+        >
+          <Trophy size={32} strokeWidth={2.4} />
+        </span>
+        <p className="mt-4 font-serif text-2xl font-bold text-ink"><UiText source={'The summit: B1 reached'} /></p>
+        <p className="mt-1 text-sm text-ink-soft">
+          {reached ? translateUi('Every unit done. Well walked.') : translateUi('At the end of the trail.')}
+        </p>
+      </div>
+    );
+  }
+
+  const theme = LEVEL_THEMES[level];
+  const Icon = theme.icon;
+
   return (
-    <div className={cx('flex flex-col items-center text-center', first ? 'mb-6' : 'my-10')}>
-      <span
-        className={cx('grid size-14 place-items-center rounded-2xl', reached ? 'bg-accent text-on-accent shadow-elev-1' : 'bg-sunken text-ink-faint')}
-        style={reached ? { boxShadow: `0 5px 0 ${edge('var(--accent)')}` } : undefined}
-        aria-hidden
+    <div className={cx('relative mx-auto max-w-sm text-center', first ? 'mb-8 mt-2' : 'my-12')}>
+      {!first && (
+        <div className="mb-8 flex items-center justify-center gap-3" aria-hidden>
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-line-strong/60 to-transparent" />
+          <span className="size-2 rounded-full" style={{ backgroundColor: theme.hue }} />
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-line-strong/60 to-transparent" />
+        </div>
+      )}
+
+      <div
+        className="relative overflow-hidden rounded-3xl border p-6 text-center shadow-xs transition-all duration-200"
+        style={{
+          borderColor: `color-mix(in oklab, ${theme.hue} 35%, var(--line))`,
+          background: `linear-gradient(180deg, ${theme.softBg} 0%, var(--surface) 100%)`,
+        }}
       >
-        <Icon size={26} />
-      </span>
-      <p className="mt-3 font-serif text-xl font-semibold">{level ? `${level} · ${LEVEL_NAME[level]}` : translateUi('The summit: B1 reached')}</p>
-      <p className="mt-0.5 text-[13px] text-ink-faint">
-        {level ? (first ? translateUi('Your adventure starts here.') : reached ? translateUi('You’ve reached this part of the trail.') : translateUi('Further up the trail.')) : reached ? translateUi('Every unit done. Well walked.') : translateUi('At the end of the trail.')}
-      </p>
+        <div
+          className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-sans text-xs font-bold tracking-[0.14em] uppercase shadow-xs"
+          style={{ backgroundColor: theme.badgeBg, color: theme.badgeText }}
+        >
+          <span>{level}</span>
+          <span>·</span>
+          <span><UiText source={LEVEL_NAME[level]} /></span>
+        </div>
+
+        <div className="mt-4 flex justify-center">
+          <span
+            className={cx(
+              'grid size-16 place-items-center rounded-2xl text-[#fffaf2] transition-transform duration-200',
+              reached ? 'shadow-elev-1' : 'opacity-85',
+            )}
+            style={{
+              backgroundColor: theme.hue,
+              boxShadow: `0 6px 0 ${theme.edge}`,
+            }}
+            aria-hidden
+          >
+            <Icon size={30} strokeWidth={2.4} />
+          </span>
+        </div>
+
+        <h3 className="mt-4 font-serif text-2xl font-bold tracking-tight text-ink">
+          {level} · <UiText source={LEVEL_NAME[level]} />
+        </h3>
+        <p className="mt-1.5 text-[13.5px] leading-relaxed text-ink-soft">
+          {first
+            ? translateUi('Your adventure starts here.')
+            : reached
+              ? translateUi('You’ve reached this part of the trail.')
+              : translateUi('Further up the trail.')}
+        </p>
+      </div>
     </div>
   );
 }
@@ -132,8 +244,15 @@ function UnitBanner({ unit, number, done, of, complete, locked }: { unit: UnitOu
   const ink = locked ? undefined : '#fffaf2';
   return (
     <div
-      className={cx('relative mx-auto flex items-center gap-4 overflow-hidden rounded-3xl px-5 py-4', locked ? 'bg-sunken text-ink-soft' : '')}
-      style={locked ? undefined : { background: edge(hue, 12), color: ink, boxShadow: `0 6px 0 ${edge(hue, 40)}` }}
+      className={cx(
+        'sticky top-3 lg:top-5 z-20 mx-auto flex items-center gap-4 overflow-hidden rounded-3xl px-5 py-4 transition-all duration-150',
+        locked ? 'bg-sunken text-ink-soft' : '',
+      )}
+      style={
+        locked
+          ? { boxShadow: '0 5px 0 var(--line-strong)' }
+          : { background: edge(hue, 12), color: ink, boxShadow: `0 6px 0 ${edge(hue, 40)}` }
+      }
     >
       <div className="min-w-0 flex-1">
         <p className="text-[11.5px] font-bold tracking-[0.14em] uppercase opacity-85"><UiText source={'Unit {0} · {1}{2}'} values={[number, unit.level, complete ? <UiText source={' · done'} /> : locked ? '' : ` · ${done} of ${of}`]} /></p>

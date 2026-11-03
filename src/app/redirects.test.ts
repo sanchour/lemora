@@ -56,7 +56,7 @@ describe('movedPath', () => {
 describe('rooms', () => {
   it('lists the primary sections, tools (with Sonus and Visio separate), and bottom links', () => {
     expect(PRIMARY_SECTIONS.map((s) => s.id)).toEqual(['home', 'cursus', 'explora', 'bibliotheca']);
-    expect(TOOL_SECTIONS.map((s) => s.id)).toEqual(['codex', 'thesaurus', 'ludus', 'sonus', 'visio', 'mentis']);
+    expect(TOOL_SECTIONS.map((s) => s.id)).toEqual(['codex', 'thesaurus', 'ludus', 'sonus', 'cantus', 'visio', 'mentis']);
     expect(SECTIONS.map((s) => s.name)).toEqual([
       'Home',
       'Cursus',
@@ -66,6 +66,7 @@ describe('rooms', () => {
       'Thesaurus',
       'Ludus',
       'Sonus',
+      'Cantus',
       'Visio',
       'Mentis',
       'Ratio',

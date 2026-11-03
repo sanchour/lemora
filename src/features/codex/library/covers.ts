@@ -1,6 +1,6 @@
 // Cloth colours and ornaments for designed book covers. The first eight are the automatic ones
 // (chosen from the title), so existing covers keep their look.
-import type { CoverDesign, CoverOrnament } from '@/data/types';
+import type { CoverBinding, CoverDesign, CoverOrnament } from '@/data/types';
 import { hashString } from '@/core/hash';
 
 export interface Cloth {
@@ -9,6 +9,18 @@ export interface Cloth {
   bg: string;
   ink: string;
 }
+
+export interface BindingOption {
+  id: CoverBinding;
+  name: string;
+}
+
+export const BINDINGS: BindingOption[] = [
+  { id: 'paperback', name: 'Paperback' },
+  { id: 'hardcover', name: 'Hardcover' },
+  { id: 'leather', name: 'Leather' },
+  { id: 'linen', name: 'Linen' },
+];
 
 export const CLOTHS: Cloth[] = [
   { id: 'sage', name: 'Sage', bg: '#6b8e78', ink: '#faf6f0' },
@@ -36,10 +48,11 @@ export const ORNAMENTS: Array<{ id: CoverOrnament; name: string }> = [
 ];
 
 /** The cover a text shows: its own design, or a colour picked from its title. */
-export function coverOf(text: { title: string; cover?: CoverDesign }): { cloth: Cloth; ornament: CoverOrnament } {
+export function coverOf(text: { title: string; cover?: CoverDesign }): { cloth: Cloth; ornament: CoverOrnament; binding: CoverBinding } {
   const chosen = text.cover && CLOTHS.find((c) => c.id === text.cover!.cloth);
   return {
     cloth: chosen ?? CLOTHS[parseInt(hashString(text.title), 36) % 8],
     ornament: text.cover?.ornament ?? 'rule',
+    binding: text.cover?.binding ?? 'hardcover',
   };
 }

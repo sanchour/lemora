@@ -39,9 +39,10 @@ export function Popover({ trigger, children, placement = 'bottom-start', classNa
     mounted.current = true;
   }, [open]);
   const id = useId();
-  const { refs, floatingStyles, elements } = useFloating({
+  const { refs, floatingStyles, elements, isPositioned } = useFloating({
     open,
     placement,
+    strategy: 'fixed',
     transform: false,
     middleware: [offset(8), flip({ padding: 12 }), shift({ padding: 12 })],
     whileElementsMounted: autoUpdate,
@@ -84,20 +85,27 @@ export function Popover({ trigger, children, placement = 'bottom-start', classNa
       {createPortal(
         <AnimatePresence>
           {open && (
-            <motion.div
+            <div
               ref={refs.setFloating}
-              id={id}
-              role="dialog"
-              aria-label={label}
-              style={floatingStyles}
-              className={cx('z-[55] min-w-56 rounded-2xl border border-line bg-raised p-2 shadow-elev-3', className)}
-              initial={{ opacity: 0, scale: 0.96, y: -4 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.97, transition: { duration: 0.1 } }}
-              transition={spring.snappy}
+              style={{ ...floatingStyles, visibility: isPositioned ? 'visible' : 'hidden' }}
+              className="z-[55]"
             >
-              {typeof children === 'function' ? children(close) : children}
-            </motion.div>
+              <motion.div
+                id={id}
+                role="dialog"
+                aria-label={label}
+                className={cx(
+                  'max-h-[calc(100dvh-5rem)] min-w-56 overflow-y-auto overscroll-contain rounded-2xl border border-line bg-raised p-2 shadow-elev-3 [scrollbar-width:thin]',
+                  className,
+                )}
+                initial={{ opacity: 0, scale: 0.96, y: -4 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.97, transition: { duration: 0.1 } }}
+                transition={spring.snappy}
+              >
+                {typeof children === 'function' ? children(close) : children}
+              </motion.div>
+            </div>
           )}
         </AnimatePresence>,
         portalRoot,

@@ -89,7 +89,7 @@ function SlideOver({ onClose, title, description, children, footer }: DrawerProp
       >
         <div className="pt-2" />
         <Header id={titleId} title={title} description={description} onClose={onClose} />
-        <div className="flex-1 overflow-y-auto overscroll-contain px-6 pb-6">{children}</div>
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 pb-6">{children}</div>
         {footer && <footer className="border-t border-line px-6 py-4">{footer}</footer>}
       </motion.div>
     </div>
@@ -133,7 +133,7 @@ function BottomSheet({ onClose, title, description, children, footer }: DrawerPr
           <div className="mx-auto mt-2.5 mb-1 h-1.5 w-10 rounded-full bg-line-strong" />
           <Header id={titleId} title={title} description={description} onClose={onClose} />
         </div>
-        <div className="flex-1 overflow-y-auto overscroll-contain px-6 pb-6">{children}</div>
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 pb-6">{children}</div>
         {footer && <footer className="border-t border-line px-6 pt-4 pb-2">{footer}</footer>}
       </motion.div>
     </div>

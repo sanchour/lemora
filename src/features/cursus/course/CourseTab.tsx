@@ -1,19 +1,24 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
+import { useMemo } from 'react';
 import { Link } from 'react-router';
 import { motion } from 'motion/react';
-import { ArrowRight, Check, Flag, Route } from 'lucide-react';
+import { Route } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { getLanguage } from '@/core/lang/languages';
-import { LESSONS, OUTLINE } from '@/core/course/outline';
+import { hasScript } from '@/core/script/load';
+import { hasMarks } from '../marks/MarksTab';
 import { nextLesson, useCourseProgress } from '@/data/course';
-import type { NextLesson } from '@/data/course';
-import type { CourseProgressRow } from '@/data/types';
-import { buttonClasses, Card, EmptyState } from '@/design/primitives';
+import { Card, EmptyState } from '@/design/primitives';
 import { spring } from '@/design/motion';
-import { cx } from '@/lib/cx';
 import { AdventurePath } from './AdventurePath';
-import { lessonPath, useCourse } from './parts';
-import type { LoadedCourse } from './parts';
+import { useCourse } from './parts';
+import { StudioDuotoneIcon, type StudioToolId } from '../studio/StudioDuotoneIcon';
+
+interface StudioToolItem {
+  id: StudioToolId;
+  name: string;
+  role: string;
+}
 
 /** Cursus › Course: the course as a trail of lessons, where you are on it, and the next lesson a click away. */
 export function CourseTab() {
@@ -34,70 +39,57 @@ export function CourseTab() {
   const next = nextLesson(progress, loaded.lessonsOf);
 
   return (
-    <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_300px] xl:grid-cols-[minmax(0,1fr)_330px]">
+    <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_88px] xl:grid-cols-[minmax(0,1fr)_96px]">
       <AdventurePath progress={progress} lessonsOf={loaded.lessonsOf} next={next} />
-      <WhereYouAre next={next} progress={progress} loaded={loaded} />
+      <WhereYouAre lang={lang} />
     </div>
   );
 }
 
-function WhereYouAre({ next, progress, loaded }: { next: NextLesson | null; progress: Map<string, CourseProgressRow>; loaded: LoadedCourse }) {
-  const translateUi = useUi();
-  const doneUnits = OUTLINE.filter((u) => progress.get(u.id)?.doneAt);
-  const canDo = doneUnits.reduce((n, u) => n + u.canDo.length, 0);
-  const unit = next ? OUTLINE.find((u) => u.id === next.unit)! : null;
+function WhereYouAre({ lang }: { lang: string }) {
+  const core = getLanguage(lang)?.tier === 1;
+
+  const studioTools = useMemo(() => {
+    const list: StudioToolItem[] = [
+      { id: 'grammar', name: 'Grammar', role: 'Grammar topics' },
+    ];
+    if (core) {
+      list.push({ id: 'sounds', name: 'Sounds', role: 'Listen' });
+    }
+    if (hasScript(lang) || hasMarks(lang)) {
+      list.push({ id: 'script', name: 'Special letters', role: 'Alphabet' });
+    }
+    if (core) {
+      list.push({ id: 'typing', name: 'Typing', role: 'Practice' });
+    }
+    return list;
+  }, [core, lang]);
+
   return (
-    <aside className="space-y-4 lg:sticky lg:top-6">
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={spring.soft}>
-        <Card className="p-5">
-          {unit && next ? (
-            <>
-              <p className="text-[12px] font-bold tracking-[0.12em] text-sage-text uppercase"><UiText source={'Unit {0} · {1}'} values={[OUTLINE.indexOf(unit) + 1, unit.level]} /></p>
-              <h2 className="mt-1 font-serif text-xl leading-tight font-semibold">{unit.title}</h2>
-              <div className="mt-3 flex items-center gap-3">
-                <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-sunken">
-                  <div className="h-full origin-left rounded-full bg-accent" style={{ transform: `scaleX(${Math.max(0.03, next.done / next.of)})` }} />
-                </div>
-                <span className="text-xs font-semibold text-ink-faint tabular-nums">
-                  {next.done}/{next.of}
-                </span>
-              </div>
-              <Link to={lessonPath(next.unit, next.lesson)} className={cx(buttonClasses('primary', 'md', true), 'mt-4')}>
-                {next.done === 0 && OUTLINE.indexOf(unit) === 0 ? translateUi('Start') : translateUi('Continue')}: {LESSONS[next.lesson].title} <ArrowRight size={16} aria-hidden />
-              </Link>
-              <p className="mt-2 text-center text-[12.5px] text-ink-faint">{LESSONS[next.lesson].aim}.</p>
-              {next.lesson !== 'check' && (
-                <Link to={lessonPath(next.unit, 'check')} className="mt-3 flex items-center justify-center gap-1.5 text-[13px] font-semibold text-ink-soft hover:text-ink"><UiText source={'{0} Know it already? Take the unit check'} values={[<Flag size={13} aria-hidden />]} /></Link>
-              )}
-            </>
-          ) : (
-            <>
-              <p className="text-[12px] font-bold tracking-[0.12em] text-sage-text uppercase"><UiText source={'Course complete'} /></p>
-              <h2 className="mt-1 font-serif text-xl leading-tight font-semibold"><UiText source={'All twelve units done'} /></h2>
-              <p className="mt-2 text-sm text-ink-soft"><UiText source={'Keep going with books in Codex, Grammatica’s B1 and B2 topics, and Sermo’s conversations.'} /></p>
-            </>
-          )}
-        </Card>
-      </motion.div>
-      <Card className="p-5">
-        <p className="text-[12px] font-bold tracking-[0.12em] text-ink-faint uppercase"><UiText source={'What you can do'} /></p>
-        {doneUnits.length ? (
-          <>
-            <p className="mt-1 font-serif text-2xl font-semibold tabular-nums">
-              {canDo} <span className="font-sans text-sm font-semibold text-ink-faint"><UiText source={'things, in {0} {1}'} values={[doneUnits.length, doneUnits.length === 1 ? <UiText source={'unit'} /> : <UiText source={'units'} />]} /></span>
-            </p>
-            <ul className="mt-2 space-y-1 text-[13.5px] text-ink-soft">
-              {doneUnits.slice(-4).map((u) => (
-                <li key={u.id} className="flex items-start gap-2">
-                  <Check size={14} className="mt-0.5 shrink-0 text-sage-text" aria-hidden /> {u.title}
-                </li>
-              ))}
-            </ul>
-          </>
-        ) : (
-          <p className="mt-1 text-sm text-ink-soft"><UiText source={'Each unit you finish adds what you can do with {0}. The first takes about half an hour.'} values={[loaded.course.lang === 'zh' ? <UiText source={'Mandarin'} /> : getLanguage(loaded.course.lang)?.name]} /></p>
-        )}
-      </Card>
-    </aside>
+    <motion.aside
+      initial={{ opacity: 0, x: 8 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={spring.soft}
+      aria-label="Studio"
+      className="lg:sticky lg:top-8 flex flex-row flex-wrap justify-center lg:flex-col lg:items-center gap-5.5 py-1"
+    >
+      {studioTools.map((tool) => (
+        <Link
+          key={tool.id}
+          to={`/cursus?tool=${tool.id}`}
+          className="group flex flex-col items-center text-center transition-all outline-none"
+        >
+          <div
+            className="flex size-14 sm:size-15 items-center justify-center rounded-full border-2 border-line-strong/80 bg-raised shadow-xs transition-all duration-200 group-hover:-translate-y-1 group-hover:border-accent group-hover:bg-surface group-hover:shadow-elev-2 active:translate-y-0"
+            style={{ boxShadow: '0 4px 0 var(--line-strong)' }}
+          >
+            <StudioDuotoneIcon id={tool.id} className="size-8 transition-transform duration-200 group-hover:scale-110" />
+          </div>
+          <span className="mt-1.5 font-sans text-[11.5px] font-semibold text-ink-soft transition-colors group-hover:text-accent-text whitespace-nowrap">
+            <UiText source={tool.name} />
+          </span>
+        </Link>
+      ))}
+    </motion.aside>
   );
 }

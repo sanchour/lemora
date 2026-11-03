@@ -115,7 +115,6 @@ export function WhyStep({ language, reasons, onReasons }: WhyStepProps) {
                 )}
               </motion.span>
               <span className="mt-3 font-serif text-[18px] font-semibold">{r.name}</span>
-              <span className="mt-0.5 text-[12.5px] leading-snug text-ink-soft">{r.blurb}</span>
             </button>
           );
         })}

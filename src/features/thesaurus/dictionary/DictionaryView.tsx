@@ -29,29 +29,31 @@ export function DictionaryView({ lang }: { lang: string }) {
   const open = (row: RememberedRow) => setParams({ tab: 'dictionary', word: row.lemma ?? row.key });
 
   return (
-    <div>
+    <div className="space-y-6">
       {full && (
-        <div className="mb-7 flex items-center gap-5">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <DictionarySearch lang={lang} size="lg" className="max-w-2xl flex-1" />
-          {ready && installed && <p className="shrink-0 text-[13px] text-ink-faint"><UiText source={'{0} words · works offline'} values={[installed.words.toLocaleString()]} /></p>}
+          {ready && installed && <p className="shrink-0 text-[12.5px] font-medium text-ink-faint tabular-nums"><UiText source={'{0} words · works offline'} values={[installed.words.toLocaleString()]} /></p>}
         </div>
       )}
       {full && installed?.state === 'none' && (
-        <div className="mb-7">
+        <div>
           <InstallCard lang={lang} />
         </div>
       )}
       {installed?.state === 'old' && (
-        <div className="mb-7">
+        <div>
           <InstallCard lang={lang} update />
         </div>
       )}
 
       <PersonalDictionaryToolbar lang={lang} onOpenWord={(w) => setParams({ tab: 'dictionary', word: w })} />
 
-      <div className="grid grid-cols-[minmax(300px,380px)_minmax(0,1fr)] items-start gap-8">
+      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[340px_minmax(0,1fr)]">
         <section aria-label={translateUi('Your words')}>
-          <h2 className="mb-3 flex items-baseline gap-2 font-serif text-xl font-semibold"><UiText source={'Your words {0}'} values={[<span className="font-sans text-sm font-bold text-ink-faint tabular-nums">{rows?.length ?? ''}</span>]} /></h2>
+          <header className="mb-3.5 flex items-baseline gap-2.5 border-b border-line pb-2">
+            <h2 className="font-serif text-xl font-semibold"><UiText source={'Your words {0}'} values={[<span className="ml-1 font-sans text-sm font-bold text-ink-faint tabular-nums">{rows?.length ?? ''}</span>]} /></h2>
+          </header>
           {rows && rows.length > 0 && <MemoryList lang={lang} rows={rows} selected={selected?.key} onSelect={open} />}
           {rows && rows.length === 0 && (
             <Card className="p-5">
@@ -61,12 +63,12 @@ export function DictionaryView({ lang }: { lang: string }) {
           )}
         </section>
 
-        <div className="sticky top-6 max-h-[calc(100dvh-48px)] min-w-0 overflow-y-auto overscroll-contain rounded-3xl border border-line bg-raised p-7 [scrollbar-width:thin]">
+        <div className="min-w-0 overflow-y-auto overscroll-contain rounded-3xl border border-line/70 bg-surface p-6 shadow-elev-1 sm:p-8 lg:sticky lg:top-6 lg:max-h-[calc(100dvh-48px)] [scrollbar-width:thin]">
           {word ? (
             <EntryView lang={lang} word={word} />
           ) : selected ? (
             <div>
-              <p lang={lang} className="font-serif text-[40px] leading-tight font-semibold">
+              <p lang={lang} className="font-serif text-[36px] leading-tight font-semibold sm:text-[40px]">
                 {selected.surface}
               </p>
               {selected.gloss && <p className="mt-1 mb-6 text-[16px] text-ink-soft">{selected.gloss}</p>}

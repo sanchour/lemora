@@ -583,7 +583,7 @@ function ContinueLearningSection({ lang, level }: { lang: string; level: Level }
       list.push({
         id: `song:${s.id}`,
         to: `/cantus/song/${encodeURIComponent(s.id)}`,
-        room: 'Sonus+',
+        room: 'Cantus',
         title: s.title,
         detail: translateUi("Song · {0}", [s.artist]),
         langAttr: lang,

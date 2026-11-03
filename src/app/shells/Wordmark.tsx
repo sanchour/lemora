@@ -21,3 +21,12 @@ export function Wordmark({ className, size = 'md' }: { className?: string; size?
     </span>
   );
 }
+
+/** Monogram: lowercase serif "l." with an accent full stop, in the style of lingua. */
+export function Monogram({ className, size = 'md' }: { className?: string; size?: 'sm' | 'md' }) {
+  return (
+    <span className={cx('font-serif leading-none font-semibold tracking-tight text-ink select-none', size === 'sm' ? 'text-[20px]' : 'text-[24px]', className)}>
+      l<span className="text-accent" aria-hidden>.</span>
+    </span>
+  );
+}

@@ -157,12 +157,22 @@ function ExampleReveal({ lang, level }: { lang: string; level: Level }) {
 }
 
 /** A level's little pen drawing, filled in soft colour: the sprig that grows from seed to tree. */
-export function LevelIcon({ level, className, style }: { level: Level | 'C2'; className?: string; style?: CSSProperties }) {
+export function LevelIcon({ level, className, style, halo }: { level: Level | 'C2'; className?: string; style?: CSSProperties; halo?: boolean }) {
+  const { opacity, ...rest } = style ?? {};
   return (
-    <svg viewBox="0 0 32 32" className={cx('text-ink', className)} style={style} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      {ICONS[level].map((p, k) => (
-        <path key={k} d={p.d} fill={p.fill ?? 'none'} stroke="currentColor" />
-      ))}
+    <svg viewBox="0 0 32 32" className={cx('text-ink', className)} style={ halo ? rest : style } strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      {halo && (
+        <g fill="var(--bg)" stroke="var(--bg)" strokeWidth={3.5}>
+          {ICONS[level].map((p, k) => (
+            <path key={k} d={p.d} />
+          ))}
+        </g>
+      )}
+      <g style={halo && opacity !== undefined ? { opacity } : undefined}>
+        {ICONS[level].map((p, k) => (
+          <path key={k} d={p.d} fill={p.fill ?? 'none'} stroke="currentColor" />
+        ))}
+      </g>
     </svg>
   );
 }
@@ -237,9 +247,11 @@ export function LevelStep({ lang, level, seedKnown, onLevel, onSeedKnown }: Leve
               <path d={LINE} fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
             </svg>
             {/* The travelled part: the same line again, cropped at exactly the chosen level's position. */}
-            <motion.svg viewBox="0 0 600 20" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-1/2 h-5 -translate-y-1/2 overflow-visible" aria-hidden initial={false} animate={{ clipPath: `inset(-10px ${100 - (100 * index) / last}% -10px -10px)` }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
-              <path d={LINE} fill="none" stroke="var(--accent)" strokeWidth={2.4} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-            </motion.svg>
+            <motion.div className="pointer-events-none absolute inset-x-0 top-1/2 h-5 -translate-y-1/2" aria-hidden initial={false} animate={{ clipPath: `inset(-10px ${100 - (100 * index) / last}% -10px -10px)` }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
+              <svg viewBox="0 0 600 20" preserveAspectRatio="none" className="size-full overflow-visible">
+                <path d={LINE} fill="none" stroke="var(--accent)" strokeWidth={2.4} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+              </svg>
+            </motion.div>
 
             {/* A small drawing on the line for each level. */}
             {LEVELS.map((l, i) => {
@@ -253,14 +265,10 @@ export function LevelStep({ lang, level, seedKnown, onLevel, onSeedKnown }: Leve
                   aria-label={`${l.id}, ${translateUi(MEANS[l.id].short)}`}
                   onPointerDown={(e) => e.stopPropagation()}
                   onClick={() => onLevel(l.id)}
-                  className="absolute top-1/2 grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-bg"
+                  className="absolute top-1/2 grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full"
                   style={{ left: pct(i) }}
                 >
-                  <svg viewBox="0 0 32 32" className={cx('size-10 text-ink transition-[opacity,transform] duration-300', on ? 'scale-110' : 'scale-100')} style={{ opacity: on ? 1 : reached ? 0.85 : 0.5 }} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                    {ICONS[l.id].map((p, k) => (
-                      <path key={k} d={p.d} fill={p.fill ?? 'none'} stroke="currentColor" />
-                    ))}
-                  </svg>
+                  <LevelIcon level={l.id} halo className={cx('size-10 transition-[opacity,transform] duration-300', on ? 'scale-110' : 'scale-100')} style={{ opacity: on ? 1 : reached ? 0.85 : 0.5 }} />
                 </button>
               );
             })}

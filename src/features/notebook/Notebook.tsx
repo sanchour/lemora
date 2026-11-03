@@ -16,35 +16,279 @@ import { db } from '@/data/db';
 import { newNotebookNote, removeLibrary, saveLibrary, useLibrary } from '@/data/notebook';
 import { getGrammarNotesMap } from '@/data/grammarUserData';
 import { useLibrary as useTexts } from '@/data/library';
-import { Button } from '@/design/primitives';
+import { Button, Segmented } from '@/design/primitives';
 import { DiaryEditor } from '@/features/codex/diarium/DiaryEditor';
 import { ErrorLogPanel } from '@/features/ratio/ErrorLogPanel';
 import { WeakSpotsPanel } from '@/features/ratio/WeakSpotsPanel';
 import { saveFile, frontMatter } from '@/services/export';
 import { toast } from '@/state/ui';
+import { cx } from '@/lib/cx';
 import { Field, inputClass } from './fields';
 import { Markdown } from './Markdown';
 
-export function Notebook() { const { language } = useApp(); return <NotebookBody key={language.id} lang={language.id} />; }
+type NotebookMode = 'notes' | 'sources' | 'errors' | 'connections';
+
+export function Notebook() {
+  const { language } = useApp();
+  return <NotebookBody key={language.id} lang={language.id} />;
+}
+
 function NotebookBody({ lang }: { lang: string }) {
-  const t = useUi(); const data = useLibrary('notebook', lang); const [params, setParams] = useSearchParams();
-  const [query, setQuery] = useState(''); const [folder, setFolder] = useState(''); const [mode, setMode] = useState<'notes' | 'sources' | 'errors' | 'connections'>('notes'); const [editing, edit] = useState<NotebookNote | null>(() => { try { const n = JSON.parse(localStorage.getItem('notebook.draft:' + lang) ?? 'null') as NotebookNote | null; return n?.lang === lang && typeof n.id === 'string' && typeof n.body === 'string' ? n : null; } catch { return null; } });
-  const list = filterLibrary(data?.items ?? [], query, folder); const requested = params.get('note'); const selected = requested ? data?.items.find((n) => n.id === requested) : list[0];
-  const choose = (id?: string) => { if (editing && !window.confirm(t('Discard unsaved changes?'))) return; localStorage.removeItem('notebook.draft:' + lang); edit(null); setParams(id ? { note: id } : {}); };
-  const start = (note: NotebookNote) => { if (!editing || window.confirm(t('Discard unsaved changes?'))) { edit(note); setMode('notes'); } };
-  return <section aria-label={t('Notebook')} className="space-y-5">
-    <header className="flex flex-wrap justify-between gap-3"><div><h2 className="font-serif text-2xl"><UiText source="Your notebook" /></h2><p className="mt-1 text-sm text-ink-soft"><UiText source="Markdown notes and connections, kept on this device. Use folders, tags and search to find them again." /></p></div><Button onClick={() => start(newNotebookNote(lang))}><UiText source="New note" /></Button></header>
-    <nav aria-label={t('Notebook view')} className="flex gap-2">{(['notes', 'sources', 'errors', 'connections'] as const).map((v) => <Button key={v} size="sm" variant={mode === v ? 'primary' : 'ghost'} onClick={() => { if (!editing || window.confirm(t('Discard unsaved changes?'))) { localStorage.removeItem('notebook.draft:' + lang); edit(null); setMode(v); } }}><UiText source={v === 'notes' ? 'My notes' : v === 'sources' ? 'Notes elsewhere' : v === 'connections' ? 'Connections' : 'Error log'} /></Button>)}</nav>
-    {mode !== 'errors' && <div className="grid grid-cols-[minmax(240px,1fr)_240px] gap-4"><Field title={t('Search all notes')}><input className={inputClass} value={query} onChange={(e) => setQuery(e.target.value)} /></Field><Field title={t('Folder')}><select className={inputClass} value={folder} onChange={(e) => setFolder(e.target.value)}><option value="">{t('Every folder')}</option>{[...new Set((data?.items ?? []).map((n) => n.folder).filter(Boolean))].sort().map((f) => <option key={f}>{f}</option>)}</select></Field></div>}
-    {data?.error && <p role="alert">{data.error}</p>}
-    {mode === 'connections' ? <NotebookConnections items={list} onOpenNote={() => setMode('notes')} /> : mode === 'errors' ? <><ErrorLogPanel lang={lang} /><WeakSpotsPanel lang={lang} /><p className="text-sm text-ink-soft"><UiText source="Mistakes from your learner record appear here when there is evidence. Practise links return to the existing lesson or practice tools." /></p></> : mode === 'sources' ? <LegacyNotes lang={lang} query={query} onCopy={start} /> : <div className="grid grid-cols-[240px_minmax(0,1fr)] items-start gap-6"><aside className="max-h-[72vh] overflow-y-auto"><ul className="space-y-2">{list.map((n) => <li key={n.id}><button type="button" aria-pressed={selected?.id === n.id} onClick={() => choose(n.id)} className={'w-full rounded-xl border p-3 text-left ' + (selected?.id === n.id ? 'border-accent bg-accent-soft' : 'border-line bg-raised')}><span className="block font-serif text-lg">{n.title || t('Untitled note')}</span><span className="text-xs text-ink-faint">{[n.folder, ...n.tags].filter(Boolean).join(' · ')}</span></button></li>)}</ul>{!list.length && <p className="text-sm text-ink-soft"><UiText source="No notes match. Create one or change the filters." /></p>}</aside><article className="min-w-0 rounded-2xl border border-line bg-raised p-6">{editing ? <NotebookEditor key={editing.id} initial={editing} notes={data?.items ?? []} onCancel={() => { if (window.confirm(t('Discard unsaved changes?'))) { localStorage.removeItem('notebook.draft:' + lang); edit(null); } }} onSaved={(n) => { edit(null); setParams({ note: n.id }); }} /> : selected ? <>
-      <header className="mb-5 flex items-start justify-between gap-3"><div><h3 className="font-serif text-3xl">{selected.title || t('Untitled note')}</h3><p className="mt-2 text-xs text-ink-faint">{[t(selected.kind), selected.folder, ...selected.tags].filter(Boolean).join(' · ')}</p></div><Button size="sm" variant="secondary" onClick={() => edit(selected)}><UiText source="Edit note" /></Button></header><Markdown text={selected.body} />
-      {!!selected.links.length && <section className="mt-6 border-t border-line pt-4" aria-label={t('Linked learning')}><h4 className="font-semibold"><UiText source="Linked learning" /></h4><ul className="mt-2 space-y-1">{selected.links.map((l, i) => <li key={i}><Link className="text-accent-text underline" to={noteLinkPath(l)}>{l.label || l.target}</Link><span className="ml-2 text-xs text-ink-faint">{t(l.kind)}</span></li>)}</ul></section>}
-      {(data?.items ?? []).some((n) => n.links.some((l) => l.kind === 'note' && l.target === selected.id)) && <section className="mt-5"><h4 className="font-semibold"><UiText source="Notes that link here" /></h4>{(data?.items ?? []).filter((n) => n.links.some((l) => l.kind === 'note' && l.target === selected.id)).map((n) => <button key={n.id} type="button" className="mt-2 block text-accent-text underline" onClick={() => choose(n.id)}>{n.title}</button>)}</section>}
-      <NotebookStudyTools key={`${selected.id}:${selected.updatedAt}`} note={selected} notes={list} />
-      <div className="mt-6 flex flex-wrap gap-2"><Button size="sm" variant="ghost" onClick={() => saveFile(`note-${selected.id}.md`, frontMatter({ title: selected.title, lang, tags: selected.tags, folder: selected.folder }) + '\n\n' + selected.body + '\n\n' + selected.links.map((l) => `- [${l.label || l.target}](${noteLinkPath(l)})`).join('\n'), 'text/markdown;charset=utf-8')}><UiText source="Export Markdown" /></Button><Button size="sm" variant="ghost" onClick={() => void removeLibrary('notebook', selected).then(() => toast('Note removed.', { action: { label: 'Undo', onClick: () => { void saveLibrary('notebook', selected); } } })).catch((e: unknown) => toast(e instanceof Error ? e.message : 'Could not remove the note.', { tone: 'error' }))}><UiText source="Remove note" /></Button></div>
-    </> : <p className="text-ink-soft"><UiText source={requested ? 'This note is no longer available in this language.' : 'A page for grammar, words, books, media and expressions you want to understand.'} /></p>}</article></div>}
-  </section>;
+  const t = useUi();
+  const data = useLibrary('notebook', lang);
+  const [params, setParams] = useSearchParams();
+  const [query, setQuery] = useState('');
+  const [folder, setFolder] = useState('');
+  const [mode, setMode] = useState<NotebookMode>('notes');
+  const [editing, edit] = useState<NotebookNote | null>(() => {
+    try {
+      const n = JSON.parse(localStorage.getItem('notebook.draft:' + lang) ?? 'null') as NotebookNote | null;
+      return n?.lang === lang && typeof n.id === 'string' && typeof n.body === 'string' ? n : null;
+    } catch {
+      return null;
+    }
+  });
+  const list = filterLibrary(data?.items ?? [], query, folder);
+  const requested = params.get('note');
+  const selected = requested ? data?.items.find((n) => n.id === requested) : list[0];
+
+  const choose = (id?: string) => {
+    if (editing && !window.confirm(t('Discard unsaved changes?'))) return;
+    localStorage.removeItem('notebook.draft:' + lang);
+    edit(null);
+    setParams(id ? { note: id } : {});
+  };
+
+  const start = (note: NotebookNote) => {
+    if (!editing || window.confirm(t('Discard unsaved changes?'))) {
+      edit(note);
+      setMode('notes');
+    }
+  };
+
+  const switchMode = (next: NotebookMode) => {
+    if (!editing || window.confirm(t('Discard unsaved changes?'))) {
+      localStorage.removeItem('notebook.draft:' + lang);
+      edit(null);
+      setMode(next);
+    }
+  };
+
+  return (
+    <section aria-label={t('Notebook')} className="space-y-6">
+      <header className="flex flex-wrap items-start justify-between gap-4 border-b border-line pb-4">
+        <div>
+          <div className="flex items-baseline gap-2.5">
+            <h2 className="font-serif text-xl font-semibold"><UiText source="Your notebook" /></h2>
+            <span className="text-sm font-bold text-ink-faint tabular-nums">{(data?.items ?? []).length}</span>
+          </div>
+          <p className="mt-1 max-w-2xl text-[13.5px] leading-relaxed text-ink-soft">
+            <UiText source="Markdown notes and connections, kept on this device. Use folders, tags and search to find them again." />
+          </p>
+        </div>
+        <Button size="sm" onClick={() => start(newNotebookNote(lang))}><UiText source="New note" /></Button>
+      </header>
+
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <nav aria-label={t('Notebook view')}>
+          <Segmented<NotebookMode>
+            label={t('Notebook view')}
+            value={mode}
+            onChange={switchMode}
+            options={[
+              { value: 'notes', label: t('My notes') },
+              { value: 'sources', label: t('Notes elsewhere') },
+              { value: 'connections', label: t('Connections') },
+              { value: 'errors', label: t('Error log') },
+            ]}
+          />
+        </nav>
+
+        {mode !== 'errors' && (
+          <div className="grid flex-1 gap-3 sm:max-w-xl sm:grid-cols-[minmax(180px,1fr)_180px]">
+            <Field title={t('Search all notes')}>
+              <input className={inputClass} value={query} onChange={(e) => setQuery(e.target.value)} />
+            </Field>
+            <Field title={t('Folder')}>
+              <select className={inputClass} value={folder} onChange={(e) => setFolder(e.target.value)}>
+                <option value="">{t('Every folder')}</option>
+                {[...new Set((data?.items ?? []).map((n) => n.folder).filter(Boolean))].sort().map((f) => (
+                  <option key={f}>{f}</option>
+                ))}
+              </select>
+            </Field>
+          </div>
+        )}
+      </div>
+
+      {data?.error && <p role="alert" className="text-sm text-accent-text">{data.error}</p>}
+
+      {mode === 'connections' ? (
+        <NotebookConnections items={list} onOpenNote={() => setMode('notes')} />
+      ) : mode === 'errors' ? (
+        <div className="space-y-6">
+          <ErrorLogPanel lang={lang} />
+          <WeakSpotsPanel lang={lang} />
+          <p className="text-[13.5px] text-ink-soft">
+            <UiText source="Mistakes from your learner record appear here when there is evidence. Practise links return to the existing lesson or practice tools." />
+          </p>
+        </div>
+      ) : mode === 'sources' ? (
+        <LegacyNotes lang={lang} query={query} onCopy={start} />
+      ) : (
+        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
+          <aside className="max-h-[72vh] overflow-y-auto pr-1">
+            <ul className="space-y-1.5">
+              {list.map((n) => (
+                <li key={n.id}>
+                  <button
+                    type="button"
+                    aria-pressed={selected?.id === n.id}
+                    onClick={() => choose(n.id)}
+                    className={cx(
+                      'w-full rounded-xl border p-3.5 text-left transition-all',
+                      selected?.id === n.id
+                        ? 'border-accent/50 bg-accent-soft/60 shadow-elev-1'
+                        : 'border-line/70 bg-surface hover:border-line-strong hover:bg-raised',
+                    )}
+                  >
+                    <span className="block font-serif text-[16.5px] leading-snug font-semibold">
+                      {n.title || t('Untitled note')}
+                    </span>
+                    <span className="mt-0.5 block text-[11.5px] text-ink-faint">
+                      {[n.folder, ...n.tags].filter(Boolean).join(' · ') || t(n.kind)}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+            {!list.length && (
+              <p className="rounded-xl border border-dashed border-line p-4 text-[13.5px] text-ink-soft">
+                <UiText source="No notes match. Create one or change the filters." />
+              </p>
+            )}
+          </aside>
+
+          <article className="min-w-0 rounded-3xl border border-line/70 bg-surface p-6 shadow-elev-1 sm:p-8">
+            {editing ? (
+              <NotebookEditor
+                key={editing.id}
+                initial={editing}
+                notes={data?.items ?? []}
+                onCancel={() => {
+                  if (window.confirm(t('Discard unsaved changes?'))) {
+                    localStorage.removeItem('notebook.draft:' + lang);
+                    edit(null);
+                  }
+                }}
+                onSaved={(n) => {
+                  edit(null);
+                  setParams({ note: n.id });
+                }}
+              />
+            ) : selected ? (
+              <>
+                <header className="mb-5 flex items-start justify-between gap-3 border-b border-line/60 pb-4">
+                  <div>
+                    <h3 className="font-serif text-2xl font-semibold tracking-tight sm:text-3xl">
+                      {selected.title || t('Untitled note')}
+                    </h3>
+                    <p className="mt-1.5 text-[12px] font-semibold text-ink-faint">
+                      {[t(selected.kind), selected.folder, ...selected.tags].filter(Boolean).join(' · ')}
+                    </p>
+                  </div>
+                  <Button size="sm" variant="secondary" onClick={() => edit(selected)}>
+                    <UiText source="Edit note" />
+                  </Button>
+                </header>
+                <Markdown text={selected.body} />
+                {!!selected.links.length && (
+                  <section className="mt-6 border-t border-line/60 pt-4" aria-label={t('Linked learning')}>
+                    <h4 className="text-[11px] font-bold tracking-[0.14em] text-ink-faint uppercase">
+                      <UiText source="Linked learning" />
+                    </h4>
+                    <ul className="mt-2 space-y-1.5">
+                      {selected.links.map((l, i) => (
+                        <li key={i} className="text-[13.5px]">
+                          <Link className="font-semibold text-accent-text underline decoration-line-strong underline-offset-4" to={noteLinkPath(l)}>
+                            {l.label || l.target}
+                          </Link>
+                          <span className="ml-2 text-xs text-ink-faint">{t(l.kind)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+                {(data?.items ?? []).some((n) => n.links.some((l) => l.kind === 'note' && l.target === selected.id)) && (
+                  <section className="mt-5 border-t border-line/60 pt-4">
+                    <h4 className="text-[11px] font-bold tracking-[0.14em] text-ink-faint uppercase">
+                      <UiText source="Notes that link here" />
+                    </h4>
+                    {(data?.items ?? [])
+                      .filter((n) => n.links.some((l) => l.kind === 'note' && l.target === selected.id))
+                      .map((n) => (
+                        <button
+                          key={n.id}
+                          type="button"
+                          className="mt-2 block text-[13.5px] font-semibold text-accent-text underline decoration-line-strong underline-offset-4"
+                          onClick={() => choose(n.id)}
+                        >
+                          {n.title}
+                        </button>
+                      ))}
+                  </section>
+                )}
+                <NotebookStudyTools key={`${selected.id}:${selected.updatedAt}`} note={selected} notes={list} />
+                <div className="mt-6 flex flex-wrap gap-2 border-t border-line/60 pt-4">
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onClick={() =>
+                      saveFile(
+                        `note-${selected.id}.md`,
+                        frontMatter({ title: selected.title, lang, tags: selected.tags, folder: selected.folder }) +
+                          '\n\n' +
+                          selected.body +
+                          '\n\n' +
+                          selected.links.map((l) => `- [${l.label || l.target}](${noteLinkPath(l)})`).join('\n'),
+                        'text/markdown;charset=utf-8',
+                      )
+                    }
+                  >
+                    <UiText source="Export Markdown" />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() =>
+                      void removeLibrary('notebook', selected)
+                        .then(() =>
+                          toast('Note removed.', {
+                            action: {
+                              label: 'Undo',
+                              onClick: () => {
+                                void saveLibrary('notebook', selected);
+                              },
+                            },
+                          }),
+                        )
+                        .catch((e: unknown) => toast(e instanceof Error ? e.message : 'Could not remove the note.', { tone: 'error' }))
+                    }
+                  >
+                    <UiText source="Remove note" />
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <p className="text-[14.5px] leading-relaxed text-ink-soft">
+                <UiText source={requested ? 'This note is no longer available in this language.' : 'A page for grammar, words, books, media and expressions you want to understand.'} />
+              </p>
+            )}
+          </article>
+        </div>
+      )}
+    </section>
+  );
 }
 function NotebookEditor({ initial, notes, onCancel, onSaved }: { initial: NotebookNote; notes: NotebookNote[]; onCancel: () => void; onSaved: (n: NotebookNote) => void }) {
   const t = useUi(); const [draft, set] = useState(initial); const [raw, setRaw] = useState(false); const [busy, setBusy] = useState(false); const [error, setError] = useState('');

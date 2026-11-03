@@ -69,12 +69,15 @@ export function Entries({ entries, lang }: { entries: JournalEntry[]; lang: stri
   if (!entries.length) return null;
   return (
     <section aria-label={translateUi('Entries')}>
-      <div className="mb-4 flex items-center gap-2">
-        <h2 className="mr-auto font-serif text-xl font-semibold"><UiText source={'Entries'} /></h2>
+      <div className="mb-4 flex flex-wrap items-center gap-2 border-b border-line pb-2.5">
+        <div className="mr-auto flex items-baseline gap-2.5">
+          <h2 className="font-serif text-xl font-semibold"><UiText source={'Entries'} /></h2>
+          <span className="text-sm font-bold text-ink-faint tabular-nums">{entries.length}</span>
+        </div>
         {view === 'list' && (
           <>
             <div className="relative w-64">
-              <SearchInput ref={search} value={query} onChange={setQuery} placeholder={translateUi('Search entries')} className="h-10" />
+              <SearchInput ref={search} value={query} onChange={setQuery} placeholder={translateUi('Search entries')} className="h-9" />
               {!query && (
                 <span className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2">
                   <Kbd>/</Kbd>

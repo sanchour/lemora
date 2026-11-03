@@ -16,18 +16,18 @@ export function RoomSettings() {
   const translateUi = useUi();
   return (
     <Popover
-      label={translateUi('Sonus+ settings')}
+      label={translateUi('Cantus settings')}
       placement="bottom-end"
       className="w-[340px]"
       trigger={(props) => (
-        <button {...props} type="button" aria-label={translateUi('Sonus+ settings')} title={translateUi('Sonus+ settings')} className="grid size-10 shrink-0 place-items-center rounded-full bg-[var(--room-fill)] text-[var(--room-soft)] transition-colors hover:bg-[var(--room-fill-strong)] hover:text-[var(--room-ink)] pointer-coarse:size-11">
-          <Settings2 size={18} aria-hidden />
-        </button>
+          <button {...props} type="button" aria-label={translateUi('Cantus settings')} title={translateUi('Cantus settings')} className="grid size-10 shrink-0 place-items-center rounded-full bg-[var(--room-fill)] text-[var(--room-soft)] transition-colors hover:bg-[var(--room-fill-strong)] hover:text-[var(--room-ink)] pointer-coarse:size-11">
+            <Settings2 size={18} aria-hidden />
+          </button>
       )}
     >
-      {() => <RoomSettingsBody />}
-    </Popover>
-  );
+          {() => <RoomSettingsBody />}
+        </Popover>
+      );
 }
 
 function RoomSettingsBody() {

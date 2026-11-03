@@ -113,7 +113,7 @@ function CloseRoom({ className }: { className?: string }) {
   const translateUi = useUi();
   const leave = useLeaveCantus();
   return (
-    <button type="button" onClick={leave} aria-label={translateUi('Leave Sonus+')} title={translateUi('Back to Lingua')} className={cx('grid size-10 shrink-0 place-items-center rounded-full bg-[var(--room-fill)] text-[var(--room-soft)] transition-colors hover:bg-[var(--room-fill-strong)] hover:text-[var(--room-ink)] pointer-coarse:size-11', className)}>
+    <button type="button" onClick={leave} aria-label={translateUi('Leave Cantus')} title={translateUi('Back to Lingua')} className={cx('grid size-10 shrink-0 place-items-center rounded-full bg-[var(--room-fill)] text-[var(--room-soft)] transition-colors hover:bg-[var(--room-fill-strong)] hover:text-[var(--room-ink)] pointer-coarse:size-11', className)}>
       <X size={19} aria-hidden />
     </button>
   );
@@ -125,7 +125,7 @@ function Wordmark() {
       <span className="grid size-8 place-items-center rounded-[10px] bg-[linear-gradient(135deg,#e8a0bf,#b4587e)] text-[#1a1215]" aria-hidden>
         ♪
       </span>
-      <span><UiText source={'Sonus{0}'} values={[<span className="text-[var(--room-rose)]">+</span>]} /></span>
+      <span><UiText source={'Cantus'} /></span>
     </span>
   );
 }
@@ -137,7 +137,7 @@ function TopBar({ tab }: { tab: RoomTab }) {
     <header className="sticky top-0 z-30 border-b border-[var(--room-rim)] bg-[rgb(18_14_16/0.72)] backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-[1440px] items-center gap-6 px-10">
         <Wordmark />
-        <nav aria-label={translateUi('Sonus+')} className="flex gap-1.5">
+        <nav aria-label={translateUi('Cantus')} className="flex gap-1.5">
           {ROOM_TABS.filter((t) => t.id !== 'search').map((t) => (
             <Link key={t.id} to={t.path} aria-current={tab === t.id ? 'page' : undefined} className={cx('h-9 rounded-full px-4 text-[14px] leading-9 font-bold transition-colors', tab === t.id ? 'bg-[var(--room-pill)] text-[var(--room-pill-ink)]' : 'text-[var(--room-soft)] hover:bg-[var(--room-fill)] hover:text-[var(--room-ink)]')}>
               {t.name}
@@ -171,7 +171,7 @@ function PhoneHeader() {
 function TabBar({ tab }: { tab: RoomTab }) {
   const translateUi = useUi();
   return (
-    <nav aria-label={translateUi('Sonus+')} className="room-tabbar">
+    <nav aria-label={translateUi('Cantus')} className="room-tabbar">
       {ROOM_TABS.filter((t) => t.id !== 'search').map((t) => {
         const Icon = TAB_ICON[t.id];
         const on = tab === t.id;

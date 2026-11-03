@@ -193,14 +193,14 @@ export function LibraryHome({ lang, media, visible, feeds, playback, transcribed
             <SongTile key={s.id} song={s} i={i} />
           ))}
         </ul>
-        <MoreIn onClick={onMusic}><UiText source={'More music in Sonus+'} /></MoreIn>
+        <MoreIn onClick={onMusic}><UiText source={'More music in Cantus'} /></MoreIn>
       </>
     );
   else if (view === 'podcasts')
     main = (
       <>
         <PodcastGrid feeds={feeds} />
-        <MoreIn onClick={onPodcasts}><UiText source={'Find podcasts in Sonus+'} /></MoreIn>
+        <MoreIn onClick={onPodcasts}><UiText source={'Find podcasts in Cantus'} /></MoreIn>
       </>
     );
   else if (view === 'episodes') main = rows(visible.filter((m) => m.feedId));

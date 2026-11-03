@@ -17,7 +17,7 @@ type Perk = { icon: LucideIcon; name: string; text: string };
 
 const PLUS: Perk[] = [
   { icon: Gamepad2, name: 'Ludus', text: 'Games that drill your own decks' },
-  { icon: Music, name: 'Sonus+', text: 'Sing along, podcasts, song games' },
+  { icon: Music, name: 'Cantus', text: 'Sing along, podcasts, song games' },
   { icon: Tv, name: 'Streaming', text: 'Your shows with study subtitles' },
   { icon: GraduationCap, name: 'Cursus', text: 'The course, Grammatica and typing' },
   { icon: MessagesSquare, name: 'Sermo', text: 'Scenes to talk through in your AI app' },
