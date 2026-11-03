@@ -109,3 +109,9 @@ export function checkStory(story: StoryGame): StoryCheck {
 
 /** Three stars for a win in a few more choices than the shortest, two for up to six more, one beyond. A story that was not won earns none. */
 export const storyStars = (s: StoryState, shortest: number): number => (s.status !== 'won' ? 0 : s.moves <= shortest + 2 ? 3 : s.moves <= shortest + 6 ? 2 : 1);
+
+/** How many of the words are in a story, in its scenes or its choices: Max is asked to use the learner's words, and this says whether it did. */
+export function wordsUsed(story: StoryGame, words: string[]): number {
+  const text = Object.values(story.scenes).flatMap((sc) => [sc.text, ...sc.choices.map((c) => c.label)]).join(' ').toLocaleLowerCase();
+  return words.filter((w) => text.includes(w.toLocaleLowerCase())).length;
+}

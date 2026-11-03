@@ -15627,5 +15627,101 @@
   ],
   "Needs sentences to dictate: some languages have hand-made ones, and the dictionary’s sentences and your own examples count too.": [
     "src/core/games/source.ts"
+  ],
+  "The line that fits is marked.": [
+    "src/features/games/Complete.tsx"
+  ],
+  "Which line fits?": [
+    "src/features/games/Complete.tsx"
+  ],
+  "Which ending fits?": [
+    "src/features/games/Complete.tsx"
+  ],
+  "A dialogue with a line missing, or a story without its ending. Pick the line that fits.": [
+    "src/features/games/Complete.tsx"
+  ],
+  "For any language, with Max: Practice has dialogues to complete.": [
+    "src/features/games/Complete.tsx"
+  ],
+  "Open Practice": [
+    "src/features/games/Complete.tsx"
+  ],
+  "Click a line or press its number. Right the first time is three stars, the second time two, the third one; two wrong picks and it is lost.": [
+    "src/features/games/Complete.tsx"
+  ],
+  "Strength: {0}": [
+    "src/features/games/Story.tsx"
+  ],
+  "Strength": [
+    "src/features/games/Story.tsx"
+  ],
+  "Add at least three words to a deck first.": [
+    "src/features/games/Story.tsx"
+  ],
+  "Max’s story could not be played. Try again.": [
+    "src/features/games/Story.tsx"
+  ],
+  "{0} of your {1} words are in it.": [
+    "src/features/games/Story.tsx"
+  ],
+  "Write your own": [
+    "src/features/games/Story.tsx"
+  ],
+  "Make a story from my words": [
+    "src/features/games/Story.tsx"
+  ],
+  "Needs Lingua+ Max, and your AI key (Settings › AI)": [
+    "src/features/games/Story.tsx"
+  ],
+  "Back to the story game": [
+    "src/features/games/StoryEditor.tsx"
+  ],
+  "Write a story": [
+    "src/features/games/StoryEditor.tsx"
+  ],
+  "Scenes go in [square brackets]. A choice starts with >, then its words, then -> and the scene it leads to. A choice can need something (| needs: key), a scene can give it (gives: key) or end the story (end: win or end: lose), and health: 3 gives a story strength that a choice can use up (| cost: 1).": [
+    "src/features/games/StoryEditor.tsx"
+  ],
+  "Your stories": [
+    "src/features/games/StoryEditor.tsx"
+  ],
+  "The story": [
+    "src/features/games/StoryEditor.tsx"
+  ],
+  "It can be played: the shortest way is {0} choices.": [
+    "src/features/games/StoryEditor.tsx"
+  ],
+  "Kept. It is in the story game now.": [
+    "src/features/games/StoryEditor.tsx"
+  ],
+  "Finish it": [
+    "src/core/games/defs.ts"
+  ],
+  "A dialogue with a line missing, or a story without its ending: pick what fits.": [
+    "src/core/games/defs.ts"
+  ],
+  "Needs a language with hand-made dialogues and stories to finish: the six core languages have them.": [
+    "src/core/games/source.ts"
+  ],
+  "A scene needs some text: {0}": [
+    "src/core/games/customStory.ts"
+  ],
+  "A choice must come after a scene: {0}": [
+    "src/core/games/customStory.ts"
+  ],
+  "This choice is not written as > words -> scene: {0}": [
+    "src/core/games/customStory.ts"
+  ],
+  "This line is not a scene, a choice or text: {0}": [
+    "src/core/games/customStory.ts"
+  ],
+  "The story needs a title: title: …": [
+    "src/core/games/customStory.ts"
+  ],
+  "Add at least one scene, written [name].": [
+    "src/core/games/customStory.ts"
+  ],
+  "The start scene does not exist: {0}": [
+    "src/core/games/customStory.ts"
   ]
 }

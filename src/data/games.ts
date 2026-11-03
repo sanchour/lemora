@@ -6,7 +6,8 @@ import type { Best, Bests, RoundResult } from '@/core/games/bests';
 import { letterWord } from '@/core/games/letters';
 import { partsOf } from '@/core/games/parts';
 import { dictationLines, translationPool } from '@/core/games/timed';
-import { fromAdventure } from '@/core/games/story';
+import { parseStory } from '@/core/games/customStory';
+import { checkStory, fromAdventure } from '@/core/games/story';
 import type { StoryGame } from '@/core/games/story';
 import { readyStories } from '@/core/games/storyData';
 import { readAdventure } from '@/core/generate/generate';
@@ -135,8 +136,22 @@ export async function storiesOf(lang: string, database: LinguaDB = db): Promise<
     const body = readAdventure(r.content);
     return body ? [fromAdventure(r.id, body, r.level)] : [];
   });
-  return [...readyStories(lang), ...made];
+  const own = (await loadCustom(lang, database)).flatMap((c) => {
+    const { story } = parseStory(c.source, c.id);
+    return story && checkStory(story).ok ? [story] : [];
+  });
+  return [...readyStories(lang), ...own, ...made];
 }
+
+/** The stories the learner wrote (6-21, F1220): their text, kept as written, read again when played. */
+export interface CustomStory {
+  id: string;
+  source: string;
+}
+const CUSTOM_KEY = (lang: string) => `games.custom:${lang}`;
+export const loadCustom = async (lang: string, database: LinguaDB = db): Promise<CustomStory[]> => ((await database.settings.get(CUSTOM_KEY(lang)))?.value as CustomStory[] | undefined) ?? [];
+export const useCustom = (lang: string): CustomStory[] | undefined => useLiveQuery(() => loadCustom(lang), [lang]);
+export const saveCustom = (lang: string, stories: CustomStory[], database: LinguaDB = db): Promise<unknown> => database.settings.put({ key: CUSTOM_KEY(lang), value: stories, updatedAt: Date.now() });
 
 const PROJECTS_KEY = (lang: string) => `games.projects:${lang}`;
 export const loadProjects = async (lang: string, database: LinguaDB = db): Promise<Project[]> => ((await database.settings.get(PROJECTS_KEY(lang)))?.value as Project[] | undefined) ?? [];

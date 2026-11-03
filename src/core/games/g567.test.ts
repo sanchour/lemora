@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest';
+import { seededRandom } from '@/core/srs/ludus';
 import { dailyList, dailyPuzzle, shareText, weeklyTheme, weeklyWords } from './daily';
 import type { ListWord } from './daily';
 import { GAMES } from './defs';
 import { progress, startProject, STEPS, TEMPLATES, templateOf, toggleStep } from './projects';
 import { canPlay } from './source';
-import { checkStory, choose, fromAdventure, startStory, storyStars, visible } from './story';
+import { checkStory, choose, fromAdventure, startStory, storyStars, visible, wordsUsed } from './story';
+import { completeItems, makeComplete } from './complete';
+import { parseStory, SAMPLE } from './customStory';
 import type { StoryGame } from './story';
 import { readyStories } from './storyData';
 import { dictationLines, judgeDictation, judgeTranslation, timedStars, translationPool } from './timed';
@@ -167,5 +170,53 @@ describe('the shelf', () => {
     expect(canPlay(by('dictation'), src({ sentences: 8 }), 'es')).toEqual({ ok: true });
     expect(canPlay(by('daily'), src({ listWords: 5000 }), 'es')).toEqual({ ok: true });
     expect(canPlay(by('daily'), src({ listWords: 10 }), 'es').ok).toBe(false);
+  });
+});
+
+describe('custom stories', () => {
+  it('reads the sample into a story that can be won', () => {
+    const { story, errors } = parseStory(SAMPLE, 'custom:1');
+    expect(errors).toEqual([]);
+    expect(story!.title).toBe('The locked room');
+    expect(story!.items).toEqual({ key: 'the key', note: 'the note' });
+    expect(story!.scenes.desk).toMatchObject({ gives: 'key', text: 'On the desk there is a small key.' });
+    expect(story!.scenes.room.choices[1]).toEqual({ label: 'Open the door with the key', to: 'win', needs: 'key' });
+    expect(checkStory(story!).shortest).toBe(3);
+  });
+  it('reads strength, cost and a lost ending, and says what is wrong', () => {
+    const s = parseStory('title: T\nhealth: 2\n[a]\nText\n> go -> b | cost: 1\n[b] end: lose\nBad', 'x').story!;
+    expect([s.health, s.scenes.a.choices[0].cost, s.scenes.b.end]).toEqual([2, 1, 'lose']);
+    expect(parseStory('[a]\nText', 'x').errors).toEqual([['The story needs a title: title: …']]);
+    expect(parseStory('title: T\n[a]\n> go -> b', 'x').errors).toEqual([['A scene needs some text: {0}', 'a']]);
+    expect(parseStory('title: T\n> go -> b', 'x').errors.map((e) => e[0])).toContain('A choice must come after a scene: {0}');
+    expect(parseStory('title: T\nstart: zz\n[a]\nText', 'x').errors).toEqual([['The start scene does not exist: {0}', 'zz']]);
+    expect(parseStory('title: T\n[a]\nText\n> go b', 'x').errors[0][0]).toMatch(/not written as/);
+    expect(parseStory('', 'x').errors.length).toBe(2);
+  });
+  it('counts how many of the learner’s words a story uses', () => {
+    const story = readyStories('es')[0];
+    expect(wordsUsed(story, ['llave', 'mesa', 'luna', 'pingüino'])).toBe(3);
+  });
+});
+
+describe('finish it', () => {
+  it('has three dialogues and three stories for each core language, the fitting line first', () => {
+    for (const lang of ['es', 'fr', 'de', 'ru', 'zh', 'ar']) {
+      const items = completeItems(lang);
+      expect(items.map((i) => i.kind), lang).toEqual(['dialogue', 'dialogue', 'dialogue', 'story', 'story', 'story']);
+      for (const i of items) {
+        expect(new Set(i.options).size).toBe(3);
+        expect(i.before.length).toBeGreaterThan(5);
+      }
+    }
+    expect(completeItems('ja')).toEqual([]);
+  });
+  it('mixes the lines and knows which one fits', () => {
+    const [item] = completeItems('es');
+    for (let seed = 1; seed < 10; seed++) {
+      const r = makeComplete(item, seededRandom(seed));
+      expect(r.options[r.answer]).toBe(item.options[0]);
+      expect([...r.options].sort()).toEqual([...item.options].sort());
+    }
   });
 });
