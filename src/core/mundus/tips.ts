@@ -1,5 +1,5 @@
 import { getLanguage } from '@/core/lang/languages';
-import { shows } from '@/product';
+import { reaches, shows } from '@/product';
 import type { Feature } from '@/product';
 
 // Mundus › Beyond the app (Lingua 3.0-7): small, playful challenges that take the language out of
@@ -392,15 +392,11 @@ export function tipsFor(lang: string): Tip[] {
 
 /** The room a challenge is about, where it needs one: a song, a dubbed film, the radio. */
 const MEDIUM: Partial<Record<TipIcon, Feature>> = { song: 'cantus', spotify: 'cantus', film: 'visio', radio: 'sonus' };
-/** The room behind an in-app link, for the addresses of rooms a build may not have. */
-const roomOf = (to: string): Feature | undefined => (/^\/(sonus|cantus|visio)\b/.exec(to)?.[1] as Feature | undefined) ?? (/^\/cursus\/grammatica\b/.test(to) ? 'grammatica' : /^\/mentis(?:$|[?/](?!diarium|try))/.test(to) ? 'mundus' : undefined);
-
 /** Challenges for this build (src/product.ts): none about a room it hasn't, and no link into one. */
 function fitted(tip: Tip): Tip[] {
   const medium = MEDIUM[tip.icon];
   if (medium && !shows(medium)) return [];
-  const room = tip.action?.to ? roomOf(tip.action.to) : undefined;
-  return [room && !shows(room) ? { ...tip, action: undefined } : tip];
+  return [tip.action?.to && !reaches(tip.action.to) ? { ...tip, action: undefined } : tip];
 }
 
 /** Today’s challenge for Home: one not done yet, a different one each day. */
