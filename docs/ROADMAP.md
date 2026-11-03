@@ -2647,7 +2647,7 @@ remain open. [Russian scope and verification](6-23-A2-RUSSIAN.md).
   contextual pairs, capitalization, unsupported input and stale saved choices. Preserve lessons.
 - [x] Reuse Reading settings and ChapterBody for named Greek choice/preview, saving per language;
   verify both reader choices at three desktop sizes in both themes, reload and source-span integrity.
-- [ ] Typecheck, tests and production build; record exact limits, synchronize and version/push Codex
+- [x] Typecheck, tests and production build; record exact limits, synchronize and version/push Codex
   only. Full A2 audit entries remain open; no A3 claim. The six local test packs are user-approved.
 
 Scope reaches core display dispatch, Settings, the reader/shared transcript render, tests, catalogues
@@ -2663,7 +2663,7 @@ The publication checkbox stays open. [Resume evidence](6-23-A2-GREEK.md).
 The user explicitly requests completing both tracks, including resolving the known inherited
 whitespace blocker. Keep the existing A1/A2 claims and publish only codex/lingua.
 
-- [ ] Finish the pending main integration and checked Greek push; remove only the known blank EOF
+- [x] Finish the pending main integration and checked Greek push; remove only the known blank EOF
   line in incoming Story.tsx, without changing its behavior or any other session's claimed work.
 - [ ] Resolve A1's offline reload evidence using a supported browser; verify the real Unicode
   page, cached script/data access and source-backed alphabet/name coverage. Record device limits.

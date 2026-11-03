@@ -58,3 +58,9 @@ named languages and controls. Codex retains A2; no A3 claim.
 integrated baseline passes: typecheck, 257 files / 1,824 tests / one skipped and build. Remove only
 the known incoming blank EOF line, retain the resolved merge, then complete checks/publication.
 This supersedes the stop above, not the recorded verification limits or A2 acceptance criteria.
+
+**Integration/publication continuation:** known whitespace blocker resolved as authorised. Main
+advanced through d2fe62d (completed games and graph contract); merged additively, preserving claims.
+Final typecheck, 258 files / 1,842 tests / one skipped and production build pass. Scoped Greek setting/
+preview recheck succeeded on the integrated production asset. Full twelve-view evidence remains
+pre-integration, not repeated after every incoming merge. Continue A1/A2; full A2 entries stay open.
