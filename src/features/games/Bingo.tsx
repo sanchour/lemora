@@ -1,18 +1,22 @@
 // Vocabulary bingo (6-21, F0187): meanings are called; mark the word on your card, or say it is not there, until you have a line.
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Volume2 } from 'lucide-react';
 import type { Best } from '@/core/games/bests';
 import { bingoStars, hasLine, makeBingo } from '@/core/games/bingo';
 import type { Bingo as BingoData } from '@/core/games/bingo';
 import type { GameDef } from '@/core/games/defs';
 import type { GameItem } from '@/core/games/source';
 import { isRtl } from '@/core/lang/languages';
-import { buttonClasses } from '@/design/primitives';
+import { buttonClasses, ToggleRow } from '@/design/primitives';
+import { speak } from '@/services/speech/voice';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { cx } from '@/lib/cx';
 import { RoundRunner, useSettleOnce } from './RoundRunner';
 import type { BoardProps } from './RoundRunner';
 
-function Board({ entry, lang, settle }: BoardProps<BingoData>) {
+type Entry = BingoData & { sound: boolean };
+
+function Board({ entry, lang, settle }: BoardProps<Entry>) {
   const t = useUi();
   const rtl = isRtl(lang);
   const [marked, setMarked] = useState<ReadonlySet<number>>(new Set());
@@ -21,6 +25,9 @@ function Board({ entry, lang, settle }: BoardProps<BingoData>) {
   const [note, setNote] = useState('');
   const won = hasLine(marked, entry.size);
   const call = entry.calls[at];
+  useEffect(() => {
+    if (entry.sound && call && !won) void speak(lang, call.item.term).catch(() => undefined);
+  }, [entry.sound, call, won, lang]);
   useSettleOnce(won, () => settle({ won: true, stars: bingoStars(mistakes), hints: 0, message: t('Bingo!') }));
   const miss = (message: string) => (setMistakes((n) => n + 1), setNote(message));
   const answer = (square: number | null) => {
@@ -36,7 +43,15 @@ function Board({ entry, lang, settle }: BoardProps<BingoData>) {
     <div>
       <div className="rounded-3xl border border-line/70 bg-surface p-5">
         <p className="text-[12px] font-bold tracking-[0.12em] text-ink-faint uppercase">{won ? <UiText source={'Bingo!'} /> : <UiText source={'Call {0} of {1}'} values={[Math.min(at + 1, entry.calls.length), entry.calls.length]} />}</p>
-        <p className="mt-1 font-serif text-2xl leading-snug">{won ? '' : call?.item.meaning}</p>
+        {entry.sound ? (
+          !won && call && (
+            <button type="button" onClick={() => void speak(lang, call.item.term).catch(() => undefined)} className={buttonClasses('secondary', 'md') + ' mt-2'}>
+              <UiText source={'{0} Hear it again'} values={[<Volume2 size={18} aria-hidden />]} />
+            </button>
+          )
+        ) : (
+          <p className="mt-1 font-serif text-2xl leading-snug">{won ? '' : call?.item.meaning}</p>
+        )}
       </div>
       <div className="mt-4 grid gap-2" style={{ gridTemplateColumns: `repeat(${entry.size}, minmax(0, 7.5rem))` }}>
         {entry.card.map((item, i) => (
@@ -59,23 +74,25 @@ function Board({ entry, lang, settle }: BoardProps<BingoData>) {
 
 export function Bingo({ lang, def, items, best }: { lang: string; def: GameDef; items: GameItem[]; best?: Best }) {
   const t = useUi();
+  const [sound, setSound] = useState(false);
   return (
-    <RoundRunner<BingoData>
+    <RoundRunner<Entry>
       lang={lang}
       def={def}
       best={best}
       unit={t('Puzzle')}
       rtl={isRtl(lang)}
       intro={<UiText source={'A card of your words. Meanings are called one at a time: mark the word, or say it is not on your card.'} />}
+      options={<ToggleRow title={t('Call by sound')} description={t('The word is read aloud by your device’s voice, and you find it on your card.')} checked={sound} onChange={setSound} />}
       make={(random) => {
         const bingo = makeBingo(items, random);
-        return bingo ? [bingo] : [];
+        return bingo ? [{ ...bingo, sound }] : [];
       }}
       empty={t('This could not be made from what you have yet.')}
       terms={(e) => e.card.map((c) => c.term)}
       label={(e) => ({ title: t('Vocabulary bingo'), detail: `${e.size}×${e.size}` })}
       Board={Board}
-      rules={<UiText source={'Click the word that matches the meaning called, or press Not on my card when it is not there. A full row, column or diagonal wins. One mistake is still three stars, up to three is two, more is one.'} />}
+      rules={<UiText source={'Click the word that matches the meaning called (or the word you hear), or press Not on my card when it is not there. A full row, column or diagonal wins. One mistake is still three stars, up to three is two, more is one.'} />}
     />
   );
 }

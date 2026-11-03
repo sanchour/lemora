@@ -26,7 +26,7 @@ export function cluesOf(item: GameItem, lang: string): Clue[] {
     ...(syn.length ? [{ kind: 'synonyms' as const, text: syn.join(', ') }] : []),
     ...(ant.length ? [{ kind: 'antonyms' as const, text: ant.join(', ') }] : []),
     ...(item.image ? [{ kind: 'picture' as const, image: item.image }] : []),
-    { kind: 'length', text: `${marks.length} ${hasLetters(lang) ? 'letters' : 'characters'}` },
+    { kind: 'length', text: hasLetters(lang) ? 'letters' : 'characters', value: String(marks.length) },
     { kind: 'first', text: 'Starts with', value: marks[0] ?? '' },
     { kind: 'meaning', text: item.meaning ?? '' },
   ];

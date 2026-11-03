@@ -79,7 +79,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
   const hinted = new Set(shown.filter((i) => !found.has(i)).map((i) => key(ws.words[i].cells[0])));
   const missed = ws.words.filter((_, i) => !found.has(i)).map((w) => w.term);
 
-  useSettleOnce(over, () => settle({ won, stars: searchStars(won, shown.length), hints: shown.length, message: won ? `All ${ws.words.length} found` : `Found ${found.size} of ${ws.words.length}`, wrong: won ? [] : missed }));
+  useSettleOnce(over, () => settle({ won, stars: searchStars(won, shown.length), hints: shown.length, message: won ? translateUi('All {0} found', [ws.words.length]) : translateUi('Found {0} of {1}.', [found.size, ws.words.length]), wrong: won ? [] : missed }));
 
   const showOne = () => {
     const next = ws.words.findIndex((_, i) => !found.has(i) && !shown.includes(i));
@@ -92,7 +92,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
         style={{ gridTemplateColumns: `repeat(${ws.size}, 2.25rem)`, direction: 'ltr' }}
         lang={lang}
         role="grid"
-        aria-label="Letters"
+        aria-label={translateUi('Letters')}
         onPointerLeave={() => dragging.current && setEnd(anchor)}
       >
         {ws.grid.flatMap((row, r) =>
@@ -143,6 +143,7 @@ function Board({ entry, lang, settle }: BoardProps<Entry>) {
 }
 
 export function WordSearch({ lang, def, items, best }: { lang: string; def: GameDef; items: GameItem[]; best?: Best }) {
+  const translateUi = useUi();
   const [backwards, setBackwards] = useState(false);
   const [meanings, setMeanings] = useState(false);
   const rtl = isRtl(lang);
@@ -151,13 +152,13 @@ export function WordSearch({ lang, def, items, best }: { lang: string; def: Game
       lang={lang}
       def={def}
       best={best}
-      unit="Puzzle"
+      unit={translateUi('Puzzle')}
       rtl={rtl}
-      intro="A grid of letters with seven of your words hidden in it. Drag across a word to find it."
+      intro={<UiText source={'A grid of letters with seven of your words hidden in it. Drag across a word to find it.'} />}
       options={
         <>
-          <ToggleRow title="Show meanings, not the words" description={meanings ? 'You get what each word means and have to find the word itself.' : 'The words are listed, and you find them in the grid.'} checked={meanings} onChange={setMeanings} />
-          <ToggleRow title="Words can run backwards" description="Also upwards and the other way along." checked={backwards} onChange={setBackwards} />
+          <ToggleRow title={translateUi('Show meanings, not the words')} description={meanings ? translateUi('You get what each word means and have to find the word itself.') : translateUi('The words are listed, and you find them in the grid.')} checked={meanings} onChange={setMeanings} />
+          <ToggleRow title={translateUi('Words can run backwards')} description={translateUi('Also upwards and the other way along.')} checked={backwards} onChange={setBackwards} />
         </>
       }
       make={(random) => {
@@ -175,11 +176,11 @@ export function WordSearch({ lang, def, items, best }: { lang: string; def: Game
         }
         return best && best.words.length >= def.needs.count - 1 ? [{ ws: best, meanings, items: new Map(items.map((i) => [i.term, i])) }] : [];
       }}
-      empty="The words would not fit in a grid. Try again."
+      empty={translateUi('The words would not fit in a grid. Try again.')}
       terms={(e) => e.ws.words.map((w) => w.term)}
       label={(e) => ({ title: 'Word search', detail: e.ws.words.map((w) => w.term).join(', ') })}
       Board={Board}
-      rules={<p>Drag from the first letter of a word to its last, or click the two ends. Words run across, down and slanting{rtl ? ', starting from the right' : ''}. Three stars for a grid found without help; showing a start costs one. Giving up earns none.</p>}
+      rules={<UiText source={'Drag from the first letter of a word to its last, or click the two ends. Words run across, down and slanting{0}. Three stars for a grid found without help; showing a start costs one. Giving up earns none.'} values={[rtl ? translateUi(', starting from the right') : '']} />}
     />
   );
 }

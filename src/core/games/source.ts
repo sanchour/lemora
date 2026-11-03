@@ -4,6 +4,7 @@ import { interpolate } from '@/core/i18n/messages';
 import type { WordFacts } from '@/core/exercise';
 import { hasLetters, letterWord, NO_LETTERS } from './letters';
 import { canSort } from './categories';
+import { completeItems } from './complete';
 import type { GameDef } from './defs';
 
 export interface GameItem {
@@ -20,6 +21,8 @@ export interface GameItem {
   synonyms: string[];
   antonyms: string[];
   image?: string;
+  /** Where the picture came from and its licence, as the card keeps it. */
+  credit?: string;
 }
 
 export const itemsOfFacts = (facts: WordFacts[]): GameItem[] =>
@@ -59,6 +62,7 @@ export function canPlay(def: GameDef, src: GameSource, lang: string, translate: 
   if (needs.tasks && (src.tasks ?? 0) < needs.tasks) return { ok: false, reason: translate('Needs sentences to translate: some languages have hand-made ones, and the dictionary’s sentences for your own words count too.') };
   if (needs.sentences && (src.sentences ?? 0) < needs.sentences) return { ok: false, reason: translate('Needs sentences to dictate: some languages have hand-made ones, and the dictionary’s sentences and your own examples count too.') };
   if (needs.stories && (src.stories ?? 0) < needs.stories) return { ok: false, reason: translate('Needs a story: there is a ready-made one for the six core languages, and Max can make more.') };
+  if (needs.completions && !completeItems(lang).length) return { ok: false, reason: translate('Needs a language with hand-made dialogues and stories to finish: the six core languages have them.') };
   if (needs.texts && src.texts < 1) return { ok: false, reason: translate('Needs a text in Codex to hunt in. Add or open one first.') };
   if (needs.image || needs.parts) {
     const have = usable(def, src.items, lang).length;

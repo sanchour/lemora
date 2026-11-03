@@ -25,7 +25,7 @@ function Board({ entry, lang, settle }: BoardProps<HuntData>) {
   const [gaveUp, setGaveUp] = useState(false);
   const won = found.size === entry.targets.length;
   const over = won || gaveUp;
-  useSettleOnce(over, () => settle({ won, stars: huntStars(won, slips.size, shown), hints: shown, message: won ? `All ${entry.targets.length} found` : `Found ${found.size} of ${entry.targets.length}`, wrong: entry.targets.filter((_, i) => !found.has(i)).map((t) => t.term) }));
+  useSettleOnce(over, () => settle({ won, stars: huntStars(won, slips.size, shown), hints: shown, message: won ? translateUi('All {0} found', [entry.targets.length]) : translateUi('Found {0} of {1}.', [found.size, entry.targets.length]), wrong: entry.targets.filter((_, i) => !found.has(i)).map((t) => t.term) }));
 
   const click = (i: number, target?: number) => {
     if (over) return;
@@ -84,20 +84,21 @@ function Board({ entry, lang, settle }: BoardProps<HuntData>) {
 }
 
 export function Hunt({ lang, def, items, best }: { lang: string; def: GameDef; items: GameItem[]; best?: Best }) {
+  const translateUi = useUi();
   return (
     <RoundRunner<HuntData>
       lang={lang}
       def={def}
       best={best}
-      unit="Passage"
+      unit={translateUi('Passage')}
       rtl={isRtl(lang)}
-      intro="Passages from your own texts, with some of your words hidden in them. Click each word as you spot it."
+      intro={<UiText source={'Passages from your own texts, with some of your words hidden in them. Click each word as you spot it.'} />}
       make={async (random) => makeHunts(await passagesOf(lang), items, lang, random, def.round)}
-      empty="None of your texts has a passage with three of your words in it yet. Read a text in Codex, or add words that are in one."
+      empty={translateUi('None of your texts has a passage with three of your words in it yet. Read a text in Codex, or add words that are in one.')}
       terms={(e) => e.targets.map((t) => t.term)}
       label={(e, i) => ({ title: `Passage ${i + 1}`, detail: e.targets.map((t) => t.term).join(', ') })}
       Board={Board}
-      rules={<p>Click the words in the passage that are your words, in any form. Three wrong clicks cost a star, and so does showing a word. Giving up earns none.</p>}
+      rules={<UiText source={'Click the words in the passage that are your words, in any form. Three wrong clicks cost a star, and so does showing a word. Giving up earns none.'} />}
     />
   );
 }
