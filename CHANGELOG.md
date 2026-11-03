@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.6.0-alpha.163** · 2026-11-03 · Claim Reading and Writing audit completion
 - **0.6.0-alpha.162** · 2026-11-02 · 6-23 T0: measured source audit, corrected deep plan and closed audit claim
 - **0.6.0-alpha.161** · 2026-11-02 · Claim 6-23 T0 data-source audit only
 - **0.6.0-alpha.160** · 2026-11-02 · Propose Lingua's iPhone structure and selective Liquid Glass design for Stitch
