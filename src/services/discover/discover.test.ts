@@ -8,6 +8,10 @@ describe('Discover', () => {
   it('keeps recipe ingredients, instruction lists and table rows once, without page navigation', () => {
     expect(sourceHtmlToBlocks('<div id="toc"><ul><li>Contents</li></ul></div><h2>Pan</h2><ul><li><p>Harina</p></li><li>Agua</li></ul><ol><li>Mezclar.</li></ol><table><tr><td>Harina</td><td>200 g</td></tr></table>', true)).toEqual([{ t: 'h', text: 'Pan' }, { t: 'p', text: 'Harina' }, { t: 'p', text: 'Agua' }, { t: 'p', text: 'Mezclar.' }, { t: 'p', text: 'Harina · 200 g' }]);
   });
+  it('unwraps recipe layout rows and drops unlabelled link-index navigation', () => {
+    const navigation = '<table><tr><th>Glosario</th></tr><tr><td><p>' + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((c) => `<a href="/wiki/${c}">${c}</a>`).join(' - ') + '</p></td></tr></table>';
+    expect(sourceHtmlToBlocks(`<table><tr><td><p>4 personas</p>${navigation}</td></tr></table><table><tr><td><p>Ingredientes</p><ul><li>1/2 cebolla</li><li>Pan</li></ul></td><td><p>Procedimiento</p><p>Mezclar.</p></td></tr></table>`, true)).toEqual([{ t: 'p', text: '4 personas' }, { t: 'p', text: 'Ingredientes' }, { t: 'p', text: '1/2 cebolla' }, { t: 'p', text: 'Pan' }, { t: 'p', text: 'Procedimiento' }, { t: 'p', text: 'Mezclar.' }]);
+  });
   it('searches and imports Wikibooks subpages and Wikivoyage with their own source URLs', async () => {
     vi.stubGlobal('navigator', { onLine: true });
     const fetcher = vi.fn().mockResolvedValueOnce({ ok: true, json: async () => ({ query: { search: [{ title: 'Cocina/Pan', snippet: 'Un <b>pan</b>' }] } }) }).mockResolvedValue({ ok: true, json: async () => ({ parse: { title: 'Cocina/Pan', text: '<div class="mw-parser-output"><p>Mezcla agua y harina.</p></div>' } }) });

@@ -115,13 +115,15 @@ these fields; binary images require media-inclusive backups and do not travel in
 
 ## Verification
 
-Implementation checks and browser review are being completed before the final versioned commit.
-The final ROADMAP/HANDOVER entry records the exact integrated test/build counts and publication.
+After integrating main: typecheck, **259 test files / 1,691 passing tests (one skipped)** and the
+production-path build pass. [ROADMAP](ROADMAP.md) records the desktop matrix and verification scope;
+version **0.6.0-alpha.187** uses the protected PR workflow, with CI/merge/Pages checked in the chat end notes.
 
 Already exercised in the local disposable profile: Spanish sample glossary save/reload; recurring
 name across two chapters; chapter edit and Undo; chapter-end practice; self-rating/evidence; real device
 read-aloud start with sentence following and Stop; selection bookmark, favourite, note and immediate
-navigation/reload; live Wikivoyage Madrid search/import; local image attachment/removal/Undo; two draft
+navigation/reload; live Wikivoyage Madrid and Wikibooks Gazpacho search/import (recipe lists and
+unlabelled navigation/layout tables checked); local image attachment/removal/Undo; two draft
 snapshots and restore; preset/custom template insertion; dictionary spelling accepting normal words and
 flagging `libroo`; no-key states. Automated checks cover new comprehension schemas/focus, unique missing
 paragraphs, source import/list/table retention, multilingual spelling/isolation, backups, binary Undo,

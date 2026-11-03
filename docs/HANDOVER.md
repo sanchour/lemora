@@ -16,8 +16,9 @@ Last updated 2026-10-27 (Lingua 6 · Features is step 23, next after 21; Lingua 
 - [x] Finished Writing’s five open entries **F0617, F0657, F0676, F0684 and F0687**; all **55** assigned
   entries are ticked. Existing W1–W4 are retained.
 - [x] Added [the per-entry audit](LINGUA-6-8-12-AUDIT.md), explicit spelling/storage/model boundaries,
-  regression checks and desktop interaction evidence. Final integrated checks/publication are recorded
-  in the roadmap and this chat’s end notes. No next step is claimed; stop after these two steps.
+  regression checks and desktop interaction evidence. After integrating main: typecheck, 259 test files /
+  1,691 tests passing (one skipped) and production build pass. Version `0.6.0-alpha.187`; protected PR and
+  Pages verification in this chat’s end notes. No next step is claimed; stop after these two steps.
 
 ## Stitch design context · 2026-11-02
 

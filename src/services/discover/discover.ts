@@ -246,11 +246,18 @@ const NOT_TEXT = '.mw-editsection, sup, .reference, .references, .mw-references-
 /** A Wikisource page's text as blocks, in order. */
 export function sourceHtmlToBlocks(html: string, includeLists = false): Block[] {
   const doc = new DOMParser().parseFromString(html, 'text/html');
-  doc.querySelectorAll(includeLists ? NOT_TEXT.replace(', table', '') + ', #toc, .toc, .sidebar, .metadata' : NOT_TEXT).forEach((el) => el.remove());
+  doc.querySelectorAll(includeLists ? NOT_TEXT.replace(', table', '') + ', #toc, .toc, .sidebar, .metadata, nav, [role="navigation"]' : NOT_TEXT).forEach((el) => el.remove());
+  if (includeLists) for (const table of [...doc.querySelectorAll('table')].reverse()) {
+    const links = [...table.querySelectorAll('a')];
+    const letters = (text: string) => text.replace(/[^\p{L}\p{N}]/gu, '').length;
+    // shortcut: unlabelled index tables use link density; extend exclusions if a source template escapes it.
+    if (table.querySelector('th') && links.length >= 8 && letters(links.map((a) => a.textContent ?? '').join('')) > letters(table.textContent ?? '') * 0.7) table.remove();
+  }
   const blocks: Block[] = [];
   for (const el of doc.body.querySelectorAll('h2, h3, h4, p, blockquote, dd, .poem' + (includeLists ? ', li, tr' : ''))) {
     // Each piece of text once: a paragraph inside a quote or a poem is taken with it.
-    if (el.parentElement?.closest('blockquote, dd, .poem' + (includeLists ? ', li, tr' : ''))) continue;
+    if (el.parentElement?.closest('blockquote, dd, .poem' + (includeLists ? ', li' : ''))) continue;
+    if (el.tagName === 'TR' && el.querySelector('h2, h3, h4, p, blockquote, dd, .poem, li, tr')) continue;
     el.querySelectorAll('br').forEach((br) => br.replaceWith(' '));
     const text = (el.tagName === 'TR' ? [...el.children].map((cell) => cell.textContent ?? '').join(' · ') : el.textContent ?? '').replace(/\s+/g, ' ').trim();
     if (!text) continue;

@@ -1,6 +1,8 @@
+# Lingua 6 · Features · the audit
 
 **Writing completion, 2026-11-03:** the five remaining entries F0617/F0657/F0676/F0684/F0687 are implemented; all 55 assigned entries are now ticked. [The audit](LINGUA-6-8-12-AUDIT.md) records image privacy/media-backup requirements, simplification limits, dictionary/native spelling, reusable templates and ten draft snapshots.
-**Reading completion, 2026-11-03:** all 72 assigned entries are reconciled with their actual implementation in [the Reading/Writing audit](LINGUA-6-8-12-AUDIT.md), including the 47 previously open. Searchable source kinds are not a newly hosted corpus; generated interpretations remain unverified, and the audit states the exact source/excerpt/storage boundaries.# Lingua 6 · Features · the audit
+
+**Reading completion, 2026-11-03:** all 72 assigned entries are reconciled with their actual implementation in [the Reading/Writing audit](LINGUA-6-8-12-AUDIT.md), including the 47 previously open. Searchable source kinds are not a newly hosted corpus; generated interpretations remain unverified, and the audit states the exact source/excerpt/storage boundaries.
 
 The Lingyu design package's feature catalogue (1,618 entries, F0001–F1618, pasted by the user on 2026-10-26)
 checked against Lingua as it is on 2026-10-26 (version 0.5.2-alpha.3). The plan that builds what is missing is

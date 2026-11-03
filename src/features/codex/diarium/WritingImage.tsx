@@ -14,7 +14,7 @@ export function WritingImage({ entry }: { entry: JournalEntry }) {
   useEffect(() => {
     let alive = true; let current: string | null = null;
     setUrl(null); setError('');
-    if (entry.pictureBlobId) void blobUrl(entry.pictureBlobId).then((u) => { if (alive) { current = u; setUrl(u); if (!u) setError('This picture is missing on this device. Restore a backup that includes images.'); } else if (u) URL.revokeObjectURL(u); }).catch(() => setError('The picture could not be opened.'));
+    if (entry.pictureBlobId) void blobUrl(entry.pictureBlobId).then((u) => { if (alive) { current = u; setUrl(u); if (!u) setError('This picture is missing on this device. Restore a backup that includes images.'); } else if (u) URL.revokeObjectURL(u); }).catch(() => { if (alive) setError('The picture could not be opened.'); });
     return () => { alive = false; if (current) URL.revokeObjectURL(current); };
   }, [entry.pictureBlobId]);
   const choose = async () => {
