@@ -53,3 +53,8 @@ continue A2 under the existing claim. No main merge/deployment, no full-A2 audit
 Atlas); merged without rewriting published Codex history, retaining the independent claims and
 decision entries. Typecheck, 254 files / 1,740 tests / one skipped and production build pass on that
 integration. These incoming features were not audited in the browser. No A2-wide acceptance tick.
+
+**Publication baseline:** main advanced once more to 7eee382 (G4 games); merged additively and
+rechecked: typecheck, 255 files / 1,748 tests / one skipped and build pass. Earlier browser evidence
+was not repeated for this final integration. An unpublished duplicate-number release commit was
+removed before retrying; no existing remote tag or published history was changed.

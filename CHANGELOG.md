@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.6.0-alpha.178** · 2026-11-03 · 6-23 A2: four Russian schemes, browser evidence and checked main integration
 - **0.6.0-alpha.176** · 2026-11-03 · Merge main (6-29 G2) into 6-21 G4
 - **0.6.0-alpha.175** · 2026-11-03 · 6-21 G4: pick, match and parts games; merge main
 - **0.6.0-alpha.174** · 2026-11-03 · 6-29 G2: Thesaurus › Atlas, the compass and the tree on screen
