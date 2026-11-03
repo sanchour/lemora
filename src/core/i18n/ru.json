@@ -7498,5 +7498,21 @@
   "Build from parts": "Собери из частей",
   "A word split into its parts, mixed up. Put the parts back in order from the meaning.": "Слово, разобранное на части и перемешанное. Расставьте части по порядку, ориентируясь на значение.",
   "Needs {0} of your words that have a picture; you have {1}. Add pictures to your cards.": "Нужно {0} ваших слов с картинкой; у вас {1}. Добавьте картинки к своим карточкам.",
-  "Needs {0} of your words that the dictionary splits into parts; you have {1}.": "Нужно {0} ваших слов, которые словарь разбивает на части; у вас {1}."
+  "Needs {0} of your words that the dictionary splits into parts; you have {1}.": "Нужно {0} ваших слов, которые словарь разбивает на части; у вас {1}.",
+  "Atlas": "Атлас",
+  "Which word?": "Какое слово?",
+  "Atlas view": "Вид атласа",
+  "Compass": "Компас",
+  "Tree": "Дерево",
+  "Look-alikes": "Похожие слова",
+  "Fit": "Вписать",
+  "Form": "Форма",
+  "Origin": "Происхождение",
+  "The tree of {0}": "Дерево слова {0}",
+  "The compass of {0}: {1} things around it": "Компас слова {0}: вокруг {1}",
+  "No word “{0}” here yet. Try another.": "Слова «{0}» здесь пока нет. Попробуйте другое.",
+  "Look up a word to see what is around it: its meanings, its family, where it comes from and how it is used.": "Найдите слово, чтобы увидеть, что вокруг него: значения, родственные слова, происхождение и употребление.",
+  "Synonyms, families and origins come with a full dictionary, which this language doesn’t have yet.": "Синонимы, родственные слова и происхождение появятся с полным словарём, которого у этого языка пока нет.",
+  "Its neighbours, in words": "Соседи слова — списком",
+  "See its neighbours": "Посмотреть соседей"
 }

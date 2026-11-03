@@ -7498,5 +7498,21 @@
   "Build from parts": "Construire à partir de parties",
   "A word split into its parts, mixed up. Put the parts back in order from the meaning.": "Un mot découpé en parties et mélangé. Remettez les parties dans l’ordre d’après le sens.",
   "Needs {0} of your words that have a picture; you have {1}. Add pictures to your cards.": "Nécessite {0} de vos mots ayant une image ; vous en avez {1}. Ajoutez des images à vos cartes.",
-  "Needs {0} of your words that the dictionary splits into parts; you have {1}.": "Nécessite {0} de vos mots que le dictionnaire découpe en parties ; vous en avez {1}."
+  "Needs {0} of your words that the dictionary splits into parts; you have {1}.": "Nécessite {0} de vos mots que le dictionnaire découpe en parties ; vous en avez {1}.",
+  "Atlas": "Atlas",
+  "Which word?": "Quel mot ?",
+  "Atlas view": "Vue de l’atlas",
+  "Compass": "Boussole",
+  "Tree": "Arbre",
+  "Look-alikes": "Mots semblables",
+  "Fit": "Ajuster",
+  "Form": "Forme",
+  "Origin": "Origine",
+  "The tree of {0}": "L’arbre de {0}",
+  "The compass of {0}: {1} things around it": "La boussole de {0} : {1} éléments autour",
+  "No word “{0}” here yet. Try another.": "Pas encore de mot « {0} » ici. Essayez-en un autre.",
+  "Look up a word to see what is around it: its meanings, its family, where it comes from and how it is used.": "Cherchez un mot pour voir ce qui l’entoure : ses sens, sa famille, son origine et son usage.",
+  "Synonyms, families and origins come with a full dictionary, which this language doesn’t have yet.": "Synonymes, familles et origines viennent avec un dictionnaire complet, que cette langue n’a pas encore.",
+  "Its neighbours, in words": "Ses voisins, en mots",
+  "See its neighbours": "Voir ses voisins"
 }

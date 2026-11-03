@@ -881,3 +881,8 @@ Its own tool in `sandesigning/` (no React, no dependencies), served beside Lingu
   or a card (`data-hint`), everywhere; status lines and warnings (last backup, what a reset deletes, where a key goes)
   always show.
 - **Visio, subtitles for a YouTube video (0.5.3-alpha.7):** the Subtitles panel has **Gemini** (Lingua+ Max, your own key; Gemini listens to the video and returns timed lines; shown as "Gemini" in the track's source) and **Captions** (YouTube's own, asked for from the browser; often YouTube shares none and says so). "Set up Whisper" no longer shows for a YouTube link.
+- **Thesaurus › Atlas (0.6.0, 6-29 G2):** a word's neighbours drawn as a compass (meaning to the west, form to the east,
+  origin to the north, use to the south: synonyms, themes and their words, its family, words to discover, the word it comes
+  from and the same word in other languages, set phrases, where you met it) or its family as a tree (what it is made from
+  above, what grew from it below). Threads draw themselves out like ink, hover lights a word's threads, the wheel or a pinch
+  zooms, the arrows walk from word to word, and the word's page sits beside it. *See its neighbours* on every word's page.

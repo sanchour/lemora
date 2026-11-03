@@ -7498,5 +7498,21 @@
   "Build from parts": "Aus Teilen bauen",
   "A word split into its parts, mixed up. Put the parts back in order from the meaning.": "Ein in seine Teile zerlegtes Wort, durcheinander. Bringen Sie die Teile anhand der Bedeutung in Ordnung.",
   "Needs {0} of your words that have a picture; you have {1}. Add pictures to your cards.": "Benötigt {0} Ihrer Wörter mit Bild; Sie haben {1}. Fügen Sie Ihren Karten Bilder hinzu.",
-  "Needs {0} of your words that the dictionary splits into parts; you have {1}.": "Benötigt {0} Ihrer Wörter, die das Wörterbuch in Teile zerlegt; Sie haben {1}."
+  "Needs {0} of your words that the dictionary splits into parts; you have {1}.": "Benötigt {0} Ihrer Wörter, die das Wörterbuch in Teile zerlegt; Sie haben {1}.",
+  "Atlas": "Atlas",
+  "Which word?": "Welches Wort?",
+  "Atlas view": "Atlas-Ansicht",
+  "Compass": "Kompass",
+  "Tree": "Baum",
+  "Look-alikes": "Ähnliche Wörter",
+  "Fit": "Einpassen",
+  "Form": "Form",
+  "Origin": "Herkunft",
+  "The tree of {0}": "Der Baum von {0}",
+  "The compass of {0}: {1} things around it": "Der Kompass von {0}: {1} Dinge ringsum",
+  "No word “{0}” here yet. Try another.": "Hier gibt es noch kein Wort „{0}“. Versuchen Sie ein anderes.",
+  "Look up a word to see what is around it: its meanings, its family, where it comes from and how it is used.": "Schlagen Sie ein Wort nach, um zu sehen, was es umgibt: seine Bedeutungen, seine Familie, seine Herkunft und seinen Gebrauch.",
+  "Synonyms, families and origins come with a full dictionary, which this language doesn’t have yet.": "Synonyme, Wortfamilien und Herkunft kommen mit einem vollständigen Wörterbuch, das diese Sprache noch nicht hat.",
+  "Its neighbours, in words": "Seine Nachbarn, in Worten",
+  "See its neighbours": "Nachbarn ansehen"
 }

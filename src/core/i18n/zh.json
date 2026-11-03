@@ -7498,5 +7498,21 @@
   "Build from parts": "用部分组词",
   "A word split into its parts, mixed up. Put the parts back in order from the meaning.": "一个被拆成几个部分并打乱的词。请根据词义把各部分排回正确的顺序。",
   "Needs {0} of your words that have a picture; you have {1}. Add pictures to your cards.": "需要 {0} 个有图片的单词；您有 {1} 个。请为您的卡片添加图片。",
-  "Needs {0} of your words that the dictionary splits into parts; you have {1}.": "需要 {0} 个词典能拆成几个部分的单词；您有 {1} 个。"
+  "Needs {0} of your words that the dictionary splits into parts; you have {1}.": "需要 {0} 个词典能拆成几个部分的单词；您有 {1} 个。",
+  "Atlas": "地图集",
+  "Which word?": "哪个词？",
+  "Atlas view": "地图集视图",
+  "Compass": "罗盘",
+  "Tree": "树",
+  "Look-alikes": "形近词",
+  "Fit": "适应窗口",
+  "Form": "形式",
+  "Origin": "来源",
+  "The tree of {0}": "{0}的词树",
+  "The compass of {0}: {1} things around it": "{0}的罗盘：周围有 {1} 项",
+  "No word “{0}” here yet. Try another.": "这里还没有“{0}”这个词。换一个试试。",
+  "Look up a word to see what is around it: its meanings, its family, where it comes from and how it is used.": "查一个词，看看它周围有什么：词义、词族、来源和用法。",
+  "Synonyms, families and origins come with a full dictionary, which this language doesn’t have yet.": "同义词、词族和来源需要完整词典，这门语言目前还没有。",
+  "Its neighbours, in words": "它的邻居（文字版）",
+  "See its neighbours": "查看邻近词"
 }

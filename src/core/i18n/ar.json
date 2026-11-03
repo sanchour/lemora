@@ -7498,5 +7498,21 @@
   "Build from parts": "ابنِ من الأجزاء",
   "A word split into its parts, mixed up. Put the parts back in order from the meaning.": "كلمة مقسّمة إلى أجزائها ومخلوطة. رتّب الأجزاء حسب المعنى.",
   "Needs {0} of your words that have a picture; you have {1}. Add pictures to your cards.": "يحتاج إلى {0} من كلماتك التي لها صورة؛ لديك {1}. أضف صورًا إلى بطاقاتك.",
-  "Needs {0} of your words that the dictionary splits into parts; you have {1}.": "يحتاج إلى {0} من كلماتك التي يقسّمها القاموس إلى أجزاء؛ لديك {1}."
+  "Needs {0} of your words that the dictionary splits into parts; you have {1}.": "يحتاج إلى {0} من كلماتك التي يقسّمها القاموس إلى أجزاء؛ لديك {1}.",
+  "Atlas": "الأطلس",
+  "Which word?": "أي كلمة؟",
+  "Atlas view": "عرض الأطلس",
+  "Compass": "البوصلة",
+  "Tree": "الشجرة",
+  "Look-alikes": "كلمات متشابهة",
+  "Fit": "ملاءمة",
+  "Form": "الشكل",
+  "Origin": "الأصل",
+  "The tree of {0}": "شجرة {0}",
+  "The compass of {0}: {1} things around it": "بوصلة {0}: {1} عنصرًا حولها",
+  "No word “{0}” here yet. Try another.": "لا توجد كلمة «{0}» هنا بعد. جرّب كلمة أخرى.",
+  "Look up a word to see what is around it: its meanings, its family, where it comes from and how it is used.": "ابحث عن كلمة لترى ما حولها: معانيها وعائلتها ومن أين جاءت وكيف تُستعمل.",
+  "Synonyms, families and origins come with a full dictionary, which this language doesn’t have yet.": "المرادفات والعائلات والأصول تأتي مع قاموس كامل، وهذه اللغة لا تملكه بعد.",
+  "Its neighbours, in words": "جيرانها، بالكلمات",
+  "See its neighbours": "عرض جيرانها"
 }
