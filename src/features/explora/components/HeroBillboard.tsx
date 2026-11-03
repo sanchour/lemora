@@ -1,6 +1,6 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useEffect, useState, useRef } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   Bookmark,
   BookOpen,
@@ -27,6 +27,7 @@ import { posterUrl } from '@/services/mundus/tmdb';
 import type { PickLookup } from '@/features/mundus/hooks';
 import type { ExploraItem } from '../types';
 import { LevelBadge } from './LevelBadge';
+import { Hand } from '@/design/drawings';
 
 const KIND_ICONS: Record<string, typeof Tv> = {
   series: Tv,
@@ -62,6 +63,7 @@ export function HeroBillboard({
   streamingServices,
 }: HeroBillboardProps) {
   const translateUi = useUi();
+  const still = useReducedMotion();
   const featured = items.slice(0, 5);
   const [index, setIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -116,190 +118,117 @@ export function HeroBillboard({
     return Play;
   })();
 
+  const cover = poster ? (
+    <img src={poster} alt="" className="size-full object-cover" />
+  ) : current.book ? (
+    <Artwork title={current.book.title} coverUrl={current.book.coverUrl} className="size-full object-cover" />
+  ) : current.station ? (
+    <Artwork title={current.station.name} coverUrl={current.station.favicon} className="size-full object-cover" />
+  ) : current.pick ? (
+    <Art query={pickImageQuery(current.pick, current.kind as PickGroup, lang)} fit="cover" fallback={<CoverFallback title={current.title} />} />
+  ) : (
+    <CoverFallback title={current.title} />
+  );
+
   return (
-    <div
-      className="relative mb-5 overflow-hidden rounded-[24px] sm:rounded-[30px] bg-neutral-950 text-white shadow-elev-3 ring-1 ring-white/10"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Background Cinematic Art with Soft Gradients */}
-      <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current.id}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="size-full"
-          >
-            {poster ? (
-              <img
-                src={poster}
-                alt=""
-                className="size-full object-cover object-center opacity-50 blur-[1px] md:blur-none"
-              />
-            ) : current.station ? (
-              <Artwork
-                title={current.station.name}
-                coverUrl={current.station.favicon}
-                className="size-full object-cover opacity-45"
-              />
-            ) : current.book ? (
-              <Artwork
-                title={current.book.title}
-                coverUrl={current.book.coverUrl}
-                className="size-full object-cover opacity-45"
-              />
-            ) : current.pick ? (
-              <div className="size-full opacity-45">
-                <Art
-                  query={pickImageQuery(current.pick, current.kind as PickGroup, lang)}
-                  fit="cover"
-                  fallback={<div className="size-full bg-gradient-to-tr from-accent/30 to-sage/20" />}
-                />
-              </div>
-            ) : (
-              <div className="size-full bg-gradient-to-tr from-neutral-900 via-neutral-800 to-neutral-950" />
-            )}
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Soft Vignette Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/75 to-transparent md:bg-gradient-to-r md:from-neutral-950 md:via-neutral-950/80 md:to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-neutral-950" />
-      </div>
-
-      {/* Hero Content */}
-      <div className="relative z-10 flex min-h-[250px] sm:min-h-[290px] md:min-h-[320px] flex-col justify-end p-5 sm:p-7 md:p-8 lg:w-7/12">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current.id}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.35, ease: 'easeOut' }}
-          >
-            {/* Cute Bubbly Badges */}
-            <div className="flex flex-wrap items-center gap-1.5 mb-2">
-              {service && (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 backdrop-blur-md px-2.5 py-0.5 text-[11px] font-extrabold tracking-wide uppercase text-white shadow-sm">
-                  <ServiceMark service={serviceId!} size={14} />
-                  {service.name}
-                </span>
-              )}
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur-md px-2.5 py-0.5 text-[11px] font-bold tracking-wide uppercase text-neutral-200 shadow-sm">
-                <KindIcon size={12} aria-hidden />
-                {translateUi(current.kind.toUpperCase())}
-              </span>
-              <LevelBadge level={current.level} estimated={current.estimated} size="sm" />
-              {current.level === learnerLevel && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/25 border border-emerald-400/40 px-2.5 py-0.5 text-[10.5px] font-bold text-emerald-300 shadow-xs select-none">
-                  ★ <UiText source={'At your level'} />
-                </span>
-              )}
+    // A book on the reading table (Lemora): paper, a cover standing like a book, the blurb set like the back of one.
+    <div className="relative mb-6 overflow-hidden rounded-[28px] border border-line bg-surface" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+      <div className="pointer-events-none absolute inset-0 opacity-60 [background:radial-gradient(120%_90%_at_85%_10%,color-mix(in_oklab,var(--accent)_10%,transparent),transparent_60%)]" aria-hidden />
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={current.id}
+          initial={still ? { opacity: 0 } : { opacity: 0, rotateY: -8, x: 18 }}
+          animate={still ? { opacity: 1 } : { opacity: 1, rotateY: 0, x: 0 }}
+          exit={still ? { opacity: 0 } : { opacity: 0, rotateY: 6, x: -14 }}
+          transition={{ type: 'spring', stiffness: 260, damping: 32 }}
+          style={{ transformPerspective: 1400 }}
+          className="relative grid items-center gap-6 p-6 sm:grid-cols-[auto_minmax(0,1fr)] sm:gap-9 sm:p-8"
+        >
+          {/* The cover, with a spine and a page edge, leaning very slightly as books on a stand do. */}
+          <div className="relative mx-auto w-[150px] sm:mx-0 sm:w-[168px]">
+            <div className="relative aspect-[2/3] -rotate-[1.5deg] overflow-hidden rounded-r-xl rounded-l-[4px] bg-raised shadow-elev-2 ring-1 ring-line">
+              {cover}
+              <span className="pointer-events-none absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/25 to-transparent" aria-hidden />
             </div>
+            <span className="absolute inset-y-2 -right-1.5 w-1.5 -rotate-[1.5deg] rounded-r-sm bg-[repeating-linear-gradient(to_bottom,var(--color-raised)_0_2px,var(--color-line)_2px_3px)]" aria-hidden />
+          </div>
 
-            {/* Title */}
-            <h1 className="font-serif text-2xl sm:text-3xl lg:text-[34px] font-bold tracking-tight text-white drop-shadow-md leading-tight">
-              {current.title}
-            </h1>
-
-            {/* Subtitle / Pitch */}
-            <p className="mt-1.5 text-[12.5px] sm:text-[13.5px] leading-relaxed text-neutral-300 line-clamp-2 max-w-xl drop-shadow">
-              {current.pick?.why ?? current.artist?.why ?? current.sub ?? (
-                <UiText source={'Essential immersion material carefully selected for language learners.'} />
+          <div className="min-w-0">
+            <p className="flex flex-wrap items-center gap-2 text-[11.5px] font-bold tracking-[0.14em] text-ink-faint uppercase">
+              <KindIcon size={13} aria-hidden />
+              <span>{translateUi(current.kind.toUpperCase())}</span>
+              <LevelBadge level={current.level} estimated={current.estimated} size="sm" />
+              {current.level === learnerLevel && <span className="tracking-normal text-sage-text normal-case">· <UiText source={'At your level'} /></span>}
+              {service && (
+                <span className="inline-flex items-center gap-1 tracking-normal normal-case">
+                  · <ServiceMark service={serviceId!} size={13} /> {service.name}
+                </span>
               )}
             </p>
-
-            {/* Cute Round Action Buttons */}
-            <div className="mt-4 sm:mt-5 flex flex-wrap items-center gap-2.5">
-              <Button
-                variant="accent"
-                size="md"
-                icon={ActionIcon}
-                onClick={() => onPrimaryAction(current)}
-                className="rounded-full px-5 h-10 shadow-elev-2 text-[13px] font-bold hover:scale-[1.02] active:scale-[0.95] transition-all"
-              >
+            <h2 className="mt-2 font-serif text-[30px] leading-[1.1] font-semibold tracking-tight text-balance sm:text-[36px]">{current.title}</h2>
+            {(current.pick?.by || current.book?.author) && <p className="mt-1 font-serif text-[16px] text-ink-soft italic">{current.pick?.by ?? current.book?.author}</p>}
+            {/* A small drawn ornament, then the blurb as on a book's back. */}
+            <Hand name="leaf" size={22} className="mt-3 text-ink-faint" />
+            <p className="mt-1 max-w-xl font-serif text-[16.5px] leading-relaxed text-ink-soft">
+              {current.pick?.why ?? current.artist?.why ?? current.sub ?? <UiText source={'Essential immersion material carefully selected for language learners.'} />}
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-2.5">
+              <Button variant="accent" size="md" icon={ActionIcon} onClick={() => onPrimaryAction(current)}>
                 {actionLabel}
               </Button>
-
               <button
                 type="button"
                 aria-pressed={isSaved}
                 onClick={() => onToggleSave(current.id)}
-                className={cx(
-                  'flex h-10 items-center gap-1.5 rounded-full px-4 text-[12.5px] font-bold transition-all duration-200 backdrop-blur-md shadow-elev-1 hover:scale-[1.02] active:scale-[0.95]',
-                  isSaved
-                    ? 'bg-white text-neutral-900'
-                    : 'bg-white/20 text-white hover:bg-white/30',
-                )}
+                className={cx('inline-flex h-10 items-center gap-1.5 rounded-xl border px-3.5 text-[13.5px] font-semibold transition-colors', isSaved ? 'border-transparent bg-sage-soft text-sage-text' : 'border-line bg-raised text-ink-soft hover:border-line-strong hover:text-ink')}
               >
-                <Bookmark size={14} className={isSaved ? 'fill-current' : ''} aria-hidden />
-                <span>{isSaved ? translateUi('Saved') : translateUi('Watchlist')}</span>
+                <Bookmark size={15} className={isSaved ? 'fill-current' : ''} aria-hidden />
+                {isSaved ? translateUi('Saved') : translateUi('Save')}
               </button>
-
-              <button
-                type="button"
-                onClick={() => onOpenDetails(current)}
-                className="flex size-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md hover:bg-white/30 hover:scale-[1.05] active:scale-[0.95] transition-all shadow-elev-1"
-                title={translateUi('More details')}
-                aria-label={translateUi('View details')}
-              >
-                <Info size={17} aria-hidden />
+              <button type="button" onClick={() => onOpenDetails(current)} className="hit inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-ink-soft hover:text-ink" aria-label={translateUi('View details')}>
+                <Info size={15} aria-hidden /> <UiText source={'More details'} />
               </button>
             </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Prev / Next Slide Arrows (Round & bouncy) */}
+      {/* Turning the pages: a quiet folio at the foot, "2 / 5", with the arrows beside it. */}
       {featured.length > 1 && (
-        <>
-          <button
-            type="button"
-            onClick={prevSlide}
-            aria-label={translateUi('Previous featured item')}
-            className="absolute left-3 top-1/2 -translate-y-1/2 z-20 hidden md:grid size-9 place-items-center rounded-full bg-black/40 text-white backdrop-blur-md transition-all hover:bg-black/70 hover:scale-110 active:scale-95 shadow-md"
-          >
-            <ChevronLeft size={18} />
+        <div className="relative flex items-center justify-end gap-3 border-t border-line/60 px-6 py-2.5 sm:px-8">
+          <div role="tablist" aria-label={translateUi('Featured highlights')} className="mr-auto flex items-center gap-1.5">
+            {featured.map((item, idx) => {
+              const active = idx === activeIndex;
+              return (
+                <button
+                  key={item.id}
+                  role="tab"
+                  aria-selected={active}
+                  aria-label={translateUi('Go to slide {0}: {1}', [String(idx + 1), item.title])}
+                  onClick={() => setIndex(idx)}
+                  className={cx('h-1.5 rounded-full transition-all duration-300', active ? 'w-6 bg-ink-soft' : 'w-1.5 bg-line-strong hover:bg-ink-faint')}
+                />
+              );
+            })}
+          </div>
+          <button type="button" onClick={prevSlide} aria-label={translateUi('Previous featured item')} className="grid size-8 place-items-center rounded-full text-ink-soft transition-colors hover:bg-sunken hover:text-ink">
+            <ChevronLeft size={17} aria-hidden />
           </button>
-          <button
-            type="button"
-            onClick={nextSlide}
-            aria-label={translateUi('Next featured item')}
-            className="absolute right-3 top-1/2 -translate-y-1/2 z-20 hidden md:grid size-9 place-items-center rounded-full bg-black/40 text-white backdrop-blur-md transition-all hover:bg-black/70 hover:scale-110 active:scale-95 shadow-md"
-          >
-            <ChevronRight size={18} />
+          <span className="font-serif text-[14px] text-ink-faint tabular-nums">{activeIndex + 1} / {featured.length}</span>
+          <button type="button" onClick={nextSlide} aria-label={translateUi('Next featured item')} className="grid size-8 place-items-center rounded-full text-ink-soft transition-colors hover:bg-sunken hover:text-ink">
+            <ChevronRight size={17} aria-hidden />
           </button>
-        </>
-      )}
-
-      {/* 5 Bottom Indicator Bars (Cute rounded smooth pills) */}
-      {featured.length > 1 && (
-        <div
-          role="tablist"
-          aria-label={translateUi('Featured highlights')}
-          className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5"
-        >
-          {featured.map((item, idx) => {
-            const active = idx === activeIndex;
-            return (
-              <button
-                key={item.id}
-                role="tab"
-                aria-selected={active}
-                aria-label={translateUi('Go to slide {0}: {1}', [String(idx + 1), item.title])}
-                onClick={() => setIndex(idx)}
-                className={cx(
-                  'h-1.5 rounded-full transition-all duration-300',
-                  active ? 'w-7 bg-white shadow-md' : 'w-2.5 bg-white/40 hover:bg-white/70 hover:w-4',
-                )}
-              />
-            );
-          })}
         </div>
       )}
+    </div>
+  );
+}
+
+/** A cover with no picture: a plain cloth binding with its title set on it. */
+function CoverFallback({ title }: { title: string }) {
+  return (
+    <div className="grid size-full place-items-center bg-[color-mix(in_oklab,var(--sage)_22%,var(--color-raised))] p-4 text-center">
+      <span className="font-serif text-[15px] leading-snug font-semibold text-ink-soft">{title}</span>
     </div>
   );
 }

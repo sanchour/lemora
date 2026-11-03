@@ -2,7 +2,7 @@ import { Phrasebook } from '@/features/phrasebook/Phrasebook';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { lazy, Suspense, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
-import { useNavigate, useSearchParams } from 'react-router';
+import { Navigate, useNavigate, useSearchParams } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
 import { BookA, Compass, Layers, LayoutGrid, List, MessageSquareQuote, Plus, Search, SearchX, Sparkles, Waypoints } from 'lucide-react';
 import { useApp } from '@/app/context';
@@ -12,14 +12,14 @@ import type { RoomTab } from '@/app/RoomTabs';
 import { STARTER_THEMES } from '@/core/lang/starter';
 import { createDeck, createFolder, useDeckCounts, useDecks, useFolders } from '@/data/decks';
 import { patchSetting } from '@/data/settings';
-import type { DeckSort, DiscoverGroup, DiscoverSort } from '@/data/settings';
+import type { DeckSort } from '@/data/settings';
 import { starterKey, useStarterList } from '@/data/starter';
 import type { StarterSpec } from '@/data/starter';
 import { useStudyOutlook } from '@/data/study';
 import type { Deck, Folder } from '@/data/types';
 import { useHotkeys } from '@/design/hooks/useHotkeys';
 import { useLayout } from '@/design/hooks/useLayout';
-import { Button, Card, IconButton, SearchInput, searchKey, Segmented, SortMenu } from '@/design/primitives';
+import { Button, Card, IconButton, SearchInput, searchKey, SortMenu } from '@/design/primitives';
 import { fade, spring } from '@/design/motion';
 import { cx } from '@/lib/cx';
 import { THEME_ICONS } from './common/DeckIcon';
@@ -35,12 +35,12 @@ import type { ConfirmRequest, MoveRequest, NameRequest } from './library/dialogs
 import { JourneySection } from './library/JourneySection';
 import { NewMenu } from './library/NewMenu';
 import type { NewAction } from './library/NewMenu';
-import { StarterLibrary } from './library/StarterLibrary';
 import { TodayCard } from './library/TodayCard';
 import { useDeckImport } from './library/useDeckImport';
 import { DictionaryView } from './dictionary/DictionaryView';
 
-type Tab = 'decks' | 'discover' | 'dictionary' | 'phrases' | 'atlas';
+type Tab = 'decks' | 'dictionary' | 'phrases' | 'atlas';
+const DISCOVER = '/explora?kind=words';
 // The Atlas draws on a canvas and loads its code only when its tab opens (6-29).
 const AtlasTab = lazy(() => import('./atlas/AtlasTab'));
 
@@ -50,16 +50,6 @@ const SORTS: Array<{ value: DeckSort; label: string }> = [
   { value: 'name', label: 'Name' },
   { value: 'size', label: 'Most cards' },
   { value: 'hand', label: 'By hand' },
-];
-
-const DISCOVER_SORTS: Array<{ value: DiscoverSort; label: string }> = [
-  { value: 'suggested', label: 'Suggested' },
-  { value: 'size', label: 'Most words' },
-  { value: 'easiest', label: 'Easiest first' },
-];
-const DISCOVER_GROUPS: Array<{ value: DiscoverGroup; label: string }> = [
-  { value: 'kind', label: 'Kind of deck' },
-  { value: 'level', label: 'Level' },
 ];
 
 function ViewToggle({ view, onChange }: { view: 'list' | 'cards'; onChange: (v: 'list' | 'cards') => void }) {
@@ -131,24 +121,20 @@ export default function ThesaurusPage() {
   const counts = useDeckCounts(decks);
   const outlook = useStudyOutlook(decks);
   const imports = useDeckImport(lang);
-  const { deckSort: sort, deckView: view, discoverSort, discoverGroup } = settings.ui;
+  const { deckSort: sort, deckView: view } = settings.ui;
   const totals = useMemo(() => counts && sumCounts([...counts.values()]), [counts]);
 
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
   const hasDecks = Boolean(allDecks?.length);
   // The tab you pick wins; with nothing chosen, Thesaurus opens on My decks with the Lexicon desk.
   const picked = params.get('tab');
   // "memory" was the word memory's own tab before it joined the dictionary.
-  const tab: Tab = picked === 'decks' || picked === 'discover' || picked === 'dictionary' || picked === 'phrases' || picked === 'atlas' ? picked : picked === 'memory' ? 'dictionary' : 'decks';
-  const browse = () => {
-    setSearching(false);
-    setQuery('');
-    setParams({ tab: 'discover' }, { replace: true });
-  };
+  const tab: Tab = picked === 'decks' || picked === 'dictionary' || picked === 'phrases' || picked === 'atlas' ? picked : picked === 'memory' ? 'dictionary' : 'decks';
+  // Ready-made decks are found in Explora › Word decks, with the rest of what there is to discover.
+  const browse = () => navigate(DISCOVER);
   // The room's tabs (5.1-3b), as Codex's and Mentis's: 1 2 3 open them.
   const tabs: Array<RoomTab<Tab>> = [
     { id: 'decks', label: 'My decks', to: '/thesaurus?tab=decks', icon: Layers },
-    { id: 'discover', label: 'Discover', to: '/thesaurus?tab=discover', icon: Compass },
     { id: 'dictionary', label: 'Dictionary', to: '/thesaurus?tab=dictionary', icon: BookA },
     { id: 'phrases', label: 'Phrases', to: '/thesaurus?tab=phrases', icon: MessageSquareQuote },
     { id: 'atlas', label: 'Atlas', to: '/thesaurus?tab=atlas', icon: Waypoints },
@@ -157,7 +143,7 @@ export default function ThesaurusPage() {
   const [searching, setSearching] = useState(false);
   const [query, setQuery] = useState('');
   const searchRef = useRef<HTMLInputElement>(null);
-  useHotkeys({ '/': () => (searching ? searchRef.current?.focus() : setSearching(true)) }, pointer === 'fine' && (tab === 'decks' || tab === 'discover'));
+  useHotkeys({ '/': () => (searching ? searchRef.current?.focus() : setSearching(true)) }, pointer === 'fine' && tab === 'decks');
 
   const openStarter = (spec: StarterSpec) => navigate('/thesaurus/ready/' + starterKey(spec));
   const [naming, setNaming] = useState<NameRequest | null>(null);
@@ -205,12 +191,18 @@ export default function ThesaurusPage() {
     setSearching(false);
   };
 
+  if (picked === 'discover') return <Navigate to={DISCOVER} replace />;
   return (
     <>
       <PageHeader
         title={translateUi('Thesaurus')}
         englishTitle={'Thesaurus'}
-        actions={<NewMenu busy={imports.apkgProgress !== null} onChoose={choose} />}
+        actions={
+          <div className="flex items-center gap-2">
+            <IconButton icon={Compass} label={translateUi('Discover')} onClick={browse} />
+            <NewMenu busy={imports.apkgProgress !== null} onChoose={choose} />
+          </div>
+        }
       />
       <RoomTabs label={translateUi('Thesaurus sections')} tabs={tabs} active={tab} keys={!searching} />
 
@@ -297,46 +289,9 @@ export default function ThesaurusPage() {
               )}
             </section>
           </motion.div>
-        ) : tab === 'dictionary' ? (
+        ) : (
           <motion.section key="dictionary" aria-label={translateUi('Dictionary')} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} transition={spring.snappy}>
             <DictionaryView lang={lang} />
-          </motion.section>
-        ) : (
-          <motion.section key="discover" aria-label={translateUi('Ready-made decks')} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} transition={spring.snappy}>
-            <div className="mb-6 flex h-11 items-center gap-2">
-              <div className="relative h-full min-w-0 flex-1">
-                <AnimatePresence mode="popLayout" initial={false}>
-                  {searching ? (
-                    <motion.div key="search" className="absolute inset-0" initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 12 }} transition={fade}>
-                      <SearchInput
-                        ref={searchRef}
-                        value={query}
-                        onChange={setQuery}
-                        placeholder={translateUi('Search ready-made decks and words')}
-                        onClose={closeSearch}
-                        autoFocus
-                      />
-                    </motion.div>
-                  ) : (
-                    <motion.div key="group" className="flex h-full items-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={fade}>
-                      <Segmented<DiscoverGroup>
-                        label={translateUi('Kind of deck')}
-                        value={discoverGroup}
-                        onChange={(value) => void patchSetting('ui', { discoverGroup: value })}
-                        options={DISCOVER_GROUPS.map((g) => ({ value: g.value, label: translateUi(g.label) }))}
-                      />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              {!searching && <IconButton icon={Search} label={translateUi('Search')} shortcut="/" onClick={() => setSearching(true)} />}
-              <SortMenu
-                value={discoverSort}
-                options={DISCOVER_SORTS}
-                onChange={(value) => void patchSetting('ui', { discoverSort: value })}
-              />
-            </div>
-            <StarterLibrary lang={lang} query={query} sort={discoverSort} group={discoverGroup} onOpen={openStarter} />
           </motion.section>
         )}
       </AnimatePresence>

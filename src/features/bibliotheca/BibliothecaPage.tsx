@@ -408,7 +408,7 @@ export default function BibliothecaPage() {
               to="/thesaurus"
               count={filteredDecks.length}
               action={
-                <Link to="/thesaurus?tab=discover" className={buttonClasses('secondary', 'sm')}><UiText source={'{0} Ready-made decks'} values={[<Plus size={15} aria-hidden />]} /></Link>
+                <Link to="/explora?kind=words" className={buttonClasses('secondary', 'sm')}><UiText source={'{0} Ready-made decks'} values={[<Plus size={15} aria-hidden />]} /></Link>
               }
             />
             {filteredDecks.length > 0 ? (
@@ -442,7 +442,7 @@ export default function BibliothecaPage() {
                 icon={Layers}
                 title={translateUi('No vocabulary decks yet')}
                 detail={translateUi('Start with a ready-made frequency or theme deck, import an Anki deck, or mark words while reading and listening.')}
-                to="/thesaurus?tab=discover"
+                to="/explora?kind=words"
                 actionLabel="Browse decks"
               />
             )}

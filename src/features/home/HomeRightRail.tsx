@@ -19,6 +19,7 @@ import {
   GreetingWithNameUnderline,
 } from './homeComponents';
 import { TimeADayMeter } from './TimeADayMeter';
+import { shows } from '@/product';
 
 /**
  * Lingua Home: Right Rail (Cozy Scriptorium Atelier)
@@ -77,10 +78,12 @@ export function HomeRightRail() {
               <TimeADayMeter lang={language.id} goalMinutes={goal} className="h-full bg-transparent" />
             </section>
 
-            {/* 2. Next step from Cursus (Alphabet / Marks / Course) */}
-            <section aria-label="Next step in Cursus">
-              <CursusNextStepCard data={cursusStep} variant="banner" />
-            </section>
+            {/* 2. Next step from Cursus (Alphabet / Marks / Course), where the build has Cursus */}
+            {shows('cursus') && (
+              <section aria-label="Next step in Cursus">
+                <CursusNextStepCard data={cursusStep} variant="banner" />
+              </section>
+            )}
           </div>
 
           {/* Right Column: Tools Round Icons (positioned higher, aligned with top header) ─── */}

@@ -1,6 +1,6 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useSettings } from '@/data/settings';
-import { History, LayoutGrid, LayoutList, Monitor, Moon, PanelRight, Sparkles, SlidersHorizontal, Sun, Waves, Wind } from 'lucide-react';
+import { History, LayoutDashboard, LayoutGrid, LayoutList, Monitor, Moon, PanelRight, SlidersHorizontal, Sparkles, Sun, Waves, Wind } from 'lucide-react';
 import { getLanguage } from '@/core/lang/languages';
 import { flavourOf } from '@/design/flavours';
 import { AnimatePresence, motion as m } from 'motion/react';
@@ -12,6 +12,7 @@ import { cx } from '@/lib/cx';
 import { Segmented, Switch, ToggleRow } from '@/design/primitives';
 import { fade } from '@/design/motion';
 import { SettingsSection } from '../SettingsSection';
+import { shows } from '@/product';
 
 const MOTION_NOTES: Record<MotionPref, string> = {
   system: 'Follows your device: if it asks for less motion, Lingua moves less too.',
@@ -130,7 +131,9 @@ export function AppearanceSection({
             { value: 'topline', label: translateUi('Topline'), icon: LayoutList },
             { value: 'rail', label: translateUi('Right rail'), icon: PanelRight },
             { value: 'shelf', label: translateUi('Bottom shelf'), icon: LayoutGrid },
-            { value: 'classic', label: translateUi('Classic'), icon: History },
+            // Classic leans on Cursus and the listening rooms; the desk is Lemora's own (src/product.ts).
+            ...(shows('cursus') ? [{ value: 'classic' as const, label: translateUi('Classic'), icon: History }] : []),
+            ...(shows('desk') ? [{ value: 'desk' as const, label: translateUi('Desk'), icon: LayoutDashboard }] : []),
           ]}
         />
         <p data-hint="" className="mt-2 text-[13px] text-ink-soft"><UiText source={'Choose between Topline tools, Right rail, Bottom shelf, or Classic.'} /></p>

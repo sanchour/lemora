@@ -33,6 +33,9 @@ import {
 import { WordDecksShelf } from './components/WordDecksShelf';
 import { shows } from '@/product';
 import { TipsView } from '@/features/mundus/TipsView';
+import { Segmented, SortMenu } from '@/design/primitives';
+import { patchSetting } from '@/data/settings';
+import type { DiscoverGroup, DiscoverSort } from '@/data/settings';
 
 const EASE_LEVEL: Record<PickedArtist['ease'], PickLevel> = {
   clear: 'A2',
@@ -463,6 +466,27 @@ export function ExploreAll({
       ) : category === 'words' ? (
         /* Word Decks Tab: StarterLibrary embedded in Explore */
         <div className="pt-1">
+          {/* Ready-made decks live here (Thesaurus's Discover moved in): by kind or by level, and in what order. */}
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <Segmented<DiscoverGroup>
+              label={translateUi('Kind of deck')}
+              value={settings.ui.discoverGroup}
+              onChange={(value) => void patchSetting('ui', { discoverGroup: value })}
+              options={[
+                { value: 'kind', label: translateUi('Kind of deck') },
+                { value: 'level', label: translateUi('Level') },
+              ]}
+            />
+            <SortMenu
+              value={settings.ui.discoverSort}
+              options={[
+                { value: 'suggested', label: 'Suggested' },
+                { value: 'size', label: 'Most words' },
+                { value: 'easiest', label: 'Easiest first' },
+              ]}
+              onChange={(value: DiscoverSort) => void patchSetting('ui', { discoverSort: value })}
+            />
+          </div>
           <StarterLibrary
             lang={lang}
             query={searchQuery}

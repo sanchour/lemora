@@ -228,7 +228,7 @@ export const AddLibraryMenu = memo(function AddLibraryMenu({ lang }: { lang: str
           icon: Layers,
           title: 'Vocabulary deck',
           detail: 'Top frequency lists and themed decks',
-          action: () => navigate('/thesaurus?tab=discover'),
+          action: () => navigate('/explora?kind=words'),
         },
       ],
     },

@@ -23,7 +23,7 @@ import type { Settings } from '@/data/settings';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { cx } from '@/lib/cx';
 import {
-  HOME_TOOLS,
+  useHomeTools,
   type HomeToolItem,
   type LeftOffData,
   type CursusStepData,
@@ -100,6 +100,25 @@ export function ToolDuotoneIcon({ id, className = 'size-8' }: { id: HomeToolItem
           <path d="M16 41h16M24 23v18" stroke="var(--ink)" />
           <path d="M15 23h18l-3.5-12h-11L15 23Z" stroke="var(--ink)" fill="var(--accent)" fillOpacity={0.25} />
           <path d="M18 27c2 2 6 2 12 0" stroke="var(--accent)" strokeWidth={1.8} strokeLinecap="round" />
+        </svg>
+      );
+    case 'diarium':
+      // A quill over a page, its last line still wet in the accent.
+      return (
+        <svg viewBox="0 0 48 48" className={className} fill="none" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M10 12h17M10 19h13M10 26h9" stroke="var(--ink)" opacity={0.55} />
+          <path d="M10 33c4-2 7 1.5 11-0.5" stroke="var(--accent)" strokeWidth={1.9} />
+          <path d="M40 7C30 9 23 17 20 30l2.5-1.5C26 20 32 13 40 7Z" stroke="var(--ink)" fill="#9d8fcb" fillOpacity={0.3} />
+          <path d="M20 30l-2 6" stroke="var(--ink)" />
+        </svg>
+      );
+    case 'alphabet':
+      // A letter in two hands: a capital drawn in ink, its small one in the accent, on a ruled line.
+      return (
+        <svg viewBox="0 0 48 48" className={className} fill="none" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M8 36L16.5 12L25 36M11.5 27h10" stroke="var(--ink)" />
+          <path d="M37 24c-4.5-1.5-8 0.5-8 5.5s3.5 7 8 5.5V22" stroke="var(--accent)" strokeWidth={2} />
+          <path d="M6 40.5c12-1 24-1 36 0" stroke="#6f9cc0" strokeWidth={1.8} opacity={0.7} />
         </svg>
       );
     case 'cursus':
@@ -774,11 +793,12 @@ export function ToolsBar({
 }: {
   mode: 'topline' | 'rail' | 'shelf';
 }) {
+  const tools = useHomeTools();
   if (mode === 'topline') {
     return (
       <nav aria-label="Tools" className="w-full">
         <div className="flex flex-wrap items-center gap-2">
-          {HOME_TOOLS.map((tool) => (
+          {tools.map((tool) => (
             <Link
               key={tool.id}
               to={tool.to}
@@ -806,7 +826,7 @@ export function ToolsBar({
         </h2>
 
         <div className="grid grid-cols-2 gap-x-4 gap-y-3 sm:gap-x-5 sm:gap-y-3.5">
-          {HOME_TOOLS.map((tool) => (
+          {tools.map((tool) => (
             <Link
               key={tool.id}
               to={tool.to}
@@ -859,7 +879,7 @@ export function ToolsBar({
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
-        {HOME_TOOLS.map((tool) => (
+        {tools.map((tool) => (
           <Link
             key={tool.id}
             to={tool.to}

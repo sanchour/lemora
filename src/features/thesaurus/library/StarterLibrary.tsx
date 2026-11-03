@@ -146,18 +146,64 @@ export function StarterLibrary({ lang, query, sort, group, onOpen }: LibraryProp
             <span className="text-sm font-bold text-ink-faint tabular-nums">{shelf.entries.length}</span>
             {shelf.blurb && <p className="ml-auto hidden truncate text-[12.5px] text-ink-faint sm:block">{shelf.blurb}</p>}
           </header>
-          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {shelf.entries.map((e) => (
-              <Tile key={starterKey(e.spec)} entry={e} lang={lang} index={shown++} added={Boolean(added?.get(starterKey(e.spec)))} onOpen={onOpen} />
-            ))}
-          </div>
+          {shelf.id === 'path' && !query.trim() ? (
+            <PathShelf entries={shelf.entries} added={added} onOpen={onOpen} />
+          ) : (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+              {shelf.entries.map((e) => (
+                <Tile key={starterKey(e.spec)} entry={e} lang={lang} index={shown++} added={Boolean(added?.get(starterKey(e.spec)))} onOpen={onOpen} />
+              ))}
+            </div>
+          )}
         </section>
       ))}
     </div>
   );
 }
 
-/** One ready-made deck: a bookish lexicon card with its emblem, name, blurb, word count and mastery bar. */
+/**
+ * The frequency decks as the path they are: milestones along a drawn line, each ringed by how much of it is known.
+ * One step, the next; a click opens the deck to see its words and add it.
+ */
+function PathShelf({ entries, added, onOpen }: { entries: Entry[]; added?: ReadonlyMap<string, unknown>; onOpen: (spec: StarterSpec) => void }) {
+  const translateUi = useUi();
+  return (
+    <div className="relative overflow-x-auto pb-2 [scrollbar-width:thin]">
+      <ol className="relative flex min-w-max items-start gap-2 px-1 pt-1">
+        {/* The road between the stones, drawn by hand. */}
+        <svg className="pointer-events-none absolute top-[38px] right-10 left-10 h-3 w-[calc(100%-5rem)] overflow-visible text-line-strong" preserveAspectRatio="none" viewBox="0 0 100 6" aria-hidden>
+          <path d="M0 3C12 1 22 5 34 3S56 1 68 3S88 5 100 3" fill="none" stroke="currentColor" strokeWidth={1.4} strokeDasharray="2 3" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+        </svg>
+        {entries.map((e, i) => {
+          const share = e.size ? e.known / e.size : 0;
+          const isAdded = Boolean(added?.get(starterKey(e.spec)));
+          return (
+            <motion.li key={starterKey(e.spec)} className="relative w-[118px] shrink-0" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ ...spring.soft, delay: i * 0.03 }}>
+              <button type="button" onClick={() => onOpen(e.spec)} title={e.blurb} className="group flex w-full flex-col items-center gap-2 rounded-2xl px-1 py-1 text-center">
+                <span className="relative grid size-[76px] place-items-center rounded-full bg-bg">
+                  <svg viewBox="0 0 76 76" className="absolute inset-0 -rotate-90" aria-hidden>
+                    <circle cx="38" cy="38" r="34" fill="var(--color-surface)" stroke="var(--color-line)" strokeWidth="3" />
+                    <circle cx="38" cy="38" r="34" fill="none" stroke="var(--sage)" strokeWidth="3.5" strokeLinecap="round" strokeDasharray={2 * Math.PI * 34} strokeDashoffset={2 * Math.PI * 34 * (1 - share)} className="transition-[stroke-dashoffset] duration-700" />
+                  </svg>
+                  <span className="relative font-serif text-[19px] font-semibold tabular-nums transition-colors group-hover:text-accent-text">{e.label}</span>
+                  {isAdded && (
+                    <span className="absolute -top-0.5 -right-0.5 grid size-5 place-items-center rounded-full bg-sage text-on-accent" aria-label={translateUi('Added')}>
+                      <Check size={11} strokeWidth={3} aria-hidden />
+                    </span>
+                  )}
+                </span>
+                <span className="block w-full truncate text-[13px] font-semibold">{e.name}</span>
+                <span className="-mt-1.5 block text-[11.5px] font-semibold text-ink-faint tabular-nums">{Math.round(share * 100)}%</span>
+              </button>
+            </motion.li>
+          );
+        })}
+      </ol>
+    </div>
+  );
+}
+
+/** One ready-made deck: a library catalogue card, its theme's colour on the tab, its emblem, a ruled line, how much is known. */
 function Tile({ entry, lang, index, added, onOpen }: { entry: Entry; lang: string; index: number; added: boolean; onOpen: (spec: StarterSpec) => void }) {
   const translateUi = useUi();
   const { Icon } = entry;
@@ -167,62 +213,34 @@ function Tile({ entry, lang, index, added, onOpen }: { entry: Entry; lang: strin
   const meta = entry.empty ? 'Look words up while listening' : entry.spec.kind === 'frequency' ? `Top ${entry.spec.milestone.toLocaleString('en')} · ${pct}% known` : pct ? `${size} · ${pct}% known` : size;
   const lvl = levelOf(entry.rank);
   return (
-    <motion.div
-      className="group relative min-w-0"
-      style={{ '--hue': entry.hue } as CSSProperties}
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ ...spring.soft, delay: Math.min(index, 14) * 0.02 }}
-    >
+    <motion.div className="group relative min-w-0 pt-2.5" style={{ '--hue': entry.hue } as CSSProperties} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ ...spring.soft, delay: Math.min(index, 14) * 0.02 }}>
+      {/* The card's tab, in its theme's colour, as on a drawer of catalogue cards. */}
+      <span className="absolute top-0 left-5 h-3.5 w-16 rounded-t-lg border border-b-0 border-line/70 bg-[color-mix(in_oklab,var(--hue)_30%,var(--color-surface))]" aria-hidden />
       <button
         type="button"
         disabled={entry.empty}
         title={entry.empty ? translateUi('Words you look up in songs, videos and podcasts gather here.') : entry.blurb}
         onClick={() => onOpen(entry.spec)}
-        className="no-callout flex h-full w-full flex-col justify-between rounded-2xl border border-line/70 bg-surface p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-elev-2 active:translate-y-0 active:scale-[0.99] disabled:cursor-default disabled:opacity-70 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+        className="no-callout relative flex h-full w-full flex-col rounded-2xl border border-line/70 bg-surface p-4 pt-3.5 text-left transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-elev-1 disabled:opacity-60"
       >
-        <div>
-          <div className="flex items-start justify-between gap-2 pr-8">
-            <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-line/50 bg-[color-mix(in_oklab,var(--hue)_14%,var(--raised))] text-[color-mix(in_oklab,var(--hue)_72%,var(--ink))] transition-transform duration-200 group-hover:scale-105">
-              {Icon ? (
-                <Icon aria-hidden size={19} strokeWidth={1.75} />
-              ) : (
-                <span aria-hidden className="font-serif text-[14.5px] leading-none font-bold tracking-tight tabular-nums">
-                  {entry.label}
-                </span>
-              )}
-            </span>
-            <div className="flex items-center gap-1.5">
-              {added && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-sage-soft px-2 py-0.5 text-[10.5px] font-bold text-sage-text">
-                  <UiText source={'{0} Added'} values={[<Check size={10} strokeWidth={3} aria-hidden />]} />
-                </span>
-              )}
-              <span className="rounded-md bg-raised px-1.5 py-0.5 text-[10.5px] font-bold text-ink-soft tabular-nums">
-                {lvl}
-              </span>
-            </div>
-          </div>
-
-          <span className="mt-3 block line-clamp-1 font-serif text-[16.5px] leading-snug font-semibold text-ink transition-colors group-hover:text-accent-text">
-            {entry.name}
+        <span className="flex items-center gap-3 pr-9">
+          <span className="grid size-9 shrink-0 place-items-center rounded-full text-[color-mix(in_oklab,var(--hue)_72%,var(--ink))]" style={{ background: 'color-mix(in oklab, var(--hue) 14%, var(--color-raised))' }}>
+            {Icon ? <Icon aria-hidden size={17} strokeWidth={1.6} /> : <span aria-hidden className="font-serif text-[13px] font-bold tabular-nums">{entry.label}</span>}
           </span>
-          <span className="mt-1 line-clamp-2 block text-[12.5px] leading-relaxed text-ink-soft">
-            {entry.blurb}
-          </span>
-        </div>
-
-        <div className="mt-3.5 border-t border-line/50 pt-2.5">
-          <div className="flex items-center justify-between gap-2 text-[11.5px] font-semibold text-ink-faint tabular-nums">
-            <span className="truncate">{meta}</span>
-          </div>
-          <span className="mt-2 block h-1 shrink-0 overflow-hidden rounded-full bg-sunken">
-            <span className="block h-full origin-left rounded-full bg-sage transition-transform duration-500" style={{ transform: `scaleX(${share})` }} />
-          </span>
-        </div>
+          <span className="min-w-0 flex-1 truncate font-serif text-[17px] leading-snug font-semibold transition-colors group-hover:text-accent-text">{entry.name}</span>
+        </span>
+        <span className="mt-2.5 border-t border-dashed border-line pt-2 text-[12.5px] leading-relaxed text-ink-soft line-clamp-2">{entry.blurb}</span>
+        <span className="mt-auto flex items-center gap-2 pt-3 text-[11.5px] font-semibold text-ink-faint tabular-nums">
+          <span className="min-w-0 flex-1 truncate">{meta}</span>
+          {added && <span className="inline-flex items-center gap-1 rounded-full bg-sage-soft px-2 py-0.5 text-[10.5px] font-bold text-sage-text"><UiText source={'{0} Added'} values={[<Check size={10} strokeWidth={3} aria-hidden />]} /></span>}
+          <span className="rounded-md bg-raised px-1.5 py-0.5 text-[10.5px] font-bold text-ink-soft">{lvl}</span>
+        </span>
+        <span className="mt-2 block h-1 overflow-hidden rounded-full bg-sunken">
+          <span className="block h-full origin-left rounded-full bg-sage transition-transform duration-500" style={{ transform: `scaleX(${share})` }} />
+        </span>
       </button>
       {!entry.empty && (
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-5 right-3">
           <AddStarterMenu lang={lang} spec={entry.spec} trigger="icon" />
         </div>
       )}

@@ -38,7 +38,7 @@ export default function StarterPage() {
     return (
       <div className="py-20 text-center">
         <p className="font-serif text-xl"><UiText source={'That ready-made deck doesn’t exist.'} /></p>
-        <Link to="/thesaurus?tab=discover" className="hit mt-4 inline-block font-semibold text-accent-text"><UiText source={'Back to Discover'} /></Link>
+        <Link to="/explora?kind=words" className="hit mt-4 inline-block font-semibold text-accent-text"><UiText source={'Back to Discover'} /></Link>
       </div>
     );
   }
@@ -100,7 +100,7 @@ function Booklet({ spec }: { spec: StarterSpec }) {
 
   return (
     <div className="pb-32">
-      <BackLink to="/thesaurus?tab=discover"><UiText source={'Discover'} /></BackLink>
+      <BackLink to="/explora?kind=words"><UiText source={'Discover'} /></BackLink>
 
       <header className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
         <motion.span

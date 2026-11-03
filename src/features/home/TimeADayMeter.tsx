@@ -1,16 +1,18 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'motion/react';
-import { Clock, Sparkles, X } from 'lucide-react';
+import { Sparkles, X } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { DAILY_MINUTES } from '@/app/onboarding/GoalStep';
 import { updateLanguage } from '@/data/languages';
-import { useToday } from '@/data/stats';
+import { useToolDays } from '@/data/toolGoals';
+import type { ToolId } from '@/core/goals/tools';
+import { useHomeTools } from './homeData';
+import { ToolDuotoneIcon } from './homeComponents';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { spring } from '@/design/motion';
 import { cx } from '@/lib/cx';
-import { studyMinutes } from './facts';
 
 const PEACH = '#f6bd8a';
 const WOBBLE = 'M0 10C60 6 110 14 170 9C230 5 280 13 340 9C400 5 450 13 510 9C550 7 580 11 600 9';
@@ -45,12 +47,13 @@ interface TimeADayMeterProps {
 export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMeterProps) {
   const translateUi = useUi();
   const { language } = useApp();
-  const todayStat = useToday(lang);
+  // The same minutes as Home's tools and the day's goal: the recorded sessions, counted once (core/goals/tools).
+  const days = useToolDays(lang, 7);
+  const tools = useHomeTools();
   const [sliderOpen, setSliderOpen] = useState(false);
 
-  const minutesToday = useMemo(() => {
-    return Math.round(studyMinutes(todayStat));
-  }, [todayStat]);
+  const today = days?.[days.length - 1];
+  const minutesToday = Math.round((today?.total ?? 0) / 60_000);
 
   const descriptor = descriptorFor(minutesToday > 0 ? minutesToday : goalMinutes);
   const fractionOfHour = Math.min(1, minutesToday / 60);
@@ -77,84 +80,63 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
 
   return (
     <>
+      {/* Open on the page, no box: the clock, the minutes in the book's figures, each tool's share, and the week. */}
       <button
         type="button"
         onClick={() => setSliderOpen(true)}
         aria-label={translateUi('Time today · Change daily goal')}
-        className={cx(
-          'group flex w-full cursor-pointer flex-col justify-between rounded-[24px] border border-line/80 bg-transparent p-5 text-left transition-[border-color,box-shadow] hover:border-line-strong hover:shadow-elev-1 sm:p-6',
-          className,
-        )}
+        className={cx('group flex w-full cursor-pointer flex-col rounded-2xl p-1 text-left', className)}
       >
-        {/* Central, Fat, Clear Header */}
-        <div className="flex flex-col items-center text-center">
-          <div className="inline-flex items-center gap-2">
-            <Clock size={18} strokeWidth={2.3} className="text-accent-text" aria-hidden />
-            <h2 className="font-serif text-[20px] font-bold tracking-tight text-ink sm:text-[22px]">
-              <UiText source={'Time today'} />
-            </h2>
-          </div>
-        </div>
+        <span className="flex items-center gap-2">
+          <h2 className="font-serif text-[21px] font-semibold tracking-tight text-ink"><UiText source={'Time today'} /></h2>
+          <span className="ml-auto text-[12px] font-semibold text-ink-faint transition-colors group-hover:text-ink-soft">
+            <UiText source={'Goal'} /> · {goalMinutes} <UiText source={'min'} />
+          </span>
+        </span>
 
-        {/* Central Display: Cute Clock Face & Fat Literata Numbers */}
-        <div className="my-auto flex flex-col items-center justify-center gap-2.5 py-4 text-center">
-          <div className="flex items-center justify-center gap-3.5">
-            <div className="flex items-baseline gap-1.5">
-              <span className="font-serif text-[38px] leading-none font-bold text-ink tabular-nums sm:text-[44px]">
-                {minutesToday}
-              </span>
-              <span className="font-serif text-[19px] font-bold text-ink-soft sm:text-[21px]">
-                / {goalMinutes} <UiText source={'min'} />
-              </span>
-            </div>
-
-            {/* Cute Onboarding Clock SVG with Peach Slice */}
-            <div className="relative shrink-0">
-              <svg
-                viewBox="0 0 32 32"
-                className="size-12 drop-shadow-sm"
-                strokeWidth={1.4}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden
-              >
-                <circle cx={16} cy={16} r={13} fill="var(--raised)" stroke="var(--ink)" />
-                {fractionOfHour >= 1 ? (
-                  <circle cx={16} cy={16} r={11} fill={PEACH} stroke="none" />
-                ) : fractionOfHour > 0 ? (
-                  <path d={clockWedge(fractionOfHour)} fill={PEACH} stroke="none" />
-                ) : null}
-                <circle cx={16} cy={16} r={13} fill="none" stroke="var(--ink)" />
-                <path d="M16 6.5V8.5M25.5 16H23.5M16 25.5V23.5M6.5 16H8.5" stroke="var(--ink)" />
-                <path d="M16 16V9.5" stroke="var(--accent)" strokeWidth={1.8} />
-                <circle cx={16} cy={16} r={1.5} fill="var(--ink)" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Track: Daily goal progress */}
-        <div className="w-full border-t border-line/60 pt-3.5">
-          <div className="mb-1.5 flex items-center justify-between font-sans text-[12px]">
-            <span className="font-semibold text-accent-text">
-              {isGoalMet ? (
-                <span className="inline-flex items-center gap-1 text-sage-text">
-                  <Sparkles size={12} /> <UiText source={'Goal met'} />
-                </span>
-              ) : (
-                <UiText source={descriptor} />
-              )}
+        <span className="mt-3 flex items-center gap-4">
+          {/* The cute clock: an hour's face with today's slice in peach, drawn in the hand of the first start. */}
+          <svg viewBox="0 0 32 32" className="size-[72px] shrink-0" strokeWidth={1.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <circle cx={16} cy={16} r={13} fill="var(--raised)" stroke="var(--ink)" />
+            {fractionOfHour >= 1 ? <circle cx={16} cy={16} r={11} fill={PEACH} stroke="none" /> : fractionOfHour > 0 ? <path d={clockWedge(fractionOfHour)} fill={PEACH} stroke="none" /> : null}
+            <circle cx={16} cy={16} r={13} fill="none" stroke="var(--ink)" />
+            <path d="M16 6.5V8.5M25.5 16H23.5M16 25.5V23.5M6.5 16H8.5" stroke="var(--ink)" />
+            <path d="M16 16V9.5" stroke="var(--accent)" strokeWidth={1.6} />
+            <circle cx={16} cy={16} r={1.3} fill="var(--ink)" />
+          </svg>
+          <span className="min-w-0">
+            <span className="flex items-baseline gap-1.5">
+              <span className="font-serif text-[44px] leading-none font-semibold text-ink tabular-nums">{minutesToday}</span>
+              <span className="font-serif text-[18px] text-ink-soft">/ {goalMinutes} <UiText source={'min'} /></span>
             </span>
-            <span className="font-bold text-ink-soft tabular-nums">{Math.round(progressRatio * 100)}%</span>
-          </div>
+            <span className={cx('mt-1.5 inline-flex items-center gap-1 text-[12.5px] font-semibold', isGoalMet ? 'text-sage-text' : 'text-ink-soft')}>
+              {isGoalMet ? <><Sparkles size={12} aria-hidden /> <UiText source={'Goal met'} /></> : <UiText source={descriptor} />}
+              <span className="text-ink-faint tabular-nums"> · {Math.round(progressRatio * 100)}%</span>
+            </span>
+          </span>
+        </span>
 
-          <div className="relative h-2 w-full overflow-hidden rounded-full bg-sunken/60">
-            <div
-              className="h-full bg-accent transition-all duration-500 ease-out"
-              style={{ width: `${Math.max(minutesToday > 0 ? 6 : 0, progressRatio * 100)}%` }}
-            />
-          </div>
-        </div>
+        {/* Each tool's minutes today, behind its own drawn circle. */}
+        <span className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+          {tools.map((tool) => {
+            const ms = today?.byTool[(tool.id === 'mentis' ? 'diarium' : tool.id) as ToolId] ?? 0;
+            return (
+              <span key={tool.id} className={cx('inline-flex items-center gap-1.5', ms < 30_000 && 'opacity-45')} title={translateUi(tool.name)}>
+                <span className="grid size-7 place-items-center rounded-full border border-line-strong/70"><ToolDuotoneIcon id={tool.id} className="size-4" /></span>
+                <span className="text-[12.5px] font-semibold tabular-nums text-ink-soft">{Math.round(ms / 60_000)}</span>
+              </span>
+            );
+          })}
+        </span>
+
+        {/* The week, as strokes of a pen: today's in the accent, a met day in sage. */}
+        <span className="mt-4 flex h-9 items-end gap-1.5 border-t border-line/60 pt-2" aria-hidden>
+          {(days ?? []).map((d, i) => {
+            const m = d.total / 60_000;
+            const last = i === (days?.length ?? 0) - 1;
+            return <span key={d.date} className={cx('flex-1 rounded-full', last ? 'bg-accent' : m >= goalMinutes ? 'bg-sage' : m > 0 ? 'bg-ink-soft/35' : 'bg-line')} style={{ height: `${Math.max(12, Math.min(100, (m / Math.max(1, goalMinutes)) * 100))}%` }} />;
+          })}
+        </span>
       </button>
 
       {/* Onboarding Time-a-Day Slider Modal */}

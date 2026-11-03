@@ -1,19 +1,5 @@
 import { useMemo } from 'react';
-import {
-  BookOpen,
-  Headphones,
-  Clapperboard,
-  Layers,
-  Gamepad2,
-  Sparkles,
-  PenLine,
-  MessagesSquare,
-  MessageCircle,
-  Radio,
-  Music,
-  AudioLines,
-  Bookmark,
-} from 'lucide-react';
+import { AudioLines, BookOpen, Bookmark, Clapperboard, Feather, Gamepad2, Headphones, Languages, Layers, MessageCircle, MessagesSquare, Music, PenLine, Radio, Sparkles } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { getLanguage } from '@/core/lang/languages';
@@ -35,10 +21,12 @@ import { useGuide } from '@/features/mundus/useGuide';
 import type { PickLevel } from '@/core/mundus/types';
 import type { ImageQuery } from '@/services/mundus/images';
 import { homeGreeting } from './HomeClassic';
+import { SECTIONS, shownFor } from '@/app/sections';
+import { reaches, shows } from '@/product';
 
 /** Core tool entry with SVG icon and route */
 export interface HomeToolItem {
-  id: 'codex' | 'sonus' | 'cantus' | 'visio' | 'thesaurus' | 'ludus' | 'mentis' | 'cursus';
+  id: 'codex' | 'sonus' | 'cantus' | 'visio' | 'thesaurus' | 'ludus' | 'mentis' | 'cursus' | 'diarium' | 'alphabet';
   name: string;
   role: string;
   to: string;
@@ -54,7 +42,16 @@ export const HOME_TOOLS: HomeToolItem[] = [
   { id: 'thesaurus', name: 'Thesaurus', role: 'Cards, dictionary & vocabulary recall', to: '/thesaurus', icon: Layers },
   { id: 'ludus', name: 'Ludus', role: 'Games, sentence builder & drills', to: '/thesaurus/games', icon: Gamepad2 },
   { id: 'mentis', name: 'Mentis', role: 'Scriptorium guide, prompts & diarium', to: '/mentis', icon: Sparkles },
+  // Rooms of their own in Lemora (src/product.ts); in Lingua they live inside Mentis and Cursus.
+  { id: 'diarium', name: 'Diarium', role: 'Your journal, written and corrected', to: '/mentis/diarium', icon: Feather },
+  { id: 'alphabet', name: 'Alphabet', role: 'Letters, sounds & stroke order', to: '/cursus/alphabets', icon: Languages },
 ];
+
+/** The tools this build has, in its sidebar's order (Alphabet only for a language in another script). */
+export function useHomeTools(): HomeToolItem[] {
+  const { language } = useApp();
+  return useMemo(() => SECTIONS.filter(shownFor(language.id)).flatMap((s) => HOME_TOOLS.filter((t) => t.id === s.id)), [language.id]);
+}
 
 /** Active or starter text for "Where you left off" */
 export interface LeftOffData {
@@ -443,7 +440,8 @@ export function useHomeWhatNext(): WhatNextItem[] {
       },
     ];
 
-    return pool;
+    // Only what leads to a room this build has (src/product.ts).
+    return pool.filter((s) => reaches(s.to));
   }, [allTexts, progress, due]);
 }
 
@@ -602,8 +600,8 @@ export function useHomeDiscover(): DiscoverItem[] {
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
 
-    // Return up to 12 curated daily items
-    return shuffled.slice(0, 12);
+    // Return up to 12 curated daily items, of the kinds this build has a room for
+    return shuffled.filter((d) => (d.kind === 'podcasts' || d.kind === 'audiobooks' ? shows('sonus') : d.kind === 'series' || d.kind === 'films' ? shows('visio') : true)).slice(0, 12);
   }, [picks, lang]);
 }
 

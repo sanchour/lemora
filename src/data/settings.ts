@@ -252,7 +252,8 @@ export interface Settings {
     /** Sonus et Visio's library filter. */
     sonusShow: MediaShow;
     /** Home's layout: Topline tools, Right rail, Bottom shelf, Today (5.1-2c) or Classic. */
-    homeLayout: 'today' | 'classic' | 'topline' | 'rail' | 'shelf';
+    /** 'desk': Lemora's own Home (src/app/home), a choice where the build has it (src/product.ts). */
+    homeLayout: 'today' | 'classic' | 'topline' | 'rail' | 'shelf' | 'desk';
     /** A touch of the studied language in the design (5.1-4b, design/flavours.ts). */
     flavour: boolean;
     /** Settings › Lab › Design notes (7-0b): click any element to pin a note. Off for learners. */

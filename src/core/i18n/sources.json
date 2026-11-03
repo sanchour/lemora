@@ -16979,5 +16979,8 @@
   ],
   "Books, articles and word decks": [
     "src/app/home/LemoraHome.tsx"
+  ],
+  "Desk": [
+    "src/features/ordo/sections/AppearanceSection.tsx"
   ]
 }
