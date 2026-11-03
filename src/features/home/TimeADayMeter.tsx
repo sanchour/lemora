@@ -104,7 +104,7 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
                 {minutesToday}
               </span>
               <span className="font-serif text-[19px] font-bold text-ink-soft sm:text-[21px]">
-                / {goalMinutes} min
+                / {goalMinutes} <UiText source={'min'} />
               </span>
             </div>
 

@@ -163,7 +163,7 @@ function KindTag({ item }: { item: ExploraItem }) {
     return (
       <span className="flex items-center gap-1.5 rounded-full bg-red-600/90 backdrop-blur-sm px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white shadow-sm">
         <span className="size-1.5 rounded-full bg-white animate-pulse" />
-        LIVE
+        <span lang="en">LIVE</span>
       </span>
     );
   }

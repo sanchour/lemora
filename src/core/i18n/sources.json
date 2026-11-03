@@ -742,7 +742,7 @@
     "src/features/cantus/SongPage.tsx"
   ],
   "Leave Cantus": [
-    "src/features/cantus/SongPage.tsx"
+    "src/features/cantus/room/CantusRoom.tsx"
   ],
   "Back to Lingua": [
     "src/features/cantus/SongPage.tsx",
@@ -1059,9 +1059,6 @@
     "src/features/cantus/room/CantusRoom.tsx"
   ],
   "Song games": [
-    "src/features/cantus/room/CantusRoom.tsx"
-  ],
-  "Leave Cantus": [
     "src/features/cantus/room/CantusRoom.tsx"
   ],
   "Cantus": [
@@ -14876,97 +14873,280 @@
     "src/features/ordo/sections/LanguageSection.tsx",
     "src/data/removalUndo.ts"
   ],
-  "Unicode character reference": ["src/features/cursus/characters/CharactersPage.tsx", "src/features/cursus/marks/MarksTab.tsx"],
-  "Back to Cursus": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Loading character reference…": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Ready offline for the characters shown. Other scripts need one first visit online.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "The reference is loaded, but it could not be saved offline. A connection is needed after reopening.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Character data loads on first use. It works offline after it is saved on this device.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Inspect a text": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Each tile is one code point, including spaces and combining marks. Repeated characters appear once. Text stays on this device.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Paste a text to inspect its characters.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Normalization of the text (preview up to 80 code points)": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Find a character": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Character, official name, or U+0041": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Script": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Block": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Name searches cover all scripts; up to 96 matches are shown. Refine the search for more specific results.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Browse the selected script by Unicode block. Unassigned positions are labelled in the details.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "No matching characters. Try a name such as LATIN SMALL LETTER A or a code point such as U+0061.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Character details": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Loading character details…": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Character data": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Unicode licence": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Names are official Unicode names, shown in English. Normalization uses this device’s Unicode support.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Page {0}": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "No UTF-8 encoding for an isolated surrogate": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Noncharacter — permanently reserved": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Private-use character — no official name": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Surrogate — not a standalone Unicode character": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Control character — no official name": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Unassigned code point — no official name": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Unicode 1.0 label": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Simple case pairs do not include multi-character changes such as ß → SS.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Could not copy. Select the character above to copy it.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Copy character": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "How to type it": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Use your system’s character viewer or copy the character. Choose the matching language keyboard for direct typing.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Open the current language’s typing layout": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Possible lookalikes": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "These may look similar but have different code points. This is a reference, not a security verdict.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Inspect {0}": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "No lookalike mapping in this dataset. This does not prove the character is visually unique.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Bundled CJK readings": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Japanese on (romaji)": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Japanese kun (romaji)": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Saved offline": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Not saved offline": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Readings are unavailable. Connect once to save them offline.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "No bundled reading for this character.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Loading readings…": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Character reference": ["src/features/cursus/CursusPage.tsx"],
-  "Open character reference": ["src/features/grammatica/letters/parts.tsx"],
-  "Uppercase letter": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Lowercase letter": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Titlecase letter": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Modifier letter": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Other letter": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Nonspacing mark": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Spacing combining mark": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Enclosing mark": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Decimal digit": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Letter number": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Other number": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Connector punctuation": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Dash punctuation": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Opening punctuation": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Closing punctuation": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Initial quotation mark": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Final quotation mark": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Other punctuation": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Math symbol": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Currency symbol": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Modifier symbol": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Other symbol": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Space separator": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Line separator": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Paragraph separator": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Control": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Format character": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Surrogate": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Private use": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Unassigned": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Unicode": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Unihan": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Code point": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "General category": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Simple uppercase": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Simple lowercase": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "NFC": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "NFD": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "UTF-8 bytes (hex)": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Character data could not be loaded. Connect once and try again.": ["src/features/cursus/characters/CharactersPage.tsx"],
-  "Character data has an unexpected format. Please try again.": ["src/features/cursus/characters/CharactersPage.tsx"],
+  "Unicode character reference": [
+    "src/features/cursus/characters/CharactersPage.tsx",
+    "src/features/cursus/marks/MarksTab.tsx"
+  ],
+  "Back to Cursus": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Loading character reference…": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Ready offline for the characters shown. Other scripts need one first visit online.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "The reference is loaded, but it could not be saved offline. A connection is needed after reopening.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Character data loads on first use. It works offline after it is saved on this device.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Inspect a text": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Each tile is one code point, including spaces and combining marks. Repeated characters appear once. Text stays on this device.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Paste a text to inspect its characters.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Normalization of the text (preview up to 80 code points)": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Find a character": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Character, official name, or U+0041": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Script": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Block": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Name searches cover all scripts; up to 96 matches are shown. Refine the search for more specific results.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Browse the selected script by Unicode block. Unassigned positions are labelled in the details.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "No matching characters. Try a name such as LATIN SMALL LETTER A or a code point such as U+0061.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Character details": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Loading character details…": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Character data": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Unicode licence": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Names are official Unicode names, shown in English. Normalization uses this device’s Unicode support.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Page {0}": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "No UTF-8 encoding for an isolated surrogate": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Noncharacter — permanently reserved": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Private-use character — no official name": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Surrogate — not a standalone Unicode character": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Control character — no official name": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Unassigned code point — no official name": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Unicode 1.0 label": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Simple case pairs do not include multi-character changes such as ß → SS.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Could not copy. Select the character above to copy it.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Copy character": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "How to type it": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Use your system’s character viewer or copy the character. Choose the matching language keyboard for direct typing.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Open the current language’s typing layout": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Possible lookalikes": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "These may look similar but have different code points. This is a reference, not a security verdict.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Inspect {0}": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "No lookalike mapping in this dataset. This does not prove the character is visually unique.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Bundled CJK readings": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Japanese on (romaji)": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Japanese kun (romaji)": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Saved offline": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Not saved offline": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Readings are unavailable. Connect once to save them offline.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "No bundled reading for this character.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Loading readings…": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Character reference": [
+    "src/features/cursus/CursusPage.tsx"
+  ],
+  "Open character reference": [
+    "src/features/grammatica/letters/parts.tsx"
+  ],
+  "Uppercase letter": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Lowercase letter": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Titlecase letter": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Modifier letter": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Other letter": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Nonspacing mark": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Spacing combining mark": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Enclosing mark": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Decimal digit": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Letter number": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Other number": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Connector punctuation": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Dash punctuation": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Opening punctuation": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Closing punctuation": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Initial quotation mark": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Final quotation mark": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Other punctuation": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Math symbol": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Currency symbol": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Modifier symbol": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Other symbol": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Space separator": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Line separator": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Paragraph separator": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Control": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Format character": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Surrogate": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Private use": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Unassigned": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Unicode": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Unihan": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Code point": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "General category": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Simple uppercase": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Simple lowercase": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "NFC": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "NFD": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "UTF-8 bytes (hex)": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Character data could not be loaded. Connect once and try again.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
+  "Character data has an unexpected format. Please try again.": [
+    "src/features/cursus/characters/CharactersPage.tsx"
+  ],
   "Transliteration scheme": [
     "src/features/ordo/sections/ReadingSection.tsx"
   ],
@@ -16512,5 +16692,230 @@
   ],
   "{0} words joined to nothing yet": [
     "src/features/thesaurus/atlas/AtlasTab.tsx"
+  ],
+  "Grid": [
+    "src/features/codex/CodexPage.tsx"
+  ],
+  "Paperback": [
+    "src/features/codex/library/CoverDesigner.tsx"
+  ],
+  "Hardcover": [
+    "src/features/codex/library/CoverDesigner.tsx"
+  ],
+  "Leather": [
+    "src/features/codex/library/CoverDesigner.tsx"
+  ],
+  "Grade your book": [
+    "src/features/codex/library/LecternCard.tsx"
+  ],
+  "To finish book": [
+    "src/features/codex/library/LecternCard.tsx"
+  ],
+  "{0} to learn": [
+    "src/features/codex/library/LecternCard.tsx",
+    "src/features/thesaurus/library/TodayCard.tsx"
+  ],
+  "Studio": [
+    "src/features/cursus/CursusPage.tsx"
+  ],
+  "Search Explora...": [
+    "src/features/explora/ExploraPage.tsx"
+  ],
+  "Search Explora": [
+    "src/features/explora/ExploraPage.tsx"
+  ],
+  "Search titles, authors, decks": [
+    "src/features/explora/ExploraPage.tsx"
+  ],
+  "Search Results": [
+    "src/features/explora/ExploreAll.tsx"
+  ],
+  "match": [
+    "src/features/explora/ExploreAll.tsx"
+  ],
+  "matches": [
+    "src/features/explora/ExploreAll.tsx"
+  ],
+  "No titles match “{0}”. Try another keyword.": [
+    "src/features/explora/ExploreAll.tsx"
+  ],
+  "Series & Films": [
+    "src/features/explora/ExploreAll.tsx"
+  ],
+  "Watch with dual subtitles and vocabulary aids in Visio.": [
+    "src/features/explora/ExploreAll.tsx"
+  ],
+  "Listen aloud with audio playback in Sonus.": [
+    "src/features/explora/ExploreAll.tsx"
+  ],
+  "Singable lyrics with pronunciation in Cantus.": [
+    "src/features/explora/ExploreAll.tsx"
+  ],
+  "Follow podcasts and listen on the go in Sonus.": [
+    "src/features/explora/ExploreAll.tsx"
+  ],
+  "Live Radio": [
+    "src/features/explora/ExploreAll.tsx"
+  ],
+  "Real-time broadcasts from countries where the language is spoken.": [
+    "src/features/explora/ExploreAll.tsx"
+  ],
+  "No saved items yet. Bookmark titles as you explore.": [
+    "src/features/explora/ExploreAll.tsx"
+  ],
+  "Your Watchlist & Reading List": [
+    "src/features/explora/ExploreAll.tsx"
+  ],
+  "Titles you bookmarked for later exploration.": [
+    "src/features/explora/ExploreAll.tsx"
+  ],
+  "On shelf": [
+    "src/features/explora/components/BooksSection.tsx"
+  ],
+  "Books": [
+    "src/features/explora/components/BooksSection.tsx"
+  ],
+  "Free books from Gutenberg & Wikisource, graded literature and stories.": [
+    "src/features/explora/components/BooksSection.tsx"
+  ],
+  "The latest stories, read with the article only (no menus or adverts).": [
+    "src/features/explora/components/BooksSection.tsx"
+  ],
+  "Explore categories": [
+    "src/features/explora/components/ExploraHeaderBar.tsx"
+  ],
+  "Filter by level: currently {0}": [
+    "src/features/explora/components/ExploraHeaderBar.tsx"
+  ],
+  "Watch with Subtitles": [
+    "src/features/explora/components/HeroBillboard.tsx"
+  ],
+  "Follow Podcast": [
+    "src/features/explora/components/HeroBillboard.tsx"
+  ],
+  "Tune in Live": [
+    "src/features/explora/components/HeroBillboard.tsx"
+  ],
+  "Sing in Sonus": [
+    "src/features/explora/components/HeroBillboard.tsx"
+  ],
+  "Essential immersion material carefully selected for language learners.": [
+    "src/features/explora/components/HeroBillboard.tsx"
+  ],
+  "Watchlist": [
+    "src/features/explora/components/HeroBillboard.tsx"
+  ],
+  "More details": [
+    "src/features/explora/components/HeroBillboard.tsx"
+  ],
+  "View details": [
+    "src/features/explora/components/HeroBillboard.tsx"
+  ],
+  "Previous featured item": [
+    "src/features/explora/components/HeroBillboard.tsx"
+  ],
+  "Next featured item": [
+    "src/features/explora/components/HeroBillboard.tsx"
+  ],
+  "Featured highlights": [
+    "src/features/explora/components/HeroBillboard.tsx"
+  ],
+  "Go to slide {0}: {1}": [
+    "src/features/explora/components/HeroBillboard.tsx"
+  ],
+  "View {0}": [
+    "src/features/explora/components/MediaCard.tsx"
+  ],
+  "Remove from saved": [
+    "src/features/explora/components/MediaCard.tsx"
+  ],
+  "Save item": [
+    "src/features/explora/components/MediaCard.tsx"
+  ],
+  "Not on your active services in {0}.": [
+    "src/features/explora/components/MediaDetailModal.tsx"
+  ],
+  "Add its subtitles in Visio": [
+    "src/features/explora/components/MediaDetailModal.tsx"
+  ],
+  "Tune in in Sonus": [
+    "src/features/explora/components/MediaDetailModal.tsx"
+  ],
+  "Save to Watchlist": [
+    "src/features/explora/components/MediaDetailModal.tsx"
+  ],
+  "Collapse row": [
+    "src/features/explora/components/MediaShelf.tsx"
+  ],
+  "Scroll left": [
+    "src/features/explora/components/MediaShelf.tsx",
+    "src/features/home/homeComponents.tsx"
+  ],
+  "Scroll right": [
+    "src/features/explora/components/MediaShelf.tsx",
+    "src/features/home/homeComponents.tsx"
+  ],
+  "Word Decks": [
+    "src/features/explora/components/WordDecksShelf.tsx"
+  ],
+  "Vocabulary packs tailored to your level, shuffled each visit.": [
+    "src/features/explora/components/WordDecksShelf.tsx"
+  ],
+  "Time today · Change daily goal": [
+    "src/features/home/TimeADayMeter.tsx"
+  ],
+  "Time today": [
+    "src/features/home/TimeADayMeter.tsx"
+  ],
+  "min": [
+    "src/features/home/TimeADayMeter.tsx"
+  ],
+  "Goal met": [
+    "src/features/home/TimeADayMeter.tsx"
+  ],
+  "Layout:": [
+    "src/features/home/homeComponents.tsx"
+  ],
+  "Topline": [
+    "src/features/home/homeComponents.tsx",
+    "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "Right rail": [
+    "src/features/home/homeComponents.tsx",
+    "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "Bottom shelf": [
+    "src/features/home/homeComponents.tsx",
+    "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "{0}% completed": [
+    "src/features/home/homeComponents.tsx"
+  ],
+  "Alphabet & Marks": [
+    "src/features/home/homeComponents.tsx"
+  ],
+  "Grammar Studio": [
+    "src/features/home/homeComponents.tsx"
+  ],
+  "Next in Cursus": [
+    "src/features/home/homeComponents.tsx"
+  ],
+  "What next": [
+    "src/features/home/homeComponents.tsx"
+  ],
+  "Discover more": [
+    "src/features/home/homeComponents.tsx"
+  ],
+  "Tools of the study": [
+    "src/features/home/homeComponents.tsx"
+  ],
+  "At your desk": [
+    "src/features/home/homeComponents.tsx"
+  ],
+  "Choose between Topline tools, Right rail, Bottom shelf, or Classic.": [
+    "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "Kind of deck": [
+    "src/features/thesaurus/ThesaurusPage.tsx"
   ]
 }

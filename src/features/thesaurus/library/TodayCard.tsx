@@ -89,7 +89,7 @@ export function TodayCard({ lang, totals, forecast, onDiscover }: TodayCardProps
                 <Ring totals={counts} waiting={waiting} compact />
               </div>
               <span className="relative z-10 font-serif text-[10px] font-semibold tracking-[0.14em] uppercase opacity-80">
-                Thesaurus
+                <UiText source={'Thesaurus'} />
               </span>
             </div>
 

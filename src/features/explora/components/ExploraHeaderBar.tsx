@@ -62,7 +62,7 @@ export function ExploraHeaderBar({
   ];
 
   const levelFilterLabel = (() => {
-    if (levelFilter === 'mine') return `Around ${learnerLevel}`;
+    if (levelFilter === 'mine') return translateUi('Around {0}', [learnerLevel]);
     if (levelFilter === 'any') return translateUi('All levels');
     return `Level ${levelFilter}`;
   })();
@@ -186,7 +186,7 @@ export function ExploraHeaderBar({
             >
               <div className="flex items-center gap-1.5">
                 <Star size={12} className="text-accent fill-accent" />
-                <span>Around {learnerLevel}</span>
+                <span><UiText source={'Around {0}'} values={[learnerLevel]} /></span>
               </div>
               {levelFilter === 'mine' && <Check size={13} className="text-accent stroke-[3]" />}
             </button>

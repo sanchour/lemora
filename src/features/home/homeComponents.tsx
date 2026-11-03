@@ -238,7 +238,7 @@ export function WhereLeftOffCard({
         </div>
         {data.percent > 0 && (
           <span className="mt-0.5 font-sans text-[12px] font-semibold text-accent-text">
-            {data.percent}% completed
+            <UiText source={'{0}% completed'} values={[data.percent]} />
           </span>
         )}
       </div>
