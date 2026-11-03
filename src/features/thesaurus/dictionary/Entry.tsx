@@ -5,7 +5,8 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { motion } from 'motion/react';
-import { BookA, BookMarked, Check, Circle, Download, Sparkles, Volume2 } from 'lucide-react';
+import { BookA, BookMarked, Check, Circle, Download, Sparkles, Volume2, Waypoints } from 'lucide-react';
+import { atlasPath } from '../atlas/path';
 import type { FullDictRow, FullEntry } from '@/core/dictionary/format';
 import { getLanguage } from '@/core/lang/languages';
 import { easiestFirst } from '@/core/dictionary/difficulty';
@@ -191,6 +192,10 @@ function Entry({ lang, row }: { lang: string; row: FullDictRow }) {
             ]}
           />
         </div>
+        <Link to={atlasPath(row.word)} className="inline-flex h-10 items-center gap-2 rounded-xl border border-line px-3.5 text-[14px] font-semibold text-ink-soft transition-colors hover:bg-surface hover:text-ink">
+          <Waypoints size={16} aria-hidden />
+          <UiText source={'See its neighbours'} />
+        </Link>
         <AddToDeck lang={lang} note={{ term: row.word, meaning: gloss, lemma: row.key, pos: main?.pos, gender: main?.gender, ipa: main?.ipa?.[0], source: 'codex' }} />
       </div>
 

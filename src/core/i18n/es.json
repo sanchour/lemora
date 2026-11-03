@@ -7458,5 +7458,21 @@
   "Sort words into the decks, tags or kinds of word they belong to.": "Ordena las palabras en los mazos, etiquetas o clases de palabra a los que pertenecen.",
   "Odd one out": "La que sobra",
   "Three of the four words belong together. Find the one that does not.": "Tres de las cuatro palabras van juntas. Encuentra la que no.",
-  "Your words crossed on a grid, clued by their meanings.": "Tus palabras cruzadas en una cuadrícula, con sus significados como pistas."
+  "Your words crossed on a grid, clued by their meanings.": "Tus palabras cruzadas en una cuadrícula, con sus significados como pistas.",
+  "Atlas": "Atlas",
+  "Which word?": "¿Qué palabra?",
+  "Atlas view": "Vista del atlas",
+  "Compass": "Brújula",
+  "Tree": "Árbol",
+  "Look-alikes": "Parecidas",
+  "Fit": "Ajustar",
+  "Form": "Forma",
+  "Origin": "Origen",
+  "The tree of {0}": "El árbol de {0}",
+  "The compass of {0}: {1} things around it": "La brújula de {0}: {1} cosas a su alrededor",
+  "No word “{0}” here yet. Try another.": "Todavía no hay ninguna palabra «{0}» aquí. Prueba con otra.",
+  "Look up a word to see what is around it: its meanings, its family, where it comes from and how it is used.": "Busca una palabra para ver lo que la rodea: sus significados, su familia, de dónde viene y cómo se usa.",
+  "Synonyms, families and origins come with a full dictionary, which this language doesn’t have yet.": "Los sinónimos, las familias y los orígenes llegan con un diccionario completo, que este idioma aún no tiene.",
+  "Its neighbours, in words": "Sus vecinas, en palabras",
+  "See its neighbours": "Ver sus vecinas"
 }

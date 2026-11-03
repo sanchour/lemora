@@ -1393,24 +1393,24 @@ Think of this as a personal linguistic knowledge base.
 
 #### 13.2 Personal linguistic graph
 
-- [ ] `F1076` Synonym connections · **6-29**
-- [ ] `F1077` Antonym connections · **6-29**
-- [ ] `F1078` Cognate connections · **6-29**
-- [ ] `F1079` Word-family connections · **6-29**
-- [ ] `F1080` Root connections · **6-29**
-- [ ] `F1081` Collocation connections · **6-29**
+- [x] `F1076` Synonym connections · **6-29**
+- [x] `F1077` Antonym connections · **6-29**
+- [x] `F1078` Cognate connections · **6-29**
+- [x] `F1079` Word-family connections · **6-29**
+- [x] `F1080` Root connections · **6-29**
+- [x] `F1081` Collocation connections · **6-29**
 - [ ] `F1082` Semantic category connections · **6-29**
 - [ ] `F1083` Grammatical connections · **6-29**
 - [ ] `F1084` Topic connections · **6-29**
-- [ ] `F1085` Idiom connections · **6-29**
-- [ ] `F1086` Shared example sentence connections · **6-29**
-- [ ] `F1087` Connections between a word and a saved text · **6-29**
+- [x] `F1085` Idiom connections · **6-29**
+- [x] `F1086` Shared example sentence connections · **6-29**
+- [x] `F1087` Connections between a word and a saved text · **6-29**
 - [ ] `F1088` Connections between a word and a personal mistake · **6-29**
 - [ ] `F1089` Connections between words across multiple languages · **6-29**
 - [ ] `F1090` Visual graph exploration · **6-29**
 - [ ] `F1091` Filter by word type, topic or difficulty · **6-29**
 - [ ] `F1092` Identify isolated words with few connections · **6-29**
-- [ ] `F1093` Discover related vocabulary · **6-29**
+- [x] `F1093` Discover related vocabulary · **6-29**
 - [ ] `F1094` Build a personal semantic map · **6-29**
 - [ ] `F1095` Create a word cluster from a selected concept · **6-29**
 
