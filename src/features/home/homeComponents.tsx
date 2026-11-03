@@ -820,7 +820,7 @@ export function ToolsBar({
 
   if (mode === 'rail') {
     return (
-      <aside aria-label="Tools" className="flex flex-col items-center gap-3">
+      <aside aria-label="Tools" className="flex flex-col items-center gap-3 lg:gap-6">
         <h2 className="text-center font-serif text-[20px] font-bold tracking-tight text-ink sm:text-[22px]">
           <UiText source={'Tools'} />
         </h2>

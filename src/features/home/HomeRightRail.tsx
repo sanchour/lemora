@@ -86,8 +86,8 @@ export function HomeRightRail() {
             )}
           </div>
 
-          {/* Right Column: Tools Round Icons (positioned higher, aligned with top header) ─── */}
-          <div className="pt-0.5">
+          {/* Right Column: Tools, its heading on the greeting's line and its icons level with the cards ─── */}
+          <div className="pt-0.5 lg:pt-10">
             <ToolsBar mode="rail" />
           </div>
         </div>
