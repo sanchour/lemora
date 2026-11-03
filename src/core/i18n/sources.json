@@ -14960,5 +14960,8 @@
   "Character data has an unexpected format. Please try again.": ["src/features/cursus/characters/CharactersPage.tsx"],
   "Transliteration scheme": [
     "src/features/ordo/sections/ReadingSection.tsx"
+  ],
+  "Passport · ICAO 9303": [
+    "src/features/ordo/sections/ReadingSection.tsx"
   ]
 }

@@ -2167,3 +2167,8 @@ is handled locally; other failures remain reported. Typecheck, 1,640 tests/one s
 pass; ordinary rebuilt-browser theme and Russian/Arabic switches completed with an empty warn/error
 log in that tab. [Evidence and scope](6-23-A2-VERIFICATION.md). No A2 audit ticks; continue remaining
 named schemes and per-surface controls under the existing Codex claim. A1 offline gap remains.
+
+**A2.2a Russian, 2026-11-03:** four named choices now reachable in Settings/reader; new ALA-LC and
+passport choices inspected at all three desktop sizes/themes. Tests/typecheck/build pass before
+incoming main integration. [Verification and remaining scope](6-23-A2-RUSSIAN.md). F1298/F1300/F1301/
+F1371 remain unticked until the full deep-plan acceptance; no claim about other surfaces/languages.

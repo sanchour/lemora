@@ -7475,5 +7475,6 @@
   "UTF-8 bytes (hex)": "UTF-8-Bytes (Hex)",
   "Character data could not be loaded. Connect once and try again.": "Zeichendaten konnten nicht geladen werden. Stelle eine Verbindung her und versuche es erneut.",
   "Character data has an unexpected format. Please try again.": "Die Zeichendaten haben ein unerwartetes Format. Bitte versuche es erneut.",
-  "Transliteration scheme": "Transliterationssystem"
+  "Transliteration scheme": "Transliterationssystem",
+  "Passport · ICAO 9303": "Reisepass · ICAO 9303"
 }

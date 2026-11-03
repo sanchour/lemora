@@ -2153,3 +2153,12 @@ only DOMException AbortError; report unexpected animation failures and preserve 
 and callback promises. This follows CSS View Transitions §6.2, avoids a global suppression handler,
 and retains the user's motion preference. Forced-cancellation/update-error regressions and ordinary
 browser theme/language changes pass; A2 can continue without claiming A1's offline gap was fixed.
+
+## 2026-11-03 · Complete Russian named spelling choices without rewriting learner text
+
+ALA-LC 2012 follows the visually checked tied capitals and all 37 letters in LC's Russian table,
+including the obsolete letters and retained final hard sign. The ICAO passport choice is uppercase
+letter spelling with soft-sign omission, not MRZ serialization or individual passport validation.
+Keep existing alphabet fixtures intact, default unknown stored choices to BGN, and keep supplied old
+readings from overriding an explicit named Russian scheme. Sources/review limits are in the Russian
+ledger; browser verification and incoming-main integration status are in 6-23-A2-RUSSIAN.md.

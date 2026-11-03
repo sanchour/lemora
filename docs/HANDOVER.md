@@ -336,3 +336,14 @@ is handled locally; other failures remain reported. Typecheck, 1,640 tests/one s
 pass; ordinary rebuilt-browser theme and Russian/Arabic switches completed with an empty warn/error
 log in that tab. [Evidence and scope](6-23-A2-VERIFICATION.md). No A2 audit ticks; continue remaining
 named schemes and per-surface controls under the existing Codex claim. A1 offline gap remains.
+
+## 2026-11-03 · A2.2a Russian resumed after interruption
+
+All four Russian choices implemented; ALA-LC 2012 and ICAO passport-letter spelling extend the
+existing Settings/reader path. Typecheck, 251 files/1,712 tests/one skipped and build pass. Both new
+choices inspected at the three required desktop sizes/themes; persistence/source text checked,
+no warn/error entries in that tab. [Exact scope, screenshots and integration result](6-23-A2-RUSSIAN.md).
+Integrate the newly fetched main/onboarding history without rewriting published commits before
+versioning/pushing. Codex retains A2; other languages and per-surface controls remain. No A3 claim,
+full-A2 audit tick, real AI/microphone, native/standards or screen-reader certification. A1 offline
+acceptance remains open; main stays protected and receives no direct push.

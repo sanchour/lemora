@@ -27,6 +27,10 @@ it('uses the selected Russian scheme without putting the reading in selectable w
   expect(iso).toContain('>Щит</span>.');
   const bgn = renderToStaticMarkup(createElement(ChapterBody, { model, lang: 'ru', scheme: 'bgn-pcgn-1947' }));
   expect(bgn).toContain('data-r="Shchit"');
+  const lc = renderToStaticMarkup(createElement(ChapterBody, { model, lang: 'ru', scheme: 'ala-lc-2012' }));
+  expect(lc).toContain('data-r="Shchit"');
+  const passport = renderToStaticMarkup(createElement(ChapterBody, { model, lang: 'ru', scheme: 'icao-9303-2021' }));
+  expect(passport).toContain('data-r="SHCHIT"');
   const unknown = renderToStaticMarkup(createElement(ChapterBody, { model, lang: 'ru', scheme: 'unknown-old-setting' }));
   expect(unknown).toContain('data-r="Shchit"');
 });

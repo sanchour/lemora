@@ -244,3 +244,10 @@ is handled locally; other failures remain reported. Typecheck, 1,640 tests/one s
 pass; ordinary rebuilt-browser theme and Russian/Arabic switches completed with an empty warn/error
 log in that tab. [Evidence and scope](6-23-A2-VERIFICATION.md). No A2 audit ticks; continue remaining
 named schemes and per-surface controls under the existing Codex claim. A1 offline gap remains.
+
+**A2.2a Russian checkpoint, Codex 2026-11-03:** all four Russian choices implemented in Settings/
+reader. ALA-LC 2012's complete published Russian table and ICAO passport-letter spelling have
+independent primary-table goldens. Typecheck, 1,712 tests/one skipped and build pass before incoming
+main integration; both new choices inspected at all three desktop sizes in Paper/Nocturne, with
+persistence and source text intact and a clean tab log. [Scope and pending integration](6-23-A2-RUSSIAN.md).
+Other seven languages and per-surface/position/reveal/lesson fading remain; no full A2 acceptance.

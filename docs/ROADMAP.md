@@ -2594,3 +2594,22 @@ main asset confirmed in a fresh tab; theme changes and Russian→Arabic→Russia
 with preserved Russian settings and no warn/error log entries in that tab. Existing full desktop
 A2.1 render checks remain recorded at alpha.168; no new UI layout or motion preference was changed.
 The previous transition stop is resolved for continuing A2, not A1's separate offline gap.
+
+### A2.2a · remaining Russian schemes · Codex · 2026-11-02
+
+- [x] Add ALA-LC 2012's complete published Russian table (including four obsolete letters) and
+  ICAO 9303's Russian passport-letter spelling, keeping editions/limits explicit.
+- [x] Golden-check the primary tables independently, including tied capitals, terminal hard sign,
+  soft-sign omission for the passport choice, case and unknown saved settings.
+- [ ] Reach both choices and the real reader in Settings; check required desktop sizes/themes,
+  run typecheck/tests/build and publish separately. Keep the full A2 audit entries open.
+
+LC's PDF cells were visually inspected after Word text extraction omitted their equation-like glyphs.
+The official Danish consular passport table was read through its public web PDF; direct caching
+returned 403, so it has no invented cache hash. The larger ICAO document is already cached.
+
+**A2.2a resumed 2026-11-03:** own interrupted changes preserved. Setup/typecheck, 1,712 tests/one
+skipped and production build pass. Both new choices and the actual reader inspected at all three
+sizes in both themes, with persistence/source-word checks and an empty warn/error log. [Evidence](6-23-A2-RUSSIAN.md).
+Before versioning, integrate 74 incoming main commits (onboarding PR) by merge to preserve Codex's
+published history; rerun integrated checks. No broad A2 audit ticks; no A3 claim.

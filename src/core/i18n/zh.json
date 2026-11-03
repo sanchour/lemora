@@ -7475,5 +7475,6 @@
   "UTF-8 bytes (hex)": "UTF-8 字节（十六进制）",
   "Character data could not be loaded. Connect once and try again.": "无法加载字符数据。请联网后重试。",
   "Character data has an unexpected format. Please try again.": "字符数据格式异常。请重试。",
-  "Transliteration scheme": "转写方案"
+  "Transliteration scheme": "转写方案",
+  "Passport · ICAO 9303": "护照 · ICAO 9303"
 }

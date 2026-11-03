@@ -147,9 +147,9 @@ export function ReadingSection({ reader, lang }: { reader: Settings['reader']; l
       {target.code === 'ru' && <div className="mt-5 space-y-3">
         <Select label={translateUi('Transliteration scheme')} value={russianScheme(reader.readingSchemes?.ru)}
           onChange={(scheme) => void patchSetting('reader', { readingSchemes: { ...reader.readingSchemes, ru: scheme } })}
-          options={RUSSIAN_SCHEMES.map((value) => ({ value, label: RUSSIAN_SCHEME_NAMES[value] }))} />
-        <p lang="ru" className="rounded-xl border border-line bg-raised px-4 py-3 text-[15px]">Екатеринбург · Ёлкино · Змеевка<br />
-          <bdi lang="en" className="text-ink-soft">{russian('Екатеринбург · Ёлкино · Змеевка', russianScheme(reader.readingSchemes?.ru))}</bdi>
+          options={RUSSIAN_SCHEMES.map((value) => ({ value, label: value === 'icao-9303-2021' ? translateUi('Passport · ICAO 9303') : RUSSIAN_SCHEME_NAMES[value] }))} />
+        <p lang="ru" className="rounded-xl border border-line bg-raised px-4 py-3 text-[15px]">Екатеринбург · Щит · Юлия · Цель<br />
+          <bdi lang="en" className="text-ink-soft">{russian('Екатеринбург · Щит · Юлия · Цель', russianScheme(reader.readingSchemes?.ru))}</bdi>
         </p>
       </div>}
 
