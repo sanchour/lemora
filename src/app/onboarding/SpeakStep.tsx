@@ -64,10 +64,30 @@ export function spokenName(code: string): string {
   }
 }
 
-const ALL = ISO_639_1.split(' ')
+// Living languages only (Lemora 3.6): the ISO list's liturgical, ancient and constructed ones are left out (Lingua's own
+// languages, Latin among them, always stay), and widely spoken ones without a two-letter code are added.
+const NOT_LIVING = new Set(['cu', 'pi', 'ae', 'vo', 'ie', 'io', 'ia', 'oj', 'kr']);
+const MORE_LIVING = ['fil', 'haw', 'ceb', 'hmn', 'nan', 'hak', 'wuu', 'ckb', 'mai', 'kok', 'sat', 'ast', 'scn', 'gsw', 'nds', 'pap', 'tpi', 'bho', 'mni', 'doi'];
+
+const ALL = [...ISO_639_1.split(' ').filter((code) => !NOT_LIVING.has(code) || getLanguage(code)), ...MORE_LIVING]
   .map((code) => ({ code, name: spokenName(code) }))
   .filter((l) => l.name && l.name !== l.code)
   .sort((a, b) => a.name.localeCompare(b.name));
+
+/**
+ * What the "Add a language" search suggests (Lemora 3.6): nothing until something is typed, then at most two, the
+ * languages the app teaches first (with their flags), then any other living language the browser can name.
+ */
+export function suggestLanguages(query: string, taken: (code: string) => boolean, limit = 2): Array<{ code: string; name: string }> {
+  const q = searchKey(query.trim());
+  if (!q) return [];
+  const own = AVAILABLE_LANGUAGES.filter((l) => !taken(l.code) && searchKey(l.name).includes(q)).map((l) => ({ code: l.code, name: l.name }));
+  const ownIds = new Set(own.map((l) => l.code));
+  const rest = ALL.filter((l) => !taken(l.code) && !ownIds.has(l.code) && !getLanguage(l.code) && searchKey(l.name).includes(q));
+  // Names that start with what was typed come before names that only contain it.
+  const starts = (l: { name: string }) => (searchKey(l.name).startsWith(q) ? 0 : 1);
+  return [...own.sort((a, b) => starts(a) - starts(b)), ...rest.sort((a, b) => starts(a) - starts(b))].slice(0, limit);
+}
 
 /** Lingua's flag for the language, or its code on a small tag. */
 function Mark({ code, width }: { code: string; width: number }) {
@@ -107,12 +127,7 @@ export function SpeakStep({ spoken, target, level: targetLevel, onSpoken }: Spea
   /** The level just chosen as signal bars (A0 has none yet). */
   const targetBars = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1'].indexOf(targetLevel);
   /** What the search lists: the languages the app teaches first, then (when searching) any other. */
-  const found = useMemo(() => {
-    const own = AVAILABLE_LANGUAGES.filter((l) => !taken(l.code) && (!q || searchKey(l.name).includes(q))).map((l) => ({ code: l.code, name: l.name }));
-    if (!q) return own;
-    const ownIds = new Set(own.map((l) => l.code));
-    return [...own, ...ALL.filter((l) => !taken(l.code) && !ownIds.has(l.code) && !getLanguage(l.code) && searchKey(l.name).includes(q)).slice(0, 4)];
-  }, [q, spoken, target]);
+  const found = useMemo(() => suggestLanguages(q, taken), [q, spoken, target]);
 
   const setLevel = (code: string, level: SpokenLevel) => onSpoken(spoken.map((s) => (s.code === code ? { ...s, level } : s)));
   const remove = (code: string) => onSpoken(spoken.filter((s) => s.code !== code));
@@ -275,7 +290,7 @@ export function SpeakStep({ spoken, target, level: targetLevel, onSpoken }: Spea
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
                       transition={{ duration: 0.16 }}
-                      className="absolute inset-x-0 top-full z-10 mt-1.5 max-h-64 overflow-y-auto rounded-2xl border border-line bg-raised py-1 shadow-elev-2"
+                      className="mt-1.5 overflow-hidden rounded-2xl border border-line bg-raised py-1"
                     >
                       {found.map((l) => (
                         <li key={l.code}>

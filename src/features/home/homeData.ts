@@ -481,7 +481,7 @@ export function useHomeWhatNext(): WhatNextItem[] {
     ];
 
     // The level's steps speak for their rooms; the other rooms (Lingua's Sermo, Sonus…) follow.
-    const covered = new Set(Object.values(FLOW).map((f) => f!.room));
+    const covered = new Set(Object.values(FLOW).flatMap((f) => (f ? [f.room] : [])));
     // Only what leads to a room this build has (src/product.ts).
     return [...flow, ...rooms.filter((r) => !covered.has(r.room))].filter((s) => reaches(s.to));
   }, [allTexts, progress, due, decks, today, language.level, language.script, language.seededKnownTopN, lang]);
