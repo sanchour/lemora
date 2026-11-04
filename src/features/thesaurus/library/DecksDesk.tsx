@@ -51,7 +51,7 @@ function DeckDrawing({ done }: { done: boolean }) {
   );
 }
 
-export function DecksDesk({ lang, decks, folders, counts, totals, forecast, lastStudied, order, below, tools }: {
+export function DecksDesk({ lang, decks, folders, counts, totals, forecast, lastStudied, order, below, tools, empty }: {
   lang: string;
   decks: Deck[];
   folders: Folder[];
@@ -64,6 +64,8 @@ export function DecksDesk({ lang, decks, folders, counts, totals, forecast, last
   below?: ReactNode;
   /** At the top of the deck list: search, sort. */
   tools?: ReactNode;
+  /** Shown where the list goes when there are no decks yet. */
+  empty?: ReactNode;
 }) {
   const translateUi = useUi();
   const activity = useToday(lang);
@@ -133,8 +135,9 @@ export function DecksDesk({ lang, decks, folders, counts, totals, forecast, last
       <aside aria-label={translateUi('My decks')} className="lg:sticky lg:top-6">
         <div className="mb-3 flex items-center gap-1">
           <h2 className="mr-auto font-serif text-[20px] font-semibold"><UiText source={'My decks'} /> <span className="text-[13px] font-bold text-ink-faint tabular-nums">{decks.length}</span></h2>
-          {tools}
+          {decks.length > 0 && tools}
         </div>
+        {decks.length === 0 && empty}
         <div className="space-y-5">
           {groups.map((g) => (
             <div key={g.id ?? 'loose'}>
@@ -162,10 +165,10 @@ export function DecksDesk({ lang, decks, folders, counts, totals, forecast, last
               </ul>
             </div>
           ))}
-          <Link to="/explora?kind=words" className="flex items-center gap-3 rounded-2xl border-[1.5px] border-dashed border-line-strong/80 px-3 py-2.5 text-[13.5px] font-semibold text-ink-faint transition-colors hover:border-accent hover:text-accent-text">
+          {decks.length > 0 && <Link to="/explora?kind=words" className="flex items-center gap-3 rounded-2xl border-[1.5px] border-dashed border-line-strong/80 px-3 py-2.5 text-[13.5px] font-semibold text-ink-faint transition-colors hover:border-accent hover:text-accent-text">
             <span className="grid size-9 place-items-center rounded-full bg-accent-soft"><Hand name="add" size={20} /></span>
             <UiText source={'Ready-made decks'} />
-          </Link>
+          </Link>}
         </div>
       </aside>
     </div>

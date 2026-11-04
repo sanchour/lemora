@@ -237,7 +237,7 @@ export default function ThesaurusPage() {
             className="mt-2 space-y-8"
           >
             {/* Lemora U9: Today first and the decks down the right, unless the earlier design is chosen in Settings. */}
-            {!settings.ui.classicDecks && !query.trim() && hasDecks && folders && decks ? (
+            {!settings.ui.classicDecks && !query.trim() && folders && decks ? (
               <DecksDesk
                 lang={lang}
                 decks={decks}
@@ -247,6 +247,7 @@ export default function ThesaurusPage() {
                 forecast={outlook?.forecast}
                 lastStudied={outlook?.lastStudied}
                 order={order}
+                empty={<NoDecks onBrowse={browse} onNew={() => newDeck(null)} onImport={(kind) => choose(kind)} />}
                 tools={
                   <>
                     <IconButton icon={Search} label={translateUi('Search')} shortcut="/" onClick={() => setSearching(true)} />
