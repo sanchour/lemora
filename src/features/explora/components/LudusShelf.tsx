@@ -3,9 +3,8 @@ import { Link } from 'react-router';
 import { GAME_GROUPS, GAMES } from '@/core/games/defs';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { Hand } from '@/design/drawings';
-import type { HandName } from '@/design/drawings';
+import { GAME_HAND as HAND } from '@/features/games/hands';
 
-const HAND: Partial<Record<string, HandName>> = { daily: 'day', weekly: 'day', tournament: 'seal', hangman: 'letter', anagram: 'repeat', missing: 'search', clues: 'help', wordsearch: 'search', crossword: 'keys', story: 'book', translate: 'talk', dictation: 'sound', memory: 'cards', definition: 'glasses', hunt: 'search', synonyms: 'repeat', antonyms: 'undo', association: 'globe', sorting: 'folder', odd: 'flag', picture: 'leaf', bingo: 'tag', parts: 'add', ladder: 'stack', complete: 'quill' };
 
 export function LudusShelf() {
   const translateUi = useUi();

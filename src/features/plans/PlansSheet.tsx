@@ -1,3 +1,4 @@
+import { PRODUCT } from '@/product';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
@@ -27,7 +28,7 @@ function Panel({ feature, onClose }: { feature?: Feature; onClose: () => void })
   const titleId = useId();
   const plan = usePlan();
   useOverlay(ref, onClose);
-  const title = feature ? `${FEATURE_NAME[feature]} comes with ${FEATURE_PLAN[feature] === 'max' ? 'Lingua+ Max' : 'Lingua+'}` : 'Lingua’s plans';
+  const title = feature ? `${FEATURE_NAME[feature]} comes with ${FEATURE_PLAN[feature] === 'max' ? `${PRODUCT.name}+ Max` : `${PRODUCT.name}+`}` : `${PRODUCT.name}’s plans`;
   return (
     <div className="fixed inset-0 z-[60] grid place-items-center overflow-y-auto p-4 sm:p-5">
       <motion.div className="fixed inset-0 bg-scrim" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={fade} onClick={onClose} aria-hidden />

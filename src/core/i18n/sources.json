@@ -17253,5 +17253,17 @@
   ],
   "Recent grade": [
     "src/features/codex/diarium/DiariumHome.tsx"
+  ],
+  "Explora: books, comics, magazines and word decks to discover": [
+    "src/features/plans/PlanCards.tsx"
+  ],
+  "Atlas: every word you have, as a map": [
+    "src/features/plans/PlanCards.tsx"
+  ],
+  "Alphabet: the letters of a new script, with their sounds": [
+    "src/features/plans/PlanCards.tsx"
+  ],
+  "Diarium: a diary to write in": [
+    "src/features/plans/PlanCards.tsx"
   ]
 }

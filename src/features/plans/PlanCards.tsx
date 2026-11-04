@@ -1,3 +1,4 @@
+import { PRODUCT, shows } from '@/product';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useState } from 'react';
 import type { ReactNode } from 'react';
@@ -13,18 +14,24 @@ import { toast } from '@/state/ui';
 import { MaxMark } from './PlanMarks';
 
 /** What each plan adds, in the order the plans screen lists it (D4's table, 5.1-2a). */
-export const PLAN_LISTS: Record<PlanKind, string[]> = {
+// Each line names the room it needs: a build lists only what it has (Lemora U14: no rooms Lemora doesn't have on sale).
+const LISTS: Record<PlanKind, Array<[line: string, when?: () => boolean]>> = {
   free: [
-    'Codex: every book, article and comic, with every word a tap away',
-    'Thesaurus: unlimited decks and flashcards, Discover, add anything',
-    'Sonus et Visio: your library, audiobooks and the radio',
-    'Cursus: alphabets and writing',
-    'Mentis: Mundus the guide and Diarium',
-    'Ratio and every setting',
+    ['Codex: every book, article and comic, with every word a tap away'],
+    ['Thesaurus: unlimited decks and flashcards, Discover, add anything'],
+    ['Explora: books, comics, magazines and word decks to discover', () => shows('explora')],
+    ['Atlas: every word you have, as a map', () => shows('atlas')],
+    ['Alphabet: the letters of a new script, with their sounds', () => shows('alphabet') && !shows('cursus')],
+    ['Sonus et Visio: your library, audiobooks and the radio', () => shows('sonus')],
+    ['Cursus: alphabets and writing', () => shows('cursus')],
+    ['Mentis: Mundus the guide and Diarium', () => shows('mentis')],
+    ['Diarium: a diary to write in', () => shows('diarium') && !shows('mentis')],
+    ['Ratio and every setting'],
   ],
-  plus: ['Ludus, the games for your decks', 'Cantus: music to sing, podcasts, song games', 'Streaming: your services’ shows with study subtitles', 'Cursus: the course, Grammatica and typing', 'Sermo: scenes to talk through in your AI app', 'Every update, for life'],
-  max: ['Everything in Lingua+', 'AI translation and Explain in context', 'Diary checking and feedback on your writing', 'Automatic dictation for audio and video', 'Natural AI voices', 'With your own free Groq or Gemini key'],
+  plus: [['Ludus, the games for your decks', () => shows('ludus')], ['Cantus: music to sing, podcasts, song games', () => shows('cantus')], ['Streaming: your services’ shows with study subtitles', () => shows('visio')], ['Cursus: the course, Grammatica and typing', () => shows('course')], ['Sermo: scenes to talk through in your AI app', () => shows('sermo')], ['Every update, for life']],
+  max: [['Everything in Lingua+'], ['AI translation and Explain in context'], ['Diary checking and feedback on your writing'], ['Automatic dictation for audio and video', () => shows('sonus')], ['Natural AI voices'], ['With your own free Groq or Gemini key']],
 };
+export const PLAN_LISTS = Object.fromEntries(Object.entries(LISTS).map(([plan, lines]) => [plan, lines.filter(([, when]) => !when || when()).map(([line]) => line)])) as Record<PlanKind, string[]>;
 
 /** Which plan a locked feature needs, for the highlight. */
 const NEEDS: Record<Feature, Exclude<PlanKind, 'free'>> = { ludus: 'plus', sonusPlus: 'plus', streaming: 'plus', course: 'plus', grammatica: 'plus', typing: 'plus', sermo: 'plus', ai: 'max' };
@@ -45,7 +52,7 @@ export function useBuy(onBought?: () => void) {
     setBusy(product);
     try {
       const done = await buy(product);
-      const name = product === 'plus' ? 'Lingua+' : 'Lingua+ Max';
+      const name = product === 'plus' ? `${PRODUCT.name}+` : `${PRODUCT.name}+ Max`;
       if (done === 'pretend') toast({ source: '{0} is on. Test mode: nothing was charged.', values: [String(name)] }, { tone: 'success' });
       else toast('Finish paying on the page that opened. Lingua picks up your licence when you come back.', { duration: 9000 });
       onBought?.();
@@ -124,7 +131,7 @@ function Column({ title, price, note, items, lifted, badge, children }: { title:
         {items.map((item) => (
           <li key={item} className="flex gap-2 text-[13.5px] leading-snug text-ink-soft">
             <Check size={15} className="mt-0.5 shrink-0 text-sage-text" aria-hidden />
-            {item}
+            <UiText source={item} />
           </li>
         ))}
       </ul>

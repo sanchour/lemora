@@ -44,6 +44,8 @@ import type { LucideIcon } from 'lucide-react';
 import { clock } from '@/core/games/bests';
 import type { Best, Bests } from '@/core/games/bests';
 import { GAME_GROUPS, GAMES as ALL_GAMES, gameById } from '@/core/games/defs';
+import { Hand } from '@/design/drawings';
+import { GAME_HAND } from './hands';
 import type { GameDef, GameGroup } from '@/core/games/defs';
 import { canPlay } from '@/core/games/source';
 import type { GameItem, GameSource } from '@/core/games/source';
@@ -194,23 +196,20 @@ export default function GamesPage() {
                 <Link
                   key={g.id}
                   to={to}
-                  className="group flex flex-col justify-between rounded-2xl border border-line/70 bg-surface p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-elev-2"
+                  className="group flex flex-col justify-between rounded-[22px] border border-line p-5 transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-line-strong"
                 >
                   <div>
                     <div className="flex items-start justify-between gap-2">
-                      <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-line/50 bg-sage-soft/75 text-sage-text transition-colors duration-200 group-hover:bg-accent-soft group-hover:text-accent-text">
-                        <Icon size={18} strokeWidth={1.75} aria-hidden />
+                      {/* Lemora U14: the game's drawn icon in its soft circle, no fills or shadows around it. */}
+                      <span className="grid size-12 shrink-0 place-items-center rounded-full bg-accent-soft transition-transform duration-300 group-hover:-rotate-6">
+                        {GAME_HAND[g.id] ? <Hand name={GAME_HAND[g.id]!} size={26} /> : <Icon size={18} strokeWidth={1.75} aria-hidden />}
                       </span>
                       {best ? (
                         <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-sage-soft px-2.5 py-0.5 text-[11px] font-bold text-sage-text tabular-nums">
                           <Star size={10} fill="currentColor" aria-hidden />
                           {best.stars} · {clock(best.ms)}
                         </span>
-                      ) : (
-                        <span className="rounded-md bg-raised px-2 py-0.5 text-[10.5px] font-bold tracking-[0.08em] text-ink-faint uppercase">
-                          <UiText source={GAME_GROUPS[g.group].title} />
-                        </span>
-                      )}
+                      ) : null}
                     </div>
                     <h3 className="mt-3.5 font-serif text-[17.5px] leading-snug font-semibold text-ink transition-colors group-hover:text-accent-text">
                       <UiText source={g.title} />
@@ -230,15 +229,12 @@ export default function GamesPage() {
             return (
               <div
                 key={g.id}
-                className="flex flex-col justify-between rounded-2xl border border-line/50 bg-surface/45 p-5 opacity-75"
+                className="flex flex-col justify-between rounded-[22px] border border-dashed border-line-strong/70 p-5 opacity-70"
               >
                 <div>
                   <div className="flex items-start justify-between gap-2">
-                    <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-line/50 bg-sunken text-ink-faint">
-                      <Icon size={18} strokeWidth={1.75} aria-hidden />
-                    </span>
-                    <span className="rounded-md bg-raised/60 px-2 py-0.5 text-[10.5px] font-bold tracking-[0.08em] text-ink-faint uppercase">
-                      <UiText source={GAME_GROUPS[g.group].title} />
+                    <span className="grid size-12 shrink-0 place-items-center rounded-full border border-line text-ink-faint">
+                      {GAME_HAND[g.id] ? <Hand name={GAME_HAND[g.id]!} size={26} /> : <Icon size={18} strokeWidth={1.75} aria-hidden />}
                     </span>
                   </div>
                   <h3 className="mt-3.5 font-serif text-[17.5px] leading-snug font-semibold text-ink">
@@ -283,7 +279,7 @@ export default function GamesPage() {
         {/* Top Scholar's Ludus Desk: Quick Play Modes + Minimalist Record Rail */}
         <section
           aria-label={translateUi('Ludus')}
-          className="relative overflow-hidden rounded-3xl border border-line/80 bg-surface p-5 shadow-2xs sm:p-7"
+          className="relative border-b border-line/70 pb-8"
         >
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
             {/* Left: Quick Play Modes from your cards */}
@@ -296,9 +292,9 @@ export default function GamesPage() {
                   <Link
                     key={mode.to}
                     to={mode.to}
-                    className="group flex items-start gap-3.5 rounded-2xl border border-line/70 bg-raised/45 p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-line-strong hover:bg-surface hover:shadow-elev-1"
+                    className="group flex items-start gap-3.5 rounded-[20px] border border-line p-3.5 transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-line-strong"
                   >
-                    <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-line/50 bg-sage-soft text-sage-text transition-colors group-hover:bg-accent-soft group-hover:text-accent-text">
+                    <span className="grid size-11 shrink-0 place-items-center rounded-full bg-sage-soft text-sage-text transition-transform group-hover:-rotate-6">
                       <mode.icon size={18} aria-hidden />
                     </span>
                     <span className="min-w-0 flex-1">
