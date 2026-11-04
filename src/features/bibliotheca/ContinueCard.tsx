@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Link } from 'react-router';
-import { ArrowRight, BookOpen, Clapperboard, Headphones, Play } from 'lucide-react';
+import { ArrowRight, BookOpen, Clapperboard, Headphones } from 'lucide-react';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { BookCover } from '@/features/codex/library/BookCover';
 import { Artwork } from '@/features/sonus/library/Artwork';
@@ -93,18 +93,6 @@ export const ContinueCard = memo(function ContinueCard({ item, lang }: ContinueC
           </div>
         )}
 
-        {/* Explora-inspired Bouncy Hover Action Bubble */}
-        <div className="pointer-events-none absolute inset-0 z-10 grid place-items-center bg-black/25 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-          <span className="grid size-11 place-items-center rounded-full bg-surface/95 text-ink shadow-elev-2 transition-transform duration-200 group-hover:scale-110 active:scale-95">
-            {item.kind === 'text' ? (
-              <BookOpen size={17} aria-hidden />
-            ) : item.kind === 'audio' ? (
-              <Headphones size={17} aria-hidden />
-            ) : (
-              <Play size={17} fill="currentColor" aria-hidden />
-            )}
-          </span>
-        </div>
 
         {/* Sleek Progress Bar Line at base of stage */}
         {pct !== undefined && pct > 0 && (

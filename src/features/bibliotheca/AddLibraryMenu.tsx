@@ -1,6 +1,9 @@
+import { Hand } from '@/design/drawings';
+import type { HandName } from '@/design/drawings';
 import { memo, useState } from 'react';
 import { useNavigate } from 'react-router';
 import {
+  ChevronLeft,
   BookHeadphones,
   BookOpen,
   Captions,
@@ -234,59 +237,8 @@ export const AddLibraryMenu = memo(function AddLibraryMenu({ lang }: { lang: str
     },
   ].filter((section) => (section.id === 'sonus' || section.id === 'visio' ? shows(section.id) : true));
 
-  const renderContent = (close: () => void) => (
-    <div className="max-h-[80vh] overflow-y-auto px-1 py-1 [scrollbar-width:thin]">
-      <div className="border-b border-line/60 px-3 py-2">
-        <p className="font-serif text-[16px] font-semibold text-ink">
-          <UiText source={'Add to your library'} />
-        </p>
-      </div>
-
-      <div className="space-y-3 p-1">
-        {sections.map((section) => {
-          const RoomIcon = section.roomIcon;
-          return (
-            <div key={section.id}>
-              <div className="flex items-center gap-1.5 px-2.5 pt-2 pb-1 text-[11px] font-bold tracking-[0.12em] text-ink-faint uppercase">
-                <RoomIcon size={12} className={section.roomColor} aria-hidden />
-                <span>{section.tool}</span>
-              </div>
-              <ul className="space-y-0.5">
-                {section.options.map((opt) => {
-                  const Icon = opt.icon;
-                  return (
-                    <li key={opt.id}>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          close();
-                          void opt.action();
-                        }}
-                        className="flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-left transition-colors hover:bg-raised active:bg-sunken"
-                      >
-                        <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-sunken text-ink-soft">
-                          <Icon size={16} aria-hidden />
-                        </span>
-                        <span className="min-w-0 flex-1">
-                          <span className="block truncate text-[14px] font-semibold text-ink">
-                            {opt.title}
-                          </span>
-                          <span className="block truncate text-[12px] text-ink-soft">
-                            {opt.detail}
-                          </span>
-                        </span>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-
+  // Lemora U5: the rooms come first (Codex, Thesaurus…); a click on one shows its ways in.
+  const renderContent = (close: () => void) => <AddSteps sections={sections} close={close} />;
   return (
     <>
       {layout === 'wide' ? (
@@ -473,3 +425,62 @@ function VideoLinkDrawer({
     </Drawer>
   );
 }
+
+const ROOM_HAND: Record<string, HandName> = { codex: 'book', thesaurus: 'cards', sonus: 'sound', visio: 'play' };
+const ROOM_LINE: Record<string, string> = { codex: 'Books, texts, comics and articles', thesaurus: 'Decks of words to learn', sonus: 'Audio, podcasts and audiobooks', visio: 'Videos and subtitles' };
+
+/** Two steps: pick the room, then how to add to it; Back returns to the rooms. */
+function AddSteps({ sections, close }: { sections: AddSection[]; close: () => void }) {
+  const translateUi = useUi();
+  const [room, setRoom] = useState<string | null>(null);
+  const section = sections.find((s) => s.id === room);
+  return (
+    <div className="max-h-[80vh] overflow-y-auto p-2 [scrollbar-width:thin]">
+      {!section ? (
+        <>
+          <p className="px-2 pt-1 pb-2 font-serif text-[16px] font-semibold text-ink"><UiText source={'Add to your library'} /></p>
+          <div className="grid grid-cols-2 gap-2">
+            {sections.map((s) => (
+              <button key={s.id} type="button" onClick={() => setRoom(s.id)} className="group flex flex-col items-start gap-2 rounded-2xl border border-line p-3.5 text-left transition-colors hover:border-line-strong">
+                <span className="grid size-11 place-items-center rounded-full bg-accent-soft transition-transform group-hover:-rotate-6"><Hand name={ROOM_HAND[s.id] ?? 'add'} size={24} /></span>
+                <span className="font-serif text-[16px] font-semibold text-ink">{s.tool}</span>
+                <span className="text-[12px] leading-snug text-ink-faint"><UiText source={ROOM_LINE[s.id] ?? ''} /></span>
+              </button>
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <button type="button" onClick={() => setRoom(null)} className="hit mb-1 flex items-center gap-1.5 px-2 pt-1 text-[13px] font-semibold text-ink-soft hover:text-ink">
+            <ChevronLeft size={15} aria-hidden /> <span className="font-serif text-[16px] text-ink">{section.tool}</span>
+            <span className="sr-only">{translateUi('Back')}</span>
+          </button>
+          <ul className="space-y-0.5">
+            {section.options.map((opt) => {
+              const Icon = opt.icon;
+              return (
+                <li key={opt.id}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      close();
+                      void opt.action();
+                    }}
+                    className="flex w-full items-center gap-3 rounded-xl px-2.5 py-2 text-left transition-colors hover:bg-raised active:bg-sunken"
+                  >
+                    <span className="grid size-8 shrink-0 place-items-center rounded-full bg-sunken text-ink-soft"><Icon size={16} aria-hidden /></span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[14px] font-semibold text-ink"><UiText source={opt.title} /></span>
+                      <span className="block truncate text-[12px] text-ink-soft"><UiText source={opt.detail} /></span>
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      )}
+    </div>
+  );
+}
+

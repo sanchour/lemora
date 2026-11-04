@@ -154,7 +154,17 @@ export async function importSample(lang: string): Promise<string> {
 }
 
 /** A complete beginner's first book (Lemora U1): added to the library once (or the welcome text where none is written yet), then reused. */
-export async function importFirstBook(lang: string): Promise<string> {
+const firstBookImports = new Map<string, Promise<string>>();
+export function importFirstBook(lang: string): Promise<string> {
+  // One at a time per language: two quick opens (or React's double effect) must not shelve it twice.
+  const pending = firstBookImports.get(lang);
+  if (pending) return pending;
+  const run = shelveFirstBook(lang).finally(() => firstBookImports.delete(lang));
+  firstBookImports.set(lang, run);
+  return run;
+}
+
+async function shelveFirstBook(lang: string): Promise<string> {
   const book = FIRST_BOOKS[lang];
   if (!book) return importSample(lang);
   const existing = await db.texts.where('lang').equals(lang).filter((t) => !t.deletedAt && t.title === book.title && t.author === 'Lingua').first();

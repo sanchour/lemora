@@ -4,7 +4,7 @@ import { useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import { motion } from 'motion/react';
-import { ArrowRight, BookOpen, ChevronRight, Clapperboard, Compass, Headphones, Layers, Music2, Plus, Podcast, Radio, Search, SearchX } from 'lucide-react';
+import { ArrowRight, BookOpen, ChevronRight, Clapperboard, Headphones, Layers, Music2, Plus, Podcast, Radio, Search, SearchX } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { PageHeader } from '@/app/PageHeader';
 import { formatDuration } from '@/core/audio/cues';
@@ -28,6 +28,7 @@ import { Artwork } from '@/features/sonus/library/Artwork';
 import { AddVideoMenu } from '@/features/visio/library/AddVideoMenu';
 import { VideoCard } from '@/features/visio/library/VideoCard';
 import { AddLibraryMenu } from './AddLibraryMenu';
+import { Hand } from '@/design/drawings';
 import { ContinueShelf } from './ContinueShelf';
 import type { ContinueItem } from './types';
 import { attachEpub } from '@/services/import/importers';
@@ -207,7 +208,7 @@ export default function BibliothecaPage() {
         eyebrow={translateUi('Your library across every tool in {0}', [translateUi(langName)])} englishEyebrow={interpolate('Your library across every tool in {0}', [langName])}
         actions={
           <div className="flex flex-wrap items-center gap-2">
-            <Link to="/explora" className={buttonClasses('secondary', 'md')}><UiText source={'{0} Explora'} values={[<Compass size={17} aria-hidden />]} /></Link>
+            <Link to="/explora" aria-label={translateUi('Explora')} title={translateUi('Explora')} className="grid size-10 place-items-center rounded-full border border-line/70 text-ink-soft transition-transform hover:scale-105 hover:-rotate-6 hover:text-ink active:scale-95"><Hand name="globe" size={22} /></Link>
             <AddLibraryMenu lang={lang} />
           </div>
         }
@@ -266,6 +267,7 @@ export default function BibliothecaPage() {
                 {filteredTexts.slice(0, filter === 'read' ? 50 : 10).map((t) => (
                   <BookCard key={t.id} text={t} progress={progress?.get(t.id)} onAttach={(item) => void attach(item)} />
                 ))}
+                <AddPlace to="/codex/new" label={translateUi('Add book or text')} shape="book" />
               </div>
             ) : (
               <EmptyToolShelf
@@ -436,6 +438,7 @@ export default function BibliothecaPage() {
                     </Link>
                   );
                 })}
+                <AddPlace to="/explora?kind=words" label={translateUi('Ready-made decks')} shape="row" />
               </div>
             ) : (
               <EmptyToolShelf
@@ -450,6 +453,18 @@ export default function BibliothecaPage() {
         )}
       </div>
     </>
+  );
+}
+
+/** Lemora U5: the next place on a shelf, empty and dashed, in the shape of what lives there; a click adds one. */
+function AddPlace({ to, label, shape }: { to: string; label: string; shape: 'book' | 'row' }) {
+  return (
+    <Link to={to} aria-label={label} className={cx('group grid place-items-center rounded-2xl border-[1.5px] border-dashed border-line-strong/80 text-ink-faint transition-colors hover:border-accent hover:text-accent-text', shape === 'book' ? 'aspect-[2/3] rounded-r-md rounded-l-xs' : 'min-h-[76px]')}>
+      <span className={cx('flex items-center gap-2', shape === 'book' && 'flex-col')}>
+        <span className="grid size-11 place-items-center rounded-full bg-accent-soft transition-transform group-hover:rotate-90"><Hand name="add" size={24} /></span>
+        <span className="text-[12.5px] font-semibold"><UiText source={'Add'} /></span>
+      </span>
+    </Link>
   );
 }
 

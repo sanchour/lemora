@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Link } from 'react-router';
-import { ArrowRight, BookOpen, Clapperboard, Headphones, Play } from 'lucide-react';
+import { ArrowRight, BookOpen, Clapperboard, Headphones } from 'lucide-react';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { buttonClasses } from '@/design/primitives';
 import { BookCover } from '@/features/codex/library/BookCover';
@@ -65,11 +65,6 @@ export const ContinueDeskCard = memo(function ContinueDeskCard({ item, lang }: C
               className="size-full shadow-elev-3"
               rounded="rounded-2xl"
             />
-            <div className="pointer-events-none absolute inset-0 z-10 grid place-items-center rounded-2xl bg-black/20 opacity-0 transition-opacity duration-200 group-hover/cover:opacity-100">
-              <span className="grid size-12 place-items-center rounded-full bg-raised/95 text-ink shadow-elev-2 transition-transform duration-200 group-hover/cover:scale-110">
-                <Headphones size={22} className="text-emerald-500" aria-hidden />
-              </span>
-            </div>
           </div>
         </Link>
       )}
@@ -88,11 +83,6 @@ export const ContinueDeskCard = memo(function ContinueDeskCard({ item, lang }: C
               className="size-full rounded-2xl shadow-elev-3"
               fill
             />
-            <div className="pointer-events-none absolute inset-0 z-10 grid place-items-center rounded-2xl bg-black/20 opacity-0 transition-opacity duration-200 group-hover/cover:opacity-100">
-              <span className="grid size-12 place-items-center rounded-full bg-raised/95 text-ink shadow-elev-2 transition-transform duration-200 group-hover/cover:scale-110">
-                <Play size={22} fill="currentColor" className="text-accent" aria-hidden />
-              </span>
-            </div>
           </div>
         </Link>
       )}

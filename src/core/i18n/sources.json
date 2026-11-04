@@ -17145,5 +17145,20 @@
   ],
   "The magazine couldn’t be reached just now.": [
     "src/features/explora/components/ComicsSection.tsx"
+  ],
+  "Add book or text": [
+    "src/features/bibliotheca/BibliothecaPage.tsx"
+  ],
+  "Books, texts, comics and articles": [
+    "src/features/bibliotheca/AddLibraryMenu.tsx"
+  ],
+  "Decks of words to learn": [
+    "src/features/bibliotheca/AddLibraryMenu.tsx"
+  ],
+  "Audio, podcasts and audiobooks": [
+    "src/features/bibliotheca/AddLibraryMenu.tsx"
+  ],
+  "Videos and subtitles": [
+    "src/features/bibliotheca/AddLibraryMenu.tsx"
   ]
 }
