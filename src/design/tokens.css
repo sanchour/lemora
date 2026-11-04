@@ -39,6 +39,11 @@
   --learning-line: #c86d51;
   --unseen-line: rgb(107 142 120 / 0.55);
 
+  /* The app mark's three colours (the bubbles and the ribbon). */
+  --mark-sage: #a9c4ae;
+  --mark-orange: #ee8b48;
+  --mark-ribbon: #b4452a;
+
   --scrim: rgb(38 34 32 / 0.28);
   --elev-1: 0 1px 2px rgb(38 34 32 / 0.06), 0 2px 8px rgb(38 34 32 / 0.05);
   --elev-2: 0 2px 6px rgb(38 34 32 / 0.07), 0 12px 32px rgb(38 34 32 / 0.1);
@@ -78,6 +83,10 @@
   --learning-bg: rgb(212 155 84 / 0.17);
   --learning-line: #d49b54;
   --unseen-line: rgb(147 179 158 / 0.5);
+
+  --mark-sage: #7fa38a;
+  --mark-orange: #e0823f;
+  --mark-ribbon: #c9553a;
 
   --scrim: rgb(10 8 7 / 0.45);
   --elev-1: 0 1px 2px rgb(0 0 0 / 0.25);

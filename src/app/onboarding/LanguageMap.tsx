@@ -439,25 +439,6 @@ export function LanguageMap({ highlight, selected, place, onPlace, inset = 0 }: 
           </ul>
         </div>
       )}
-      {frames.length > 1 && (
-        <div role="group" aria-label={translateUi('Where it is spoken')} className="absolute right-3 bottom-3 flex max-w-[60%] flex-wrap justify-end gap-1.5">
-          {frames.map((f, i) => (
-            <button
-              key={f.lead}
-              type="button"
-              aria-pressed={region === i}
-              onClick={() => {
-                focus.current = 'language';
-                setRegion(i);
-              }}
-              className={`rounded-full border px-3 py-1 text-[12px] font-semibold backdrop-blur transition-colors ${region === i ? 'border-accent bg-accent-soft text-accent-text' : 'border-line bg-raised/95 text-ink-soft hover:text-ink'}`}
-            >
-              {placeName(f.lead)}
-              {f.countries.length > 1 && <span className="ml-1 text-ink-faint">+{f.countries.length - 1}</span>}
-            </button>
-          ))}
-        </div>
-      )}
       <div className="absolute bottom-3 left-3 flex flex-col gap-1.5">
         {(
           [
