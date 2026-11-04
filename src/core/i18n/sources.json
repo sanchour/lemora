@@ -6926,7 +6926,8 @@
   ],
   "Speed": [
     "src/features/sonus/player/Transport.tsx",
-    "src/features/visio/player/VideoStage.tsx"
+    "src/features/visio/player/VideoStage.tsx",
+    "src/features/tutor/TutorSettingsPanel.tsx"
   ],
   "Speed {0}": [
     "src/features/sonus/player/Transport.tsx"

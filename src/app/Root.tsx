@@ -1,5 +1,6 @@
 import { UiLocale } from '@/design/i18n/UiText';
 import { uiLanguage } from '@/core/i18n/messages';
+import { useCatalogue } from '@/core/i18n/useCatalogue';
 import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import { MotionConfig } from 'motion/react';
@@ -129,10 +130,11 @@ export function Root() {
   const context = useMemo(() => (settings && language ? { settings, language } : null), [settings, language]);
 
   // The first IndexedDB read takes a few ms; if it takes seconds, StartingUp says so instead of a blank page.
+  const uiLocale = useCatalogue(settings?.ui.interfaceLanguage ? uiLanguage(language?.id ?? '') : 'en');
   if (!settings || language === undefined) return <StartingUp waitingFor={!settings ? (language === undefined ? 'settings and language' : 'settings') : 'language'} />;
 
   return (
-    <UiLocale.Provider value={settings.ui.interfaceLanguage ? uiLanguage(language?.id ?? '') : 'en'}><MotionConfig reducedMotion={motionPref === 'reduced' ? 'always' : motionPref === 'full' ? 'never' : 'user'}>
+    <UiLocale.Provider value={uiLocale}><MotionConfig reducedMotion={motionPref === 'reduced' ? 'always' : motionPref === 'full' ? 'never' : 'user'}>
       {replay && context ? (
         <Suspense fallback={null}>
           <Onboarding key={`replay-${replay.from}`} replay={replay.from} />

@@ -191,6 +191,7 @@ export function TutorSettingsPanel({ tutor }: TutorSettingsPanelProps) {
           <span className="text-[12px] text-ink-soft">0.75x</span>
           <input
             type="range"
+            aria-label={translateUi('Speed')}
             min="0.75"
             max="1.25"
             step="0.05"
