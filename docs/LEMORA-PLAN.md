@@ -27,11 +27,11 @@ two in one commit.
 | 2.5 | Settings without Listening and Music; Lemora+ naming checked | ✅ | Opus 5.5, 2026-11-03 |
 | 2.6 | Delete what nothing reachable imports any more; bundle size before and after | ⬜ | |
 | 3.1 | Home: Lingua's right-rail Home made for Lemora by default (circle tools, Time today open on the page, Tools on the greeting's line); the desk layout as a choice in Settings. Lemora's own, **redesigned** (greeting, tools 2-up with per-tool progress, overall time, continue reading, recent, next actions); fixed sidebar with the tools always visible | ✅ | Opus 5.5, 2026-11-03 |
-| 3.2 | Showcase → Lingua-Launch (rewritten in plain HTML and JS, checked there), then out of Lemora's onboarding | ⬜ | |
-| 3.3 | Onboarding map: frame each language from country geometry; multi-region languages get a primary focus plus alternatives | ⬜ | |
-| 3.4 | Level step: title → slider → content sequence (reduced motion respected); hover, click, multi-word and long-press translation of the example sentence from local data | ⬜ | |
+| 3.2 | Showcase → Lingua-Launch (rewritten in plain HTML and JS, checked there), then out of Lemora's onboarding | ✅ | Opus 5.5, 2026-11-04 (live demo now in Lingua-Launch, `d407991`) |
+| 3.3 | Onboarding map: frame each language from country geometry; multi-region languages get a primary focus plus alternatives | ✅ | Opus 5.5, 2026-11-04 |
+| 3.4 | Level step: title → slider → content sequence (reduced motion respected); hover, click, multi-word and long-press translation of the example sentence from local data | ✅ | Opus 5.5, 2026-11-04 |
 | 3.5 | Known words from the same `starterLists` lemmas as the frequency decks; tests | ✅ | Opus 5.5, 2026-11-04 |
-| 3.6 | Languages you speak: any living language (Intl.DisplayNames + Lingua's data), honest flags, suggestions only after typing, at most two, never over Continue | ⬜ | |
+| 3.6 | Languages you speak: any living language (Intl.DisplayNames + Lingua's data), honest flags, suggestions only after typing, at most two, never over Continue | ✅ | Opus 5.5, 2026-11-04 |
 | 3.7 | No horizontal overflow on any page (causes fixed); no stray scroll bars or edge controls | ✅ | Opus 5.5, 2026-11-04 |
 | 3.8 | Per-tool daily goals (Codex, Thesaurus, Ludus, Diarium, Alphabet), one attribution rule, persisted, tested | ✅ | Opus 5.5, 2026-11-03 |
 | 3.9 | **Redesign: Thesaurus, every tab** (a new layout and look; big changes welcome) | ✅ | Opus 5.5, 2026-11-04 (Phase U) |

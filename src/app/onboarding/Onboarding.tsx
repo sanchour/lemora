@@ -23,7 +23,7 @@ import { cx } from '@/lib/cx';
 import { AestheticStep } from './AestheticStep';
 import { enjoymentsFor } from './EnjoyStep';
 import { defaultGoal, GoalStep } from './GoalStep';
-import { AboutPage, NamePage, ROOM_COUNT, roomNextLabel, WelcomePage } from './IntroPages';
+import { NamePage, WelcomePage } from './IntroPages';
 import { LanguageStep } from './LanguageStep';
 import { LevelStep } from './LevelStep';
 import { needsScriptStep, ScriptStep } from './ScriptStep';
@@ -39,7 +39,7 @@ import { WhyStep } from './WhyStep';
  * to the plans. Adding another language: its language, level and goal.
  */
 const ANOTHER: Page[] = ['language', 'script', 'level', 'goal'];
-const INTRO = new Set<Page>(['name', 'welcome', 'about']);
+const INTRO = new Set<Page>(['name', 'welcome']);
 const ORDER: CefrLevel[] = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
 /** The language translations are given in: the first native language Lingua can gloss in, else English. */
@@ -79,8 +79,6 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const [goal, setGoal] = useState<CefrLevel | null>(null);
   const [minutes, setMinutes] = useState(15);
   const [busy, setBusy] = useState(false);
-  /** Which demo room the about page shows: Codex, Thesaurus, then Sonus & Visio; Next walks through them first. */
-  const [room, setRoom] = useState(0);
   /** Which light the Lux and Nox page shows: 0 Lux (light), 1 Nox (dark); Continue goes from one to the other. */
   const [lightStage, setLightStage] = useState<0 | 1>(0);
   /** The goal page's two stages (goal, then time a day), and whether a goal level was clicked. */
@@ -152,8 +150,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
 
   const next = () => {
     if (!canContinue || busy) return;
-    if (page === 'about' && room < ROOM_COUNT - 1) setRoom(room + 1);
-    else if (page === 'goal' && goalStage === 0) setGoalStage(1);
+    if (page === 'goal' && goalStage === 0) setGoalStage(1);
     else if (page === 'light' && lightStage === 0) setLightStage(1);
     else if (index < pages.length - 1) {
       // Past the lights the app follows the device: Lux by day, Nox at night.
@@ -168,8 +165,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   };
 
   const back = () => {
-    if (page === 'about' && room > 0) setRoom(room - 1);
-    else if (page === 'goal' && goalStage === 1) setGoalStage(0);
+    if (page === 'goal' && goalStage === 1) setGoalStage(0);
     else if (page === 'light' && lightStage === 1) setLightStage(0);
     else {
       if (page === 'light') setGoalStage(1);
@@ -196,17 +192,15 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const cancel = () => (replaying ? leaveReplay() : void patchSetting('meta', { onboardedAt: Date.now() }));
   useHotkeys({ escape: cancel }, canCancel || replaying);
 
-  const width = page === 'language' ? 'max-w-7xl' : page === 'about' || page === 'light' || page === 'plans' ? 'max-w-6xl' : page === 'level' ? 'max-w-4xl' : 'max-w-3xl';
+  const width = page === 'language' ? 'max-w-7xl' : page === 'light' || page === 'plans' ? 'max-w-6xl' : page === 'level' ? 'max-w-4xl' : 'max-w-3xl';
   const label =
     page === 'name'
       ? nameNow.trim()
         ? 'Continue'
         : 'Continue'
       : page === 'welcome'
-        ? 'Show me around'
-        : page === 'about'
-          ? (roomNextLabel(room) ?? 'Choose a language')
-          : page === 'language' && target
+        ? 'Choose a language'
+        : page === 'language' && target
             ? { source: 'Continue with {0}', values: [getLanguage(target)?.endonym ?? target] }
             : index === pages.length - 1
               ? 'Begin'
@@ -248,7 +242,6 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
             <motion.section key={page} custom={dir} variants={turn} initial="enter" animate="center" exit="exit" transition={spring.gentle}>
               {page === 'name' && <NamePage name={nameNow} onName={setName} onEnter={next} />}
               {page === 'welcome' && <WelcomePage name={nameNow} />}
-              {page === 'about' && <AboutPage room={room} onRoom={setRoom} />}
               {page === 'language' && <LanguageStep target={target} onTarget={setTarget} />}
               {page === 'script' && target && <ScriptStep lang={target} value={script} onValue={setScript} />}
               {page === 'level' && target && <LevelStep lang={target} level={level} seedKnown={seedKnown} onLevel={setLevel} onSeedKnown={setSeedKnown} />}
