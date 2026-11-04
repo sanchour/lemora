@@ -30,9 +30,9 @@ two in one commit.
 | 3.2 | Showcase → Lingua-Launch (rewritten in plain HTML and JS, checked there), then out of Lemora's onboarding | ⬜ | |
 | 3.3 | Onboarding map: frame each language from country geometry; multi-region languages get a primary focus plus alternatives | ⬜ | |
 | 3.4 | Level step: title → slider → content sequence (reduced motion respected); hover, click, multi-word and long-press translation of the example sentence from local data | ⬜ | |
-| 3.5 | Known words from the same `starterLists` lemmas as the frequency decks; tests | ⬜ | |
+| 3.5 | Known words from the same `starterLists` lemmas as the frequency decks; tests | ✅ | Opus 5.5, 2026-11-04 |
 | 3.6 | Languages you speak: any living language (Intl.DisplayNames + Lingua's data), honest flags, suggestions only after typing, at most two, never over Continue | ⬜ | |
-| 3.7 | No horizontal overflow on any page (causes fixed); no stray scroll bars or edge controls | ⬜ | |
+| 3.7 | No horizontal overflow on any page (causes fixed); no stray scroll bars or edge controls | ✅ | Opus 5.5, 2026-11-04 |
 | 3.8 | Per-tool daily goals (Codex, Thesaurus, Ludus, Diarium, Alphabet), one attribution rule, persisted, tested | ✅ | Opus 5.5, 2026-11-03 |
 | 3.9 | **Redesign: Thesaurus, every tab** (a new layout and look; big changes welcome) | ✅ | Opus 5.5, 2026-11-04 (Phase U) |
 | 3.10 | **Redesign: Ludus** | ✅ | Opus 5.5, 2026-11-04 (Phase U) |
