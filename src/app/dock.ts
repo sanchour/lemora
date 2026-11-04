@@ -1,5 +1,5 @@
 import { useLayout } from '@/design/hooks/useLayout';
-import { MINI_PLAYER_SPACE } from '@/features/sonus/MiniPlayer';
+import { MINI_PLAYER_SPACE } from '@/features/sonus/miniSpace';
 import { usePlayer } from '@/services/audio/engine';
 
 /** Where a floating action bar sits: above the tab bar (and the mini player) on phones. */

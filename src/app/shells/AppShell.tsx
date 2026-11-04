@@ -1,7 +1,7 @@
 import { PhraseCapture } from '@/features/phrasebook/Capture';
 import { UiText } from '@/design/i18n/UiText';
 import { ReferenceHelp } from '@/features/culture/ReferenceHelp';
-import { Suspense, useEffect, useLayoutEffect } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 import { motion } from 'motion/react';
 import { useApp } from '@/app/context';
@@ -9,7 +9,6 @@ import { useFullMotion } from '@/app/motion';
 import { roomKey } from '@/app/redirects';
 import { sectionKey, SHORTCUT_SECTIONS, shownFor } from '@/app/sections';
 import { ShortcutsDialog } from '@/app/ShortcutsDialog';
-import { MiniPlayer } from '@/features/sonus/MiniPlayer';
 import { PlansSheet } from '@/features/plans/PlansSheet';
 import { usePlanUpkeep } from '@/features/plans/usePlan';
 import { GlobalSearchModal } from '@/features/search/GlobalSearchModal';
@@ -22,6 +21,10 @@ import { pageEnter, pageEnterFull } from '@/design/motion';
 import { ensureLexicon } from '@/services/packs/lexicon';
 import { useUI } from '@/state/ui';
 import { DesktopShell } from './desktop/DesktopShell';
+import { shows } from '@/product';
+
+// Only a build with Sonus has a player: elsewhere its code never loads.
+const MiniPlayer = lazy(() => import('@/features/sonus/MiniPlayer').then((m) => ({ default: m.MiniPlayer })));
 import { TouchShell } from './touch/TouchShell';
 
 /** Routes that take the whole screen (no sidebar, no tab bar). On phones the Sonus and Visio players and a Cantus song do too. */
@@ -113,7 +116,11 @@ export function AppShell() {
     <>
       {skipLink}
       {layout === 'wide' ? <DesktopShell>{content}</DesktopShell> : <TouchShell>{content}</TouchShell>}
-      {showMini && <MiniPlayer />}
+      {showMini && shows('sonus') && (
+        <Suspense fallback={null}>
+          <MiniPlayer />
+        </Suspense>
+      )}
       <ReferenceHelp />
       <PhraseCapture />
       <ShortcutsDialog />

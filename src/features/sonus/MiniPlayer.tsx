@@ -9,8 +9,7 @@ import { closePlayer, onTime, skip, toggle, usePlayer } from '@/services/audio/e
 import { Artwork } from './library/Artwork';
 import { sonusBase } from '@/features/sonus/paths';
 
-/** Height the phone layout reserves above the tab bar while the mini player shows. */
-export const MINI_PLAYER_SPACE = 72;
+export { MINI_PLAYER_SPACE } from './miniSpace';
 
 /** What's playing, wherever you are: a slim bar above the tab bar (phone) or a card (desktop). */
 export function MiniPlayer() {

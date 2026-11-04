@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { MINI_PLAYER_SPACE } from '@/features/sonus/MiniPlayer';
+import { MINI_PLAYER_SPACE } from '@/features/sonus/miniSpace';
 import { usePlayer } from '@/services/audio/engine';
 import { TopBar } from './TopBar';
 
