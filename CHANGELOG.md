@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.23** · 2026-11-04 · Phase 4: functional pass, privacy audit, licences; catalogues lazy
 - **0.1.0-alpha.22** · 2026-11-04 · Phases 2 and 3 finished: cleanup (155 files), drawn empty states
 - **0.1.0-alpha.21** · 2026-11-04 · Checkpoint: 3.2 showcase moved to Lingua-Launch, 3.3 map regions, 3.4 level step, 3.6 language picker
 - **0.1.0-alpha.20** · 2026-11-04 · Fix Home crash with no book started; 3.6 languages-you-speak suggestions

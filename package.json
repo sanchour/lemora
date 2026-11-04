@@ -1,7 +1,7 @@
 {
   "name": "lemora",
   "private": true,
-  "version": "0.1.0-alpha.22",
+  "version": "0.1.0-alpha.23",
   "type": "module",
   "description": "Lemora: a local-first place to read, collect words and write in a new language. Built from Lingua.",
   "scripts": {
