@@ -5,6 +5,7 @@ import type { LinguaDB } from './db';
 import { createDeck, deleteNote, makeNote, moveNote, setSuspended } from './decks';
 import type { NoteInput } from './decks';
 import type { Bit, Deck } from './types';
+import { wordsFromCounts } from '@/core/srs/deckFrom';
 import type { Draft } from '@/core/srs/deckFrom';
 
 export type DeckFlag = 'archived' | 'pinned' | 'important';
@@ -122,7 +123,8 @@ export async function deckFromDrafts(lang: string, name: string, drafts: readonl
 
 /** The normalised words the learner already knows (state 1), so a deck made from a text leaves them out. */
 export async function knownNorms(lang: string, database: LinguaDB = db): Promise<Set<string>> {
-  return new Set((await database.words.where('lang').equals(lang).filter((w) => w.state === 1 && !w.deletedAt).toArray()).map((w) => w.norm));
+  // The [lang+state] index: the table has no index on lang alone, and a query on it found nothing.
+  return new Set((await database.words.where('[lang+state]').equals([lang, 1]).filter((w) => !w.deletedAt).toArray()).map((w) => w.norm));
 }
 
 /** Moves the chosen cards one place earlier (-1) or later (1) in the deck's own order. `ordered` is the deck's cards as they are now, in that order; every card is given its place again, so none shares one. */
@@ -178,4 +180,20 @@ export async function shiftDeck(id: string, by: -1 | 1, database: LinguaDB = db)
   [siblings[at], siblings[to]] = [siblings[to], siblings[at]];
   const now = Date.now();
   await database.transaction('rw', database.decks, () => Promise.all(siblings.map((d, i) => (d.order === i ? undefined : database.decks.update(d.id, { order: i, updatedAt: now })))));
+}
+
+/**
+ * Lemora U8: a deck of the words in a text that the learner doesn't know yet, the most used first (at most `max`), each
+ * with its dictionary meaning where there is one. Made once per text: the same deck is given back after that.
+ */
+export async function deckForText(lang: string, textId: string, title: string, meaningOf: (term: string) => Promise<string | undefined>, max = 30, database: LinguaDB = db): Promise<{ deckId: string; words: number } | null> {
+  const name = `${title} · words`;
+  const existing = await database.decks.where('lang').equals(lang).filter((d) => !d.deletedAt && d.name === name).first();
+  if (existing) return { deckId: existing.id, words: await database.notes.where('deckId').equals(existing.id).filter((n) => !n.deletedAt).count() };
+  const vocab = await database.textVocab.get(textId);
+  if (!vocab) return null;
+  const drafts = wordsFromCounts(vocab.norms, vocab.counts, await knownNorms(lang, database)).slice(0, max);
+  if (!drafts.length) return null;
+  const withMeanings = await Promise.all(drafts.map(async (d) => ({ ...d, meaning: d.meaning || (await meaningOf(d.term).catch(() => undefined)) || '' })));
+  return { deckId: await deckFromDrafts(lang, name, withMeanings, database), words: withMeanings.length };
 }

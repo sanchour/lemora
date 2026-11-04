@@ -8120,5 +8120,13 @@
   "Videos and subtitles": "视频和字幕",
   "Children’s book": "童书",
   "Wikipedia": "维基百科",
-  "Article": "文章"
+  "Article": "文章",
+  "Study a book’s words before reading it": "读书前先学书里的词",
+  "A book you haven’t started opens on its new words first, as a small deck to study. You can always read straight away.": "还没开始读的书会先打开它的新词，做成一小副卡片供学习。你也随时可以直接阅读。",
+  "Learn its words first?": "先学书里的词吗？",
+  "The words in it you don’t know yet, the most used first, as a small deck. A few minutes of cards, and the book reads more easily.": "书中你还不认识的词，最常用的在前，做成一小副卡片。花几分钟复习，读起来就轻松多了。",
+  "Study its words": "学这些词",
+  "Read now": "现在就读",
+  "There are no new words to learn in it: happy reading.": "里面没有要学的新词：祝阅读愉快。",
+  "The deck couldn’t be made. Read now, or try again.": "卡组没能生成。现在就读，或再试一次。"
 }

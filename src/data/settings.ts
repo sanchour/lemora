@@ -144,6 +144,8 @@ export interface Settings {
   /** Why they learn, what they enjoy, and what to call them (the first start's name, 5.1-2b). */
   learner: { reasons: LearningReason[]; enjoys: Enjoyment[]; name?: string };
   reader: {
+    /** Lemora U8: offer a book's new words as a deck to study before reading it (off unless turned on). */
+    deckFirst?: boolean;
     font: ReaderFontId;
     sizePx: number;
     lineHeight: number;

@@ -172,6 +172,12 @@ export function ReadingSection({ reader, lang }: { reader: Settings['reader']; l
 
       <div className="mt-3 divide-y divide-line">
         <ToggleRow
+          title={translateUi('Study a book’s words before reading it')}
+          description={translateUi('A book you haven’t started opens on its new words first, as a small deck to study. You can always read straight away.')}
+          checked={reader.deckFirst === true}
+          onChange={(deckFirst) => void patchSetting('reader', { deckFirst })}
+        />
+        <ToggleRow
           title={translateUi('Highlight unseen words')}
           description={translateUi('A faint dotted underline on words you haven’t marked yet.')}
           checked={reader.highlightUnseen}

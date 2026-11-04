@@ -8120,5 +8120,13 @@
   "Videos and subtitles": "Видео и субтитры",
   "Children’s book": "Детская книга",
   "Wikipedia": "Википедия",
-  "Article": "Статья"
+  "Article": "Статья",
+  "Study a book’s words before reading it": "Учить слова книги перед чтением",
+  "A book you haven’t started opens on its new words first, as a small deck to study. You can always read straight away.": "Ещё не начатая книга сначала открывается своими новыми словами — небольшой колодой для изучения. Читать сразу можно всегда.",
+  "Learn its words first?": "Сначала выучить его слова?",
+  "The words in it you don’t know yet, the most used first, as a small deck. A few minutes of cards, and the book reads more easily.": "Слова, которых вы ещё не знаете, самые частые — первыми, в небольшой колоде. Несколько минут карточек — и книга читается легче.",
+  "Study its words": "Учить его слова",
+  "Read now": "Читать сейчас",
+  "There are no new words to learn in it: happy reading.": "Новых слов здесь нет — приятного чтения.",
+  "The deck couldn’t be made. Read now, or try again.": "Не удалось создать колоду. Читайте сейчас или попробуйте снова."
 }

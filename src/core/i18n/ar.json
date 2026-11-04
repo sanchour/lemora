@@ -8120,5 +8120,13 @@
   "Videos and subtitles": "فيديوهات وترجمات",
   "Children’s book": "كتاب أطفال",
   "Wikipedia": "ويكيبيديا",
-  "Article": "مقال"
+  "Article": "مقال",
+  "Study a book’s words before reading it": "تعلّم كلمات الكتاب قبل قراءته",
+  "A book you haven’t started opens on its new words first, as a small deck to study. You can always read straight away.": "الكتاب الذي لم تبدأه يُفتح أولًا على كلماته الجديدة في مجموعة صغيرة للدراسة. ويمكنك دائمًا القراءة مباشرة.",
+  "Learn its words first?": "تتعلم كلماته أولًا؟",
+  "The words in it you don’t know yet, the most used first, as a small deck. A few minutes of cards, and the book reads more easily.": "الكلمات التي لا تعرفها بعد، الأكثر استخدامًا أولًا، في مجموعة صغيرة. بضع دقائق من البطاقات، فيصبح الكتاب أسهل.",
+  "Study its words": "ادرس كلماته",
+  "Read now": "اقرأ الآن",
+  "There are no new words to learn in it: happy reading.": "لا توجد فيه كلمات جديدة لتتعلمها: قراءة ممتعة.",
+  "The deck couldn’t be made. Read now, or try again.": "تعذّر إنشاء المجموعة. اقرأ الآن أو حاول مرة أخرى."
 }

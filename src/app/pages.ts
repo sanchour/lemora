@@ -4,7 +4,8 @@ import { lazy } from 'react';
 // so switching tabs never waits on the network.
 const loaders = {
   codex: () => import('@/features/codex/CodexPage'),
-  reader: () => import('@/features/codex/reader/ReaderPage'),
+  // The reader, behind Lemora's optional deck-first page (U8).
+  reader: () => import('@/features/codex/reader/DeckFirst'),
   newText: () => import('@/features/codex/NewTextPage'),
   bookDetails: () => import('@/features/codex/BookDetailsPage'),
   journalEntry: () => import('@/features/codex/diarium/EntryPage'),

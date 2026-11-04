@@ -17169,5 +17169,29 @@
   ],
   "Article": [
     "src/features/codex/library/LecternCard.tsx"
+  ],
+  "Study a book’s words before reading it": [
+    "src/features/ordo/sections/ReadingSection.tsx"
+  ],
+  "A book you haven’t started opens on its new words first, as a small deck to study. You can always read straight away.": [
+    "src/features/ordo/sections/ReadingSection.tsx"
+  ],
+  "Learn its words first?": [
+    "src/features/codex/reader/DeckFirst.tsx"
+  ],
+  "The words in it you don’t know yet, the most used first, as a small deck. A few minutes of cards, and the book reads more easily.": [
+    "src/features/codex/reader/DeckFirst.tsx"
+  ],
+  "Study its words": [
+    "src/features/codex/reader/DeckFirst.tsx"
+  ],
+  "Read now": [
+    "src/features/codex/reader/DeckFirst.tsx"
+  ],
+  "There are no new words to learn in it: happy reading.": [
+    "src/features/codex/reader/DeckFirst.tsx"
+  ],
+  "The deck couldn’t be made. Read now, or try again.": [
+    "src/features/codex/reader/DeckFirst.tsx"
   ]
 }

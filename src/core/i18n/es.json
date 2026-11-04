@@ -8120,5 +8120,13 @@
   "Videos and subtitles": "Vídeos y subtítulos",
   "Children’s book": "Libro infantil",
   "Wikipedia": "Wikipedia",
-  "Article": "Artículo"
+  "Article": "Artículo",
+  "Study a book’s words before reading it": "Estudiar las palabras de un libro antes de leerlo",
+  "A book you haven’t started opens on its new words first, as a small deck to study. You can always read straight away.": "Un libro que no has empezado se abre primero con sus palabras nuevas, en un mazo pequeño para estudiar. Siempre puedes leer directamente.",
+  "Learn its words first?": "¿Aprender antes sus palabras?",
+  "The words in it you don’t know yet, the most used first, as a small deck. A few minutes of cards, and the book reads more easily.": "Las palabras que aún no conoces, las más usadas primero, en un mazo pequeño. Unos minutos de tarjetas y el libro se lee mejor.",
+  "Study its words": "Estudiar sus palabras",
+  "Read now": "Leer ahora",
+  "There are no new words to learn in it: happy reading.": "No tiene palabras nuevas que aprender: ¡buena lectura!",
+  "The deck couldn’t be made. Read now, or try again.": "No se pudo crear el mazo. Lee ahora o inténtalo de nuevo."
 }
