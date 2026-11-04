@@ -3962,7 +3962,7 @@
   "Light, modern K-pop": "الكيبوب الخفيف والحديث",
   "Light, palettes, motion": "الضوء، اللوحات، الحركة",
   "Lightning": "البرق",
-  "Lightning round": "جولة البرق",
+  "Lightning round": "جولة خاطفة",
   "Like": "مثل",
   "Like a native": "مثل مواطن",
   "Lillebjørn Nilsen": "ليليبيورن نيلسن",
@@ -4489,7 +4489,7 @@
   "SecurityError": "خطأ أمني",
   "See Lingua+ Max": "انظر لينغوا+ ماكس",
   "Self-study": "الدراسة الذاتية",
-  "Sentences with a gap": "الجمل مع وجود فجوة",
+  "Sentences with a gap": "جمل فيها فراغ",
   "Sepia": "بني داكن",
   "Sepia night": "ليلة بني داكن",
   "Sequentia": "تسلسل",
@@ -8128,5 +8128,12 @@
   "Study its words": "ادرس كلماته",
   "Read now": "اقرأ الآن",
   "There are no new words to learn in it: happy reading.": "لا توجد فيه كلمات جديدة لتتعلمها: قراءة ممتعة.",
-  "The deck couldn’t be made. Read now, or try again.": "تعذّر إنشاء المجموعة. اقرأ الآن أو حاول مرة أخرى."
+  "The deck couldn’t be made. Read now, or try again.": "تعذّر إنشاء المجموعة. اقرأ الآن أو حاول مرة أخرى.",
+  "Earlier My decks design": "التصميم السابق لـ«مجموعاتي»",
+  "Thesaurus › My decks as it was: Today as a book, the decks in a table below it.": "Thesaurus › مجموعاتي كما كانت: «اليوم» على هيئة كتاب والمجموعات في جدول أسفله.",
+  "{0} d ago": "قبل {0} يوم",
+  "{0} cards waiting": "{0} بطاقة بالانتظار",
+  "Study now": "ادرس الآن",
+  "reviewed today": "رُوجعت اليوم",
+  "known words": "كلمات معروفة"
 }

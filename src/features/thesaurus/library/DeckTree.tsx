@@ -38,7 +38,7 @@ interface TreeProps {
 }
 
 /** How decks and folders are ordered at every level of the tree. */
-interface Order {
+export interface Order {
   decks: (a: Deck, b: Deck) => number;
   folders: (a: Folder, b: Folder) => number;
 }

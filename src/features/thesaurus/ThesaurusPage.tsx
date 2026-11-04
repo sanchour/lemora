@@ -37,6 +37,7 @@ import { JourneySection } from './library/JourneySection';
 import { NewMenu } from './library/NewMenu';
 import type { NewAction } from './library/NewMenu';
 import { TodayCard } from './library/TodayCard';
+import { DecksDesk } from './library/DecksDesk';
 import { useDeckImport } from './library/useDeckImport';
 import { DictionaryView } from './dictionary/DictionaryView';
 
@@ -229,6 +230,33 @@ export default function ThesaurusPage() {
             transition={spring.snappy}
             className="mt-2 space-y-8"
           >
+            {/* Lemora U9: Today first and the decks down the right, unless the earlier design is chosen in Settings. */}
+            {!settings.ui.classicDecks && !query.trim() && hasDecks && folders && decks ? (
+              <DecksDesk
+                lang={lang}
+                decks={decks}
+                folders={folders}
+                counts={counts}
+                totals={totals}
+                forecast={outlook?.forecast}
+                lastStudied={outlook?.lastStudied}
+                order={order}
+                tools={
+                  <>
+                    <IconButton icon={Search} label={translateUi('Search')} shortcut="/" onClick={() => setSearching(true)} />
+                    <SortMenu value={sort} options={SORTS} onChange={(deckSort) => void patchSetting('ui', { deckSort })} />
+                  </>
+                }
+                below={
+                  <>
+                    {archivedCount > 0 && (
+                      <button type="button" onClick={() => setShowArchived((v) => !v)} className="text-[13.5px] font-semibold text-ink-soft underline decoration-line-strong underline-offset-4"><UiText source={'{0} {1} archived {2}'} values={[showArchived ? <UiText source={'Hide'} /> : <UiText source={'Show'} />, archivedCount, archivedCount === 1 ? <UiText source={'deck'} /> : <UiText source={'decks'} />]} /></button>
+                    )}
+                    <JourneySection lang={lang} onOpen={openStarter} />
+                  </>
+                }
+              />
+            ) : (<>
             {!query.trim() && (
               <section aria-label={translateUi('Today')} className="pb-1">
                 <TodayCard lang={lang} totals={totals} forecast={outlook?.forecast} onDiscover={browse} />
@@ -291,6 +319,7 @@ export default function ThesaurusPage() {
                 </>
               )}
             </section>
+            </>)}
           </motion.div>
         ) : (
           <motion.section key="dictionary" aria-label={translateUi('Dictionary')} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} transition={spring.snappy}>

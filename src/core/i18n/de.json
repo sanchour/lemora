@@ -4489,7 +4489,7 @@
   "SecurityError": "Sicherheitsfehler",
   "See Lingua+ Max": "Siehe Lingua+ Max",
   "Self-study": "Selbststudium",
-  "Sentences with a gap": "Sätze mit einer Lücke",
+  "Sentences with a gap": "Sätze mit Lücke",
   "Sepia": "Sepia",
   "Sepia night": "Sepia-Nacht",
   "Sequentia": "Sequenzie",
@@ -5930,7 +5930,7 @@
   "the missing word": "das fehlende Wort",
   "the next most common words": "die zweithäufigsten Wörter",
   "this language": "diese Sprache",
-  "to review": "zu überprüfen",
+  "to review": "zu wiederholen",
   "transcript subtitles whisper groq device private visio": "Transkript Untertitel Flüstern Groq Gerät Privatvisio",
   "transcript turbo large": "Transkript Turbo groß",
   "transform 1.1s cubic-bezier(.2,.9,.25,1.08)": "transformieren 1,1s kubisch-bezier(.2,.9,.25,1.08)",
@@ -8128,5 +8128,12 @@
   "Study its words": "Seine Wörter lernen",
   "Read now": "Jetzt lesen",
   "There are no new words to learn in it: happy reading.": "Darin gibt es keine neuen Wörter zu lernen: viel Spaß beim Lesen.",
-  "The deck couldn’t be made. Read now, or try again.": "Der Stapel konnte nicht erstellt werden. Lies jetzt oder versuch es noch einmal."
+  "The deck couldn’t be made. Read now, or try again.": "Der Stapel konnte nicht erstellt werden. Lies jetzt oder versuch es noch einmal.",
+  "Earlier My decks design": "Früheres Design von Meine Stapel",
+  "Thesaurus › My decks as it was: Today as a book, the decks in a table below it.": "Thesaurus › Meine Stapel wie früher: Heute als Buch, die Stapel in einer Tabelle darunter.",
+  "{0} d ago": "vor {0} T.",
+  "{0} cards waiting": "{0} Karten warten",
+  "Study now": "Jetzt lernen",
+  "reviewed today": "heute wiederholt",
+  "known words": "bekannte Wörter"
 }

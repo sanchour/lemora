@@ -422,10 +422,11 @@ export default function BibliothecaPage() {
                     <Link
                       key={d.id}
                       to={`/thesaurus/deck/${d.id}`}
-                      className="group flex items-center gap-3.5 rounded-2xl border border-line/70 bg-surface p-4 transition-colors hover:border-line-strong hover:bg-raised"
+                      className="group flex items-center gap-3.5 rounded-2xl border border-line p-4 transition-[border-color,transform] hover:-translate-y-0.5 hover:border-line-strong"
                     >
-                      <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-sage-soft text-sage-text">
-                        <Layers size={20} aria-hidden />
+                      {/* The same drawn deck as Thesaurus's (Lemora U9): a fine line, no fill. */}
+                      <span className="grid size-11 shrink-0 place-items-center rounded-full border border-line transition-transform group-hover:-rotate-6">
+                        <Hand name="cards" size={22} />
                       </span>
                       <span className="min-w-0 flex-1">
                         <span className="block truncate font-serif text-[17px] font-semibold">{d.name}</span>

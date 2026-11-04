@@ -159,6 +159,12 @@ export function AppearanceSection({
           onChange={(on) => void patchSetting('ui', { homeTools: on })}
         />
         <ToggleRow
+          title={translateUi('Earlier My decks design')}
+          description={translateUi('Thesaurus › My decks as it was: Today as a book, the decks in a table below it.')}
+          checked={settings?.ui.classicDecks === true}
+          onChange={(on) => void patchSetting('ui', { classicDecks: on })}
+        />
+        <ToggleRow
           title={translateUi('Ask button')}
           description={translateUi('The Ask button at the bottom right, for the tutor and explaining a reference. Alt+T still opens the tutor.')}
           checked={settings?.ui.askButton !== false}

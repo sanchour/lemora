@@ -259,6 +259,8 @@ export interface Settings {
     /** Lemora U3: the tools on Home (on unless turned off), and the Ask button at the bottom right (on unless turned off). */
     homeTools?: boolean;
     askButton?: boolean;
+    /** Lemora U9: Thesaurus › My decks in its earlier design (Today as a book, decks in a table). */
+    classicDecks?: boolean;
     /** A touch of the studied language in the design (5.1-4b, design/flavours.ts). */
     flavour: boolean;
     /** Settings › Lab › Design notes (7-0b): click any element to pin a note. Off for learners. */

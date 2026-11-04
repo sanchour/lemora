@@ -17193,5 +17193,35 @@
   ],
   "The deck couldn’t be made. Read now, or try again.": [
     "src/features/codex/reader/DeckFirst.tsx"
+  ],
+  "Earlier My decks design": [
+    "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "Thesaurus › My decks as it was: Today as a book, the decks in a table below it.": [
+    "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "{0} d ago": [
+    "src/features/thesaurus/library/DecksDesk.tsx"
+  ],
+  "{0} cards waiting": [
+    "src/features/thesaurus/library/DecksDesk.tsx"
+  ],
+  "Study now": [
+    "src/features/thesaurus/library/DecksDesk.tsx"
+  ],
+  "reviewed today": [
+    "src/features/thesaurus/library/DecksDesk.tsx"
+  ],
+  "known words": [
+    "src/features/thesaurus/library/DecksDesk.tsx"
+  ],
+  "Lightning round": [
+    "src/features/thesaurus/library/DecksDesk.tsx"
+  ],
+  "Sentences with a gap": [
+    "src/features/thesaurus/library/DecksDesk.tsx"
+  ],
+  "to review": [
+    "src/features/thesaurus/library/DecksDesk.tsx"
   ]
 }
