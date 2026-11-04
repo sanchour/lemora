@@ -17160,5 +17160,14 @@
   ],
   "Videos and subtitles": [
     "src/features/bibliotheca/AddLibraryMenu.tsx"
+  ],
+  "Children’s book": [
+    "src/features/codex/library/LecternCard.tsx"
+  ],
+  "Wikipedia": [
+    "src/features/codex/library/LecternCard.tsx"
+  ],
+  "Article": [
+    "src/features/codex/library/LecternCard.tsx"
   ]
 }

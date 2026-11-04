@@ -6,6 +6,18 @@ import { useApp } from '@/app/context';
 import type { ReadingProgress, Text } from '@/data/types';
 import { buttonClasses } from '@/design/primitives';
 import { BookCover } from './BookCover';
+import { Hand } from '@/design/drawings';
+import type { HandName } from '@/design/drawings';
+
+/** What a text is, said in one word (Lemora U6): a book, a comic, an article, Wikipedia… */
+export function textKind(text: Text): { label: string; hand: HandName } {
+  if (text.kind === 'comic') return { label: 'Comic', hand: 'cards' };
+  if (text.kind === 'transcript') return { label: 'Transcript', hand: 'sound' };
+  if (text.readingGenre === 'children') return { label: 'Children’s book', hand: 'leaf' };
+  if (text.source === 'wiki') return { label: 'Wikipedia', hand: 'globe' };
+  if (text.kind === 'article') return { label: text.readingGenre === 'post' ? 'Magazine' : 'Article', hand: 'letter' };
+  return { label: 'Book', hand: 'book' };
+}
 import { codexGoal, GoalRing, useReadToday } from '../reader/readingGoal';
 
 interface LecternCardProps {
@@ -78,6 +90,10 @@ export function LecternCard({ text, progress }: LecternCardProps) {
           {/* Title, Subtitle at top; Progress bar & Action buttons aligned to bottom line of book */}
           <div className="flex min-w-0 flex-1 flex-col justify-between self-stretch py-0.5">
             <div>
+              <p className="mb-2 flex items-center gap-1.5 text-[11.5px] font-bold tracking-[0.14em] text-ink-faint uppercase">
+                <Hand name={textKind(text).hand} size={18} />
+                <UiText source={textKind(text).label} />
+              </p>
               <Link to={`/codex/read/${text.id}`} className="group block">
                 <h3 lang={text.lang} className="font-serif text-2xl font-semibold leading-tight text-ink transition-colors group-hover:text-accent-text sm:text-[26px] lg:text-[28px]">
                   {text.title}

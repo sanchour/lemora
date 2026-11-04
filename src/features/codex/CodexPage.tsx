@@ -394,12 +394,10 @@ export default function CodexPage() {
   }
   return (
     <>
-      <div className="pl-2 sm:pl-5 lg:pl-8">
-        <PageHeader
-          title={translateUi('Codex')} englishTitle={'Codex'}
-          actions={<AddCodexMenu />}
-        />
-      </div>
+      <PageHeader
+        title={translateUi('Codex')} englishTitle={'Codex'}
+        actions={<AddCodexMenu />}
+      />
 
       {texts && texts.length === 0 && (
         <EmptyLibrary lang={lang} busy={busy === 'sample'} onSample={() => void run('sample')} />
@@ -478,9 +476,10 @@ export default function CodexPage() {
         );
 
         return (
-          <div className="mt-6 space-y-8">
+          <div className="mt-2 space-y-8">
             {current && progress && !query && (
-              <section aria-label={translateUi('Continue reading')} className="pb-1 pl-2 sm:pl-5 lg:pl-8">
+              // In line with the room's header (Lemora U6), not indented under it.
+              <section aria-label={translateUi('Continue reading')} className="pb-1">
                 <LecternCard text={current} progress={progress.get(current.id)!} />
               </section>
             )}
