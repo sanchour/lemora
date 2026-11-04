@@ -41,10 +41,10 @@ export const shortDate = (ms: number) => new Date(ms).toLocaleDateString(undefin
 /** A section of the dashboard: a quiet card with a small title. */
 export function Panel({ title, icon: Icon, children, className, action }: { title: string; icon?: LucideIcon; children: ReactNode; className?: string; action?: ReactNode }) {
   return (
-    <section className={cx('rounded-3xl border border-line/70 bg-surface p-5 sm:p-6', className)} aria-label={title}>
-      <header className="mb-4 flex items-center gap-2">
-        {Icon && <Icon size={17} className="text-sage-text" aria-hidden />}
-        <h2 className="flex-1 text-[13px] font-bold tracking-wide text-ink-soft uppercase"><UiText source={title} /></h2>
+    <section className={cx('border-t border-line/70 pt-6', className)} aria-label={title}>
+      <header className="mb-5 flex items-center gap-3">
+        {Icon && <span className="grid size-9 shrink-0 place-items-center rounded-full bg-sage-soft text-sage-text"><Icon size={17} aria-hidden /></span>}
+        <h2 className="flex-1 font-serif text-[20px] font-semibold"><UiText source={title} /></h2>
         {action}
       </header>
       {children}

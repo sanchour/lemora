@@ -17265,5 +17265,11 @@
   ],
   "Diarium: a diary to write in": [
     "src/features/plans/PlanCards.tsx"
+  ],
+  "Milestones": [
+    "src/features/ratio/Overview.tsx"
+  ],
+  "Deeper": [
+    "src/features/ratio/Overview.tsx"
   ]
 }

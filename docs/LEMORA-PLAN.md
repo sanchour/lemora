@@ -34,16 +34,16 @@ two in one commit.
 | 3.6 | Languages you speak: any living language (Intl.DisplayNames + Lingua's data), honest flags, suggestions only after typing, at most two, never over Continue | ⬜ | |
 | 3.7 | No horizontal overflow on any page (causes fixed); no stray scroll bars or edge controls | ⬜ | |
 | 3.8 | Per-tool daily goals (Codex, Thesaurus, Ludus, Diarium, Alphabet), one attribution rule, persisted, tested | ✅ | Opus 5.5, 2026-11-03 |
-| 3.9 | **Redesign: Thesaurus, every tab** (a new layout and look; big changes welcome) | ⬜ | |
-| 3.10 | **Redesign: Ludus** | ⬜ | |
-| 3.11 | **Redesign: Diarium** | ⬜ | |
-| 3.12 | **Redesign: Ratio**, with only real numbers (Overview's monthly report feeds made-up "accuracy" figures and stamps today) | ⬜ | |
-| 3.13 | **Redesign: Settings** | ⬜ | |
+| 3.9 | **Redesign: Thesaurus, every tab** (a new layout and look; big changes welcome) | ✅ | Opus 5.5, 2026-11-04 (Phase U) |
+| 3.10 | **Redesign: Ludus** | ✅ | Opus 5.5, 2026-11-04 (Phase U) |
+| 3.11 | **Redesign: Diarium** | ✅ | Opus 5.5, 2026-11-04 (Phase U) |
+| 3.12 | **Redesign: Ratio**, with only real numbers (Overview's monthly report feeds made-up "accuracy" figures and stamps today) | ✅ | Opus 5.5, 2026-11-04 |
+| 3.13 | **Redesign: Settings** | ✅ | Opus 5.5, 2026-11-04 (Phase U) |
 | 3.14 | Things to try redrawn and moved into Explora (out of the sidebar) | ✅ | Opus 5.5, 2026-11-03 |
 | 3.15 | Alphabet (with Sounds) only for languages not written in Latin script | ✅ | Opus 5.5, 2026-11-03 |
 | 3.16 | Explora's rotating hero in the bookish look, not a streaming billboard | ✅ | Opus 5.5, 2026-11-03 |
 | 3.17 | Word decks: a better layout and design (Explora › Word decks, the starter library) | ✅ | Opus 5.5, 2026-11-03 |
-| 3.18 | Bibliotheca: a better layout | ⬜ | |
+| 3.18 | Bibliotheca: a better layout | ✅ | Opus 5.5, 2026-11-04 (Phase U) |
 | 3.19 | Thesaurus's Discover moves to Explora entirely; a Discover icon at Thesaurus's top right | ✅ | Opus 5.5, 2026-11-03 |
 | 3.20 | Hand-drawn touches where they fit, still clean (src/design/drawings.tsx: the handbook's icons and empty-page art) | ◐ Home, Things to try, Explora's hero, word decks | |
 | 4.1 | Functional audit of every page (imports, files, lookups, saving, flashcards, Ludus, Diarium, language switch, backup and restore, offline, errors) | ⬜ | |
@@ -85,7 +85,8 @@ Ratio's layout (3.12) and the redesigns already listed (3.9 to 3.13, 3.18) fold 
 | U11 | **Thesaurus › Phrases.** The same principles | ✅ |
 | U12 | **Diarium.** A minimal overhaul with two tabs, Journal and Writing tasks; the "A few sentences a day is plenty…" lines gone; the day's question centred in a beautiful face, fitted to the level, translated on hover instead of an English line under it; while writing, the helpers (describe a picture, compare drafts, simpler wording…) as small hand-drawn icons under one icon at the top right | ✅ |
 | U13 | **Things to try.** A fixed page that fits the screen (no sideways swipe), in the new minimal design, with every feature kept | ✅ |
-| U14 | **Full redesigns: Ludus and Settings** (3.10, 3.13), then Ratio's layout (3.12: a summary always in view, one chapter at a time) | ⬜ |
+| U14 | **Full redesigns: Ludus and Settings** (3.10, 3.13), then Ratio's layout (3.12: a summary always in view, one chapter at a time) | ✅ |
+| U15 | **Earlier designs, page by page** (the user, 2026-11-04): Settings › Appearance › Earlier designs, one switch per redesigned page (Home, Explora, Bibliotheca, Codex, Atlas, My decks, Dictionary, Phrases, Diarium, Things to try, Ludus, Settings, Ratio), each bringing that page's previous look back | ⬜ |
 
 ## Lemora's website: `lemora-site` (the user, 2026-11-03)
 

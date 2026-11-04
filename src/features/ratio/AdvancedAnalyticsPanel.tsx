@@ -52,7 +52,7 @@ export function AdvancedAnalyticsPanel({
   const mistakeData = calculateMistakeTrends(evidence);
 
   return (
-    <div className="space-y-5 rounded-3xl bg-surface p-5 sm:p-6">
+    <div className="space-y-5 border-t border-line/70 pt-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">

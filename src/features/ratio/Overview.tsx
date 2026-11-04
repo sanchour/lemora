@@ -1,6 +1,7 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
+import { RoomTabs } from '@/app/RoomTabs';
 import { ArrowRight, BookOpen, Clock, Compass, Feather, Headphones, Keyboard, Layers, Plus, Printer, Sparkles, Sprout } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { getLanguage } from '@/core/lang/languages';
@@ -34,6 +35,9 @@ import { MonthlyReportModal } from './MonthlyReportModal';
 import { ACTIVITY_COLOR, ACTIVITY_LABEL, hours, Legend, Panel, pct, shortDate, Stat } from './common';
 import { shows } from '@/product';
 
+const VIEWS = ['time', 'words', 'reading', 'writing', 'milestones', 'deeper'] as const;
+type View = (typeof VIEWS)[number];
+
 const MODE_LABEL: Record<string, string> = { mcq: 'Choose', match: 'Match pairs', cloze: 'Fill the gap', build: 'Build sentences', type: 'Typing', listen: 'Listening', speak: 'Speaking' };
 const weekday = (date: string) => new Date(`${date}T12:00:00`).toLocaleDateString(undefined, { weekday: 'narrow' });
 
@@ -58,6 +62,9 @@ export function Overview() {
   }, [lang]);
 
   const languages = useLanguages();
+  // Lemora U14: one chapter at a time under the summary; the chapter lives in the address (?view=).
+  const [params] = useSearchParams();
+  const view: View = (VIEWS as readonly string[]).includes(params.get('view') ?? '') ? (params.get('view') as View) : 'time';
   const [drawer, setDrawer] = useState<'time' | 'moment' | 'review' | 'report' | null>(null);
   const close = () => {
     setDrawer(null);
@@ -109,7 +116,7 @@ export function Overview() {
           <UiText source={'Add a moment'} />
         </Button>
       </div>
-      {!data ? <div className="h-96 animate-pulse rounded-3xl bg-surface" /> : <Dashboard data={data} lang={lang} evidence={evidence} conversationsCount={conversationsCount} />}
+      {!data ? <div className="h-96 animate-pulse rounded-3xl bg-surface" /> : <Dashboard data={data} lang={lang} evidence={evidence} conversationsCount={conversationsCount} view={view} />}
       <LogTimeDrawer open={drawer === 'time'} onClose={close} languages={languages ?? []} lang={lang} />
       <MomentDrawer open={drawer === 'moment'} onClose={close} languages={languages ?? []} lang={lang} />
       <ReflectionDrawer open={drawer === 'review'} onClose={close} lang={lang} />
@@ -144,7 +151,7 @@ function LevelCard({ known, said }: { known: number; said: string }) {
   );
 }
 
-function Dashboard({ data, lang, evidence, conversationsCount }: { data: OverviewData; lang: string; evidence: EvidenceRow[]; conversationsCount: number }) {
+function Dashboard({ data, lang, evidence, conversationsCount, view }: { data: OverviewData; lang: string; evidence: EvidenceRow[]; conversationsCount: number; view: View }) {
   const translateUi = useUi();
   const { language } = useApp();
   const { vocabulary: v, reading: r, listening: l, flashcards: f, writing: w, habit: h } = data;
@@ -177,7 +184,7 @@ function Dashboard({ data, lang, evidence, conversationsCount }: { data: Overvie
           { label: 'Streak', value: translateUi(h.current === 1 ? '{0} day' : '{0} days', [h.current]), hint: translateUi('Longest: {0}', [h.longest]) },
           { label: 'This week', value: `${h.weekMet.filter(Boolean).length} / 7`, hint: 'goal days' },
         ].map((s) => (
-          <div key={s.label} className="rounded-2xl bg-surface px-4 py-3.5">
+          <div key={s.label} className="border-l border-line/70 pl-4 first:border-l-0 first:pl-0">
             <Stat value={s.value} label={s.label} hint={s.hint} />
           </div>
         ))}
@@ -186,8 +193,21 @@ function Dashboard({ data, lang, evidence, conversationsCount }: { data: Overvie
       {/* Where you are */}
       <LevelCard known={v.known} said={language.level} />
 
+      <RoomTabs
+        label={translateUi('Ratio')}
+        active={view}
+        tabs={[
+          { id: 'time', label: 'Time and habit', to: '/ratio' },
+          { id: 'words', label: 'Words', to: '/ratio?view=words' },
+          { id: 'reading', label: 'Reading', to: '/ratio?view=reading' },
+          { id: 'writing', label: 'Writing', to: '/ratio?view=writing' },
+          { id: 'milestones', label: 'Milestones', to: '/ratio?view=milestones' },
+          { id: 'deeper', label: 'Deeper', to: '/ratio?view=deeper' },
+        ]}
+      />
+
       {/* Time & habit */}
-      <Panel title={translateUi('Time and habit')} icon={Clock}>
+      {view === 'time' && <Panel title={translateUi('Time and habit')} icon={Clock}>
         <Heatmap values={heat} format={(m) => `${hours(m)} studied`} />
         <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_260px]">
           <div>
@@ -224,11 +244,11 @@ function Dashboard({ data, lang, evidence, conversationsCount }: { data: Overvie
             </div>
           </div>
         </div>
-      </Panel>
+      </Panel>}
 
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid gap-x-12 gap-y-8 lg:grid-cols-2">
         {/* Vocabulary */}
-        <Panel title={translateUi('Vocabulary')} icon={Sprout}>
+        {view === 'words' && <Panel title={translateUi('Vocabulary')} icon={Sprout}>
           <dl className="mb-5 grid grid-cols-3 gap-3">
             <Stat value={v.known.toLocaleString()} label={translateUi('Known')} />
             <Stat value={v.learning.toLocaleString()} label={translateUi('Learning')} />
@@ -261,10 +281,10 @@ function Dashboard({ data, lang, evidence, conversationsCount }: { data: Overvie
             <p className="mb-3 text-[13px] font-semibold text-ink-soft"><UiText source={'New words a week'} /></p>
             <BarChart bars={v.newPerWeek.map((x) => ({ label: shortDate(new Date(`${x.week}T12:00:00`).getTime()), values: [x.words], current: x.current }))} colors={['var(--sage)']} names={[translateUi('New words')]} height={110} labelEvery={3} />
           </div>
-        </Panel>
+        </Panel>}
 
         {/* Reading */}
-        <Panel title={translateUi('Reading')} icon={BookOpen}>
+        {view === 'reading' && <Panel title={translateUi('Reading')} icon={BookOpen}>
           <dl className="mb-5 grid grid-cols-3 gap-3">
             <Stat value={hours(r.minutes)} label={translateUi('Read')} />
             <Stat value={compact(r.words)} label={translateUi('Words')} />
@@ -292,10 +312,10 @@ function Dashboard({ data, lang, evidence, conversationsCount }: { data: Overvie
               ))}
             </ul>
           )}
-        </Panel>
+        </Panel>}
 
         {/* Flashcards */}
-        <Panel title={translateUi('Flashcards')} icon={Layers}>
+        {view === 'words' && <Panel title={translateUi('Flashcards')} icon={Layers}>
           <dl className="mb-5 grid grid-cols-3 gap-3">
             <Stat value={f.retention30 === null ? '—' : pct(f.retention30)} label={translateUi('Recall 30 d')} />
             <Stat value={f.retention90 === null ? '—' : pct(f.retention90)} label={translateUi('Recall 90 d')} />
@@ -344,11 +364,11 @@ function Dashboard({ data, lang, evidence, conversationsCount }: { data: Overvie
               </ul>
             </>
           )}
-        </Panel>
+        </Panel>}
 
-        <div className="space-y-5">
+        <div className="space-y-8">
           {/* Listening */}
-          {(shows('sonus') || shows('cantus') || shows('visio')) && <Panel title={translateUi('Listening, music and watching')} icon={Headphones}>
+          {view === 'reading' && (shows('sonus') || shows('cantus') || shows('visio')) && <Panel title={translateUi('Listening, music and watching')} icon={Headphones}>
             <dl className="grid grid-cols-2 gap-4 sm:grid-cols-3">
               <Stat value={hours(l.minutes)} label={translateUi('Listened')} />
               <Stat value={l.finished} label={translateUi('Finished')} />
@@ -375,7 +395,7 @@ function Dashboard({ data, lang, evidence, conversationsCount }: { data: Overvie
             )}
           </Panel>}
 
-          {data.typing && shows('typing') && (
+          {view === 'writing' && data.typing && shows('typing') && (
             <Panel
               title={translateUi('Typing')}
               icon={Keyboard}
@@ -393,7 +413,7 @@ function Dashboard({ data, lang, evidence, conversationsCount }: { data: Overvie
           )}
 
           {/* Writing */}
-          <Panel
+          {view === 'writing' && <Panel
             title={translateUi('Writing')}
             icon={Feather}
             action={
@@ -418,16 +438,16 @@ function Dashboard({ data, lang, evidence, conversationsCount }: { data: Overvie
                 </ul>
               </>
             )}
-          </Panel>
+          </Panel>}
         </div>
       </div>
 
-      {shows('grammatica') && <GrammarPanel lang={lang} />}
-      <WeakSpotsPanel lang={lang} />
-      <SkillBalancePanel lang={lang} />
-      <ErrorLogPanel lang={lang} />
+      {view === 'deeper' && shows('grammatica') && <GrammarPanel lang={lang} />}
+      {view === 'deeper' && <WeakSpotsPanel lang={lang} />}
+      {view === 'deeper' && <SkillBalancePanel lang={lang} />}
+      {view === 'deeper' && <ErrorLogPanel lang={lang} />}
 
-      <MilestoneStamps
+      {view === 'milestones' && <MilestoneStamps
         knownWords={v.known}
         finishedBooks={r.finished}
         conversations={conversationsCount}
@@ -435,11 +455,11 @@ function Dashboard({ data, lang, evidence, conversationsCount }: { data: Overvie
         songsSung={l.songs}
         streakDays={h.current}
         totalHours={totalMinutes / 60}
-      />
+      />}
 
-      <RealLifeGoalsPanel lang={lang} />
+      {view === 'milestones' && <RealLifeGoalsPanel lang={lang} />}
 
-      <AdvancedAnalyticsPanel
+      {view === 'deeper' && <AdvancedAnalyticsPanel
         evidence={evidence}
         targetLevel={language.level as CefrLevel}
         knownWords={v.known}
@@ -451,7 +471,7 @@ function Dashboard({ data, lang, evidence, conversationsCount }: { data: Overvie
           writing: h.totals.write,
           vocabulary: h.totals.review,
         }}
-      />
+      />}
     </div>
   );
 }
