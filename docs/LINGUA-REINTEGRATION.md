@@ -146,3 +146,11 @@ can go to Lingua (for example the 2-up tool cards) but as new Lingua work, not c
 - Ratio's `Overview.tsx`, `common.tsx`, `MonthlyReportModal.tsx` and Home's view files are redesigned here; expect
   conflicts with Lingua's own changes to them and keep the data fixes (`overview.month`, `earnedStamps`) either way.
 
+## Lemora's cleanup (2.6, 2026-11-04)
+
+Lemora deleted 155 files (about 27,000 lines) that nothing reachable from `src/main.tsx` imports: the screens, stores and
+tests of Lingua rooms it doesn't have (Sonus, Cantus, Visio, the Cursus course screens, Mentis, Colloquium…). The
+data-building scripts under `scripts/` still import some `src` files, so those stayed. When moving a Lemora change back,
+a Lingua file Lemora deleted shows as *modified/deleted* in a cherry-pick: keep Lingua's. The files are listed in
+commit `c6e09d1`.
+

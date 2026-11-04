@@ -1,3 +1,4 @@
+import { Art } from '@/design/drawings';
 import { Phrasebook } from '@/features/phrasebook/Phrasebook';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { lazy, Suspense, useMemo, useRef, useState } from 'react';
@@ -347,9 +348,7 @@ export default function ThesaurusPage() {
 function NoDecks({ onBrowse, onNew, onImport }: { onBrowse: () => void; onNew: () => void; onImport: (kind: 'apkg' | 'csv') => void }) {
   return (
     <Card className="flex flex-col items-center px-6 py-7 text-center sm:py-8">
-      <span className="mb-4 grid size-14 place-items-center rounded-2xl bg-sage-soft text-sage-text">
-        <Layers size={24} aria-hidden />
-      </span>
+      <Art name="empty" size={96} className="mb-3 text-ink-soft" />
       <p className="font-serif text-xl font-semibold"><UiText source={'No decks yet'} /></p>
       <p className="mt-1.5 max-w-sm text-[14.5px] leading-relaxed text-ink-soft"><UiText source={'Start with ready-made words, make a deck of your own, or bring one from Anki. Words you mark as Learning while reading arrive on their own.'} /></p>
       <div className="mt-6 flex flex-wrap justify-center gap-2">

@@ -25,7 +25,7 @@ two in one commit.
 | 2.3 | Mentis room → Diarium + Things to Try; tips filtered to Lemora's activities | ✅ | Opus 5.5, 2026-11-03 |
 | 2.4 | Alphabet on its own (Cursus tab alone); Ratio without Tabula or excluded panels | ✅ | Opus 5.5, 2026-11-03 |
 | 2.5 | Settings without Listening and Music; Lemora+ naming checked | ✅ | Opus 5.5, 2026-11-03 |
-| 2.6 | Delete what nothing reachable imports any more; bundle size before and after | ⬜ | |
+| 2.6 | Delete what nothing reachable imports any more; bundle size before and after | ✅ | Opus 5.5, 2026-11-04: 155 files, precache -22 KiB, player lazy |
 | 3.1 | Home: Lingua's right-rail Home made for Lemora by default (circle tools, Time today open on the page, Tools on the greeting's line); the desk layout as a choice in Settings. Lemora's own, **redesigned** (greeting, tools 2-up with per-tool progress, overall time, continue reading, recent, next actions); fixed sidebar with the tools always visible | ✅ | Opus 5.5, 2026-11-03 |
 | 3.2 | Showcase → Lingua-Launch (rewritten in plain HTML and JS, checked there), then out of Lemora's onboarding | ✅ | Opus 5.5, 2026-11-04 (live demo now in Lingua-Launch, `d407991`) |
 | 3.3 | Onboarding map: frame each language from country geometry; multi-region languages get a primary focus plus alternatives | ✅ | Opus 5.5, 2026-11-04 |
@@ -45,7 +45,7 @@ two in one commit.
 | 3.17 | Word decks: a better layout and design (Explora › Word decks, the starter library) | ✅ | Opus 5.5, 2026-11-03 |
 | 3.18 | Bibliotheca: a better layout | ✅ | Opus 5.5, 2026-11-04 (Phase U) |
 | 3.19 | Thesaurus's Discover moves to Explora entirely; a Discover icon at Thesaurus's top right | ✅ | Opus 5.5, 2026-11-03 |
-| 3.20 | Hand-drawn touches where they fit, still clean (src/design/drawings.tsx: the handbook's icons and empty-page art) | ◐ Home, Things to try, Explora's hero, word decks | |
+| 3.20 | Hand-drawn touches where they fit, still clean (src/design/drawings.tsx: the handbook's icons and empty-page art) | ✅ | Opus 5.5, 2026-11-04 |
 | 4.1 | Functional audit of every page (imports, files, lookups, saving, flashcards, Ludus, Diarium, language switch, backup and restore, offline, errors) | ⬜ | |
 | 4.2 | UX pass: spacing, type, focus, empty, loading and error states | ⬜ | |
 | 4.3 | Performance: bundle, lazy routes, rerenders, reader | ⬜ | |

@@ -28,7 +28,7 @@ import { Artwork } from '@/features/sonus/library/Artwork';
 import { AddVideoMenu } from '@/features/visio/library/AddVideoMenu';
 import { VideoCard } from '@/features/visio/library/VideoCard';
 import { AddLibraryMenu } from './AddLibraryMenu';
-import { Hand } from '@/design/drawings';
+import { Art, Hand } from '@/design/drawings';
 import { ContinueShelf } from './ContinueShelf';
 import type { ContinueItem } from './types';
 import { attachEpub } from '@/services/import/importers';
@@ -486,7 +486,7 @@ function ToolHeader({ title, room, to, count, action }: { title: string; room: s
 }
 
 function EmptyToolShelf({
-  icon: Icon,
+  icon: _icon,
   title,
   detail,
   to,
@@ -499,10 +499,10 @@ function EmptyToolShelf({
   actionLabel: string;
 }) {
   return (
-    <div className="flex flex-col items-start justify-between gap-4 rounded-2xl border border-line/70 bg-surface/60 p-5 sm:flex-row sm:items-center">
+    <div className="flex flex-col items-start justify-between gap-4 rounded-[22px] border border-dashed border-line-strong/70 p-5 sm:flex-row sm:items-center">
       <div className="flex items-start gap-3.5">
-        <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-sunken text-ink-soft">
-          <Icon size={19} aria-hidden />
+        <span className="grid size-14 shrink-0 place-items-center text-ink-soft" aria-hidden>
+          <Art name="empty" size={56} />
         </span>
         <div>
           <p className="font-serif text-[16.5px] font-semibold">{title}</p>

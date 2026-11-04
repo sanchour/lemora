@@ -1,9 +1,10 @@
+import { Art } from '@/design/drawings';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowRight, BookOpenText, BookUp, ClipboardPaste, Compass, LayoutGrid, Library, List, Newspaper, PanelsTopLeft, Plus, Search, SearchX, Sparkles } from 'lucide-react';
+import { ArrowRight, BookUp, ClipboardPaste, Compass, LayoutGrid, Library, List, Newspaper, PanelsTopLeft, Plus, Search, SearchX, Sparkles } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { movedPath } from '@/app/redirects';
 import { useFullMotion } from '@/app/motion';
@@ -226,9 +227,7 @@ function AddCodexMenu({ triggerLabel }: { triggerLabel?: ReactNode }) {
 function EmptyLibrary({ lang, busy, onSample }: { lang: string; busy: boolean; onSample: () => void }) {
   return (
     <Card className="flex flex-col items-center px-6 py-8 text-center sm:py-10">
-      <div className="mb-5 grid size-16 place-items-center rounded-2xl bg-sage-soft text-sage-text">
-        <BookOpenText size={28} aria-hidden />
-      </div>
+      <Art name="welcome" size={110} className="mb-4 text-ink-soft" />
       <h2 className="font-serif text-2xl font-semibold"><UiText source={'Your shelves are waiting'} /></h2>
       <p className="mt-2 max-w-sm text-[15px] leading-relaxed text-ink-soft"><UiText source={'Add a book, a text file or something you pasted. Or start with a short page, written for you.'} /></p>
       <div className="mt-6 flex flex-wrap justify-center gap-2">
