@@ -8,13 +8,14 @@ import { TemplateForm } from './Template';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { Plus, Search } from 'lucide-react';
+import { Download, FileSpreadsheet, Plus, Search } from 'lucide-react';
+import { Art, Hand } from '@/design/drawings';
 import { filterLibrary, PHRASE_KINDS, tagsOf } from '@/core/notebook/library';
 import type { SavedPhrase } from '@/core/notebook/library';
 import { db } from '@/data/db';
 import { newPhrase, removeLibrary, saveLibrary, useLibrary } from '@/data/notebook';
 import { phrasebookToCsv, phrasebookToMarkdown, saveFile, savedPhrasesForExport } from '@/services/export';
-import { Button, Drawer } from '@/design/primitives';
+import { Button, Drawer, IconButton } from '@/design/primitives';
 import { SpeakButton } from '@/features/speech/SpeakButton';
 import { Field, inputClass } from '@/features/notebook/fields';
 import { toast } from '@/state/ui';
@@ -42,16 +43,13 @@ export function Phrasebook({ lang }: { lang: string }) {
           <h2 className="font-serif text-xl font-semibold"><UiText source="Your phrasebook" /></h2>
           <span className="text-sm font-bold text-ink-faint tabular-nums">{list.length}</span>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <Button size="sm" variant="secondary" disabled={!phrasebookSpecs(list).length} onClick={() => setPractice(list)}>
-            <UiText source="Practise recall" />
-          </Button>
-          <Button size="sm" variant="ghost" disabled={!list.length} onClick={() => exportList(false)}>
-            <UiText source="Export Markdown" />
-          </Button>
-          <Button size="sm" variant="ghost" disabled={!list.length} onClick={() => exportList(true)}>
-            <UiText source="Export CSV" />
-          </Button>
+        {/* Lemora U11: quiet icons for the less used actions; the drawn circle for practising. */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <button type="button" disabled={!phrasebookSpecs(list).length} onClick={() => setPractice(list)} aria-label={t('Practise recall')} title={t('Practise recall')} className="grid size-10 place-items-center rounded-full border border-line transition-[transform,border-color] hover:-rotate-6 hover:border-line-strong disabled:opacity-40">
+            <Hand name="repeat" size={22} />
+          </button>
+          <IconButton icon={Download} label={t('Export Markdown')} disabled={!list.length} onClick={() => exportList(false)} />
+          <IconButton icon={FileSpreadsheet} label={t('Export CSV')} disabled={!list.length} onClick={() => exportList(true)} />
           <Button size="sm" icon={Plus} onClick={() => edit(newPhrase(lang))}>
             <UiText source="New phrase" />
           </Button>
@@ -93,7 +91,8 @@ export function Phrasebook({ lang }: { lang: string }) {
       {data?.error && <p role="alert">{data.error}</p>}
 
       {!phrase ? (
-        <div className="rounded-3xl border border-dashed border-line/80 bg-surface/50 p-10 text-center text-ink-soft">
+        <div className="p-10 text-center text-ink-soft">
+          <Art name="empty" size={110} className="mx-auto mb-4 text-ink-soft" />
           <p className="font-serif text-lg font-semibold text-ink"><UiText source="Save your first phrase, or change the filters." /></p>
           <p className="mx-auto mt-1 max-w-md text-sm text-ink-soft">
             <UiText source="Phrases, replies and templates you choose. Text and attached audio stay on this device and work offline." />
@@ -101,7 +100,7 @@ export function Phrasebook({ lang }: { lang: string }) {
         </div>
       ) : (
         <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[320px_minmax(0,1fr)]">
-          <ul aria-label={t('Saved phrases')} className="max-h-[68vh] space-y-2 overflow-y-auto pr-1 [scrollbar-width:thin]">
+          <ul aria-label={t('Saved phrases')} className="max-h-[68vh] divide-y divide-line/70 overflow-y-auto border-y border-line/70 pr-1 [scrollbar-width:thin]">
             {list.map((p) => (
               <li key={p.id}>
                 <button
@@ -109,10 +108,8 @@ export function Phrasebook({ lang }: { lang: string }) {
                   aria-pressed={phrase.id === p.id}
                   onClick={() => select(p.id)}
                   className={
-                    'w-full rounded-2xl border p-3.5 text-left transition-colors ' +
-                    (phrase.id === p.id
-                      ? 'border-accent/60 bg-accent-soft/40 shadow-2xs'
-                      : 'border-line/70 bg-surface hover:border-line-strong hover:bg-raised/60')
+                    'relative w-full py-3 pr-2 pl-4 text-left transition-colors ' +
+                    (phrase.id === p.id ? 'text-ink before:absolute before:inset-y-3 before:left-0 before:w-[3px] before:rounded-full before:bg-accent' : 'text-ink-soft hover:text-ink')
                   }
                 >
                   <span lang={lang} className="block font-serif text-[17px] leading-snug font-semibold text-ink">
@@ -124,7 +121,7 @@ export function Phrasebook({ lang }: { lang: string }) {
             ))}
           </ul>
 
-          <article className="min-w-0 rounded-3xl border border-line/70 bg-surface p-6 shadow-elev-1 sm:p-8">
+          <article className="min-w-0 lg:border-l lg:border-line/70 lg:pl-10">
             <p className="text-[11.5px] font-bold tracking-[0.12em] text-ink-faint uppercase">
               {[t(phrase.kind), phrase.folder, phrase.situation, phrase.topic, ...phrase.tags].filter(Boolean).join(' · ')}
             </p>
