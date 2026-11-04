@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.25** · 2026-11-04 · My decks: new layout also with no decks
 - **0.1.0-alpha.24** · 2026-11-04 · Phases 4 to 6 finished: completion report, reintegration check, i18n merge helper
 - **0.1.0-alpha.23** · 2026-11-04 · Phase 4: functional pass, privacy audit, licences; catalogues lazy
 - **0.1.0-alpha.22** · 2026-11-04 · Phases 2 and 3 finished: cleanup (155 files), drawn empty states
