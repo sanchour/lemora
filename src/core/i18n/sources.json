@@ -17271,5 +17271,8 @@
   ],
   "Deeper": [
     "src/features/ratio/Overview.tsx"
+  ],
+  "Where it is spoken": [
+    "src/app/onboarding/LanguageMap.tsx"
   ]
 }

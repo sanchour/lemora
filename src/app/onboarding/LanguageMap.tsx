@@ -10,7 +10,8 @@ import { getLanguage } from '@/core/lang/languages';
 import { languagesIn, placesOf, STATUS_NAME } from '@/data/territories';
 import type { PlaceStatus } from '@/data/territories';
 import { LanguageFlag } from '@/design/flags';
-import { between, boxAround, clampCamera, decodeCountries, fitBox, latToY, lonToX, maxZoom, minZoom } from '@/features/sonus/radio/sky';
+import { framesOf } from './framing';
+import { between, clampCamera, decodeCountries, fitBox, latToY, lonToX, maxZoom, minZoom } from '@/features/sonus/radio/sky';
 import type { Camera } from '@/features/sonus/radio/sky';
 import { WORLD_MAP } from '@/features/sonus/radio/worldMap';
 
@@ -244,6 +245,10 @@ export function LanguageMap({ highlight, selected, place, onPlace, inset = 0 }: 
     return () => observer.disconnect();
   }, []);
 
+  // Lemora 3.3: the regions of the language chosen (the first is the main view), and which one is shown.
+  const frames = useMemo(() => (selected ? framesOf(selected, BY_CODE) : []), [selected]);
+  const [region, setRegion] = useState(0);
+  useEffect(() => setRegion(0), [selected]);
   // What the map last centred on: the country clicked, or the language chosen (whichever came last).
   const focus = useRef<'place' | 'language'>('language');
   useEffect(() => {
@@ -268,14 +273,14 @@ export function LanguageMap({ highlight, selected, place, onPlace, inset = 0 }: 
       const [hw, hh] = [Math.max(SMALLEST, x1 - x0) / 2, Math.max(SMALLEST, y1 - y0) / 2];
       return fit({ x0: cx - hw, y0: cy - hh, x1: cx + hw, y1: cy + hh }, 0.4);
     }
-    const where = selected ? placesOf(selected).filter((p) => (p.status === 'official' || p.status === 'regional' || p.status === 'historical') && BY_CODE.has(p.country)) : [];
-    if (!where.length) return flyTo(home(w, h));
-    const box = boxAround(
-      where.slice(0, 12).map((p) => BY_CODE.get(p.country)!.label),
-      14,
-    );
-    if (box) fit(box, 0.3);
-  }, [selected, place, size.w, size.h, inset]);
+    // Lemora 3.3: the main region of the language, or the alternative chosen from the chips (framing.ts).
+    const frame = frames[Math.min(region, frames.length - 1)];
+    if (!frame) return flyTo(home(w, h));
+    const { x0, y0, x1, y1 } = frame.box;
+    const [cx, cy] = [(x0 + x1) / 2, (y0 + y1) / 2];
+    const [hw, hh] = [Math.max(SMALLEST * 3, x1 - x0) / 2, Math.max(SMALLEST * 3, y1 - y0) / 2];
+    fit({ x0: cx - hw, y0: cy - hh, x1: cx + hw, y1: cy + hh }, 0.3);
+  }, [frames, region, place, size.w, size.h, inset]);
 
   // Gestures: drag to move, two fingers or ctrl and the wheel to zoom.
   const pointers = useRef(new Map<number, { x: number; y: number }>());
@@ -432,6 +437,25 @@ export function LanguageMap({ highlight, selected, place, onPlace, inset = 0 }: 
               </li>
             ))}
           </ul>
+        </div>
+      )}
+      {frames.length > 1 && (
+        <div role="group" aria-label={translateUi('Where it is spoken')} className="absolute right-3 bottom-3 flex max-w-[60%] flex-wrap justify-end gap-1.5">
+          {frames.map((f, i) => (
+            <button
+              key={f.lead}
+              type="button"
+              aria-pressed={region === i}
+              onClick={() => {
+                focus.current = 'language';
+                setRegion(i);
+              }}
+              className={`rounded-full border px-3 py-1 text-[12px] font-semibold backdrop-blur transition-colors ${region === i ? 'border-accent bg-accent-soft text-accent-text' : 'border-line bg-raised/95 text-ink-soft hover:text-ink'}`}
+            >
+              {placeName(f.lead)}
+              {f.countries.length > 1 && <span className="ml-1 text-ink-faint">+{f.countries.length - 1}</span>}
+            </button>
+          ))}
         </div>
       )}
       <div className="absolute bottom-3 left-3 flex flex-col gap-1.5">
