@@ -58,13 +58,15 @@ describe('setWordState', () => {
 });
 
 describe('seeding and bulk known', () => {
-  it('marks the top-N frequency forms Known once, without touching marked words', async () => {
+  it('marks the top-N lemmas and forms Known once, without touching marked words', async () => {
     const db = freshDb();
     await completeOnboarding({ target: 'es', native: 'en', level: 'A1', seedKnown: true, theme: 'paper' }, db);
     await db.frequency.bulkPut(['de', 'que', 'no', 'casa'].map((norm, i) => ({ id: `es:${norm}`, lang: 'es', norm, rank: i + 1 })));
     await db.words.put({ id: 'es:que', lang: 'es', norm: 'que', state: 2, stateChangedAt: 1, createdAt: 1, updatedAt: 1 });
+    // The starter decks' lemmas (Lemora 3.5): "ser" is a lemma, not a frequent form here.
+    await db.starterLists.put({ lang: 'es', version: 1, lemmaFreq: ['de', 'que', 'ser'], themes: {} });
 
-    expect(await applyKnownSeed('es', db)).toBe(3); // A1 seeds the top 100: de, no, casa (que is Learning)
+    expect(await applyKnownSeed('es', db)).toBe(4); // A1 seeds the top 100: de, ser, no, casa (que is Learning)
     expect((await db.words.get('es:que'))?.state).toBe(2);
     expect(await applyKnownSeed('es', db)).toBe(0); // only once
     expect(await markKnownBulk('es', ['casa', 'perro'], db)).toBe(1);

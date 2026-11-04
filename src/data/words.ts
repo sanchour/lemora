@@ -171,9 +171,14 @@ export async function setWordGloss(lang: string, norm: string, gloss: string, da
 export async function applyKnownSeed(lang: string, database: LinguaDB = db): Promise<number> {
   const profile = await database.languages.get(lang);
   if (!profile || !profile.seededKnownTopN || profile.seedAppliedAt) return 0;
-  const top = await database.frequency.where('[lang+rank]').between([lang, 1], [lang, profile.seededKnownTopN], true, true).toArray();
-  if (!top.length) return 0;
-  const added = await markKnownBulk(lang, top.map((r) => r.norm), database);
+  // The same list Thesaurus's frequency decks are made from (Lemora 3.5): its top N lemmas are known, so "Top 100"
+  // shows them known and adding it skips them. The N most frequent forms come too, so the reader agrees. Both
+  // arrive with the language pack: until the list is there, nothing is marked and the seed waits.
+  const list = await database.starterLists.get(lang);
+  if (!list?.lemmaFreq.length) return 0;
+  const lemmas = list.lemmaFreq.slice(0, profile.seededKnownTopN);
+  const forms = (await database.frequency.where('[lang+rank]').between([lang, 1], [lang, profile.seededKnownTopN], true, true).toArray()).map((r) => r.norm);
+  const added = await markKnownBulk(lang, [...new Set([...lemmas, ...forms])], database);
   await database.languages.update(lang, { seedAppliedAt: Date.now(), updatedAt: Date.now() });
   return added;
 }
