@@ -16,14 +16,14 @@ import { getLanguage } from '@/core/lang/languages';
 import { packId } from '@/core/packs/format';
 import { db } from '@/data/db';
 import type { Word } from '@/data/types';
-import { Badge, Button, Card } from '@/design/primitives';
+import { Badge, Button, Card, Dialog, IconButton, Popover } from '@/design/primitives';
 import { toast } from '@/state/ui';
 
 /**
  * Toolbar in DictionaryView allowing the learner to add a custom headword entry (F1287)
  * or import a personal dictionary file in JSON, CSV, TSV, or Markdown format (F1482, F1288).
  */
-export function PersonalDictionaryToolbar({ lang, onOpenWord }: { lang: string; onOpenWord: (word: string) => void }) {
+export function PersonalDictionaryToolbar({ lang, onOpenWord, compact = false }: { lang: string; onOpenWord: (word: string) => void; compact?: boolean }) {
   const translateUi = useUi();
   const [adding, setAdding] = useState(false);
   const [word, setWord] = useState('');
@@ -69,6 +69,47 @@ export function PersonalDictionaryToolbar({ lang, onOpenWord }: { lang: string; 
       toast(e instanceof Error ? e.message : 'Could not import personal dictionary.', { tone: 'error' });
     }
   };
+
+  // Lemora U10: beside the search bar, just two icons; a click says what each one is and does it from there.
+  if (compact) {
+    return (
+      <div className="flex items-center gap-1">
+        <Popover label={translateUi('Custom entry')} placement="bottom-end" className="w-80 p-4" trigger={(props) => <IconButton {...props} icon={Plus} label={translateUi('Custom entry')} />}>
+          {(close) => (
+            <div>
+              <p className="font-serif text-[16px] font-semibold"><UiText source={'Custom entry'} /></p>
+              <p className="mt-1 text-[13px] leading-snug text-ink-soft"><UiText source={'Add a word or phrase of your own to the dictionary, with its meaning and an example.'} /></p>
+              <Button size="sm" className="mt-3" onClick={() => { close(); setAdding(true); }}><UiText source={'New entry'} /></Button>
+            </div>
+          )}
+        </Popover>
+        <Popover label={translateUi('Import personal dictionary')} placement="bottom-end" className="w-80 p-4" trigger={(props) => <IconButton {...props} icon={Upload} label={translateUi('Import personal dictionary')} />}>
+          {(close) => (
+            <div>
+              <p className="font-serif text-[16px] font-semibold"><UiText source={'Import personal dictionary'} /></p>
+              <p className="mt-1 text-[13px] leading-snug text-ink-soft"><UiText source={'A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.'} /></p>
+              <Button size="sm" className="mt-3" onClick={() => { close(); fileRef.current?.click(); }}><UiText source={'Choose a file'} /></Button>
+            </div>
+          )}
+        </Popover>
+        <input ref={fileRef} type="file" accept=".json,.csv,.tsv,.md,.txt" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) void handleFile(f); e.target.value = ''; }} />
+        {adding && (
+          <Dialog open onClose={() => setAdding(false)} title={translateUi('New custom dictionary entry')}>
+            <div className="space-y-3">
+              <input type="text" lang={lang} value={word} onChange={(e) => setWord(e.target.value)} placeholder={translateUi('Headword or phrase')} className="h-10 w-full rounded-xl border border-line bg-surface px-3 font-serif text-[15px] text-ink outline-none focus:border-ink" />
+              <input type="text" value={meaning} onChange={(e) => setMeaning(e.target.value)} placeholder={translateUi('Definition (separate multiple senses with ;)')} className="h-10 w-full rounded-xl border border-line bg-surface px-3 text-[14px] text-ink outline-none focus:border-ink" />
+              <input type="text" lang={lang} value={example} onChange={(e) => setExample(e.target.value)} placeholder={translateUi('Example sentence (optional)')} className="h-10 w-full rounded-xl border border-line bg-surface px-3 font-serif text-[14px] text-ink outline-none focus:border-ink" />
+              <input type="text" value={translation} onChange={(e) => setTranslation(e.target.value)} placeholder={translateUi('Example translation (optional)')} className="h-10 w-full rounded-xl border border-line bg-surface px-3 text-[14px] text-ink outline-none focus:border-ink" />
+              <div className="flex justify-end gap-2 pt-1">
+                <Button variant="ghost" size="sm" onClick={() => setAdding(false)}><UiText source={'Cancel'} /></Button>
+                <Button size="sm" onClick={() => void handleSave()} disabled={!word.trim() || !meaning.trim()}><UiText source={'Save entry'} /></Button>
+              </div>
+            </div>
+          </Dialog>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="mb-5">

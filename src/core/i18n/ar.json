@@ -8135,5 +8135,7 @@
   "{0} cards waiting": "{0} بطاقة بالانتظار",
   "Study now": "ادرس الآن",
   "reviewed today": "رُوجعت اليوم",
-  "known words": "كلمات معروفة"
+  "known words": "كلمات معروفة",
+  "Add a word or phrase of your own to the dictionary, with its meaning and an example.": "أضف إلى القاموس كلمة أو عبارة خاصة بك، مع معناها ومثال.",
+  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "قائمة بكلماتك من ملف JSON أو CSV أو TSV أو نصي؛ يُبحث فيها مع البقية."
 }

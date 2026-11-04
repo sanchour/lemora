@@ -8135,5 +8135,7 @@
   "{0} cards waiting": "{0} 张卡片待学",
   "Study now": "现在学习",
   "reviewed today": "今日已复习",
-  "known words": "已掌握的词"
+  "known words": "已掌握的词",
+  "Add a word or phrase of your own to the dictionary, with its meaning and an example.": "把你自己的词或短语加入词典，附上释义和例句。",
+  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "从 JSON、CSV、TSV 或文本文件导入你自己的词表；查词时会一并查到。"
 }

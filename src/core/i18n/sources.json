@@ -17223,5 +17223,11 @@
   ],
   "to review": [
     "src/features/thesaurus/library/DecksDesk.tsx"
+  ],
+  "Add a word or phrase of your own to the dictionary, with its meaning and an example.": [
+    "src/features/thesaurus/dictionary/DictionaryToolsPanel.tsx"
+  ],
+  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": [
+    "src/features/thesaurus/dictionary/DictionaryToolsPanel.tsx"
   ]
 }

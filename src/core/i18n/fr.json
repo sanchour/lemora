@@ -8135,5 +8135,7 @@
   "{0} cards waiting": "{0} cartes en attente",
   "Study now": "Étudier maintenant",
   "reviewed today": "revues aujourd’hui",
-  "known words": "mots connus"
+  "known words": "mots connus",
+  "Add a word or phrase of your own to the dictionary, with its meaning and an example.": "Ajoutez au dictionnaire un mot ou une expression à vous, avec son sens et un exemple.",
+  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "Une liste de vos mots depuis un fichier JSON, CSV, TSV ou texte ; ils sont cherchés avec les autres."
 }

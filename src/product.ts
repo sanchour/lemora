@@ -16,13 +16,15 @@ export type Feature =
   | 'sonus' | 'visio' | 'cantus'
   | 'mentis' | 'mundus' | 'culture' | 'sermo' | 'notebook' | 'diarium' | 'try'
   | 'tabula'
-  | 'desk';
+  | 'desk'
+  // Lemora U10: your words as Thesaurus's own tab, apart from the dictionary.
+  | 'words';
 
 /** The sidebar's rooms, in order (src/app/sections.ts draws them). */
 export const ROOMS: readonly Feature[] = ['home', 'explora', 'bibliotheca', 'codex', 'thesaurus', 'atlas', 'ludus', 'diarium', 'alphabet', 'ratio', 'ordo'];
 
 /** Lemora: reading, words, writing and a new script, each a room of its own, and Things to try inside Explora. In Lingua the list is the whole app. */
-const FEATURES: ReadonlySet<Feature> = new Set<Feature>([...ROOMS, 'try', 'desk']);
+const FEATURES: ReadonlySet<Feature> = new Set<Feature>([...ROOMS, 'try', 'desk', 'words']);
 
 /** Whether this build has a room or tab: shared code asks before it shows or links to one. */
 export const shows = (feature: Feature): boolean => FEATURES.has(feature);

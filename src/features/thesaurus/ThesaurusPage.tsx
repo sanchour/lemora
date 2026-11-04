@@ -4,7 +4,7 @@ import { lazy, Suspense, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Navigate, useNavigate, useSearchParams } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
-import { BookA, Compass, Layers, LayoutGrid, List, MessageSquareQuote, Plus, Search, SearchX, Sparkles, Waypoints } from 'lucide-react';
+import { BookA, Brain, Compass, Layers, LayoutGrid, List, MessageSquareQuote, Plus, Search, SearchX, Sparkles, Waypoints } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { shows } from '@/product';
 import { PageHeader } from '@/app/PageHeader';
@@ -39,9 +39,9 @@ import type { NewAction } from './library/NewMenu';
 import { TodayCard } from './library/TodayCard';
 import { DecksDesk } from './library/DecksDesk';
 import { useDeckImport } from './library/useDeckImport';
-import { DictionaryView } from './dictionary/DictionaryView';
+import { DictionaryView, WordsView } from './dictionary/DictionaryView';
 
-type Tab = 'decks' | 'dictionary' | 'phrases' | 'atlas';
+type Tab = 'decks' | 'dictionary' | 'words' | 'phrases' | 'atlas';
 const DISCOVER = '/explora?kind=words';
 // The Atlas draws on a canvas and loads its code only when its tab opens (6-29).
 const AtlasTab = lazy(() => import('./atlas/AtlasTab'));
@@ -131,13 +131,14 @@ export default function ThesaurusPage() {
   // The tab you pick wins; with nothing chosen, Thesaurus opens on My decks with the Lexicon desk.
   const picked = params.get('tab');
   // "memory" was the word memory's own tab before it joined the dictionary.
-  const tab: Tab = picked === 'decks' || picked === 'dictionary' || picked === 'phrases' || picked === 'atlas' ? picked : picked === 'memory' ? 'dictionary' : 'decks';
+  const tab: Tab = picked === 'decks' || picked === 'dictionary' || picked === 'phrases' || picked === 'atlas' || (picked === 'words' && shows('words')) ? picked : picked === 'memory' ? (shows('words') ? 'words' : 'dictionary') : 'decks';
   // Ready-made decks are found in Explora › Word decks, with the rest of what there is to discover.
   const browse = () => navigate(DISCOVER);
   // The room's tabs (5.1-3b), as Codex's and Mentis's: 1 2 3 open them.
   const tabs: Array<RoomTab<Tab>> = [
     { id: 'decks', label: 'My decks', to: '/thesaurus?tab=decks', icon: Layers },
     { id: 'dictionary', label: 'Dictionary', to: '/thesaurus?tab=dictionary', icon: BookA },
+    ...(shows('words') ? [{ id: 'words' as const, label: 'Words', to: '/thesaurus?tab=words', icon: Brain }] : []),
     { id: 'phrases', label: 'Phrases', to: '/thesaurus?tab=phrases', icon: MessageSquareQuote },
     ...(shows('atlas') ? [] : [{ id: 'atlas' as const, label: 'Atlas', to: '/thesaurus?tab=atlas', icon: Waypoints }]),
   ];
@@ -217,7 +218,11 @@ export default function ThesaurusPage() {
       )}
 
       <AnimatePresence mode="wait" initial={false}>
-        {tab === 'phrases' ? <Phrasebook key={lang} lang={lang} /> : tab === 'atlas' ? (
+        {tab === 'words' ? (
+          <motion.section key="words" aria-label={translateUi('Words')} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} transition={spring.snappy}>
+            <WordsView lang={lang} />
+          </motion.section>
+        ) : tab === 'phrases' ? <Phrasebook key={lang} lang={lang} /> : tab === 'atlas' ? (
           <Suspense key="atlas" fallback={null}>
             <AtlasTab key={lang} lang={lang} />
           </Suspense>
@@ -323,7 +328,7 @@ export default function ThesaurusPage() {
           </motion.div>
         ) : (
           <motion.section key="dictionary" aria-label={translateUi('Dictionary')} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} transition={spring.snappy}>
-            <DictionaryView lang={lang} />
+            <DictionaryView lang={lang} mode={shows('words') ? 'dictionary' : 'both'} />
           </motion.section>
         )}
       </AnimatePresence>

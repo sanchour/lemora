@@ -8135,5 +8135,7 @@
   "{0} cards waiting": "Ждут карточек: {0}",
   "Study now": "Учить сейчас",
   "reviewed today": "повторено сегодня",
-  "known words": "знакомых слов"
+  "known words": "знакомых слов",
+  "Add a word or phrase of your own to the dictionary, with its meaning and an example.": "Добавьте в словарь своё слово или выражение — со значением и примером.",
+  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "Список ваших слов из файла JSON, CSV, TSV или текста; они ищутся вместе с остальными."
 }

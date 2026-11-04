@@ -16,7 +16,7 @@ import type { RememberedRow } from './WordMemory';
  * Thesaurus › Dictionary: the full dictionary (core languages) and the word memory in one place.
  * Look any word up above; your own words are listed beside, and either opens on the right.
  */
-export function DictionaryView({ lang }: { lang: string }) {
+export function DictionaryView({ lang, mode = 'both' }: { lang: string; mode?: 'both' | 'dictionary' }) {
   const translateUi = useUi();
   const [params, setParams] = useSearchParams();
   const word = params.get('word') ?? undefined;
@@ -27,6 +27,22 @@ export function DictionaryView({ lang }: { lang: string }) {
   const name = getLanguage(lang)?.name ?? lang;
   const selected = word ? rows?.find((r) => r.lemma === word || r.key === word || r.forms.includes(word)) : undefined;
   const open = (row: RememberedRow) => setParams({ tab: 'dictionary', word: row.lemma ?? row.key });
+
+  // Lemora U10: the dictionary alone (your words have their own tab): the search with its two icons, then the word, full width.
+  if (mode === 'dictionary') {
+    return (
+      <div className="space-y-6">
+        <div className="flex flex-wrap items-center gap-3">
+          {full && <DictionarySearch lang={lang} size="lg" className="max-w-2xl flex-1" />}
+          <PersonalDictionaryToolbar compact lang={lang} onOpenWord={(w) => setParams({ tab: 'dictionary', word: w })} />
+          {ready && installed && <p className="ml-auto shrink-0 text-[12.5px] font-medium text-ink-faint tabular-nums"><UiText source={'{0} words · works offline'} values={[installed.words.toLocaleString()]} /></p>}
+        </div>
+        {full && installed?.state === 'none' && <InstallCard lang={lang} />}
+        {installed?.state === 'old' && <InstallCard lang={lang} update />}
+        <div className="min-w-0">{word ? <EntryView lang={lang} word={word} /> : <Welcome lang={lang} name={name} ready={ready} words={installed?.words ?? 0} recent={(rows ?? []).slice(0, 16)} />}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -113,3 +129,35 @@ function Welcome({ lang, name, ready, words, recent }: { lang: string; name: str
     </div>
   );
 }
+
+/** Lemora U10: your words, a tab of their own: every word you looked up or marked, and where you met it. */
+export function WordsView({ lang }: { lang: string }) {
+  const [params, setParams] = useSearchParams();
+  const word = params.get('word') ?? undefined;
+  const rows = useWordMemory(lang);
+  const selected = word ? rows?.find((r) => r.lemma === word || r.key === word || r.forms.includes(word)) : rows?.[0];
+  const open = (row: RememberedRow) => setParams({ tab: 'words', word: row.lemma ?? row.key });
+  if (rows && rows.length === 0) {
+    return (
+      <div className="mx-auto max-w-md py-16 text-center text-ink-soft">
+        <Brain size={24} aria-hidden className="mx-auto mb-3 text-sage-text" />
+        <p className="text-[14.5px] leading-relaxed"><UiText source={'Words you look up or mark while reading, listening or watching gather here, with the sentence and the place you met them.'} /></p>
+      </div>
+    );
+  }
+  return (
+    <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[360px_minmax(0,1fr)]">
+      <section aria-label={'Words'}>{rows && <MemoryList lang={lang} rows={rows} selected={selected?.key} onSelect={open} />}</section>
+      <div className="min-w-0 lg:sticky lg:top-6">
+        {selected && (selected.lemma || hasFullDictionary(lang) ? <EntryView lang={lang} word={selected.lemma ?? selected.key} /> : (
+          <div>
+            <p lang={lang} className="font-serif text-[36px] leading-tight font-semibold">{selected.surface}</p>
+            {selected.gloss && <p className="mt-1 mb-6 text-[16px] text-ink-soft">{selected.gloss}</p>}
+            <WordPlaces lang={lang} sightings={selected.sightings} forms={selected.forms} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
