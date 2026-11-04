@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.16** · 2026-11-04 · U12 Diarium's two tabs and centred question; U13 Things to try fitted, no sideways swipe
 - **0.1.0-alpha.15** · 2026-11-04 · U9-U11: Thesaurus's My decks, Dictionary and Words, Phrases redrawn
 - **0.1.0-alpha.14** · 2026-11-04 · U8: a book's words as a deck before reading; known words left out of text decks again
 - **0.1.0-alpha.13** · 2026-11-04 · U6 Codex's continue reading in line and labelled; U7 Atlas full screen
