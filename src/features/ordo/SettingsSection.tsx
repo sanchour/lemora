@@ -23,7 +23,7 @@ export function SettingsSection({
   const alone = useContext(SectionAlone);
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-24">
-      <Card className="p-5 md:p-6">
+      <Card className="rounded-none border-0 border-t border-line/70 bg-transparent px-0 pt-6 pb-2 shadow-none md:px-0">
         {alone ? (
           <header className="mb-4">
             <h2 id={`${id}-title`} className="sr-only">
