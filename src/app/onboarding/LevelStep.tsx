@@ -1,9 +1,10 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
-import { AnimatePresence, motion } from 'motion/react';
-import { useRef, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react';
 import { getLanguage } from '@/core/lang/languages';
 import { LEVELS } from '@/core/lang/levels';
+import { levelExample } from '@/core/lang/levelExamples';
 import type { Level } from '@/core/lang/levels';
 import { Switch } from '@/design/primitives';
 import { cx } from '@/lib/cx';
@@ -51,89 +52,82 @@ const ICONS: Record<Level | 'C2', Part[]> = {
   ],
 };
 
-/** A sentence in the language you are learning at each level, with what it says (for the six core languages). */
-const EXAMPLES: Record<string, Record<Level, [string, string]>> = {
-  es: {
-    A0: ['Hola, ¿cómo estás?', 'Hello, how are you?'],
-    A1: ['Me llamo Ana y vivo en Madrid.', 'My name is Ana and I live in Madrid.'],
-    A2: ['Ayer fui al mercado y compré pan y frutas.', 'Yesterday I went to the market and bought bread and fruit.'],
-    B1: ['Aunque llovía, decidimos salir a caminar porque necesitábamos aire fresco.', 'Although it was raining, we decided to go for a walk because we needed fresh air.'],
-    B2: ['Si hubiera sabido lo difícil que sería, probablemente habría empezado mucho antes.', 'If I had known how hard it would be, I would probably have started much earlier.'],
-    C1: ['Lejos de resolver el problema, la medida no hizo sino agravar la desconfianza que pretendía disipar.', 'Far from solving the problem, the measure only deepened the mistrust it was meant to dispel.'],
-  },
-  fr: {
-    A0: ['Bonjour, comment ça va ?', 'Hello, how are you?'],
-    A1: ['Je m’appelle Ana et j’habite à Paris.', 'My name is Ana and I live in Paris.'],
-    A2: ['Hier, je suis allé au marché et j’ai acheté du pain et des fruits.', 'Yesterday I went to the market and bought bread and fruit.'],
-    B1: ['Même s’il pleuvait, nous avons décidé de marcher un peu parce que nous avions besoin d’air.', 'Even though it was raining, we decided to walk a little because we needed some air.'],
-    B2: ['Si j’avais su à quel point ce serait difficile, j’aurais probablement commencé bien plus tôt.', 'If I had known how hard it would be, I would probably have started much earlier.'],
-    C1: ['Loin de résoudre le problème, cette mesure n’a fait qu’aggraver la méfiance qu’elle prétendait dissiper.', 'Far from solving the problem, this measure only deepened the mistrust it claimed to dispel.'],
-  },
-  de: {
-    A0: ['Hallo, wie geht’s?', 'Hello, how are you?'],
-    A1: ['Ich heiße Ana und wohne in Berlin.', 'My name is Ana and I live in Berlin.'],
-    A2: ['Gestern war ich auf dem Markt und habe Brot und Obst gekauft.', 'Yesterday I was at the market and bought bread and fruit.'],
-    B1: ['Obwohl es regnete, gingen wir spazieren, weil wir frische Luft brauchten.', 'Although it was raining, we went for a walk because we needed fresh air.'],
-    B2: ['Hätte ich gewusst, wie schwierig es werden würde, hätte ich wohl viel früher angefangen.', 'Had I known how hard it would be, I would probably have started much earlier.'],
-    C1: ['Weit davon entfernt, das Problem zu lösen, verstärkte die Maßnahme nur das Misstrauen, das sie zerstreuen sollte.', 'Far from solving the problem, the measure only deepened the mistrust it was meant to dispel.'],
-  },
-  ru: {
-    A0: ['Привет, как дела?', 'Hi, how are you?'],
-    A1: ['Меня зовут Ана, я живу в Москве.', 'My name is Ana, I live in Moscow.'],
-    A2: ['Вчера я ходил на рынок и купил хлеб и фрукты.', 'Yesterday I went to the market and bought bread and fruit.'],
-    B1: ['Хотя шёл дождь, мы решили погулять, потому что нам нужен был свежий воздух.', 'Although it was raining, we decided to go for a walk because we needed fresh air.'],
-    B2: ['Если бы я знал, как это трудно, я бы, наверное, начал гораздо раньше.', 'If I had known how hard it was, I would probably have started much earlier.'],
-    C1: ['Эта мера не только не решила проблему, но и усилила недоверие, которое должна была развеять.', 'This measure not only failed to solve the problem but deepened the mistrust it was meant to dispel.'],
-  },
-  ar: {
-    A0: ['مرحبا، كيف حالك؟', 'Hello, how are you?'],
-    A1: ['اسمي آنا وأسكن في القاهرة.', 'My name is Ana and I live in Cairo.'],
-    A2: ['ذهبت أمس إلى السوق واشتريت خبزًا وفاكهة.', 'Yesterday I went to the market and bought bread and fruit.'],
-    B1: ['رغم أن المطر كان ينهمر، قررنا أن نتمشى لأننا احتجنا إلى هواء نقي.', 'Although the rain was pouring, we decided to take a walk because we needed fresh air.'],
-    B2: ['لو كنت أعلم كم سيكون الأمر صعبًا، لربما بدأت قبل ذلك بكثير.', 'If I had known how hard it would be, I might have started much earlier.'],
-    C1: ['بدلًا من حلّ المشكلة، لم يزد القرار إلا تعميقًا لانعدام الثقة الذي كان يُراد تبديده.', 'Instead of solving the problem, the decision only deepened the mistrust it was meant to dispel.'],
-  },
-  zh: {
-    A0: ['你好，你好吗？', 'Hello, how are you?'],
-    A1: ['我叫安娜，我住在北京。', 'My name is Ana and I live in Beijing.'],
-    A2: ['昨天我去了市场，买了面包和水果。', 'Yesterday I went to the market and bought bread and fruit.'],
-    B1: ['虽然下着雨，我们还是决定出去走走，因为需要新鲜空气。', 'Although it was raining, we still decided to go out for a walk because we needed fresh air.'],
-    B2: ['如果早知道这么难，我大概会早点开始。', 'If I had known it was this hard, I would probably have started earlier.'],
-    C1: ['这项措施非但没有解决问题，反而加深了它本想消除的不信任。', 'Far from solving the problem, the measure deepened the very mistrust it set out to remove.'],
-  },
-};
-
-/** One word from each example sentence, with what it means: tap it to see it in the sentence. */
-const WORDS: Record<string, Record<Level, [string, string]>> = {
-  es: { A0: ['hola', 'hello'], A1: ['vivo', 'I live'], A2: ['compré', 'I bought'], B1: ['aunque', 'although'], B2: ['habría', 'would have'], C1: ['desconfianza', 'mistrust'] },
-  fr: { A0: ['bonjour', 'hello'], A1: ['habite', 'live'], A2: ['acheté', 'bought'], B1: ['pleuvait', 'was raining'], B2: ['probablement', 'probably'], C1: ['méfiance', 'mistrust'] },
-  de: { A0: ['hallo', 'hello'], A1: ['wohne', 'live'], A2: ['gekauft', 'bought'], B1: ['regnete', 'rained'], B2: ['schwierig', 'difficult'], C1: ['Misstrauen', 'mistrust'] },
-  ru: { A0: ['привет', 'hi'], A1: ['живу', 'I live'], A2: ['купил', 'bought'], B1: ['дождь', 'rain'], B2: ['трудно', 'hard'], C1: ['недоверие', 'mistrust'] },
-  ar: { A0: ['مرحبا', 'hello'], A1: ['أسكن', 'I live'], A2: ['اشتريت', 'I bought'], B1: ['المطر', 'the rain'], B2: ['صعبًا', 'hard'], C1: ['الثقة', 'trust'] },
-  zh: { A0: ['你好', 'hello'], A1: ['住', 'live'], A2: ['买', 'buy'], B1: ['决定', 'decide'], B2: ['难', 'hard'], C1: ['不信任', 'mistrust'] },
-};
-
-/** Under what a level is: first just one word, drawn like a button; tap it and it melts into a whole sentence. */
+/**
+ * The example sentence, a word at a time (Lemora 3.4): under what a level is, one phrase to tap to reveal it. Then every
+ * word answers: hover or focus shows its meaning, a click keeps it, dragging across several (or shift-click) gives the
+ * phrase, and holding on a word for half a second gives the whole sentence, as does its button. Meanings are local
+ * (core/lang/levelExamples), so none of it waits for a dictionary.
+ */
+const HOLD_MS = 500;
 function ExampleReveal({ lang, level }: { lang: string; level: Level }) {
   const translateUi = useUi();
+  const still = useReducedMotion();
   const [open, setOpen] = useState(false);
-  const sample = EXAMPLES[lang]?.[level];
-  const word = WORDS[lang]?.[level];
+  const [peek, setPeek] = useState<number | null>(null);
+  const [range, setRange] = useState<[number, number] | null>(null);
+  const [whole, setWhole] = useState(false);
+  const start = useRef<number | null>(null);
+  const held = useRef(false);
+  const dragged = useRef(false);
+  const timer = useRef(0);
+  const example = levelExample(lang, level);
   const rtl = getLanguage(lang)?.rtl;
-  if (!sample || !word) return null;
+  // Another level, another sentence: start again.
+  useEffect(() => {
+    setOpen(false);
+    setPeek(null);
+    setRange(null);
+    setWhole(false);
+  }, [lang, level]);
+  useEffect(() => () => window.clearTimeout(timer.current), []);
+  if (!example) return null;
+  const { units } = example;
+  const join = (a: number, b: number) => units.slice(a, b + 1).map((u) => u.gloss).join(' ');
+  const caption = whole ? example.en : range ? join(range[0], range[1]) : peek !== null ? units[peek].gloss : null;
+
+  const down = (i: number, e: PointerEvent<HTMLButtonElement>) => {
+    e.currentTarget.releasePointerCapture?.(e.pointerId);
+    start.current = i;
+    held.current = false;
+    dragged.current = false;
+    window.clearTimeout(timer.current);
+    if (e.shiftKey && range) return setRange([Math.min(range[0], i), Math.max(range[1], i)]);
+    setWhole(false);
+    timer.current = window.setTimeout(() => {
+      held.current = true;
+      setWhole(true);
+      setRange(null);
+    }, HOLD_MS);
+  };
+  const over = (i: number, e: PointerEvent<HTMLButtonElement>) => {
+    setPeek(i);
+    if (e.buttons !== 1 || start.current === null || start.current === i) return;
+    window.clearTimeout(timer.current);
+    dragged.current = true;
+    setRange([Math.min(start.current, i), Math.max(start.current, i)]);
+  };
+  const up = (i: number) => {
+    window.clearTimeout(timer.current);
+    const from = start.current;
+    start.current = null;
+    // A long press or a drag has already done its work; a plain click keeps the word, and clicking it again lets it go.
+    if (held.current || dragged.current || from !== i) return;
+    setRange(range && range[0] === i && range[1] === i ? null : [i, i]);
+  };
+
   return (
-    <div className="mx-auto mt-5 flex min-h-[84px] max-w-2xl items-start justify-center">
+    <div className="mx-auto mt-5 flex min-h-[112px] max-w-2xl flex-col items-center">
       <AnimatePresence mode="wait" initial={false}>
         {!open ? (
           <motion.button
             key="word"
             type="button"
             onClick={() => setOpen(true)}
-            initial={{ opacity: 0, y: 6 }}
+            initial={still ? false : { opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 1.08, filter: 'blur(6px)' }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                        whileTap={{ scale: 0.97 }}
+            exit={still ? { opacity: 0 } : { opacity: 0, scale: 1.08, filter: 'blur(6px)' }}
+            transition={{ duration: still ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}
+            whileTap={still ? undefined : { scale: 0.97 }}
             aria-label={translateUi('See example')}
             className="group flex cursor-pointer items-center gap-2.5 rounded-xl px-3 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
           >
@@ -145,9 +139,37 @@ function ExampleReveal({ lang, level }: { lang: string; level: Level }) {
             </span>
           </motion.button>
         ) : (
-          <motion.div key="sentence" initial={{ opacity: 0, y: 8, filter: 'blur(6px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} aria-live="polite">
-            <p lang={lang} dir={rtl ? 'rtl' : undefined} className="font-serif text-[21px] leading-snug text-accent-text">{sample[0]}</p>
-            <p className="mt-1 text-[13.5px] text-ink-faint">{sample[1]}</p>
+          <motion.div key="sentence" className="flex flex-col items-center" initial={still ? false : { opacity: 0, y: 8, filter: 'blur(6px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} transition={{ duration: still ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}>
+            <p lang={lang} dir={rtl ? 'rtl' : undefined} onPointerLeave={() => setPeek(null)} className="select-none font-serif text-[22px] leading-[1.7] text-ink">
+              {units.map((u, i) => {
+                const chosen = range !== null && i >= range[0] && i <= range[1];
+                return (
+                  <Fragment key={i}>
+                    {i > 0 && lang !== 'zh' && ' '}
+                    <button
+                      type="button"
+                      onPointerDown={(e) => down(i, e)}
+                      onPointerEnter={(e) => over(i, e)}
+                      onPointerUp={() => up(i)}
+                      onFocus={() => setPeek(i)}
+                      onBlur={() => setPeek(null)}
+                      onClick={(e) => e.detail === 0 && setRange(range?.[0] === i && range[1] === i ? null : [i, i])}
+                      aria-pressed={chosen}
+                      className={cx('touch-none rounded-md px-0.5 transition-colors duration-150 outline-none focus-visible:ring-2 focus-visible:ring-accent/40', chosen ? 'bg-accent-soft text-accent-text' : peek === i ? 'bg-sunken' : 'text-accent-text/90 hover:bg-sunken')}
+                    >
+                      {u.text}
+                    </button>
+                  </Fragment>
+                );
+              })}
+            </p>
+            {/* The translation of what is under the pointer, kept, or held; or what to do. */}
+            <p className="mt-2 min-h-[22px] text-center text-[14.5px] text-ink-soft" aria-live="polite">
+              {caption ?? <span className="text-ink-faint"><UiText source={'Hover a word. Drag across several. Hold for the whole sentence.'} /></span>}
+            </p>
+            <button type="button" onClick={() => { setWhole((w) => !w); setRange(null); }} aria-pressed={whole} className="mt-1 text-[12.5px] font-semibold text-ink-faint underline decoration-line-strong underline-offset-4 hover:text-ink">
+              <UiText source={whole ? 'Back to words' : 'Translate the sentence'} />
+            </button>
             <span className="sr-only">{translateUi('Example sentence')}</span>
           </motion.div>
         )}
@@ -196,6 +218,9 @@ const LINE = 'M0 10C60 6 110 14 170 9C230 5 280 13 340 9C400 5 450 13 510 9C550 
  */
 export function LevelStep({ lang, level, seedKnown, onLevel, onSeedKnown }: LevelStepProps) {
   const translateUi = useUi();
+  // Lemora 3.4: the title arrives first, then the slider, then what the level means; all at once with reduced motion.
+  const still = useReducedMotion();
+  const step = (delay: number) => (still ? {} : { initial: { opacity: 0, y: 14 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] as const } });
   const track = useRef<HTMLDivElement>(null);
   const last = LEVELS.length - 1;
   const index = LEVELS.findIndex((l) => l.id === level);
@@ -221,10 +246,12 @@ export function LevelStep({ lang, level, seedKnown, onLevel, onSeedKnown }: Leve
 
   return (
     <div>
-      <StepTitle center title={translateUi('So, how far along are you?')} body={translateUi('Slide to the level that sounds most like you. You can change it any time.')} />
+      <motion.div {...step(0)}>
+        <StepTitle center title={translateUi('So, how far along are you?')} body={translateUi('Slide to the level that sounds most like you. You can change it any time.')} />
+      </motion.div>
 
       <div className="mx-auto max-w-4xl">
-        <div className="px-20 pt-6">
+        <motion.div {...step(0.45)} className="px-20 pt-6">
           <div
             ref={track}
             role="slider"
@@ -288,20 +315,20 @@ export function LevelStep({ lang, level, seedKnown, onLevel, onSeedKnown }: Leve
               </span>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* What the level means, said once. */}
-        <div className="mt-20 flex min-h-[112px] flex-col items-center text-center">
+        <motion.div {...step(0.95)} className="mt-20 flex min-h-[112px] flex-col items-center text-center">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div key={level} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}>
               <p className="mx-auto max-w-2xl font-serif text-[23px] leading-snug font-semibold tracking-tight"><UiText source={MEANS[level].know} /></p>
               <ExampleReveal lang={lang} level={level} />
             </motion.div>
           </AnimatePresence>
-        </div>
+        </motion.div>
 
         {/* The switch: skip the common words you already know. */}
-        <div className={cx('mx-auto mt-5 flex w-fit items-center gap-4 transition-opacity duration-300', top === 0 && 'opacity-45')} title={translateUi('You can unmark any word while reading.')}>
+        <motion.div {...step(1.1)} className={cx('mx-auto mt-5 flex w-fit items-center gap-4 transition-opacity duration-300', top === 0 && 'opacity-45')} title={translateUi('You can unmark any word while reading.')}>
           <span className="text-right">
             <span className="block text-[14px] font-semibold">
               {top > 0 ? <UiText source={'Skip the {0} most common words'} values={[top.toLocaleString()]} /> : <UiText source={'Nothing to skip yet'} />}
@@ -309,7 +336,7 @@ export function LevelStep({ lang, level, seedKnown, onLevel, onSeedKnown }: Leve
             <span className="block text-[12px] text-ink-faint"><UiText source={'Only new words stay marked'} /></span>
           </span>
           <Switch checked={top > 0 && seedKnown} onChange={onSeedKnown} disabled={top === 0} label={translateUi('Mark the {0} most common words as known', [top.toLocaleString()])} />
-        </div>
+        </motion.div>
       </div>
     </div>
   );

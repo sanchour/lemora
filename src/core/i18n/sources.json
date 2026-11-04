@@ -17274,5 +17274,14 @@
   ],
   "Where it is spoken": [
     "src/app/onboarding/LanguageMap.tsx"
+  ],
+  "Hover a word. Drag across several. Hold for the whole sentence.": [
+    "src/app/onboarding/LevelStep.tsx"
+  ],
+  "Translate the sentence": [
+    "src/app/onboarding/LevelStep.tsx"
+  ],
+  "Back to words": [
+    "src/app/onboarding/LevelStep.tsx"
   ]
 }
