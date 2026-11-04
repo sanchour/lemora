@@ -15,6 +15,8 @@ describe('Streaming Explora logic', () => {
     { id: 'radio:r1', kind: 'radio', title: 'Cadena SER', level: 'B1', estimated: true },
     { id: 'music:m1', kind: 'music', title: 'Rosalía', level: 'B1' },
   ];
+  // Lemora U4: the hero also mixes in a comic and something to try.
+  const heroPool: ExploraItem[] = [...sampleItems, { id: 'comic:c1', kind: 'comic', title: 'Pepper&Carrot · 1', level: 'A2', estimated: true }, { id: 'tip:t1', kind: 'tip', title: 'Three headlines', level: 'A2' }];
 
   it('calculates counts per CEFR level correctly', () => {
     const counts: Record<PickLevel, number> = { A1: 0, A2: 0, B1: 0, B2: 0, C1: 0 };
@@ -84,28 +86,30 @@ describe('Streaming Explora logic', () => {
     expect(search('nonexistent')).toEqual([]);
   });
 
-  it('selects 5 diverse hero billboard items that change every 5 hours', () => {
+  it('selects 7 diverse hero billboard items that change every 5 hours', () => {
     // Slot 0 (e.g. t = 0)
-    const slot0Items = pickHeroItems(sampleItems, 'B1', 0);
-    expect(slot0Items).toHaveLength(5);
+    const slot0Items = pickHeroItems(heroPool, 'B1', 0);
+    expect(slot0Items).toHaveLength(7);
 
-    // Ensure all 5 items are distinct
+    // Ensure all 7 items are distinct
     const ids0 = new Set(slot0Items.map((i) => i.id));
-    expect(ids0.size).toBe(5);
+    expect(ids0.size).toBe(7);
+    expect(slot0Items[0].kind).toBe('books');
+    expect(slot0Items.some((i) => i.kind === 'comic') && slot0Items.some((i) => i.kind === 'tip')).toBe(true);
 
     // Still in slot 0 (e.g. 2 hours later, 2 * 3600 * 1000 ms)
-    const slot0Later = pickHeroItems(sampleItems, 'B1', 2 * 60 * 60 * 1000);
+    const slot0Later = pickHeroItems(heroPool, 'B1', 2 * 60 * 60 * 1000);
     expect(slot0Later.map((i) => i.id)).toEqual(slot0Items.map((i) => i.id));
 
     // Next slot: 5 hours later (HERO_SLOT_MS)
-    const slot1Items = pickHeroItems(sampleItems, 'B1', HERO_SLOT_MS);
-    expect(slot1Items).toHaveLength(5);
+    const slot1Items = pickHeroItems(heroPool, 'B1', HERO_SLOT_MS);
+    expect(slot1Items).toHaveLength(7);
     // The items should have changed
     expect(slot1Items.map((i) => i.id)).not.toEqual(slot0Items.map((i) => i.id));
 
     // Next slot: 10 hours later (2 * HERO_SLOT_MS)
-    const slot2Items = pickHeroItems(sampleItems, 'B1', 2 * HERO_SLOT_MS);
-    expect(slot2Items).toHaveLength(5);
+    const slot2Items = pickHeroItems(heroPool, 'B1', 2 * HERO_SLOT_MS);
+    expect(slot2Items).toHaveLength(7);
     expect(slot2Items.map((i) => i.id)).not.toEqual(slot1Items.map((i) => i.id));
   });
 

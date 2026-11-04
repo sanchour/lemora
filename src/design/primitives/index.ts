@@ -15,4 +15,4 @@ export { EmptyState } from './EmptyState';
 export { Kbd } from './Kbd';
 export { MenuItem } from './MenuItem';
 export { SearchInput, searchKey } from './SearchInput';
-export { SortMenu } from './SortMenu';
+export { FilterMenu, SortMenu } from './SortMenu';

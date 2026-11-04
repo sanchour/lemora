@@ -17102,5 +17102,48 @@
   ],
   "A small thing to do in the language, away from the screen.": [
     "src/features/home/homeData.ts"
+  ],
+  "Articles": [
+    "src/features/explora/components/ExploraHeaderBar.tsx"
+  ],
+  "Comics and magazines": [
+    "src/features/explora/components/ExploraHeaderBar.tsx",
+    "src/features/explora/ComicReader.tsx"
+  ],
+  "Comics": [
+    "src/features/explora/components/ComicsSection.tsx"
+  ],
+  "Magazine": [
+    "src/features/explora/components/ComicsSection.tsx"
+  ],
+  "Episode {0}": [
+    "src/features/explora/components/ComicsSection.tsx"
+  ],
+  "Try it": [
+    "src/features/explora/components/HeroBillboard.tsx"
+  ],
+  "All books": [
+    "src/features/explora/components/BooksSection.tsx"
+  ],
+  "Picked for learners": [
+    "src/features/explora/components/BooksSection.tsx"
+  ],
+  "Free classics": [
+    "src/features/explora/components/BooksSection.tsx"
+  ],
+  "{0} books": [
+    "src/features/explora/components/BooksSection.tsx"
+  ],
+  "Easiest first": [
+    "src/features/explora/components/BooksSection.tsx"
+  ],
+  "Suggested": [
+    "src/features/explora/components/BooksSection.tsx"
+  ],
+  "That comic isn’t here.": [
+    "src/features/explora/ComicReader.tsx"
+  ],
+  "The magazine couldn’t be reached just now.": [
+    "src/features/explora/components/ComicsSection.tsx"
   ]
 }

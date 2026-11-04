@@ -3,9 +3,9 @@ import type { RadioStation } from '@/data/types';
 import type { PickedArtist } from '@/features/cantus/discover';
 import type { LibrivoxHit } from '@/services/sonus/librivox';
 
-export type Kind = PickGroup | 'music' | 'radio' | 'audiobooks';
+export type Kind = PickGroup | 'music' | 'radio' | 'audiobooks' | 'comic' | 'tip';
 
-export type ExploraCategory = 'all' | 'screen' | 'books' | 'audio' | 'music' | 'words' | 'try' | 'saved';
+export type ExploraCategory = 'all' | 'screen' | 'books' | 'articles' | 'comics' | 'audio' | 'music' | 'words' | 'ludus' | 'try' | 'saved';
 
 export interface ExploraItem {
   id: string;
@@ -18,6 +18,12 @@ export interface ExploraItem {
   artist?: PickedArtist;
   station?: RadioStation;
   book?: LibrivoxHit;
+  /** Lemora U4: a picture to show as the cover, where the item has one (a comic's, a shelved book's). */
+  cover?: string;
+  /** Where the item opens, when it is not a pick (a comic, a tip, a shelved book, the first book). */
+  to?: string;
+  /** One line about it, shown in the hero. */
+  blurb?: string;
 }
 
 export interface ShelfDefinition {

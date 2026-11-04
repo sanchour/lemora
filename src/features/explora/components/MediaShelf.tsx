@@ -13,7 +13,8 @@ interface MediaShelfProps {
   children: ReactNode[];
 }
 
-export function MediaShelf({ id, title, subtitle, count, badge, children }: MediaShelfProps) {
+// No line under the title (the user, 2026-11-04): `subtitle` is kept for callers, and not shown.
+export function MediaShelf({ id, title, count, badge, children }: MediaShelfProps) {
   const translateUi = useUi();
   const { pointer } = useLayout();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -77,9 +78,6 @@ export function MediaShelf({ id, title, subtitle, count, badge, children }: Medi
               </span>
             )}
           </div>
-          {subtitle && (
-            <p className="mt-0.5 text-[12px] font-medium text-ink-soft line-clamp-1">{subtitle}</p>
-          )}
         </div>
 
         {/* Actions: Cute Bubbly "See all" Pill & Desktop Navigation Arrows */}

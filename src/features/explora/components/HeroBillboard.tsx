@@ -3,7 +3,9 @@ import { useEffect, useState, useRef } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   Bookmark,
+  BookImage,
   BookOpen,
+  Lightbulb,
   Captions,
   ChevronLeft,
   ChevronRight,
@@ -37,6 +39,8 @@ const KIND_ICONS: Record<string, typeof Tv> = {
   podcasts: Headphones,
   music: Play,
   radio: Radio,
+  comic: BookImage,
+  tip: Lightbulb,
 };
 
 interface HeroBillboardProps {
@@ -64,7 +68,7 @@ export function HeroBillboard({
 }: HeroBillboardProps) {
   const translateUi = useUi();
   const still = useReducedMotion();
-  const featured = items.slice(0, 5);
+  const featured = items.slice(0, 7);
   const [index, setIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -107,6 +111,8 @@ export function HeroBillboard({
     if (current.kind === 'podcasts') return translateUi('Follow Podcast');
     if (current.kind === 'radio') return translateUi('Tune in Live');
     if (current.kind === 'music') return translateUi('Sing in Sonus');
+    if (current.kind === 'comic') return translateUi('Read');
+    if (current.kind === 'tip') return translateUi('Try it');
     return translateUi('Open');
   })();
 
@@ -118,7 +124,11 @@ export function HeroBillboard({
     return Play;
   })();
 
-  const cover = poster ? (
+  const cover = current.cover ? (
+    <img src={current.cover} alt="" className="size-full object-cover" />
+  ) : current.kind === 'tip' ? (
+    <div className="grid size-full place-items-center bg-accent-soft"><Hand name="candle" size={72} /></div>
+  ) : poster ? (
     <img src={poster} alt="" className="size-full object-cover" />
   ) : current.book ? (
     <Artwork title={current.book.title} coverUrl={current.book.coverUrl} className="size-full object-cover" />
@@ -144,13 +154,13 @@ export function HeroBillboard({
           style={{ transformPerspective: 1400 }}
           className="relative grid items-center gap-6 p-6 sm:grid-cols-[auto_minmax(0,1fr)] sm:gap-9 sm:p-8"
         >
-          {/* The cover, with a spine and a page edge, leaning very slightly as books on a stand do. */}
+          {/* The cover, upright, with a spine and a page edge. */}
           <div className="relative mx-auto w-[150px] sm:mx-0 sm:w-[168px]">
-            <div className="relative aspect-[2/3] -rotate-[1.5deg] overflow-hidden rounded-r-xl rounded-l-[4px] bg-raised shadow-elev-2 ring-1 ring-line">
+            <div className="relative aspect-[2/3] overflow-hidden rounded-r-xl rounded-l-[4px] bg-raised shadow-elev-2 ring-1 ring-line">
               {cover}
               <span className="pointer-events-none absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/25 to-transparent" aria-hidden />
             </div>
-            <span className="absolute inset-y-2 -right-1.5 w-1.5 -rotate-[1.5deg] rounded-r-sm bg-[repeating-linear-gradient(to_bottom,var(--color-raised)_0_2px,var(--color-line)_2px_3px)]" aria-hidden />
+            <span className="absolute inset-y-2 -right-1.5 w-1.5 rounded-r-sm bg-[repeating-linear-gradient(to_bottom,var(--color-raised)_0_2px,var(--color-line)_2px_3px)]" aria-hidden />
           </div>
 
           <div className="min-w-0">
@@ -170,7 +180,7 @@ export function HeroBillboard({
             {/* A small drawn ornament, then the blurb as on a book's back. */}
             <Hand name="leaf" size={22} className="mt-3 text-ink-faint" />
             <p className="mt-1 max-w-xl font-serif text-[16.5px] leading-relaxed text-ink-soft">
-              {current.pick?.why ?? current.artist?.why ?? current.sub ?? <UiText source={'Essential immersion material carefully selected for language learners.'} />}
+              {current.blurb ?? current.pick?.why ?? current.artist?.why ?? current.sub ?? <UiText source={'Essential immersion material carefully selected for language learners.'} />}
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-2.5">
               <Button variant="accent" size="md" icon={ActionIcon} onClick={() => onPrimaryAction(current)}>

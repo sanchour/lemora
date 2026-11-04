@@ -2,9 +2,11 @@ import { UiText, useUi } from '@/design/i18n/UiText';
 import { useRef, useState, useEffect } from 'react';
 import {
   Bookmark,
+  BookImage,
+  Gamepad2,
+  Newspaper,
   BookOpen,
   Check,
-  ChevronDown,
   Film,
   Headphones,
   Layers,
@@ -25,58 +27,30 @@ interface ExploraHeaderBarProps {
   category: ExploraCategory;
   onSelectCategory: (cat: ExploraCategory) => void;
   savedCount: number;
+}
+
+interface LevelFilterProps {
   learnerLevel: Level;
   levelFilter: LevelFilter;
   onSelectLevelFilter: (filter: LevelFilter) => void;
 }
 
-export function ExploraHeaderBar({
-  category,
-  onSelectCategory,
-  savedCount,
-  learnerLevel,
-  levelFilter,
-  onSelectLevelFilter,
-}: ExploraHeaderBarProps) {
+export function ExploraHeaderBar({ category, onSelectCategory, savedCount }: ExploraHeaderBarProps) {
   const translateUi = useUi();
-  const [levelMenuOpen, setLevelMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  // Close menu on click outside
-  useEffect(() => {
-    if (!levelMenuOpen) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setLevelMenuOpen(false);
-      }
-    };
-    window.addEventListener('mousedown', handleClickOutside);
-    return () => window.removeEventListener('mousedown', handleClickOutside);
-  }, [levelMenuOpen]);
-
+  // Lemora U4: All · Books · Articles · Comics and magazines · Word decks · Ludus · Things to try (and Lingua's rooms where it has them).
   const categories = ([
     { id: 'all', label: 'All', icon: Sparkles },
-    { id: 'screen', label: 'Series & Films', icon: Film },
     { id: 'books', label: 'Books', icon: BookOpen },
+    { id: 'articles', label: 'Articles', icon: Newspaper },
+    { id: 'comics', label: 'Comics and magazines', icon: BookImage },
+    { id: 'screen', label: 'Series & Films', icon: Film },
     { id: 'audio', label: 'Audio & Podcasts', icon: Headphones },
     { id: 'music', label: 'Music & Radio', icon: Music },
     { id: 'words', label: 'Word decks', icon: Layers },
+    { id: 'ludus', label: 'Ludus', icon: Gamepad2 },
     // Lemora keeps Things to try here, with what to discover (src/product.ts); Lingua has it in Mundus.
     ...(shows('try') && !shows('mundus') ? [{ id: 'try' as const, label: 'Things to try', icon: Lightbulb }] : []),
   ] satisfies Array<{ id: ExploraCategory; label: string; icon: typeof Sparkles }>).filter((c) => (c.id === 'screen' ? shows('visio') : c.id === 'audio' ? shows('sonus') : c.id === 'music' ? shows('cantus') || shows('sonus') : true));
-
-  const levelFilterLabel = (() => {
-    if (levelFilter === 'mine') return translateUi('Around {0}', [learnerLevel]);
-    if (levelFilter === 'any') return translateUi('All levels');
-    return `Level ${levelFilter}`;
-  })();
-
-  const activeHue =
-    levelFilter === 'mine'
-      ? (LEVEL_HUE[learnerLevel as PickLevel] ?? '#cf9640')
-      : levelFilter === 'any'
-        ? '#888'
-        : (LEVEL_HUE[levelFilter as PickLevel] ?? '#cf9640');
 
   return (
     <div className="mb-3.5 sm:mb-4 flex flex-wrap items-center justify-between gap-2.5">
@@ -142,33 +116,54 @@ export function ExploraHeaderBar({
         )}
       </nav>
 
-      {/* Smooth, Round, Minimal Level Filter */}
+    </div>
+  );
+}
+
+/** Lemora U4: the level, as a round icon beside Explora's other icons; it opens the same short list. */
+export function LevelFilterButton({ learnerLevel, levelFilter, onSelectLevelFilter }: LevelFilterProps) {
+  const translateUi = useUi();
+  const [levelMenuOpen, setLevelMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close menu on click outside
+  useEffect(() => {
+    if (!levelMenuOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setLevelMenuOpen(false);
+      }
+    };
+    window.addEventListener('mousedown', handleClickOutside);
+    return () => window.removeEventListener('mousedown', handleClickOutside);
+  }, [levelMenuOpen]);
+
+  const levelFilterLabel = (() => {
+    if (levelFilter === 'mine') return translateUi('Around {0}', [learnerLevel]);
+    if (levelFilter === 'any') return translateUi('All levels');
+    return `Level ${levelFilter}`;
+  })();
+
+  const activeHue =
+    levelFilter === 'mine'
+      ? (LEVEL_HUE[learnerLevel as PickLevel] ?? '#cf9640')
+      : levelFilter === 'any'
+        ? '#888'
+        : (LEVEL_HUE[levelFilter as PickLevel] ?? '#cf9640');
+
+  return (
       <div ref={menuRef} className="relative shrink-0">
         <button
           type="button"
           aria-expanded={levelMenuOpen}
           aria-haspopup="true"
           aria-label={translateUi('Filter by level: currently {0}', [levelFilterLabel])}
+          title={levelFilterLabel}
           onClick={() => setLevelMenuOpen((prev) => !prev)}
-          className={cx(
-            'flex h-8 items-center gap-2 rounded-full px-2.5 text-[11.5px] font-bold transition-all duration-150 active:scale-95 shadow-xs',
-            levelFilter !== 'any'
-              ? 'bg-surface text-ink border border-line-strong hover:bg-raised'
-              : 'border border-line/70 bg-surface/50 text-ink-soft hover:bg-surface hover:text-ink',
-          )}
+          className="relative grid size-10 place-items-center rounded-full border border-line/70 text-[12.5px] font-bold text-ink transition-transform hover:scale-105 active:scale-95"
+          style={{ boxShadow: `inset 0 0 0 2.5px color-mix(in oklab, ${activeHue} 70%, transparent)` }}
         >
-          {/* Minimal round dot */}
-          <span
-            className="size-2 rounded-full shadow-xs shrink-0"
-            style={{ background: activeHue }}
-          />
-
-          <span>{levelFilterLabel}</span>
-
-          <ChevronDown
-            size={12}
-            className={cx('text-ink-faint transition-transform duration-150', levelMenuOpen && 'rotate-180')}
-          />
+          {levelFilter === 'any' ? '∗' : levelFilter === 'mine' ? learnerLevel : levelFilter}
         </button>
 
         {/* Minimal Round Popover Menu */}
@@ -249,6 +244,5 @@ export function ExploraHeaderBar({
           </div>
         )}
       </div>
-    </div>
   );
 }

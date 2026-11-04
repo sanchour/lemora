@@ -8,6 +8,9 @@ import type { NewsSource } from '@/core/lang/news';
 import type { NewsItem } from '@/core/parsers/article';
 import { useLibrary } from '@/data/library';
 import { cx } from '@/lib/cx';
+import { LEVELS } from '@/core/mundus/explore';
+import type { PickLevel } from '@/core/mundus/types';
+import { FilterMenu, SortMenu } from '@/design/primitives';
 import {
   gutenbergBooks,
   importGutenberg,
@@ -70,8 +73,13 @@ export function BooksShelf({
   onToggleSave,
   onOpenDetails,
   streamingServices,
-}: BooksSectionProps) {
+  layout = 'shelf',
+}: BooksSectionProps & { layout?: 'shelf' | 'grid' }) {
   const translateUi = useUi();
+  // Lemora U4: the Books tab opens on every book at once (what See all showed), with a filter and a sort.
+  const [source, setSource] = useState<'all' | 'picked' | 'free'>('all');
+  const [levelOnly, setLevelOnly] = useState<'all' | PickLevel>('all');
+  const [order, setOrder] = useState<'suggested' | 'easiest' | 'title'>('suggested');
   const navigate = useNavigate();
   const texts = useLibrary(lang);
   const onShelf = useMemo(
@@ -103,7 +111,7 @@ export function BooksShelf({
     gutenbergList.state === 'ready'
       ? gutenbergList.items.map((b) => {
           const s = status(b.url);
-          return (
+          return ({ key: `pg-${b.id}`, title: b.title, level: undefined as PickLevel | undefined, free: true, node: (
             <button
               key={`pg-${b.id}`}
               type="button"
@@ -130,13 +138,12 @@ export function BooksShelf({
               <h4 lang={lang} className="mt-2 line-clamp-1 font-serif text-[13.5px] font-semibold text-ink">
                 {b.title}
               </h4>
-              {b.author && <p className="truncate text-[11.5px] font-medium text-ink-soft">{b.author}</p>}
             </button>
-          );
+          ) });
         })
       : [];
 
-  const curatedCards = curatedBooks.map((item) => (
+  const curatedCards = curatedBooks.map((item) => ({ key: item.id, title: item.title, level: item.level as PickLevel | undefined, free: false, node: (
     <MediaCard
       key={item.id}
       item={item}
@@ -147,9 +154,35 @@ export function BooksShelf({
       streamingServices={streamingServices}
       preferredAspect="book"
     />
-  ));
+  ) }));
 
   const totalCards = [...curatedCards, ...gutenbergCards];
+
+  if (layout === 'grid') {
+    const shown = totalCards
+      .filter((c) => (source === 'all' ? true : source === 'free' ? c.free : !c.free) && (levelOnly === 'all' || c.level === levelOnly))
+      .sort((a, b) => (order === 'title' ? a.title.localeCompare(b.title, lang) : order === 'easiest' ? (a.level ? LEVELS.indexOf(a.level) : 9) - (b.level ? LEVELS.indexOf(b.level) : 9) : 0));
+    return (
+      <section aria-label={translateUi('Books')}>
+        <div className="mb-4 flex items-center gap-1">
+          <span className="mr-auto text-[13px] text-ink-faint tabular-nums"><UiText source={'{0} books'} values={[shown.length]} /></span>
+          <FilterMenu
+            active={source !== 'all' || levelOnly !== 'all'}
+            lists={[
+              { title: 'Books', value: source, onChange: (v) => setSource(v as typeof source), options: [{ value: 'all', label: 'All books' }, { value: 'picked', label: 'Picked for learners' }, { value: 'free', label: 'Free classics' }] },
+              { title: 'Level', value: levelOnly, onChange: (v) => setLevelOnly(v as typeof levelOnly), options: [{ value: 'all', label: 'All levels' }, ...LEVELS.map((l) => ({ value: l, label: l }))] },
+            ]}
+          />
+          <SortMenu value={order} onChange={setOrder} options={[{ value: 'suggested', label: 'Suggested' }, { value: 'easiest', label: 'Easiest first' }, { value: 'title', label: 'Title' }]} />
+        </div>
+        {gutenbergList.state === 'loading' && !curatedCards.length ? (
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">{Array.from({ length: 6 }, (_, i) => <div key={i} className="aspect-[2/3] animate-pulse rounded-[18px] bg-surface" />)}</div>
+        ) : (
+          <div className="grid grid-cols-2 gap-x-4 gap-y-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">{shown.map((c) => <div key={c.key}>{c.node}</div>)}</div>
+        )}
+      </section>
+    );
+  }
 
   if (!totalCards.length) return null;
 
@@ -160,7 +193,7 @@ export function BooksShelf({
       subtitle={translateUi('Free books from Gutenberg & Wikisource, graded literature and stories.')}
       count={totalCards.length}
     >
-      {totalCards}
+      {totalCards.map((c) => <div key={c.key} className="contents">{c.node}</div>)}
     </MediaShelf>
   );
 }
@@ -305,9 +338,6 @@ export function NewsSection({ lang }: { lang: string }) {
         <h2 className="font-serif text-[17px] sm:text-[19px] font-semibold text-ink">
           <UiText source={'In the news'} />
         </h2>
-        <p className="mt-0.5 text-[12px] font-medium text-ink-soft">
-          <UiText source={'The latest stories, read with the article only (no menus or adverts).'} />
-        </p>
       </div>
 
       <div className={cx('grid gap-3 sm:gap-4', newsSources.length > 1 && 'md:grid-cols-2')}>
@@ -331,9 +361,8 @@ export function NewsSection({ lang }: { lang: string }) {
 }
 
 /** Picture Books and Comics Section */
-export function PictureBooksSection({ lang }: { lang: string }) {
+export function PictureBooksSection(_props: { lang: string }) {
   const translateUi = useUi();
-  const name = getLanguage(lang)?.name ?? lang;
 
   return (
     <section aria-label={translateUi('Picture books and comics')} className="mb-5 sm:mb-6">
@@ -341,9 +370,6 @@ export function PictureBooksSection({ lang }: { lang: string }) {
         <h2 className="font-serif text-[17px] sm:text-[19px] font-semibold text-ink">
           <UiText source={'Picture books and comics'} />
         </h2>
-        <p className="mt-0.5 text-[12px] font-medium text-ink-soft">
-          {`Free libraries with illustrated books in ${name}. Download an EPUB, PDF or CBZ and open it in Codex.`}
-        </p>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

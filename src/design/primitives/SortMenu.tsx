@@ -1,6 +1,6 @@
 import { UiText, useUi } from '@/design/i18n/UiText';
 import type { ReactNode } from 'react';
-import { ArrowDownUp, Check } from 'lucide-react';
+import { ArrowDownUp, Check, ListFilter } from 'lucide-react';
 import { cx } from '@/lib/cx';
 import { IconButton } from './IconButton';
 import { Popover } from './Popover';
@@ -71,3 +71,30 @@ export function SortMenu<T extends string, G extends string = string>({ value, o
     </Popover>
   );
 }
+
+/** A filter icon that opens one or more short lists of choices (Lemora U4: Explora's books). */
+export function FilterMenu({ lists, active = false }: { lists: Array<Choices<string> & { title: string }>; active?: boolean }) {
+  const translateUi = useUi();
+  return (
+    <Popover
+      label={translateUi('Filter')}
+      placement="bottom-end"
+      className="w-60"
+      trigger={(props) => (
+        <span className="relative inline-flex">
+          <IconButton {...props} icon={ListFilter} label={translateUi('Filter')} />
+          {active && <span className="pointer-events-none absolute top-1.5 right-1.5 size-2 rounded-full bg-accent" aria-hidden />}
+        </span>
+      )}
+    >
+      {(close) => (
+        <div className="space-y-2">
+          {lists.map((l) => (
+            <ChoiceList key={l.title} {...l} close={close} />
+          ))}
+        </div>
+      )}
+    </Popover>
+  );
+}
+

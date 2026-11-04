@@ -3,6 +3,10 @@ import { useUi } from '@/design/i18n/UiText';
 import { useRef, useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Search, X } from 'lucide-react';
+import { useNavigate } from 'react-router';
+import type { LevelFilter } from '@/core/mundus/explore';
+import { Hand } from '@/design/drawings';
+import { LevelFilterButton } from './components/ExploraHeaderBar';
 import { useApp } from '@/app/context';
 import { PageHeader } from '@/app/PageHeader';
 import { getLanguage } from '@/core/lang/languages';
@@ -20,6 +24,8 @@ export default function ExploraPage() {
   const langName = getLanguage(lang)?.name ?? lang;
   const guide = useGuide();
 
+  const navigate = useNavigate();
+  const [levelFilter, setLevelFilter] = useState<LevelFilter>('mine');
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -44,7 +50,12 @@ export default function ExploraPage() {
           language.level,
         ])}
         actions={
-          <div className="relative flex items-center">
+          <div className="relative flex items-center gap-2">
+            {/* Lemora U4: the level as a round icon, then the library, then search. */}
+            <LevelFilterButton learnerLevel={language.level} levelFilter={levelFilter} onSelectLevelFilter={setLevelFilter} />
+            <button type="button" onClick={() => navigate('/bibliotheca')} aria-label={translateUi('Bibliotheca')} title={translateUi('Bibliotheca')} className="grid size-10 place-items-center rounded-full border border-line/70 text-ink-soft transition-transform hover:scale-105 hover:text-ink active:scale-95">
+              <Hand name="stack" size={22} />
+            </button>
             <AnimatePresence initial={false} mode="wait">
               {searchOpen ? (
                 <motion.div
@@ -117,6 +128,7 @@ export default function ExploraPage() {
           level={language.level}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
+          levelFilter={levelFilter}
         />
       )}
     </>

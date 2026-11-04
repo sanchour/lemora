@@ -6,6 +6,7 @@ import {
   AlphabetPage,
   AtlasRoom,
   FirstBook,
+  ComicReader,
   BibliothecaPage,
   BookDetailsPage,
   CodexPage,
@@ -53,6 +54,7 @@ export const router = createBrowserRouter(
         { path: 'cursus/alphabets/:groupId/lesson', element: <LettersLessonPage /> },
         // Explora & Bibliotheca: what there is to read, and what you have.
         { path: 'explora', element: <ExploraPage /> },
+        { path: 'explora/comic/:episode', element: <ComicReader /> },
         { path: 'bibliotheca', element: <BibliothecaPage /> },
         { path: 'codex', element: <CodexPage /> },
         { path: 'codex/graded', element: <CodexPage /> },

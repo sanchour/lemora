@@ -24,13 +24,19 @@ import { MediaShelf } from './components/MediaShelf';
 import { MediaCard } from './components/MediaCard';
 import { MediaDetailModal } from './components/MediaDetailModal';
 import {
-  BooksSection,
   BooksShelf,
   NewsSection,
   PictureBooksSection,
   WikipediaShelf,
 } from './components/BooksSection';
 import { WordDecksShelf } from './components/WordDecksShelf';
+import { ComicShelf, ComicsSection, MagazineSection } from './components/ComicsSection';
+import { LudusShelf } from './components/LudusShelf';
+import { comicCover, comicEpisodes } from '@/core/comics/peppercarrot';
+import { FIRST_BOOKS } from '@/core/lang/firstBooks';
+import { tipsFor } from '@/core/mundus/tips';
+import { tipLevel } from '@/core/mundus/guide';
+import { useLibrary } from '@/data/library';
 import { shows } from '@/product';
 import { TipsView } from '@/features/mundus/TipsView';
 import { Segmented, SortMenu } from '@/design/primitives';
@@ -56,12 +62,18 @@ const KIND_TO_CATEGORY: Record<string, ExploraCategory> = {
   words: 'words',
   try: 'try',
   saved: 'saved',
+  articles: 'articles',
+  news: 'articles',
+  comics: 'comics',
+  ludus: 'ludus',
 };
 
 /** Whether this build has the room an item opens in (src/product.ts): Lemora keeps what is read. */
 export const kindShown = (kind: Kind): boolean =>
   kind === 'series' || kind === 'films' || kind === 'youtube' ? shows('visio') : kind === 'podcasts' || kind === 'audiobooks' || kind === 'radio' ? shows('sonus') : kind === 'music' ? shows('cantus') : kind === 'games' ? shows('mundus') : true;
 
+/** How many the hero holds (the user, 2026-11-04: seven). */
+export const HERO_COUNT = 7;
 export const HERO_SLOT_HOURS = 5;
 export const HERO_SLOT_MS = HERO_SLOT_HOURS * 60 * 60 * 1000;
 
@@ -81,6 +93,7 @@ export function pickHeroItems(
   items: ExploraItem[],
   level: Level,
   timeMs = Date.now(),
+  count = HERO_COUNT,
 ): ExploraItem[] {
   if (!items.length) return [];
   const slot = get5HourSlot(timeMs);
@@ -97,20 +110,24 @@ export function pickHeroItems(
     .filter((i) => i.kind === 'series' || i.kind === 'films')
     .sort(byLevelCloseness);
   const books = items.filter((i) => i.kind === 'books').sort(byLevelCloseness);
+  const comics = items.filter((i) => i.kind === 'comic').sort(byLevelCloseness);
+  const tips = items.filter((i) => i.kind === 'tip').sort(byLevelCloseness);
   const audiobooks = items.filter((i) => i.kind === 'audiobooks').sort(byLevelCloseness);
   const podcasts = items.filter((i) => i.kind === 'podcasts').sort(byLevelCloseness);
   const lives = items
     .filter((i) => i.kind === 'radio' || i.kind === 'music')
     .sort(byLevelCloseness);
 
-  const pools = [screens, books, audiobooks, podcasts, lives].filter((p) => p.length > 0);
+  // Books lead (twice), then a comic and something to try; what a build lacks simply isn't there (Lemora U4).
+  const pools = [books, comics, books.slice(1), tips, screens, audiobooks, podcasts, lives].filter((p) => p.length > 0);
   const chosen: ExploraItem[] = [];
   const chosenIds = new Set<string>();
 
   // 1. Pick 1 item from each distinct pool rotated by the 5-hour slot
-  for (let i = 0; i < pools.length && chosen.length < 5; i++) {
+  for (let i = 0; i < pools.length && chosen.length < count; i++) {
     const pool = pools[i];
-    const item = pool[(slot + i) % pool.length];
+    // Each pool is sorted closest to the learner's level first; the hero turns among its closest three.
+    const item = pool[(slot + i) % Math.min(pool.length, 3)];
     if (item && !chosenIds.has(item.id)) {
       chosen.push(item);
       chosenIds.add(item.id);
@@ -118,9 +135,9 @@ export function pickHeroItems(
   }
 
   // 2. If fewer than 5 (e.g. some pool is missing in the language), fill from remaining items rotated by slot
-  if (chosen.length < 5) {
+  if (chosen.length < count) {
     const allSorted = [...items].sort(byLevelCloseness);
-    for (let i = 0; i < allSorted.length && chosen.length < 5; i++) {
+    for (let i = 0; i < allSorted.length && chosen.length < count; i++) {
       const item = allSorted[(slot + i) % allSorted.length];
       if (item && !chosenIds.has(item.id)) {
         chosen.push(item);
@@ -129,7 +146,7 @@ export function pickHeroItems(
     }
   }
 
-  return chosen.slice(0, 5);
+  return chosen.slice(0, count);
 }
 
 export function ExploreAll({
@@ -137,12 +154,14 @@ export function ExploreAll({
   picks,
   level,
   searchQuery = '',
+  levelFilter = 'mine',
 }: {
   lang: string;
   picks: Picks | null;
   level: Level;
   searchQuery?: string;
   onSearchChange?: (q: string) => void;
+  levelFilter?: LevelFilter;
 }) {
   const translateUi = useUi();
   const navigate = useNavigate();
@@ -159,8 +178,7 @@ export function ExploreAll({
       : 'all';
 
   const [category, setCategoryState] = useState<ExploraCategory>(initialCategory);
-  // Default filter: learner's level ('mine' = around learner's level)
-  const [levelFilter, setLevelFilter] = useState<LevelFilter>('mine');
+  // The level filter lives in the page header (Lemora U4): around the learner's level unless chosen otherwise.
   const [selectedItem, setSelectedItem] = useState<ExploraItem | null>(null);
 
   const saved = useSaved(lang);
@@ -172,6 +190,7 @@ export function ExploreAll({
     streaming.services.length ? streaming.token : '',
   );
   const stations = useRadioPicks(lang);
+  const shelf = useLibrary(lang);
   const audiobooks = useAudiobookPicks(lang);
 
   const setCategory = (cat: ExploraCategory) => {
@@ -187,6 +206,9 @@ export function ExploreAll({
         else if (cat === 'music') next.set('kind', 'music');
         else if (cat === 'words') next.set('kind', 'words');
         else if (cat === 'try') next.set('kind', 'try');
+        else if (cat === 'articles') next.set('kind', 'articles');
+        else if (cat === 'comics') next.set('kind', 'comics');
+        else if (cat === 'ludus') next.set('kind', 'ludus');
         else if (cat === 'saved') next.set('kind', 'saved');
         return next;
       },
@@ -251,8 +273,15 @@ export function ExploreAll({
         book,
       });
     }
+    // Lemora U4: the hero and search also know the comics, the things to try, the books on your shelf (Goodreads
+    // included) and, for a beginner, the first book.
+    for (const ep of comicEpisodes(lang).slice(0, 12)) out.push({ id: `comic:${ep.id}`, kind: 'comic', title: `Pepper&Carrot · ${ep.number}`, level: 'A2', estimated: true, cover: comicCover(lang, ep), to: `/explora/comic/${ep.id}`, blurb: 'A short, funny comic about a young witch and her cat, page by page.' });
+    for (const tip of tipsFor(lang).slice(0, 10)) out.push({ id: `tip:${tip.id}`, kind: 'tip', title: tip.title, level: tipLevel(tip), to: '/explora?kind=try', blurb: tip.teaser });
+    for (const t of (shelf ?? []).filter((t) => t.kind === 'shelfItem' && !t.deletedAt).slice(0, 10)) out.push({ id: `shelf:${t.id}`, kind: 'books', title: t.title, sub: t.author, level: 'B1', estimated: true, cover: t.coverUrl, to: `/codex/book/${t.id}`, blurb: t.author ? `${t.author}, on your shelf.` : 'On your shelf.' });
+    const first = FIRST_BOOKS[lang];
+    if (first && (level === 'A0' || level === 'A1')) out.push({ id: 'first-book', kind: 'books', title: first.title, level: 'A1', to: '/codex/first', blurb: 'A tiny first book: a line a page, the easiest words.' });
     return out.filter((item) => kindShown(item.kind));
-  }, [picks, stations, audiobooks, lang]);
+  }, [picks, stations, audiobooks, lang, shelf, level]);
 
   // Filter items according to active level filter
   const filteredByLevel = useMemo(() => {
@@ -295,6 +324,7 @@ export function ExploreAll({
 
   // Handle direct primary action from cards or hero
   const handlePrimaryAction = async (item: ExploraItem) => {
+    if (item.to) return navigate(item.to);
     if (item.kind === 'books' && item.pick) {
       const pick = item.pick;
       const added = await addBookToCodex(lang, pick);
@@ -346,6 +376,8 @@ export function ExploreAll({
     () => filteredByLevel.filter((i) => i.kind === 'books'),
     [filteredByLevel],
   );
+  // The Books tab shows every book (what See all showed) and filters by level itself (Lemora U4).
+  const allBookItems = useMemo(() => items.filter((i) => i.kind === 'books' && !i.id.startsWith('shelf:')), [items]);
   const audiobookItems = useMemo(
     () => filteredByLevel.filter((i) => i.kind === 'audiobooks'),
     [filteredByLevel],
@@ -417,9 +449,6 @@ export function ExploreAll({
         category={category}
         onSelectCategory={setCategory}
         savedCount={saved.length}
-        learnerLevel={level}
-        levelFilter={levelFilter}
-        onSelectLevelFilter={setLevelFilter}
       />
 
       {/* Search Results View (when user has typed in top search bar) */}
@@ -458,6 +487,19 @@ export function ExploreAll({
               ))}
             </div>
           )}
+        </div>
+      ) : category === 'articles' ? (
+        <div className="pt-1">
+          <NewsSection lang={lang} />
+          <WikipediaShelf lang={lang} />
+        </div>
+      ) : category === 'comics' ? (
+        <div className="pt-1">
+          <ComicsSection lang={lang} />
+        </div>
+      ) : category === 'ludus' ? (
+        <div className="pt-1">
+          <LudusShelf />
         </div>
       ) : category === 'try' ? (
         <div className="pt-1">
@@ -498,9 +540,10 @@ export function ExploreAll({
       ) : category === 'books' ? (
         /* Books Tab: Free Reading suite (Wikipedia, News, Gutenberg/Wikisource, Comics, Graded) */
         <div className="pt-1">
-          <BooksSection
+          <BooksShelf
+            layout="grid"
             lang={lang}
-            curatedBooks={bookItems}
+            curatedBooks={allBookItems}
             savedIds={saved}
             onToggleSave={(id) => toggleSaved(lang, id)}
             onOpenDetails={(item) => setSelectedItem(item)}
@@ -549,6 +592,10 @@ export function ExploreAll({
 
               {/* 3. Word Decks, random every time but based on level */}
               <WordDecksShelf lang={lang} learnerLevel={level} levelFilter={levelFilter} />
+
+              {/* Lemora U4: comics and the magazine, free and legal to use */}
+              <ComicShelf lang={lang} />
+              <MagazineSection lang={lang} />
 
               {/* 4. Audiobooks */}
               {renderMediaShelf({

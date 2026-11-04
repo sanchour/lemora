@@ -150,9 +150,6 @@ export function MediaCard({
         >
           {item.title}
         </h4>
-        <p className="mt-0.5 truncate text-[11.5px] font-medium text-ink-soft">
-          {item.sub || item.pick?.by || (item.kind === 'radio' ? 'Live Radio' : item.kind)}
-        </p>
       </div>
     </div>
   );

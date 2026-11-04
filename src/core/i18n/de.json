@@ -3578,7 +3578,7 @@
   "Dutch rap-pop: fast, with slang": "Niederländischer Rap-Pop: schnell, mit Slang",
   "Each letter comes back when it’s due again.": "Jeder Brief kommt zurück, wenn er wieder fällig ist.",
   "Early at the reading desk": "Früh am Lesepult",
-  "Easiest first": "Am einfachsten zuerst",
+  "Easiest first": "Leichteste zuerst",
   "Eason Chan": "Eason Chan",
   "Easy": "Einfach",
   "Easy choruses, very clear German": "Einfache Refrains, sehr klares Deutsch",
@@ -8101,5 +8101,16 @@
   "Read an article you like": "Einen Artikel lesen, der dir gefällt",
   "Paste a link or any text.": "Füge einen Link oder einen Text ein.",
   "Something to try today": "Etwas zum Ausprobieren für heute",
-  "A small thing to do in the language, away from the screen.": "Eine Kleinigkeit in der Sprache, fern vom Bildschirm."
+  "A small thing to do in the language, away from the screen.": "Eine Kleinigkeit in der Sprache, fern vom Bildschirm.",
+  "Comics and magazines": "Comics und Magazine",
+  "Comics": "Comics",
+  "Magazine": "Magazin",
+  "Episode {0}": "Folge {0}",
+  "Try it": "Ausprobieren",
+  "All books": "Alle Bücher",
+  "Picked for learners": "Für Lernende ausgewählt",
+  "Free classics": "Freie Klassiker",
+  "{0} books": "{0} Bücher",
+  "That comic isn’t here.": "Diesen Comic gibt es hier nicht.",
+  "The magazine couldn’t be reached just now.": "Das Magazin ist gerade nicht erreichbar."
 }
