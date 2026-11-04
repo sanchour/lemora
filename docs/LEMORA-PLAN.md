@@ -63,6 +63,28 @@ not afraid to make big changes, only these". Only those six rooms are redesigned
 Ludus, Diarium, Ratio, Settings) are redesigned in their shared files as `[shared]` commits, with no Lemora
 branding in them, so Lingua can take them later or leave them.
 
+## Phase U · The user's list of 2026-11-04
+
+The user's second brief, by room. Steps are built in this order, each pushed with its own version; "◐" means part built.
+Ratio's layout (3.12) and the redesigns already listed (3.9 to 3.13, 3.18) fold into the matching U step.
+
+| # | Step | Status |
+|---|------|--------|
+| U1 | **Flow by level.** From the first open, recommendations fit the learner's level: at A0 the easiest child's book with few words and small, unoverwhelming starter decks first; higher levels get their own. Home's What next and Explora's picks share one level-aware chooser (tested) | ⬜ |
+| U2 | **Onboarding.** No Sonus et Visio step. For a language not written in Latin letters, a page of its own, minimal: can you read its alphabet? (Yes / A little / Not yet); the answer steers the first recommendations (Alphabet first when not yet) | ⬜ |
+| U3 | **Home.** What next redrawn (hand-drawn, less "AI"), chosen by level and recent activity; Discover more cards larger; a Settings toggle to show or hide Tools on Home; Time today and Where you left off kept and polished; the Ask button a Settings option, and "explain a reference" and the other helpers as choices inside the Ask sidebar | ⬜ |
+| U4 | **Explora.** Tabs: All · Books (opens on today's See all, with working filter and sort) · Articles (news, articles, Wikipedia) · Comics and magazines (new, only free, legal, commercially usable sources) · Word decks · Ludus · Things to try. The hero holds 7, upright book covers (not tilted), chosen by level, mixing books, comics, articles, things to try and Goodreads-imported books. No subtitles under cards. Level and filter as round icons beside the title icon; a Library icon left of Search | ⬜ |
+| U5 | **Bibliotheca.** An empty "add" placeholder at the end of every section; Explora as a round hand-drawn icon; no icon over a card on hover; Add shows Codex and Thesaurus first, then that room's options | ⬜ |
+| U6 | **Codex.** Continue reading sits better under the header and says what each item is (book, comic, news…) | ⬜ |
+| U7 | **Atlas.** Opens full screen: the map fills the room, Loose threads in a spaced column at the right, the views as a minimal slider at the top, a search icon that opens into a field, − and + at the bottom left | ⬜ |
+| U8 | **Settings: read with the deck first.** An option to study a book's word deck before reading it | ⬜ |
+| U9 | **Thesaurus › My decks.** Minimal and compact, no background colour, decks in a list down the right; the old design as a Settings toggle; books back in the deck format; Today first, with Anki-like figures and a minimal week of what's due; Today's actions (Ludus, review, lightning, sentences) as icons with a small pop-up name; a clearer list (today, last studied, deck). One new non-AI, hand-drawn card design shared by Explora, Bibliotheca and Thesaurus | ⬜ |
+| U10 | **Thesaurus › Dictionary.** Search bar with icon buttons on its right for a custom entry and importing a personal dictionary (a click says what each is); My words becomes Words, its own tab; looking up a word takes the full page | ⬜ |
+| U11 | **Thesaurus › Phrases.** The same principles | ⬜ |
+| U12 | **Diarium.** A minimal overhaul with two tabs, Journal and Writing tasks; the "A few sentences a day is plenty…" lines gone; the day's question centred in a beautiful face, fitted to the level, translated on hover instead of an English line under it; while writing, the helpers (describe a picture, compare drafts, simpler wording…) as small hand-drawn icons under one icon at the top right | ⬜ |
+| U13 | **Things to try.** A fixed page that fits the screen (no sideways swipe), in the new minimal design, with every feature kept | ⬜ |
+| U14 | **Full redesigns: Ludus and Settings** (3.10, 3.13), then Ratio's layout (3.12: a summary always in view, one chapter at a time) | ⬜ |
+
 ## Lemora's website: `lemora-site` (the user, 2026-11-03)
 
 "A super duper, aesthetic, minimal, cute, visually impressive website, full of hand-drawn icons and elements, with a
