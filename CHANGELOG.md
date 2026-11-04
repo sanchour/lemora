@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.13** · 2026-11-04 · U6 Codex's continue reading in line and labelled; U7 Atlas full screen
 - **0.1.0-alpha.12** · 2026-11-04 · U5: Bibliotheca's two-step Add, add places, no hover icons; the first book shelved once
 - **0.1.0-alpha.11** · 2026-11-04 · U4: Explora's new tabs, comics and magazine, the upright seven-book hero
 - **0.1.0-alpha.10** · 2026-11-04 · U1-U3: level-fitted first steps and a first book, the alphabet question at the start, Home's What next redrawn
