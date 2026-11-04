@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.19** · 2026-11-04 · Checkpoint: 3.5 known words from the decks' list; 3.7 no overflow, shelf scroll bars hidden
 - **0.1.0-alpha.18** · 2026-11-04 · Phase U done; U15 skipped
 - **0.1.0-alpha.17** · 2026-11-04 · U14: Ludus, Settings and Ratio redesigned; the plans list only Lemora's rooms; U15 planned (earlier designs per page)
 - **0.1.0-alpha.16** · 2026-11-04 · U12 Diarium's two tabs and centred question; U13 Things to try fitted, no sideways swipe
