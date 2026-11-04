@@ -25,9 +25,9 @@ const WORDS: Array<{ text: string; x: number; y: number; accent?: boolean; rtl?:
 /** An open book, drawn in fine line that draws itself in: stacked pages, text lines, a highlighted word, a sprig, a ribbon and a few sparks of language. */
 function OpenBook() {
   return (
-    <svg viewBox="0 0 260 150" className="h-auto w-[340px] text-ink-soft" aria-hidden>
-      {/* Pages: a soft fill that fades in under the lines. */}
-      <motion.path d="M130 42C106 28 66 26 30 34V126C66 118 106 120 130 134C154 120 194 118 230 126V34C194 26 154 28 130 42Z" fill="var(--raised)" stroke="none" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.05 }} />
+    <svg viewBox="0 0 260 150" className="h-auto w-[340px] text-[#fff3e0]" aria-hidden>
+      {/* Pages: a deep burnt-orange fill that fades in under the lines; the words on it are cream so they stay readable. */}
+      <motion.path d="M130 42C106 28 66 26 30 34V126C66 118 106 120 130 134C154 120 194 118 230 126V34C194 26 154 28 130 42Z" fill="#a24b22" stroke="none" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3, delay: 0.05 }} />
       {/* Stacked page edges, then the cover lines. */}
       <Pen d="M30 130C66 122 106 124 130 138C154 124 194 122 230 130" delay={0.05} fade={0.45} />
       <Pen d="M30 134C66 126 106 128 130 142C154 128 194 126 230 134" delay={0.1} fade={0.3} />
@@ -43,7 +43,7 @@ function OpenBook() {
           y={w.y}
           fontSize={w.size ?? 13}
           textAnchor="middle"
-          className={cx('font-serif', w.accent ? 'fill-accent' : 'fill-current')}
+          className={cx('font-serif', w.accent ? 'fill-[#ffdca6]' : 'fill-current')}
           initial={{ y: 5 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 + i * 0.3, ease: [0.22, 1, 0.36, 1] }}
@@ -55,13 +55,13 @@ function OpenBook() {
         </motion.text>
       ))}
       {/* A sage sprig tucked into the right page. */}
-      <g stroke="#6b8e78" transform="translate(95 55) scale(0.55)">
+      <g stroke="#d3e6cb" transform="translate(95 55) scale(0.55)">
         <Pen d="M206 122C204 112 208 102 216 96" delay={1.9} duration={0.35} />
         <Pen d="M216 96C224 96 228 90 228 84C220 84 216 90 216 96Z" delay={2.15} duration={0.25} />
         <Pen d="M208 110C200 110 196 104 196 100C204 100 208 104 208 110Z" delay={2.3} duration={0.25} />
       </g>
       {/* The bookmark ribbon drops from the top. */}
-      <motion.path {...LINE} className="text-accent" d="M170 8V46L178 40L186 46V10" initial={{ pathLength: 0, y: -8, opacity: 0 }} animate={{ pathLength: 1, y: 0, opacity: 1 }} transition={{ duration: 0.4, delay: 0.75, ease: 'easeOut' }} />
+      <motion.path {...LINE} className="text-[#f3c98b]" d="M170 8V46L178 40L186 46V10" initial={{ pathLength: 0, y: -8, opacity: 0 }} animate={{ pathLength: 1, y: 0, opacity: 1 }} transition={{ duration: 0.4, delay: 0.75, ease: 'easeOut' }} />
     </svg>
   );
 }

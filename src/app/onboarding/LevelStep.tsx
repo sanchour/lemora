@@ -328,12 +328,11 @@ export function LevelStep({ lang, level, seedKnown, onLevel, onSeedKnown }: Leve
         </motion.div>
 
         {/* The switch: skip the common words you already know. */}
-        <motion.div {...step(1.1)} className={cx('mx-auto mt-5 flex w-fit items-center gap-4 transition-opacity duration-300', top === 0 && 'opacity-45')} title={translateUi('You can unmark any word while reading.')}>
+        <motion.div {...step(1.1)} className={cx('mt-5 ml-auto flex w-fit items-center gap-3 transition-opacity duration-300', top === 0 && 'opacity-45')} title={translateUi('You can unmark any word while reading.')}>
           <span className="text-right">
-            <span className="block text-[14px] font-semibold">
+            <span className="block text-[12.5px] text-ink-soft">
               {top > 0 ? <UiText source={'Skip the {0} most common words'} values={[top.toLocaleString()]} /> : <UiText source={'Nothing to skip yet'} />}
             </span>
-            <span className="block text-[12px] text-ink-faint"><UiText source={'Only new words stay marked'} /></span>
           </span>
           <Switch checked={top > 0 && seedKnown} onChange={onSeedKnown} disabled={top === 0} label={translateUi('Mark the {0} most common words as known', [top.toLocaleString()])} />
         </motion.div>

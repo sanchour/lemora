@@ -22,11 +22,11 @@ export function HandMark({ size = 64, className }: { size?: number; className?: 
   return (
     <svg width={size} height={size} viewBox="0 0 96 96" className={className} aria-hidden>
       <g stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round">
-        <Shape d={BACK} fill="#a9c4ae" delay={0} />
+        <Shape d={BACK} fill="var(--mark-sage)" delay={0} />
         <motion.path d="M36 18V22M26 25H46M30 28Q33 37 44 42M42 28Q39 37 28 42" fill="none" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6, delay: 0.5 }} />
-        <Shape d={FRONT} fill="#ee8b48" delay={0.25} />
+        <Shape d={FRONT} fill="var(--mark-orange)" delay={0.25} />
         <motion.path d="M51 67L61 43L71 67M55 60H67" fill="none" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6, delay: 0.75 }} />
-        <Shape d={RIBBON} fill="#b4452a" delay={0.5} />
+        <Shape d={RIBBON} fill="var(--mark-ribbon)" delay={0.5} />
       </g>
     </svg>
   );
