@@ -14493,7 +14493,8 @@
     "src/features/home/HomeClassic.tsx"
   ],
   "Find something to read": [
-    "src/features/home/HomeClassic.tsx"
+    "src/features/home/HomeClassic.tsx",
+    "src/features/home/homeData.ts"
   ],
   "Graded stories, articles, or your own books": [
     "src/features/home/HomeClassic.tsx"
@@ -17026,5 +17027,80 @@
   ],
   "Be honest: it only decides what Lingua shows you first.": [
     "src/app/onboarding/ScriptStep.tsx"
+  ],
+  "Tools on Home": [
+    "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "The circles for each tool at the right of Home. Off leaves Home to what you are reading and what comes next.": [
+    "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "Ask button": [
+    "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "The Ask button at the bottom right, for the tutor and explaining a reference. Alt+T still opens the tutor.": [
+    "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "Ask a question": [
+    "src/features/tutor/AskPanel.tsx"
+  ],
+  "Grammar, words, anything about the language": [
+    "src/features/tutor/AskPanel.tsx"
+  ],
+  "A saying, a name or a cultural nod you came across": [
+    "src/features/tutor/AskPanel.tsx"
+  ],
+  "Write a few lines": [
+    "src/features/home/homeData.ts"
+  ],
+  "Learn the letters": [
+    "src/features/home/homeData.ts"
+  ],
+  "A few letters, their sounds and a first word each.": [
+    "src/features/home/homeData.ts"
+  ],
+  "Read your first story": [
+    "src/features/home/homeData.ts"
+  ],
+  "A tiny first book: a line a page, the easiest words.": [
+    "src/features/home/homeData.ts"
+  ],
+  "Your first words": [
+    "src/features/home/homeData.ts"
+  ],
+  "A small deck of everyday basics to begin with.": [
+    "src/features/home/homeData.ts"
+  ],
+  "The next most common words, after the ones you know.": [
+    "src/features/home/homeData.ts"
+  ],
+  "Pick up where you left off.": [
+    "src/features/home/homeData.ts"
+  ],
+  "The cards that are due, before they slip.": [
+    "src/features/home/homeData.ts"
+  ],
+  "Play with your words": [
+    "src/features/home/homeData.ts"
+  ],
+  "A quick game with the words you are learning.": [
+    "src/features/home/homeData.ts"
+  ],
+  "A sentence or two about your day.": [
+    "src/features/home/homeData.ts"
+  ],
+  "Books and stories at your level.": [
+    "src/features/home/homeData.ts"
+  ],
+  "Read an article you like": [
+    "src/features/home/homeData.ts"
+  ],
+  "Paste a link or any text.": [
+    "src/features/home/homeData.ts"
+  ],
+  "Something to try today": [
+    "src/features/home/homeData.ts"
+  ],
+  "A small thing to do in the language, away from the screen.": [
+    "src/features/home/homeData.ts"
   ]
 }

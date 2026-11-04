@@ -51,7 +51,7 @@ export function AppShell() {
   const immersive = isImmersive(pathname, layout === 'wide');
   // The mini player shows everywhere except where the full player is on screen.
   const showMini = !immersive && !pathname.startsWith('/sonus/play/') && !pathname.startsWith('/sonus/station/') && !pathname.startsWith('/visio/watch/');
-  const { language } = useApp();
+  const { language, settings } = useApp();
   const fullMotion = useFullMotion();
   usePlanUpkeep();
 
@@ -120,7 +120,7 @@ export function AppShell() {
       <GlobalSearchModal />
       <PlansSheet />
       <AskPanel />
-      {showMini && !pathname.startsWith('/settings') && !pathname.startsWith('/ordo') && (
+      {showMini && settings.ui.askButton !== false && !pathname.startsWith('/settings') && !pathname.startsWith('/ordo') && (
         <AskButton variant="floating" />
       )}
     </>

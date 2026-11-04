@@ -14,7 +14,6 @@ import {
   CursusNextStepCard,
   ContinueLearningSection,
   DiscoverMoreSection,
-  AskFloatingButton,
   HomeLayoutSwitcher,
   GreetingWithNameUnderline,
 } from './homeComponents';
@@ -80,9 +79,6 @@ export function HomeTopline() {
 
       {/* ── Discover More ─────────────────────────────────────────────────────── */}
       <DiscoverMoreSection items={discoverItems} variant="cards4" />
-
-      {/* ── Floating Ask ? ───────────────────────────────────────────────────── */}
-      <AskFloatingButton />
     </div>
   );
 }

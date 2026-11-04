@@ -151,6 +151,21 @@ export function AppearanceSection({
         <Switch label={translateUi('Language touches')} checked={flavour} onChange={(on) => void patchSetting('ui', { flavour: on })} />
       </div>
 
+      <div className="mt-6 space-y-5">
+        <ToggleRow
+          title={translateUi('Tools on Home')}
+          description={translateUi('The circles for each tool at the right of Home. Off leaves Home to what you are reading and what comes next.')}
+          checked={settings?.ui.homeTools !== false}
+          onChange={(on) => void patchSetting('ui', { homeTools: on })}
+        />
+        <ToggleRow
+          title={translateUi('Ask button')}
+          description={translateUi('The Ask button at the bottom right, for the tutor and explaining a reference. Alt+T still opens the tutor.')}
+          checked={settings?.ui.askButton !== false}
+          onChange={(on) => void patchSetting('ui', { askButton: on })}
+        />
+      </div>
+
       <div className="mt-6">
         <ToggleRow
           title={translateUi('Tips and explanations')}

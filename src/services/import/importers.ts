@@ -5,6 +5,7 @@ import { looksTimed, parseSubtitles } from '@/core/parsers/subtitles';
 import { decodeText, textToChapters } from '@/core/parsers/text';
 import type { ChapterDraft } from '@/core/parsers/text';
 import { SAMPLES } from '@/core/lang/samples';
+import { FIRST_BOOKS } from '@/core/lang/firstBooks';
 import { db } from '@/data/db';
 import { addShelfItems, addText, deleteText } from '@/data/library';
 import type { NewText } from '@/data/library';
@@ -149,5 +150,22 @@ export async function importSample(lang: string): Promise<string> {
     kind: 'article',
     source: 'paste',
     chapters: [{ title: sample.title, blocks: [{ t: 'h', text: sample.title }, ...sample.paragraphs.map((text) => ({ t: 'p' as const, text }))] }],
+  });
+}
+
+/** A complete beginner's first book (Lemora U1): added to the library once (or the welcome text where none is written yet), then reused. */
+export async function importFirstBook(lang: string): Promise<string> {
+  const book = FIRST_BOOKS[lang];
+  if (!book) return importSample(lang);
+  const existing = await db.texts.where('lang').equals(lang).filter((t) => !t.deletedAt && t.title === book.title && t.author === 'Lingua').first();
+  if (existing) return existing.id;
+  return addText({
+    lang,
+    title: book.title,
+    author: 'Lingua',
+    kind: 'article',
+    source: 'paste',
+    readingGenre: 'children',
+    chapters: [{ title: book.title, blocks: [{ t: 'h', text: book.title }, ...book.paragraphs.map((text) => ({ t: 'p' as const, text }))] }],
   });
 }

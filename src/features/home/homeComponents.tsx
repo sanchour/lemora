@@ -1,11 +1,10 @@
-import { useState, useMemo, useRef, useCallback, useEffect, useLayoutEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, useLayoutEffect } from 'react';
 import { Link } from 'react-router';
 import {
   ArrowRight,
   BookOpen,
   ChevronLeft,
   ChevronRight,
-  Sparkles,
   Route,
   Languages,
   BookA,
@@ -22,6 +21,7 @@ import { patchSetting } from '@/data/settings';
 import type { Settings } from '@/data/settings';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { cx } from '@/lib/cx';
+import { Hand } from '@/design/drawings';
 import {
   useHomeTools,
   type HomeToolItem,
@@ -523,13 +523,8 @@ export function WhatNextSection({
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
 
-  // Random initial offset to randomly cycle different suggestions on load
-  const [cycleIndex] = useState(() => Math.floor(Math.random() * Math.max(1, pool.length)));
-
-  const displayItems = useMemo(() => {
-    if (pool.length === 0) return [];
-    return [...pool.slice(cycleIndex), ...pool.slice(0, cycleIndex)];
-  }, [pool, cycleIndex]);
+  // The order is chosen for the learner's level and today's activity (core/flow/steps): best first, never shuffled.
+  const displayItems = pool;
 
   const updateScrollState = useCallback(() => {
     const el = rowRef.current;
@@ -595,31 +590,29 @@ export function WhatNextSection({
           touchAction: 'pan-x pan-y',
         }}
       >
-        {displayItems.map((item) => {
+        {displayItems.map((item, i) => {
           const Icon = item.icon;
           return (
+            // A page-like card: a pen-drawn icon in its soft circle, the room in small capitals, the step, one line why.
             <Link
               key={item.id}
               to={item.to}
-              className="group relative flex w-[148px] sm:w-[164px] shrink-0 snap-start flex-col items-start gap-2.5 rounded-[20px] p-3.5 sm:p-4 transition-[border-color,box-shadow] duration-200 hover:shadow-elev-1"
-              style={{
-                background: `linear-gradient(145deg, color-mix(in oklab, ${item.hue} 22%, var(--surface)), color-mix(in oklab, ${item.hue} 15%, var(--surface)))`,
-                border: `1.5px solid color-mix(in oklab, ${item.hue} 40%, var(--line))`,
-              }}
+              className="group relative flex w-[188px] shrink-0 snap-start flex-col items-start rounded-[22px] border border-line px-4 pt-4 pb-3.5 transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-line-strong"
             >
-              <span
-                className="grid size-9 place-items-center rounded-xl shadow-2xs"
-                style={{
-                  background: `color-mix(in oklab, ${item.hue} 28%, var(--surface))`,
-                  border: `1px solid color-mix(in oklab, ${item.hue} 45%, var(--line))`,
-                }}
-              >
-                <Icon size={17} strokeWidth={2.3} aria-hidden style={{ color: item.hue }} />
+              <span className="relative grid size-12 place-items-center rounded-full transition-transform duration-300 group-hover:-rotate-6" style={{ background: `color-mix(in oklab, ${item.hue} 16%, transparent)` }}>
+                {item.hand ? <Hand name={item.hand} size={28} /> : <Icon size={20} strokeWidth={1.8} aria-hidden className="text-ink-soft" />}
+                {i === 0 && <span className="absolute -top-0.5 -right-0.5 size-2.5 rounded-full bg-accent" aria-hidden />}
               </span>
-
-              <h3 className="font-serif text-[15px] sm:text-[16px] font-bold leading-snug text-ink transition-colors group-hover:text-accent-text">
-                {item.title}
+              <span className="mt-3.5 text-[10.5px] font-bold tracking-[0.14em] text-ink-faint uppercase"><UiText source={item.room} /></span>
+              <h3 className="mt-1 line-clamp-2 font-serif text-[16.5px] font-semibold leading-snug text-ink transition-colors group-hover:text-accent-text">
+                {item.title.startsWith('Review ') || item.title.startsWith('Read “') || item.title.startsWith('The next ') ? item.title : <UiText source={item.title} />}
               </h3>
+              <p className="mt-1 line-clamp-2 text-[12.5px] leading-snug text-ink-faint"><UiText source={item.detail} /></p>
+              {item.percent !== undefined && (
+                <span className="mt-3 h-[3px] w-full overflow-hidden rounded-full bg-line/70" aria-hidden>
+                  <span className="block h-full origin-left rounded-full" style={{ transform: `scaleX(${item.percent / 100})`, background: item.hue }} />
+                </span>
+              )}
             </Link>
           );
         })}
@@ -732,7 +725,7 @@ export function DiscoverMoreSection({
             <Link
               key={item.id}
               to={item.to}
-              className="group block w-[210px] sm:w-[230px] shrink-0 snap-start text-left"
+              className="group block w-[260px] sm:w-[290px] shrink-0 snap-start text-left"
             >
               {/* Unified Aspect Ratio Container (All exact same size, no grow on hover) */}
               <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[18px] sm:rounded-[20px] border border-line/60 bg-surface shadow-elev-1 transition-[border-color,box-shadow] duration-200 group-hover:border-line-strong group-hover:shadow-elev-2">
@@ -914,20 +907,3 @@ export function ToolsBar({
 
 // ── Floating Ask ? Button ───────────────────────────────────────────────────
 
-export function AskFloatingButton() {
-  const translateUi = useUi();
-  return (
-    <button
-      type="button"
-      onClick={() => {
-        // Open reference drawer
-        window.dispatchEvent(new CustomEvent('lingua:open-reference', { detail: '' }));
-      }}
-      aria-label={translateUi('Ask')}
-      className="fixed right-6 bottom-6 z-20 flex items-center gap-2 rounded-full border border-line-strong/60 bg-raised/95 px-4 py-2.5 font-sans text-[13.5px] font-semibold text-ink shadow-elev-2 backdrop-blur-md transition-[transform,box-shadow] hover:-translate-y-0.5 hover:shadow-elev-3 active:scale-95"
-    >
-      <Sparkles size={16} className="text-accent-text" aria-hidden />
-      <span><UiText source={'Ask'} /> ?</span>
-    </button>
-  );
-}

@@ -1,3 +1,4 @@
+import { cx } from '@/lib/cx';
 import { useApp } from '@/app/context';
 import { usePlan } from '@/features/plans/usePlan';
 import { useUI } from '@/state/ui';
@@ -15,7 +16,6 @@ import {
   CursusNextStepCard,
   WhatNextSection,
   DiscoverMoreSection,
-  AskFloatingButton,
   GreetingWithNameUnderline,
 } from './homeComponents';
 import { TimeADayMeter } from './TimeADayMeter';
@@ -32,7 +32,7 @@ import { shows } from '@/product';
  *   - Discover more: In style of Explora (all same size cards, daily rotating)
  */
 export function HomeRightRail() {
-  const { language } = useApp();
+  const { language, settings } = useApp();
   const plan = usePlan();
   const openPlans = useUI((s) => s.openPlans);
   const { eyebrow, greeting, name } = useHomeHeader();
@@ -42,12 +42,14 @@ export function HomeRightRail() {
   const cursusStep = useHomeCursus();
   const whatNextItems = useHomeWhatNext();
   const discoverItems = useHomeDiscover();
+  // Lemora U3: Tools on Home can be turned off in Settings › Appearance.
+  const showTools = settings.ui.homeTools !== false;
 
   return (
     <div className="mx-auto max-w-[1152px] pb-20">
       {/* ── Two-Column Atelier: Left Canvas (Header + Work area) + Right Rail (Tools high up) ─── */}
       <main className="space-y-6">
-        <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[1fr_auto]">
+        <div className={cx('grid grid-cols-1 items-start gap-7', showTools && 'lg:grid-cols-[1fr_auto]')}>
           {/* Left Column: Header + Learning Content ──────────────────────────── */}
           <div className="min-w-0 space-y-5">
             {/* Top Header */}
@@ -87,9 +89,11 @@ export function HomeRightRail() {
           </div>
 
           {/* Right Column: Tools, its heading on the greeting's line and its icons level with the cards ─── */}
-          <div className="pt-0.5 lg:pt-10">
-            <ToolsBar mode="rail" />
-          </div>
+          {showTools && (
+            <div className="pt-0.5 lg:pt-10">
+              <ToolsBar mode="rail" />
+            </div>
+          )}
         </div>
 
         {/* ── Full-Width Sections: What next & Discover more (close to Next in Cursus) ── */}
@@ -99,9 +103,6 @@ export function HomeRightRail() {
         {/* 4. Discover more: In style of Explora (all same size cards, daily rotating) */}
         <DiscoverMoreSection items={discoverItems} />
       </main>
-
-      {/* ── Floating Ask ? ───────────────────────────────────────────────────── */}
-      <AskFloatingButton />
     </div>
   );
 }

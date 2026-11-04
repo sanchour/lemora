@@ -25,6 +25,8 @@ import {
 import { useApp } from '@/app/context';
 import { getLanguage } from '@/core/lang/languages';
 import { suggestTutorActions } from '@/core/tutor/context';
+import { Hand } from '@/design/drawings';
+import { selectedText } from '@/features/culture/ReferenceHelp';
 import type { TutorActionKind, TutorContext, TutorResponse } from '@/core/tutor/types';
 import { saveGrammarNote } from '@/data/grammarUserData';
 import { DEFAULT_SETTINGS, TUTOR_PRESETS, useSettings } from '@/data/settings';
@@ -292,6 +294,22 @@ export function AskPanel() {
                       </button>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {/* Lemora U3: the helpers, as choices: ask anything, or explain a reference (a saying, a name, a cultural nod). */}
+              {(!activeContext || activeContext.kind === 'general') && (
+                <div className="grid grid-cols-2 gap-2.5">
+                  <button type="button" onClick={() => inputRef.current?.focus()} className="group flex flex-col items-start gap-2 rounded-2xl border border-line px-3.5 py-3 text-left transition-colors hover:border-line-strong">
+                    <span className="grid size-10 place-items-center rounded-full bg-accent-soft transition-transform group-hover:-rotate-6"><Hand name="talk" size={24} /></span>
+                    <span className="font-serif text-[15px] font-semibold"><UiText source={'Ask a question'} /></span>
+                    <span className="text-[12px] leading-snug text-ink-faint"><UiText source={'Grammar, words, anything about the language'} /></span>
+                  </button>
+                  <button type="button" onClick={() => { const text = selectedText(); close(); useUI.getState().openReference(text); }} className="group flex flex-col items-start gap-2 rounded-2xl border border-line px-3.5 py-3 text-left transition-colors hover:border-line-strong">
+                    <span className="grid size-10 place-items-center rounded-full bg-sage-soft transition-transform group-hover:-rotate-6"><Hand name="lamp" size={24} /></span>
+                    <span className="font-serif text-[15px] font-semibold"><UiText source={'Explain a reference'} /></span>
+                    <span className="text-[12px] leading-snug text-ink-faint"><UiText source={'A saying, a name or a cultural nod you came across'} /></span>
+                  </button>
                 </div>
               )}
 

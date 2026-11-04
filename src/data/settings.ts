@@ -254,6 +254,9 @@ export interface Settings {
     /** Home's layout: Topline tools, Right rail, Bottom shelf, Today (5.1-2c) or Classic. */
     /** 'desk': Lemora's own Home (src/app/home), a choice where the build has it (src/product.ts). */
     homeLayout: 'today' | 'classic' | 'topline' | 'rail' | 'shelf' | 'desk';
+    /** Lemora U3: the tools on Home (on unless turned off), and the Ask button at the bottom right (on unless turned off). */
+    homeTools?: boolean;
+    askButton?: boolean;
     /** A touch of the studied language in the design (5.1-4b, design/flavours.ts). */
     flavour: boolean;
     /** Settings › Lab › Design notes (7-0b): click any element to pin a note. Off for learners. */

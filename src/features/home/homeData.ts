@@ -23,6 +23,13 @@ import type { ImageQuery } from '@/services/mundus/images';
 import { homeGreeting } from './HomeClassic';
 import { SECTIONS, shownFor } from '@/app/sections';
 import { reaches, shows } from '@/product';
+import { flowSteps, starterFor } from '@/core/flow/steps';
+import type { FlowStep } from '@/core/flow/steps';
+import { FIRST_BOOKS } from '@/core/lang/firstBooks';
+import { useDecks } from '@/data/decks';
+import { starterKey } from '@/data/starter';
+import { useToolDays } from '@/data/toolGoals';
+import type { HandName } from '@/design/drawings';
 
 /** Core tool entry with SVG icon and route */
 export interface HomeToolItem {
@@ -91,17 +98,19 @@ export function useHomeLeftOff(): LeftOffData {
       };
     }
 
-    const sample = SAMPLES[language.id] ?? SAMPLES.en;
+    // Nothing started yet: a beginner is offered the tiny first book (Lemora U1), others the welcome text.
+    const first = language.level === 'A0' || language.level === 'A1' ? FIRST_BOOKS[language.id] : undefined;
+    const sample = first ?? SAMPLES[language.id] ?? SAMPLES.en;
     return {
       id: 'sample',
       title: sample.title,
       author: target?.name ?? 'Sample Story',
-      to: '/codex',
+      to: first ? '/codex/first' : '/codex',
       percent: 0,
       book: undefined,
       isStarter: true,
     };
-  }, [allTexts, progress, language.id, target]);
+  }, [allTexts, progress, language.id, language.level, target]);
 }
 
 /** Cursus step: Alphabet / Marks group, Course lesson, or Grammar topic */
@@ -267,14 +276,16 @@ export interface WhatNextItem {
   actionLabel: string;
   hue: string;
   percent?: number;
+  /** The hand-drawn icon (design/drawings) shown instead of the line icon. */
+  hand?: HandName;
 }
 
 export type ContinueItem = WhatNextItem;
 
 /**
- * Suggestions pool for "What next":
- * Randomly cycles diverse activities across all of Lingua:
- * Sermo, Colloquium, Thesaurus, Codex, Sonus, Visio, Ludus, Diarium, Cantus, Studio.
+ * What next (Lemora U1, U3): the steps that fit the learner's level and today's activity first (core/flow/steps), then
+ * the rest of the build's rooms. A complete beginner gets the alphabet when its letters are new, a tiny first book and a
+ * small starter deck; a reader gets their book, their reviews and something new. Only rooms this build has.
  */
 export function useHomeWhatNext(): WhatNextItem[] {
   const { language } = useApp();
@@ -282,17 +293,45 @@ export function useHomeWhatNext(): WhatNextItem[] {
   const allTexts = useLibrary(lang);
   const progress = useAllProgress();
   const due = useDueSummary(lang);
+  const decks = useDecks(lang);
+  const today = useToolDays(lang, 1)?.[0];
 
   return useMemo(() => {
-    // Check if user has an active book in progress
     const readable = (allTexts ?? []).filter((t) => t.kind !== 'shelfItem' && !t.finishedAt);
     const activeBook = readable
       .filter((t) => t.lastOpenedAt || (progress?.get(t.id)?.percent ?? 0) > 0)
       .sort((a, b) => (b.lastOpenedAt ?? b.createdAt) - (a.lastOpenedAt ?? a.createdAt))[0];
     const bookPct = activeBook ? Math.round((progress?.get(activeBook.id)?.percent ?? 0) * 100) : 0;
     const dueCount = (due?.due ?? 0) + (due?.fresh ?? 0);
+    const minute = (ms = 0) => ms >= 60_000;
+    const spec = starterFor(language.level, language.seededKnownTopN ?? 0);
+    const firstBook = FIRST_BOOKS[lang];
 
-    const pool: WhatNextItem[] = [
+    const FLOW: Partial<Record<FlowStep, WhatNextItem>> = {
+      alphabet: { id: 'flow:alphabet', room: 'Alphabet', title: 'Learn the letters', detail: 'A few letters, their sounds and a first word each.', to: '/cursus/alphabets', icon: Languages, hand: 'letter', badge: 'Alphabet', actionLabel: 'Start', hue: '#6f9cc0' },
+      'first-book': { id: 'flow:first-book', room: 'Codex', title: firstBook ? `Read “${firstBook.title}”` : 'Read your first story', detail: 'A tiny first book: a line a page, the easiest words.', to: '/codex/first', icon: BookOpen, hand: 'book', badge: 'First book', actionLabel: 'Read', hue: '#6b8e78' },
+      'starter-deck': { id: 'flow:starter-deck', room: 'Thesaurus', title: spec.kind === 'theme' ? 'Your first words' : `The next ${spec.milestone.toLocaleString()} words`, detail: spec.kind === 'theme' ? 'A small deck of everyday basics to begin with.' : 'The next most common words, after the ones you know.', to: `/thesaurus/ready/${starterKey(spec)}`, icon: Layers, hand: 'cards', badge: 'Starter deck', actionLabel: 'Open', hue: '#d49b54' },
+      continue: activeBook ? { id: 'flow:continue', room: 'Codex', title: activeBook.title, detail: 'Pick up where you left off.', to: `/codex/read/${activeBook.id}`, icon: BookOpen, hand: 'bookmark', badge: 'Reading', actionLabel: 'Continue', hue: '#6b8e78', percent: bookPct > 0 ? bookPct : undefined } : undefined,
+      review: { id: 'flow:review', room: 'Thesaurus', title: dueCount > 0 ? `Review ${dueCount} cards` : 'Review flashcards', detail: 'The cards that are due, before they slip.', to: '/thesaurus/study/all?mode=recall', icon: Layers, hand: 'repeat', badge: 'Recall', actionLabel: 'Start', hue: '#d49b54', percent: dueCount > 0 ? Math.min(100, dueCount * 5) : undefined },
+      ludus: { id: 'flow:ludus', room: 'Ludus', title: 'Play with your words', detail: 'A quick game with the words you are learning.', to: '/thesaurus/games', icon: Gamepad2, hand: 'play', badge: 'Play', actionLabel: 'Play', hue: '#8a7fb0' },
+      write: { id: 'flow:write', room: 'Diarium', title: 'Write a few lines', detail: 'A sentence or two about your day.', to: '/mentis/diarium', icon: PenLine, hand: 'quill', badge: 'Writing', actionLabel: 'Write', hue: '#a07858' },
+      read: { id: 'flow:read', room: 'Explora', title: 'Find something to read', detail: 'Books and stories at your level.', to: '/explora?kind=books', icon: BookOpen, hand: 'glasses', badge: 'Reading', actionLabel: 'Browse', hue: '#6b8e78' },
+      import: { id: 'flow:import', room: 'Codex', title: 'Read an article you like', detail: 'Paste a link or any text.', to: '/codex/new', icon: Bookmark, hand: 'letter', badge: 'Library', actionLabel: 'Add', hue: '#6b8e78' },
+      try: { id: 'flow:try', room: 'Explora', title: 'Something to try today', detail: 'A small thing to do in the language, away from the screen.', to: '/explora?kind=try', icon: Sparkles, hand: 'candle', badge: 'Try', actionLabel: 'See', hue: '#c86d51' },
+    };
+    const order = flowSteps({
+      level: language.level,
+      nonLatin: (getLanguage(lang)?.script ?? 'Latn') !== 'Latn',
+      script: language.script,
+      due: dueCount,
+      hasDecks: Boolean(decks?.length),
+      reading: Boolean(activeBook),
+      did: { read: minute(today?.byTool.codex), review: minute(today?.byTool.thesaurus), write: minute(today?.byTool.diarium), ludus: minute(today?.byTool.ludus), alphabet: minute(today?.byTool.alphabet) },
+    });
+    const flow = order.flatMap((step) => (FLOW[step] ? [FLOW[step]!] : []));
+
+    // The rooms a fuller build has (Lingua), after the level's own steps.
+    const rooms: WhatNextItem[] = [
       // 1. Sermo (AI Tutor)
       {
         id: 'sermo:chat',
@@ -441,9 +480,11 @@ export function useHomeWhatNext(): WhatNextItem[] {
       },
     ];
 
+    // The level's steps speak for their rooms; the other rooms (Lingua's Sermo, Sonus…) follow.
+    const covered = new Set(Object.values(FLOW).map((f) => f!.room));
     // Only what leads to a room this build has (src/product.ts).
-    return pool.filter((s) => reaches(s.to));
-  }, [allTexts, progress, due]);
+    return [...flow, ...rooms.filter((r) => !covered.has(r.room))].filter((s) => reaches(s.to));
+  }, [allTexts, progress, due, decks, today, language.level, language.script, language.seededKnownTopN, lang]);
 }
 
 /** Backward-compatibility alias */

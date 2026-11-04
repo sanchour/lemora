@@ -14,7 +14,6 @@ import {
   CursusNextStepCard,
   ContinueLearningSection,
   DiscoverMoreSection,
-  AskFloatingButton,
   HomeLayoutSwitcher,
   GreetingWithNameUnderline,
 } from './homeComponents';
@@ -83,9 +82,6 @@ export function HomeBottomShelf() {
       <div className="rounded-[24px] border border-line/75 bg-surface/60 p-5 sm:p-6">
         <ToolsBar mode="shelf" />
       </div>
-
-      {/* ── Floating Ask ? ───────────────────────────────────────────────────── */}
-      <AskFloatingButton />
     </div>
   );
 }

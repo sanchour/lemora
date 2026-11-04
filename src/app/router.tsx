@@ -5,6 +5,7 @@ import HomeRouter from './home/HomeRouter';
 import {
   AlphabetPage,
   AtlasRoom,
+  FirstBook,
   BibliothecaPage,
   BookDetailsPage,
   CodexPage,
@@ -61,6 +62,7 @@ export const router = createBrowserRouter(
         { path: 'codex/comprehension/:textId/:chapterIndex', element: <ReadingPracticePage /> },
         { path: 'codex/read/:textId', element: <ReaderPage /> },
         { path: 'codex/new', element: <NewTextPage /> },
+        { path: 'codex/first', element: <FirstBook /> },
         { path: 'codex/book/:textId', element: <BookDetailsPage /> },
         { path: 'thesaurus', element: <ThesaurusPage /> },
         // Atlas, Thesaurus's word map, as a room of its own; its old tab address opens it.
