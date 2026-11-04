@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.21** · 2026-11-04 · Checkpoint: 3.2 showcase moved to Lingua-Launch, 3.3 map regions, 3.4 level step, 3.6 language picker
 - **0.1.0-alpha.20** · 2026-11-04 · Fix Home crash with no book started; 3.6 languages-you-speak suggestions
 - **0.1.0-alpha.19** · 2026-11-04 · Checkpoint: 3.5 known words from the decks' list; 3.7 no overflow, shelf scroll bars hidden
 - **0.1.0-alpha.18** · 2026-11-04 · Phase U done; U15 skipped
