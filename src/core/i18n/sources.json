@@ -17002,5 +17002,29 @@
   ],
   "Every word you have, as a map": [
     "src/features/home/homeData.ts"
+  ],
+  "Yes, I can read it": [
+    "src/app/onboarding/ScriptStep.tsx"
+  ],
+  "Straight to books and words": [
+    "src/app/onboarding/ScriptStep.tsx"
+  ],
+  "A little": [
+    "src/app/onboarding/ScriptStep.tsx"
+  ],
+  "Some letters still need a look": [
+    "src/app/onboarding/ScriptStep.tsx"
+  ],
+  "Not yet": [
+    "src/app/onboarding/ScriptStep.tsx"
+  ],
+  "We start with the alphabet": [
+    "src/app/onboarding/ScriptStep.tsx"
+  ],
+  "Can you read {0} letters?": [
+    "src/app/onboarding/ScriptStep.tsx"
+  ],
+  "Be honest: it only decides what Lingua shows you first.": [
+    "src/app/onboarding/ScriptStep.tsx"
   ]
 }

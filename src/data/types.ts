@@ -38,6 +38,9 @@ export interface Sighting extends Synced {
 
 // ── Profile & settings ──────────────────────────────────────────────────────
 
+/** Whether the learner can read the language's letters (asked at the first start for a script other than Latin). */
+export type ScriptKnowledge = 'reads' | 'some' | 'new';
+
 export interface LanguageProfile extends Synced {
   /** Target language code, e.g. 'ru'. */
   id: Lang;
@@ -59,6 +62,8 @@ export interface LanguageProfile extends Synced {
   flag?: string;
   /** The level the learner set out to reach (the first start's goal, 5.1-2b). */
   goal?: CefrLevel;
+  /** Lemora U2: can the learner read the script? Unset for Latin-script languages. */
+  script?: ScriptKnowledge;
 }
 
 export interface SettingRow {

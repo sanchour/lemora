@@ -8069,5 +8069,12 @@
   "{0} recalled (30 days)": "تذكّر {0} (30 يومًا)",
   "{0} · Word map": "{0} · خريطة الكلمات",
   "Word map": "خريطة الكلمات",
-  "Every word you have, as a map": "كل كلماتك على هيئة خريطة"
+  "Every word you have, as a map": "كل كلماتك على هيئة خريطة",
+  "Yes, I can read it": "نعم، أستطيع قراءته",
+  "Straight to books and words": "مباشرة إلى الكتب والكلمات",
+  "A little": "قليلًا",
+  "Some letters still need a look": "بعض الحروف ما زالت تحتاج إلى نظرة",
+  "We start with the alphabet": "نبدأ بالأبجدية",
+  "Can you read {0} letters?": "هل تستطيع قراءة حروف هذه اللغة ({0})؟",
+  "Be honest: it only decides what Lingua shows you first.": "كن صادقًا: هذا يحدد فقط ما يعرضه Lingua عليك أولًا."
 }

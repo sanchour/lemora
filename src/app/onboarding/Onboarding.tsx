@@ -26,6 +26,8 @@ import { defaultGoal, GoalStep } from './GoalStep';
 import { AboutPage, NamePage, ROOM_COUNT, roomNextLabel, WelcomePage } from './IntroPages';
 import { LanguageStep } from './LanguageStep';
 import { LevelStep } from './LevelStep';
+import { needsScriptStep, ScriptStep } from './ScriptStep';
+import type { ScriptKnowledge } from '@/data/types';
 import { FIRST } from './pages';
 import type { Page } from './pages';
 import { SpeakStep, spokenName } from './SpeakStep';
@@ -36,7 +38,7 @@ import { WhyStep } from './WhyStep';
  * The first start (5.1-2b): your name, a welcome and what Lingua does, then seven steps that build up
  * to the plans. Adding another language: its language, level and goal.
  */
-const ANOTHER: Page[] = ['language', 'level', 'goal'];
+const ANOTHER: Page[] = ['language', 'script', 'level', 'goal'];
 const INTRO = new Set<Page>(['name', 'welcome', 'about']);
 const ORDER: CefrLevel[] = ['A0', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
@@ -63,11 +65,13 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const settings = useSettings();
   const active = useActiveLanguage();
   const replaying = replay !== undefined;
-  const pages = canCancel && !replaying ? ANOTHER : FIRST;
+  const [target, setTarget] = useState<string | null>(replaying ? (active?.id ?? null) : null);
+  const [script, setScript] = useState<ScriptKnowledge | null>(null);
+  // The alphabet question only for a language in another script; it comes after the language is chosen, so no page shifts under you.
+  const pages = (canCancel && !replaying ? ANOTHER : FIRST).filter((p) => p !== 'script' || needsScriptStep(target));
   const [index, setIndex] = useState(replay ?? 0);
   const [dir, setDir] = useState(1);
   const [name, setName] = useState<string | null>(null);
-  const [target, setTarget] = useState<string | null>(replaying ? (active?.id ?? null) : null);
   const [level, setLevel] = useState<Level>('A0');
   const [seedKnown, setSeedKnown] = useState(true);
   const [spoken, setSpoken] = useState<Spoken[]>(() => [{ code: 'en', level: null }]);
@@ -97,6 +101,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
   const canContinue =
     page === 'name' ? nameNow.trim().length > 0
     : page === 'language' ? target !== null
+    : page === 'script' ? script !== null
     : page === 'speak' ? spoken.length > 0 && spoken.every((s) => s.level !== null)
     : page === 'why' ? reasonsNow.length > 0
     : page === 'goal' ? goalStage === 1 || goalPicked
@@ -125,6 +130,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
         native: nativeOf(spoken, target),
         level,
         seedKnown,
+        ...(needsScriptStep(target) && script ? { script } : {}),
         theme,
         minutes,
         goal: goalNow,
@@ -244,6 +250,7 @@ export default function Onboarding({ canCancel = false, replay }: { canCancel?: 
               {page === 'welcome' && <WelcomePage name={nameNow} />}
               {page === 'about' && <AboutPage room={room} onRoom={setRoom} />}
               {page === 'language' && <LanguageStep target={target} onTarget={setTarget} />}
+              {page === 'script' && target && <ScriptStep lang={target} value={script} onValue={setScript} />}
               {page === 'level' && target && <LevelStep lang={target} level={level} seedKnown={seedKnown} onLevel={setLevel} onSeedKnown={setSeedKnown} />}
               {page === 'speak' && <SpeakStep spoken={spoken} target={target} level={level} onSpoken={setSpoken} />}
               {page === 'why' && <WhyStep language={languageName} reasons={reasonsNow} onReasons={setReasons} />}

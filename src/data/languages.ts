@@ -7,7 +7,7 @@ import { getLanguage } from '@/core/lang/languages';
 import { localDateKey } from '@/lib/format';
 import { getSettings, patchSetting, setSetting } from './settings';
 import type { Settings, ThemePref } from './settings';
-import type { Capability, CefrLevel, LanguageProfile } from './types';
+import type { Capability, CefrLevel, LanguageProfile, ScriptKnowledge } from './types';
 
 /** The language being studied right now; `null` before onboarding, `undefined` while loading. */
 export function useActiveLanguage(): LanguageProfile | null | undefined {
@@ -27,6 +27,8 @@ export interface OnboardingChoice {
   learner?: Settings['learner'];
   /** The first start's "You speak" (5.1-2b): written into Tabula with the language being learned. */
   spoken?: Array<{ id: string; name: string; level: CefrLevel; native: boolean }>;
+  /** Can the learner read the script (asked only for a script other than Latin)? */
+  script?: ScriptKnowledge;
 }
 
 export async function completeOnboarding(choice: OnboardingChoice, database: LinguaDB = db): Promise<void> {
@@ -43,6 +45,7 @@ export async function completeOnboarding(choice: OnboardingChoice, database: Lin
       dailyGoal: choice.minutes ? { reviews: 50, listenMinutes: 10, ...existing?.dailyGoal, readMinutes: choice.minutes } : (existing?.dailyGoal ?? { reviews: 50, readMinutes: 15, listenMinutes: 10 }),
       seededKnownTopN: choice.seedKnown ? getLevel(choice.level).seedKnownTopN : 0,
       goal: choice.goal ?? existing?.goal,
+      ...((choice.script ?? existing?.script) ? { script: choice.script ?? existing?.script } : {}),
       createdAt: existing?.createdAt ?? now,
       updatedAt: now,
     };

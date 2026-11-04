@@ -4118,7 +4118,7 @@
   "Not started": "未开始",
   "Not synced yet": "尚未同步",
   "Not today": "不是今天",
-  "Not yet": "还没有",
+  "Not yet": "还不会",
   "NotAllowedError": "不允许错误",
   "NotFoundError": "未发现错误",
   "Lyrics that light up as they’re sung, every word a tap away": "歌词一唱就亮起来，每一个字都轻按一下",
@@ -8069,5 +8069,12 @@
   "{0} recalled (30 days)": "记住 {0}（30 天）",
   "{0} · Word map": "{0} · 词汇地图",
   "Word map": "词汇地图",
-  "Every word you have, as a map": "你所有的词，画成一张地图"
+  "Every word you have, as a map": "你所有的词，画成一张地图",
+  "Yes, I can read it": "会，我能读",
+  "Straight to books and words": "直接开始读书和学词",
+  "A little": "一点点",
+  "Some letters still need a look": "有些字母还得想一想",
+  "We start with the alphabet": "我们从字母开始",
+  "Can you read {0} letters?": "你能读懂{0}的文字吗？",
+  "Be honest: it only decides what Lingua shows you first.": "如实回答：这只决定 Lingua 先给你看什么。"
 }

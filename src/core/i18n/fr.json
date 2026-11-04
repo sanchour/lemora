@@ -8069,5 +8069,12 @@
   "{0} recalled (30 days)": "{0} retenu (30 jours)",
   "{0} · Word map": "{0} · Carte des mots",
   "Word map": "Carte des mots",
-  "Every word you have, as a map": "Tous vos mots, comme une carte"
+  "Every word you have, as a map": "Tous vos mots, comme une carte",
+  "Yes, I can read it": "Oui, je sais le lire",
+  "Straight to books and words": "Directement aux livres et aux mots",
+  "A little": "Un peu",
+  "Some letters still need a look": "Certaines lettres demandent encore un effort",
+  "We start with the alphabet": "On commence par l’alphabet",
+  "Can you read {0} letters?": "Savez-vous lire les lettres de cette langue ({0}) ?",
+  "Be honest: it only decides what Lingua shows you first.": "Soyez honnête : cela décide seulement de ce que Lingua vous montre d’abord."
 }

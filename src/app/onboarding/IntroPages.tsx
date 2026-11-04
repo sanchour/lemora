@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { HandMark } from './HandMark';
 import { LevelIcon } from './LevelStep';
 import { cx } from '@/lib/cx';
-import { PRODUCT } from '@/product';
+import { PRODUCT, shows } from '@/product';
 
 /** The fine line drawings' shared stroke. */
 const LINE = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.3, strokeLinecap: 'round', strokeLinejoin: 'round' } as const;
@@ -354,8 +354,8 @@ function Tick() {
   );
 }
 
-/** The three rooms in the demo, each with a small pen-drawn icon (24 x 24). */
-const ROOMS = [
+/** The rooms in the demo, each with a small pen-drawn icon (24 x 24); Sonus & Visio only where the build has them. */
+const ALL_ROOMS = [
   {
     id: 'read',
     name: 'Codex',
@@ -407,6 +407,7 @@ const ROOMS = [
     ),
   },
 ] as const;
+const ROOMS = ALL_ROOMS.filter((r) => r.id !== 'listen' || shows('sonus') || shows('visio'));
 export const ROOM_COUNT = ROOMS.length;
 /** What the Next button promises after the room you are in: the next room's name, then the next page. */
 export const roomNextLabel = (room: number) => ROOMS[room + 1]?.role ?? null;

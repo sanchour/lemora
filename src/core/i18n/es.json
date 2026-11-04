@@ -4200,7 +4200,7 @@
   "Not started": "No iniciado",
   "Not synced yet": "Aún no sincronizado",
   "Not today": "hoy no",
-  "Not yet": "todavía no",
+  "Not yet": "Todavía no",
   "NotAllowedError": "Error no permitido",
   "NotFoundError": "Error no encontrado",
   "NotReadableError": "Error no legible",
@@ -8069,5 +8069,12 @@
   "{0} recalled (30 days)": "{0} recordado (30 días)",
   "{0} · Word map": "{0} · Mapa de palabras",
   "Word map": "Mapa de palabras",
-  "Every word you have, as a map": "Todas tus palabras, como un mapa"
+  "Every word you have, as a map": "Todas tus palabras, como un mapa",
+  "Yes, I can read it": "Sí, sé leerlo",
+  "Straight to books and words": "Directo a libros y palabras",
+  "A little": "Un poco",
+  "Some letters still need a look": "Algunas letras aún cuestan",
+  "We start with the alphabet": "Empezamos por el alfabeto",
+  "Can you read {0} letters?": "¿Sabes leer las letras de este idioma ({0})?",
+  "Be honest: it only decides what Lingua shows you first.": "Sé sincero: solo decide qué te muestra Lingua primero."
 }

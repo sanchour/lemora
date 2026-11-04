@@ -4200,7 +4200,7 @@
   "Not started": "Не запущено",
   "Not synced yet": "Еще не синхронизировано",
   "Not today": "Не сегодня",
-  "Not yet": "Еще нет",
+  "Not yet": "Пока нет",
   "NotAllowedError": "Ноталловедеррор",
   "NotFoundError": "Нотфаундеррор",
   "NotReadableError": "Нечтенаблееррор",
@@ -8069,5 +8069,12 @@
   "{0} recalled (30 days)": "{0} вспомнено (30 дней)",
   "{0} · Word map": "{0} · Карта слов",
   "Word map": "Карта слов",
-  "Every word you have, as a map": "Все ваши слова на карте"
+  "Every word you have, as a map": "Все ваши слова на карте",
+  "Yes, I can read it": "Да, умею читать",
+  "Straight to books and words": "Сразу к книгам и словам",
+  "A little": "Немного",
+  "Some letters still need a look": "Некоторые буквы ещё непривычны",
+  "We start with the alphabet": "Начнём с алфавита",
+  "Can you read {0} letters?": "Вы умеете читать буквы этого языка ({0})?",
+  "Be honest: it only decides what Lingua shows you first.": "Отвечайте честно: от этого зависит лишь то, что Lingua покажет сначала."
 }
