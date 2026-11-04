@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.11** · 2026-11-04 · U4: Explora's new tabs, comics and magazine, the upright seven-book hero
 - **0.1.0-alpha.10** · 2026-11-04 · U1-U3: level-fitted first steps and a first book, the alphabet question at the start, Home's What next redrawn
 - **0.1.0-alpha.9** · 2026-11-04 · Phase U planned; minutes only for tools that record them
 - **0.1.0-alpha.8** · 2026-11-03 · Checkpoint: Ratio without invented figures; Atlas as its own tool in the sidebar
