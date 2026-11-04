@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { Map as MapIcon, Maximize, Minus, Network, Orbit, Plus } from 'lucide-react';
+import { Map as MapIcon, Maximize, Minus, Network, Orbit, Plus, Search as SearchIcon } from 'lucide-react';
 import { hasFullDictionary } from '@/core/dictionary/format';
 import type { Neighbour, Quarter } from '@/core/graph/model';
 import { atlasScene, compassScene, treeScene, type SceneNode } from '@/core/graph/scene';
@@ -43,12 +43,13 @@ function store(key: string, value: unknown) {
   }
 }
 
-export default function AtlasTab({ lang }: { lang: string }) {
+export default function AtlasTab({ lang, immersive = false }: { lang: string; immersive?: boolean }) {
   const translateUi = useUi();
   const [params, setParams] = useSearchParams();
   const word = params.get('word');
   const view: View = !word ? 'atlas' : params.get('view') === 'tree' ? 'tree' : 'compass';
   const [query, setQuery] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
   const [lookalikes, setLookalikes] = useState(false);
   const [selected, setSelected] = useState(() => {
     const last = stored<string>(lastKey(lang));
@@ -171,6 +172,177 @@ export default function AtlasTab({ lang }: { lang: string }) {
         : data
           ? translateUi('The compass of {0}: {1} things around it', [data.label, String(listed.length)])
           : '';
+
+  // Lemora U7: the atlas as a room of its own, full screen: the map fills it, the views are a slider at the top,
+  // search opens from an icon, − and + sit at the bottom left, Loose threads (or the word's page) in a column at the right.
+  if (immersive) {
+    return (
+      <section aria-label={translateUi('Atlas')} className="relative h-[calc(100dvh-3rem)] min-h-[520px] overflow-hidden rounded-3xl border border-line bg-bg">
+        <div tabIndex={0} onKeyDown={keys} className="absolute inset-0 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent">
+            {scene ? (
+              <AtlasCanvas
+                handle={canvas}
+                scene={scene}
+                selected={selected}
+                onSelect={select}
+                onOpen={onOpen}
+                quarterLabels={quarterLabels}
+                nameOf={etymonName}
+                label={label}
+                camera={stored<Camera>(cameraKey(lang)) ?? undefined}
+                onCamera={(c) => view === 'atlas' && store(cameraKey(lang), c)}
+              />
+            ) : (
+              <div className="grid h-full place-items-center p-8 text-center">
+                <p className="max-w-sm text-ink-soft">
+                  {view === 'atlas' ? (
+                    states && states.size === 0 ? (
+                      <UiText source={'Mark words as Known or Learning while you read, and they appear here, joined to each other.'} />
+                    ) : (
+                      <UiText source={'Laying out your words…'} />
+                    )
+                  ) : data === false ? (
+                    <UiText source={'No word “{0}” here yet. Try another.'} values={[word ?? '']} />
+                  ) : (
+                    <UiText source={'Look up a word to see what is around it: its meanings, its family, where it comes from and how it is used.'} />
+                  )}
+                </p>
+              </div>
+            )}
+        </div>
+        <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
+          {searchOpen ? (
+            <form
+              className="w-64"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (query.trim()) find(query);
+                setQuery('');
+                setSearchOpen(false);
+              }}
+            >
+              <SearchInput ref={search} value={query} onChange={setQuery} placeholder={translateUi('Which word?')} onClose={() => setSearchOpen(false)} autoFocus />
+            </form>
+          ) : (
+            <span className="rounded-full bg-bg/90 backdrop-blur-sm"><IconButton icon={SearchIcon} label={translateUi('Which word?')} onClick={() => setSearchOpen(true)} /></span>
+          )}
+        </div>
+        <div className="absolute top-4 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3 rounded-2xl bg-bg/90 p-1 backdrop-blur-sm">
+          <div className="w-[23rem]">
+                <Segmented<View>
+                  label={translateUi('Atlas view')}
+                  value={view}
+                  onChange={(v) => {
+                    const w = chosen?.key ? chosen.label : data ? data.label : stored<string>(lastKey(lang));
+                    if (v === 'atlas' || w) open(w ?? '', v);
+                  }}
+                  block
+                  options={[
+                    { value: 'atlas', label: translateUi('Atlas'), icon: MapIcon },
+                    { value: 'compass', label: translateUi('Compass'), icon: Orbit },
+                    { value: 'tree', label: translateUi('Tree'), icon: Network },
+                  ]}
+                />
+          </div>
+            {view === 'compass' && (
+              <div className="flex shrink-0 items-center gap-2 text-[13.5px] font-semibold text-ink-soft">
+                <Switch checked={lookalikes} onChange={setLookalikes} label={translateUi('Look-alikes')} />
+                <span aria-hidden>
+                  <UiText source={'Look-alikes'} />
+                </span>
+              </div>
+            )}
+        </div>
+        <div className="absolute bottom-4 left-4 z-10 flex flex-col items-start gap-2">
+          {view === 'atlas' && counts && (
+            <p className="pointer-events-none rounded-lg bg-bg/85 px-2 py-1 text-[13px] text-ink-soft">
+              <UiText source={'{0} known · {1} learning · {2} regions'} values={[counts.known.toLocaleString(), counts.learning.toLocaleString(), row?.regions.length ?? 0]} />
+            </p>
+          )}
+          <div className="flex items-center gap-1 rounded-2xl bg-bg/90 backdrop-blur-sm">
+            <IconButton icon={Minus} label={translateUi('Zoom out')} onClick={() => canvas.current?.zoom(0.8)} />
+            <IconButton icon={Plus} label={translateUi('Zoom in')} onClick={() => canvas.current?.zoom(1.25)} />
+            <IconButton icon={Maximize} label={translateUi('Fit')} onClick={() => canvas.current?.fit()} />
+          </div>
+        </div>
+        <aside aria-label={translateUi('Its neighbours, in words')} className="absolute top-20 right-4 bottom-4 z-10 w-[340px] overflow-y-auto rounded-3xl border border-line/70 bg-bg/88 p-6 backdrop-blur-md">
+        {page && <EntryView lang={lang} word={page} />}
+        {view === 'atlas' && !page && (
+          <div>
+            <h3 className="font-serif text-2xl font-semibold">
+              <UiText source={'Loose threads'} />
+            </h3>
+            <p className="mt-1 text-[13.5px] text-ink-soft">
+              <UiText source={'Small groups of words joined only to each other, and words joined to nothing yet. Link one, or learn a word that would join it.'} />
+            </p>
+            <ul className="mt-4 space-y-1.5">
+              {loose.groups.slice(0, 40).map((g) => (
+                <li key={g.join('|')} lang={lang} className="font-serif text-[15.5px]">
+                  {g.map((w, i) => (
+                    <span key={w}>
+                      {i > 0 && <span className="text-ink-faint"> — </span>}
+                      <button type="button" onClick={() => open(w, 'compass')} className="underline decoration-line-strong underline-offset-4 hover:decoration-ink">
+                        {w}
+                      </button>
+                    </span>
+                  ))}
+                </li>
+              ))}
+            </ul>
+            {loose.alone.length > 0 && (
+              <details className="mt-5">
+                <summary className="cursor-pointer text-[13.5px] font-semibold text-ink-soft">
+                  <UiText source={'{0} words joined to nothing yet'} values={[loose.alone.length]} />
+                </summary>
+                <p lang={lang} className="mt-2 flex flex-wrap gap-x-3 gap-y-1 font-serif text-[15px]">
+                  {loose.alone.slice(0, 200).map((w) => (
+                    <button key={w} type="button" onClick={() => open(w, 'compass')} className="underline decoration-line-strong underline-offset-4 hover:decoration-ink">
+                      {w}
+                    </button>
+                  ))}
+                </p>
+              </details>
+            )}
+          </div>
+        )}
+        {listed.length > 0 && (
+          <div className="mt-8 border-t border-line pt-5">
+            <h3 className="text-[11.5px] font-bold tracking-[0.08em] text-ink-faint uppercase">
+              <UiText source={'Its neighbours, in words'} />
+            </h3>
+            {QUARTERS.map((q) => {
+              const items = listed.filter((n) => n.quarter === q);
+              if (!items.length) return null;
+              return (
+                <div key={q} className="mt-4">
+                  <p className="text-[13px] font-bold">{quarterLabels[q]}</p>
+                  <ul className="mt-1 flex flex-wrap gap-x-3 gap-y-1">
+                    {items.map((n) => (
+                      <li key={idOf(n)}>
+                        {n.key ? (
+                          <button type="button" lang={lang} onClick={() => open(n.label)} className={`font-serif text-[15px] underline decoration-line-strong underline-offset-4 hover:decoration-ink ${n.ghost ? 'text-ink-soft italic' : ''}`}>
+                            {n.label}
+                          </button>
+                        ) : (
+                          <span lang={n.lang ?? lang} className="font-serif text-[15px] text-ink-soft">
+                            {n.label}
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        )}
+        </aside>
+        <p className="sr-only" aria-live="polite">
+          {said}
+        </p>
+      </section>
+    );
+  }
 
   return (
     <section aria-label={translateUi('Atlas')} className="grid grid-cols-[minmax(0,1fr)_380px] items-start gap-6">
