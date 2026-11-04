@@ -84,7 +84,7 @@ Ratio's layout (3.12) and the redesigns already listed (3.9 to 3.13, 3.18) fold 
 | U10 | **Thesaurus › Dictionary.** Search bar with icon buttons on its right for a custom entry and importing a personal dictionary (a click says what each is); My words becomes Words, its own tab; looking up a word takes the full page | ✅ |
 | U11 | **Thesaurus › Phrases.** The same principles | ✅ |
 | U12 | **Diarium.** A minimal overhaul with two tabs, Journal and Writing tasks; the "A few sentences a day is plenty…" lines gone; the day's question centred in a beautiful face, fitted to the level, translated on hover instead of an English line under it; while writing, the helpers (describe a picture, compare drafts, simpler wording…) as small hand-drawn icons under one icon at the top right | ✅ |
-| U13 | **Things to try.** A fixed page that fits the screen (no sideways swipe), in the new minimal design, with every feature kept | ⬜ |
+| U13 | **Things to try.** A fixed page that fits the screen (no sideways swipe), in the new minimal design, with every feature kept | ✅ |
 | U14 | **Full redesigns: Ludus and Settings** (3.10, 3.13), then Ratio's layout (3.12: a summary always in view, one chapter at a time) | ⬜ |
 
 ## Lemora's website: `lemora-site` (the user, 2026-11-03)

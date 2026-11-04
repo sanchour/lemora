@@ -131,14 +131,14 @@ export function TipsView({ lang }: { lang: string }) {
   };
 
   return (
-    <div className="grid items-start gap-8 lg:grid-cols-[minmax(300px,360px)_minmax(0,1fr)]">
-      <aside className="space-y-4 lg:sticky lg:top-6">
+    <div className="grid items-start gap-8 lg:h-[calc(100dvh-15rem)] lg:min-h-[480px] lg:grid-cols-[minmax(300px,360px)_minmax(0,1fr)] lg:overflow-hidden">
+      <aside className="space-y-4 lg:h-full lg:overflow-y-auto lg:pb-2 [scrollbar-width:none]">
         <FeaturedCard tip={featured} dealt={Boolean(dealt)} dates={featured ? (byTip.get(featured.id) ?? []) : []} today={today} onMark={(t) => void mark(t)} onAnother={deal} onOpen={setDetails} onBack={dealt ? () => setDealt(undefined) : undefined} />
         <WeekCard today={today} doneDays={doneDays} streak={streak.days} doneToday={streak.doneToday} week={week} tried={tried} total={tips.length} />
       </aside>
 
-      <section aria-label={translateUi('Beyond the app')} className="min-w-0">
-        <div className="mb-5 flex flex-wrap items-center gap-x-4 gap-y-3 border-b border-line/70 pb-4">
+      <section aria-label={translateUi('Beyond the app')} className="min-w-0 lg:flex lg:h-full lg:flex-col">
+        <div className="mb-5 flex shrink-0 flex-wrap items-center gap-x-4 gap-y-3 border-b border-line/70 pb-4">
           <Segmented<TryFilter['show']>
             label={translateUi('Show')}
             value={filter.show}
@@ -168,16 +168,16 @@ export function TipsView({ lang }: { lang: string }) {
         </div>
 
         {groups.length ? (
-          <div className="space-y-7">
+          <div className="space-y-7 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-2 [scrollbar-width:thin]">
             {groups.map((g) => (
               <section key={g.id} aria-label={g.label}>
                 <h3 className={cx(label, 'mb-2.5 flex items-baseline gap-2')}>
                   {g.label}
                   <span className="font-semibold tracking-normal text-ink-faint/80 tabular-nums">{g.tips.length}</span>
                 </h3>
-                <ul className="grid gap-2 2xl:grid-cols-2">
+                <ul className="grid grid-cols-[minmax(0,1fr)] 2xl:grid-cols-2 2xl:gap-x-6">
                   {g.tips.map((tip, i) => (
-                    <motion.li key={tip.id} layout="position" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ ...spring.soft, delay: 0.02 * Math.min(i, 10) }}>
+                    <motion.li key={tip.id} className="min-w-0" layout="position" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ ...spring.soft, delay: 0.02 * Math.min(i, 10) }}>
                       <Row tip={tip} dates={byTip.get(tip.id) ?? []} today={today} isToday={tip.id === todayId} onOpen={() => setDetails(tip.id)} onMark={() => void mark(tip)} />
                     </motion.li>
                   ))}
@@ -232,7 +232,7 @@ function FeaturedCard({ tip, dealt, dates, today, onMark, onAnother, onOpen, onB
           animate={still ? { opacity: 1 } : { rotateY: 0, opacity: 1 }}
           exit={still ? { opacity: 0 } : { rotateY: 70, opacity: 0 }}
           transition={spring.gentle}
-          className="relative rounded-3xl border border-line bg-raised p-1.5 shadow-elev-1"
+          className="relative rounded-3xl border border-line p-1.5"
         >
           {/* A card with a ruled inner edge, like one kept in a book. */}
           <div className="rounded-[20px] border border-line/70 px-5 pt-5 pb-4">
@@ -279,7 +279,7 @@ function WeekCard({ today, doneDays, streak, doneToday, week, tried, total }: { 
   const locale = useContext(UiLocale);
   const days = Array.from({ length: 7 }, (_, i) => localDateKey(Date.now() - (6 - i) * 86_400_000));
   return (
-    <div className="rounded-3xl border border-line/70 bg-surface px-5 py-4">
+    <div className="rounded-3xl border border-line/70 px-5 py-4">
       <p className={label}><UiText source={'Beyond the app'} /></p>
       <p className="mt-1 font-serif text-[18px] leading-snug font-semibold">
         {week === 0 ? translateUi('Take the language out for a walk.') : week === 1 ? translateUi('One challenge this week.') : translateUi('{0} challenges this week.', [week])}
@@ -309,9 +309,9 @@ function Row({ tip, dates, today, isToday, onOpen, onMark }: { tip: Tip; dates: 
   const Icon = TIP_ICONS[tip.icon];
   const doneNow = tip.habit ? dates.includes(today) : dates.length > 0;
   return (
-    <div className={cx('group flex items-center gap-3 rounded-2xl border bg-surface pr-2.5 transition-colors', doneNow ? 'border-sage/40' : 'border-line/70 hover:border-line-strong hover:bg-raised')}>
-      <button type="button" onClick={onOpen} aria-label={translateUi('{0}: show how', [tip.title])} className="no-callout flex min-w-0 flex-1 items-center gap-3 py-3 pl-3 text-left">
-        <span className={cx('grid size-10 shrink-0 place-items-center rounded-xl', doneNow ? 'bg-sage-soft text-sage-text' : 'bg-sunken text-ink-soft')}>
+    <div className={cx('group flex items-center gap-3 border-b pr-1 transition-colors', doneNow ? 'border-sage/30' : 'border-line/70 hover:border-line-strong')}>
+      <button type="button" onClick={onOpen} aria-label={translateUi('{0}: show how', [tip.title])} className="no-callout flex min-w-0 flex-1 items-center gap-3 py-3 text-left">
+        <span className={cx('grid size-10 shrink-0 place-items-center rounded-full border transition-transform group-hover:-rotate-6', doneNow ? 'border-sage/40 bg-sage-soft text-sage-text' : 'border-line text-ink-soft')}>
           <Icon size={18} aria-hidden />
         </span>
         <span className="min-w-0 flex-1">
