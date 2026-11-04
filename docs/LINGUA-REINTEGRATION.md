@@ -154,3 +154,43 @@ data-building scripts under `scripts/` still import some `src` files, so those s
 a Lingua file Lemora deleted shows as *modified/deleted* in a cherry-pick: keep Lingua's. The files are listed in
 commit `c6e09d1`.
 
+## Module boundaries of Codex and Thesaurus (5.1, 2026-11-04)
+
+Measured on the code, not assumed. Both rooms are mostly self-contained and lean on the shared layers.
+
+| | Codex | Thesaurus |
+|---|---|---|
+| Files | 66 | 50 |
+| Imports from the shared layers (`data`, `core`, `design`, `services`, `lib`, `state`, `app`) | 457 | 386 |
+| Imports from other rooms | 17 (generated, speech, exercise, ordo, culture, plans) | 36 (plans, **codex**, lesson, speech, phrasebook, exercise) |
+| Imported by other rooms | 15 (Thesaurus, Bibliotheca, Ordo, Home, Production, Explora, Culture, app) | 10 (Exercise, Grammatica, Explora, Ordo, Codex) |
+
+- **The one real coupling:** Thesaurus uses Codex's reader widgets (`WordDrawer`, `GlossText`, `WordForms`, `AddToDeck`),
+  six imports, and Codex imports Thesaurus once. They are the same word-lookup surface; if either room is ever extracted
+  on its own, move those four files to `features/words/` first.
+- **Nothing else reaches into either room's internals** except through its page, its `data/` and `core/` modules, and the
+  few exports above. Atlas left Thesaurus for its own room in Lemora with a one-line change (`shows('atlas')`).
+- Lemora's room pages (`app/rooms/*`) wrap Lingua's features (Diarium, Atlas, Alphabet), so a feature's code stays in one
+  place for both apps.
+
+## The feasibility check (5.2, 2026-11-04)
+
+Done on a throwaway clone of Lingua's `main` (no `origin` remote, in the scratchpad, never pushed): five `[shared]`
+commits from Lemora were cherry-picked with `-x`: known-words seeding (3.5), study-the-book's-words-first (U8), Ratio's
+honest report, the overflow fix (3.7) and the level step (3.4).
+
+- **Applied cleanly:** every source file. **Conflicted:** only (1) `docs/LEMORA-PLAN.md`, which `[shared]` commits must
+  not edit (edit it in the `[lemora]` commit that follows), and (2) the six `src/core/i18n/*.json` catalogues, because
+  both apps append keys at the same end. `scripts/merge-i18n.mjs` resolves (2) by merging as data; with it, all five
+  picks completed.
+- **Typecheck:** clean (0 errors) once Lingua has the two foundation files Lemora added: `src/product.ts` (Lingua's
+  variant: id `lingua`, every room shown) and `src/design/drawings.tsx` (the handbook's hand). **Lingua's tests:** 181 files,
+  1,357 tests passed on the touched areas.
+- **Order matters.** A pick that assumes an earlier shared commit (Ratio's `Overview.tsx` calls `shows()`, imported by an
+  earlier commit) fails to typecheck alone. Replay the `[shared]` chain in order, oldest first, starting with
+  `a330fb2 Sections: every room either app has…`, which brings `product.ts`.
+- **The designs overlap by intent.** Lemora redesigned shared view files (Home, Explora, Bibliotheca, Codex, Thesaurus,
+  Ratio, Settings). Taking them into Lingua changes Lingua's look; that is the user's decision, page by page.
+
+**Not done, by the rules:** no change was made to Lingua, nothing was merged, and nothing was pushed to it.
+

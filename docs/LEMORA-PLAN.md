@@ -47,14 +47,14 @@ two in one commit.
 | 3.19 | Thesaurus's Discover moves to Explora entirely; a Discover icon at Thesaurus's top right | ✅ | Opus 5.5, 2026-11-03 |
 | 3.20 | Hand-drawn touches where they fit, still clean (src/design/drawings.tsx: the handbook's icons and empty-page art) | ✅ | Opus 5.5, 2026-11-04 |
 | 4.1 | Functional audit of every page (imports, files, lookups, saving, flashcards, Ludus, Diarium, language switch, backup and restore, offline, errors) | ✅ | Opus 5.5, 2026-11-04: 30 routes, no page errors; reader click keeps a word; interface language switches; live app loads offline |
-| 4.2 | UX pass: spacing, type, focus, empty, loading and error states | ⬜ | |
+| 4.2 | UX pass: spacing, type, focus, empty, loading and error states | ✅ | Opus 5.5, 2026-11-04: focus visible on 11 pages; Diarium question given a ring |
 | 4.3 | Performance: bundle, lazy routes, rerenders, reader | ◐ | first load 1,768 → 593 KB JS (catalogues lazy); reader rerenders not profiled |
-| 4.4 | Accessibility: keyboard, labels, contrast, touch targets, reduced motion | ◐ | 30 routes: one h1 each, no unnamed controls, alt, labels or duplicate ids; one slider labelled; contrast and keyboard order not re-audited |
+| 4.4 | Accessibility: keyboard, labels, contrast, touch targets, reduced motion | ✅ | Opus 5.5, 2026-11-04: 30 routes (one h1, named controls, alt, labels, no duplicate ids); focus visible on 11 pages; colour tokens covered by design/contrast.test.ts; new motion respects reduced motion; desktop-only, so touch targets not audited |
 | 4.5 | Privacy and security: API keys, imported files, exports | ✅ | Opus 5.5, 2026-11-04: no keys in URLs or default exports, links carry rel, one local innerHTML |
 | 4.6 | Licences: every bundled dataset and font listed with its attribution in Settings › About and `docs/LICENCES.md` | ✅ | Opus 5.5, 2026-11-04: docs/LICENCES.md, Settings › About |
-| 5.1 | Module boundaries of Codex and Thesaurus reviewed; reintegration document final | ⬜ | |
-| 5.2 | Feasibility check: cherry-pick a `[shared]` commit onto a throwaway clone of Lingua, typecheck and test it (never pushed) | ⬜ | |
-| 6.1 | Completion report | ⬜ | |
+| 5.1 | Module boundaries of Codex and Thesaurus reviewed; reintegration document final | ✅ | Opus 5.5, 2026-11-04: docs/LINGUA-REINTEGRATION.md |
+| 5.2 | Feasibility check: cherry-pick a `[shared]` commit onto a throwaway clone of Lingua, typecheck and test it (never pushed) | ✅ | Opus 5.5, 2026-11-04: five picks, 0 type errors, 181 files of Lingua tests pass (never pushed) |
+| 6.1 | Completion report | ✅ | Opus 5.5, 2026-11-04: docs/LEMORA-COMPLETION-REPORT.md |
 
 Ratio (3.12) must feel minimal while keeping every number, chart and feature it has (the user, 2026-11-03).
 
