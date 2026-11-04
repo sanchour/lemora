@@ -1,5 +1,7 @@
 # Lemora · The plan and where it stands
 
+**Next generation planned · 2026-11-04:** [Lemora 1.1](LEMORA-1.1-PLAN.md) gathers all relevant Lingua 6 work, including Atlas, deep 6-23 tools, Slang & Dialects, adaptive learning and relevant experiments, plus shared verification/design work from Lingua 5/7. **1.1 is WAITING / unclaimed; do not start it without explicit user resumption.** Existing Lemora 1 / Phase U work below keeps its own status and authorisation. No application implementation is performed by this planning checkpoint.
+
 The brief is the user's "Project LEMORA" master prompt (2026-11-03). Its findings are in
 [EXTRACTION-AUDIT.md](EXTRACTION-AUDIT.md). The way back to Lingua is in
 [LINGUA-REINTEGRATION.md](LINGUA-REINTEGRATION.md). **A session continuing the work starts here:**
@@ -81,7 +83,7 @@ Ratio's layout (3.12) and the redesigns already listed (3.9 to 3.13, 3.18) fold 
 | U9 | **Thesaurus › My decks.** Minimal and compact, no background colour, decks in a list down the right; the old design as a Settings toggle; books back in the deck format; Today first, with Anki-like figures and a minimal week of what's due; Today's actions (Ludus, review, lightning, sentences) as icons with a small pop-up name; a clearer list (today, last studied, deck). One new non-AI, hand-drawn card design shared by Explora, Bibliotheca and Thesaurus | ✅ |
 | U10 | **Thesaurus › Dictionary.** Search bar with icon buttons on its right for a custom entry and importing a personal dictionary (a click says what each is); My words becomes Words, its own tab; looking up a word takes the full page | ✅ |
 | U11 | **Thesaurus › Phrases.** The same principles | ✅ |
-| U12 | **Diarium.** A minimal overhaul with two tabs, Journal and Writing tasks; the "A few sentences a day is plenty…" lines gone; the day's question centred in a beautiful face, fitted to the level, translated on hover instead of an English line under it; while writing, the helpers (describe a picture, compare drafts, simpler wording…) as small hand-drawn icons under one icon at the top right | ⬜ |
+| U12 | **Diarium.** A minimal overhaul with two tabs, Journal and Writing tasks; the "A few sentences a day is plenty…" lines gone; the day's question centred in a beautiful face, fitted to the level, translated on hover instead of an English line under it; while writing, the helpers (describe a picture, compare drafts, simpler wording…) as small hand-drawn icons under one icon at the top right | ✅ |
 | U13 | **Things to try.** A fixed page that fits the screen (no sideways swipe), in the new minimal design, with every feature kept | ⬜ |
 | U14 | **Full redesigns: Ludus and Settings** (3.10, 3.13), then Ratio's layout (3.12: a summary always in view, one chapter at a time) | ⬜ |
 

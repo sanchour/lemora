@@ -13,7 +13,7 @@ export function WritingPortfolio({ entries }: { entries: JournalEntry[] }) {
   const portfolio = entries.filter((e) => e.portfolio && !e.deletedAt);
   const shown = portfolio.filter((e) => (level === 'all' || e.portfolio!.level === level) && `${e.portfolio!.topic} ${WRITING_TASKS.find((t) => t.id === e.writingTaskId)?.title ?? 'Free entry'}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()));
   return (
-    <details className="rounded-2xl border border-line/70 bg-surface p-5">
+    <details className="border-t border-line/70 pt-5">
       <summary className="cursor-pointer font-serif text-lg font-semibold"><UiText source={'Your writing portfolio · {0}'} values={[portfolio.length]} /></summary>
       <p className="mt-3 text-[13.5px] leading-relaxed text-ink-soft"><UiText source={'Keep your best pieces from an entry’s portfolio controls. Levels are the study level you chose when keeping the piece, not an assessment.'} /></p>
       <div className="my-4 grid gap-3 sm:grid-cols-[180px_1fr]">

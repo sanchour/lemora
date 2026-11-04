@@ -4396,7 +4396,7 @@
   "Ready for a page or two?": "جاهز لصفحة أو اثنتين؟",
   "Real sentences with one word missing, your words first": "جمل حقيقية مع كلمة واحدة مفقودة، كلماتك أولا",
   "Recalled": "وأشار",
-  "Recent grade": "الصف الأخير",
+  "Recent grade": "آخر درجة",
   "Recently read": "قرأت مؤخرا",
   "Recently studied": "درس مؤخرا",
   "Recently watched": "شاهدت مؤخرا",
@@ -4965,7 +4965,7 @@
   "Write your sentence": "اكتب الجملة الخاصة بك",
   "Writing it out…": "كتابتها…",
   "Writing out the last few seconds…": "أكتب الثواني الأخيرة...",
-  "Writing streak": "خط الكتابة",
+  "Writing streak": "سلسلة الكتابة",
   "Xin chào": "شين تشاو",
   "Year": "سنة",
   "Year published": "سنة النشر",
@@ -8137,5 +8137,10 @@
   "reviewed today": "رُوجعت اليوم",
   "known words": "كلمات معروفة",
   "Add a word or phrase of your own to the dictionary, with its meaning and an example.": "أضف إلى القاموس كلمة أو عبارة خاصة بك، مع معناها ومثال.",
-  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "قائمة بكلماتك من ملف JSON أو CSV أو TSV أو نصي؛ يُبحث فيها مع البقية."
+  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "قائمة بكلماتك من ملف JSON أو CSV أو TSV أو نصي؛ يُبحث فيها مع البقية.",
+  "Journal": "اليوميات",
+  "Writing tools": "أدوات الكتابة",
+  "Spelling": "الإملاء",
+  "Measures": "المقاييس",
+  "Portfolio": "ملف الأعمال"
 }

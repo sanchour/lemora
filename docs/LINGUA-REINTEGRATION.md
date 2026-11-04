@@ -1,5 +1,7 @@
 # Bringing Lemora's improvements back to Lingua
 
+**2026-11-04:** relevant shared work is consolidated in [Lemora 1.1](LEMORA-1.1-PLAN.md), **waiting**. Lingua carries all its remaining 6/7 work as [Lingua 6.1](https://github.com/sanchour/lingua./blob/main/docs/LINGUA-6.1-PLAN.md), also waiting. [Lingua's integration plan](https://github.com/sanchour/lingua./blob/main/docs/LEMORA-INTEGRATION.md) documents the return route. No commit transfer, schema migration or feasibility test is performed by this planning checkpoint; product layers stay separate.
+
 Lemora exists partly to perfect Codex and Thesaurus away from the rest of the super-app. This file
 says how those improvements go back to Lingua without rebuilding them, and what never goes back.
 Status: the strategy is in use since Lemora's first commit. **The measured feasibility check (plan

@@ -18,7 +18,7 @@ export function WritingHelp({ lang, selected, insert }: { lang: string; selected
   const synonyms = [...new Set(full?.entries.flatMap((e) => [...(e.syn ?? []), ...e.senses.flatMap((s) => s.syn ?? [])]) ?? [])].slice(0, 15);
   const phrases = full?.entries.flatMap((e) => e.phrases ?? []).slice(0, 12) ?? [];
   return (
-    <aside className="sticky top-6 space-y-5 rounded-xl border border-line bg-surface p-4 text-sm" aria-label={translateUi('Writing help')}>
+    <aside className="sticky top-6 space-y-5 border-l border-line/70 pl-6 text-sm" aria-label={translateUi('Writing help')}>
       <h2 className="font-serif text-xl font-semibold"><UiText source={'While you write'} /></h2>
       <p className="text-xs text-ink-faint"><UiText source={'Select or hover a word in your entry. Or type a word below. Look-ups use only dictionaries already on this device.'} /></p>
       <label className="block font-semibold"><UiText source={'Dictionary word{0}'} values={[<input value={query} onChange={(e) => setQuery(e.target.value)} placeholder={selected || translateUi('A word…')} className="mt-2 w-full rounded-xl border border-line bg-raised p-2 font-normal text-ink" />]} /></label>

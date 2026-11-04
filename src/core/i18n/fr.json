@@ -4998,7 +4998,7 @@
   "Write your sentence": "Écris ta phrase",
   "Writing it out…": "L'écrire…",
   "Writing out the last few seconds…": "Écrire les dernières secondes…",
-  "Writing streak": "Séquence d'écriture",
+  "Writing streak": "Série d’écriture",
   "Xin chào": "Xin Chao",
   "Year": "Année",
   "Year published": "Année de publication",
@@ -8137,5 +8137,10 @@
   "reviewed today": "revues aujourd’hui",
   "known words": "mots connus",
   "Add a word or phrase of your own to the dictionary, with its meaning and an example.": "Ajoutez au dictionnaire un mot ou une expression à vous, avec son sens et un exemple.",
-  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "Une liste de vos mots depuis un fichier JSON, CSV, TSV ou texte ; ils sont cherchés avec les autres."
+  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "Une liste de vos mots depuis un fichier JSON, CSV, TSV ou texte ; ils sont cherchés avec les autres.",
+  "Journal": "Journal",
+  "Writing tools": "Outils d’écriture",
+  "Spelling": "Orthographe",
+  "Measures": "Mesures",
+  "Portfolio": "Portfolio"
 }

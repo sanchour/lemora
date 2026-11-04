@@ -4396,7 +4396,7 @@
   "Ready for a page or two?": "Bereit für ein oder zwei Seiten?",
   "Real sentences with one word missing, your words first": "Echte Sätze, bei denen ein Wort fehlt, Ihre Worte zuerst",
   "Recalled": "Zurückgerufen",
-  "Recent grade": "Aktuelle Klasse",
+  "Recent grade": "Letzte Note",
   "Recently read": "Kürzlich gelesen",
   "Recently studied": "Kürzlich untersucht",
   "Recently watched": "Kürzlich gesehen",
@@ -4954,7 +4954,7 @@
   "Words per sentence": "Wörter pro Satz",
   "Words that have gone quiet: a refresher, as meanings and in sentences.": "Verstummte Wörter: eine Auffrischung, als Bedeutungen und in Sätzen.",
   "Words that mean the same": "Wörter, die dasselbe bedeuten",
-  "Words written": "Worte geschrieben",
+  "Words written": "Geschriebene Wörter",
   "Words you have not seen in a while": "Wörter, die Sie schon lange nicht mehr gesehen haben",
   "Work": "Arbeit",
   "Write a first journal entry": "Schreiben Sie einen ersten Tagebucheintrag",
@@ -4965,7 +4965,7 @@
   "Write your sentence": "Schreiben Sie Ihren Satz",
   "Writing it out…": "Schreiben Sie es auf ...",
   "Writing out the last few seconds…": "Die letzten Sekunden aufschreiben…",
-  "Writing streak": "Schreibsträhne",
+  "Writing streak": "Schreibserie",
   "Xin chào": "Xin chào",
   "Year": "Jahr",
   "Year published": "Erscheinungsjahr",
@@ -8137,5 +8137,10 @@
   "reviewed today": "heute wiederholt",
   "known words": "bekannte Wörter",
   "Add a word or phrase of your own to the dictionary, with its meaning and an example.": "Füge dem Wörterbuch ein eigenes Wort oder eine Wendung hinzu, mit Bedeutung und Beispiel.",
-  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "Eine Liste eigener Wörter aus einer JSON-, CSV-, TSV- oder Textdatei; sie werden mit den übrigen nachgeschlagen."
+  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "Eine Liste eigener Wörter aus einer JSON-, CSV-, TSV- oder Textdatei; sie werden mit den übrigen nachgeschlagen.",
+  "Journal": "Tagebuch",
+  "Writing tools": "Schreibwerkzeuge",
+  "Spelling": "Rechtschreibung",
+  "Measures": "Kennzahlen",
+  "Portfolio": "Portfolio"
 }

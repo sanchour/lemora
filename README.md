@@ -1,5 +1,7 @@
 # Lemora
 
+The next-generation [Lemora 1.1 plan](docs/LEMORA-1.1-PLAN.md) is prepared and **waiting**; current Lemora 1 / Phase U work remains in its existing plan. Shared improvements can later return to Lingua through the documented selective integration strategy.
+
 A calm, local-first place to read, collect words and write in a new language. Read real books and
 articles with instant translations (Codex), keep and review your words (Thesaurus and Ludus), write
 a journal that gets corrected (Diarium), learn a new alphabet, and see honest progress (Ratio).

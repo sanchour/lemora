@@ -38,6 +38,20 @@ import { SimplifyWriting } from './SimplifyWriting';
 import { WritingSpelling } from './WritingSpelling';
 import { CorrectionList, ReviewSummary, ReviewText } from './Review';
 import { shows } from '@/product';
+import { Drawer } from '@/design/primitives';
+import { Hand } from '@/design/drawings';
+import type { HandName } from '@/design/drawings';
+import { HoverTranslation } from './HoverTranslation';
+
+type Tool = 'picture' | 'drafts' | 'simpler' | 'spelling' | 'measures' | 'portfolio';
+const TOOLS: Array<{ id: Tool; title: string; hand: HandName }> = [
+  { id: 'picture', title: 'Picture to describe', hand: 'glasses' },
+  { id: 'drafts', title: 'Compare drafts', hand: 'repeat' },
+  { id: 'simpler', title: 'Simpler wording', hand: 'leaf' },
+  { id: 'spelling', title: 'Spelling', hand: 'search' },
+  { id: 'measures', title: 'Measures', hand: 'clock' },
+  { id: 'portfolio', title: 'Portfolio', hand: 'folder' },
+];
 
 const SAVE_DELAY = 500;
 /** Pauses longer than this between keystrokes don't count as writing time. */
@@ -72,6 +86,7 @@ function Entry({ entry }: { entry: JournalEntry }) {
   const [saved, setSaved] = useState(true);
   const [checking, setChecking] = useState(false);
   const [renaming, setRenaming] = useState(false);
+  const [tool, setTool] = useState<Tool | null>(null);
   const [portfolioTopic, setPortfolioTopic] = useState(entry.portfolio?.topic ?? '');
   const [selectedWord, setSelectedWord] = useState('');
   const review = entry.review;
@@ -205,7 +220,7 @@ function Entry({ entry }: { entry: JournalEntry }) {
             />
           ) : (
             <h1 lang={entry.title || task ? undefined : lang} onDoubleClick={() => setRenaming(true)} className="mt-2 font-serif text-[26px] leading-snug font-semibold sm:text-[30px]">
-              {heading}
+              {entry.promptEn && !entry.title && typeof heading === 'string' ? <HoverTranslation text={heading} en={entry.promptEn} lang={lang} /> : heading}
             </h1>
           )}
           {entry.prompt && (entry.title || task) && (
@@ -213,8 +228,6 @@ function Entry({ entry }: { entry: JournalEntry }) {
               {entry.prompt}
             </p>
           )}
-          {entry.promptEn && !entry.title && <p className="mt-1.5 text-[14px] text-ink-faint italic">{entry.promptEn}</p>}
-          <p className="mt-1.5 text-[13px] text-ink-faint"><UiText source={'A few sentences a day is plenty.'} /></p>
           {!hasAi && mode === 'write' && (
             <div className="mt-3 flex items-center gap-3">
               {saving}
@@ -225,6 +238,28 @@ function Entry({ entry }: { entry: JournalEntry }) {
         {talkTopic && shows('sermo') && (
           <Link to={`/mentis/sermo?topic=${encodeURIComponent(talkTopic)}`} className={cx(buttonClasses('secondary', 'md'), 'shrink-0')}><UiText source={'{0} Talk about this'} values={[<MessagesSquare size={16} aria-hidden />]} /></Link>
         )}
+        <Popover
+          label={translateUi('Writing tools')}
+          placement="bottom-end"
+          trigger={(props) => (
+            <button type="button" {...props} aria-label={translateUi('Writing tools')} title={translateUi('Writing tools')} className="grid size-10 shrink-0 place-items-center rounded-full border border-line transition-transform hover:-rotate-6">
+              <Hand name="quill" size={22} />
+            </button>
+          )}
+        >
+          {(close) => (
+            <ul className="flex gap-1 p-1.5" aria-label={translateUi('Writing tools')}>
+              {TOOLS.map((t) => (
+                <li key={t.id}>
+                  <button type="button" onClick={() => { close(); setTool(t.id); }} aria-label={translateUi(t.title)} className="group relative grid size-11 place-items-center rounded-full transition-colors hover:bg-surface">
+                    <Hand name={t.hand} size={24} />
+                    <span role="tooltip" className="pointer-events-none absolute top-full left-1/2 z-20 mt-1.5 -translate-x-1/2 rounded-lg bg-inverse px-2 py-1 text-[11.5px] font-semibold whitespace-nowrap text-on-inverse opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"><UiText source={t.title} /></span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Popover>
         <Popover
           label={translateUi('Entry options')}
           placement="bottom-end"
@@ -267,20 +302,30 @@ function Entry({ entry }: { entry: JournalEntry }) {
         </Popover>
       </header>
       {mode === 'write' && <WritingSession taskId={entry.writingTaskId} words={words} />}
-      <WritingImage entry={entry} />
-      <WritingDrafts entry={entry} text={text} restore={(next) => { onChange(next); editorRef.current?.setText(next); setMode('write'); }} />
-      <SimplifyWriting lang={lang} text={plain} />
-      <WritingSpelling lang={lang} text={plain} />
-      {!hasAi && <p className="mb-4 text-sm text-ink-faint"><UiText source={'Writing feedback needs Lingua+ Max and an AI key in Settings. Local writing tools work without them.'} /></p>}
-      <WritingMeasures text={text} lang={lang} />
-      <details className="mb-6 rounded-xl border border-line p-4 text-sm">
-        <summary className="cursor-pointer font-semibold">{entry.portfolio ? translateUi('Kept in your portfolio') : translateUi('Keep in your portfolio')}</summary>
-        <div className="mt-3 flex items-end gap-3">
-          <label className="flex-1 text-ink-soft"><UiText source={'Topic{0}'} values={[<input value={portfolioTopic} onChange={(e) => setPortfolioTopic(e.target.value)} maxLength={120} className="mt-1 block w-full rounded-xl border border-line bg-raised p-2 text-ink" />]} /></label>
-          <Button variant="secondary" size="sm" disabled={!words} onClick={() => void updateEntry(entry.id, { portfolio: { level: entry.portfolio?.level ?? language.level, topic: portfolioTopic.trim(), at: entry.portfolio?.at ?? Date.now() } }).then(() => toast('Kept in your portfolio.', { tone: 'success' })).catch(() => toast('Could not save the portfolio choice.', { tone: 'error' }))}>{entry.portfolio ? translateUi('Save topic') : translateUi('Keep at {0}', [language.level])}</Button>
-          {entry.portfolio && <Button variant="ghost" size="sm" onClick={() => void updateEntry(entry.id, { portfolio: undefined }).then(() => toast('Removed from the portfolio. Your entry is still here.')).catch(() => toast('Could not change the portfolio.', { tone: 'error' }))}><UiText source={'Remove from portfolio'} /></Button>}
+      {(entry.writingTaskId === 'picture' || entry.pictureBlobId) && <WritingImage entry={entry} />}
+
+
+      {/* Lemora U12: the writing helpers, one at a time, from the drawn icons at the top right. */}
+      <Drawer open={tool !== null} onClose={() => setTool(null)} title={tool ? translateUi(TOOLS.find((t) => t.id === tool)!.title) : ''}>
+        <div ref={(el) => el?.querySelectorAll('details').forEach((d) => (d.open = true))}>
+          {tool === 'picture' && <WritingImage entry={entry} />}
+          {tool === 'drafts' && <WritingDrafts entry={entry} text={text} restore={(next) => { onChange(next); editorRef.current?.setText(next); setMode('write'); setTool(null); }} />}
+          {tool === 'simpler' && <SimplifyWriting lang={lang} text={plain} />}
+          {tool === 'spelling' && <WritingSpelling lang={lang} text={plain} />}
+          {tool === 'measures' && <WritingMeasures text={text} lang={lang} />}
+          {tool === 'portfolio' && (
+          <details className="mb-6 rounded-xl border border-line p-4 text-sm">
+            <summary className="cursor-pointer font-semibold">{entry.portfolio ? translateUi('Kept in your portfolio') : translateUi('Keep in your portfolio')}</summary>
+            <div className="mt-3 flex items-end gap-3">
+              <label className="flex-1 text-ink-soft"><UiText source={'Topic{0}'} values={[<input value={portfolioTopic} onChange={(e) => setPortfolioTopic(e.target.value)} maxLength={120} className="mt-1 block w-full rounded-xl border border-line bg-raised p-2 text-ink" />]} /></label>
+              <Button variant="secondary" size="sm" disabled={!words} onClick={() => void updateEntry(entry.id, { portfolio: { level: entry.portfolio?.level ?? language.level, topic: portfolioTopic.trim(), at: entry.portfolio?.at ?? Date.now() } }).then(() => toast('Kept in your portfolio.', { tone: 'success' })).catch(() => toast('Could not save the portfolio choice.', { tone: 'error' }))}>{entry.portfolio ? translateUi('Save topic') : translateUi('Keep at {0}', [language.level])}</Button>
+              {entry.portfolio && <Button variant="ghost" size="sm" onClick={() => void updateEntry(entry.id, { portfolio: undefined }).then(() => toast('Removed from the portfolio. Your entry is still here.')).catch(() => toast('Could not change the portfolio.', { tone: 'error' }))}><UiText source={'Remove from portfolio'} /></Button>}
+            </div>
+          </details>
+          )}
+          {!hasAi && (tool === 'simpler' || tool === 'drafts') && <p className="mt-3 text-sm text-ink-faint"><UiText source={'Writing feedback needs Lingua+ Max and an AI key in Settings. Local writing tools work without them.'} /></p>}
         </div>
-      </details>
+      </Drawer>
 
       {review && (
         <div className="mb-7">

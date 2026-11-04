@@ -4396,7 +4396,7 @@
   "Ready for a page or two?": "准备好一两页了吗？",
   "Real sentences with one word missing, your words first": "真正缺一个字的句子，你的词在前",
   "Recalled": "召回",
-  "Recent grade": "最近年级",
+  "Recent grade": "最近评分",
   "Recently read": "最近读过",
   "Recently studied": "最近学习",
   "Recently watched": "最近观看",
@@ -4954,7 +4954,7 @@
   "Words per sentence": "每句话的字数",
   "Words that have gone quiet: a refresher, as meanings and in sentences.": "已经安静下来的单词：作为含义和句子的复习。",
   "Words that mean the same": "意思相同的词",
-  "Words written": "写下的话",
+  "Words written": "已写词数",
   "Words you have not seen in a while": "好久没看到的文字",
   "Work": "工作",
   "Write a first journal entry": "写第一篇日记",
@@ -8137,5 +8137,10 @@
   "reviewed today": "今日已复习",
   "known words": "已掌握的词",
   "Add a word or phrase of your own to the dictionary, with its meaning and an example.": "把你自己的词或短语加入词典，附上释义和例句。",
-  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "从 JSON、CSV、TSV 或文本文件导入你自己的词表；查词时会一并查到。"
+  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "从 JSON、CSV、TSV 或文本文件导入你自己的词表；查词时会一并查到。",
+  "Journal": "日记",
+  "Writing tools": "写作工具",
+  "Spelling": "拼写",
+  "Measures": "指标",
+  "Portfolio": "作品集"
 }

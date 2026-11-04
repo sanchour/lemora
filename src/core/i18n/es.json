@@ -4396,7 +4396,7 @@
   "Ready for a page or two?": "¿Listo para una página o dos?",
   "Real sentences with one word missing, your words first": "Oraciones reales a las que les falta una palabra, tus palabras primero",
   "Recalled": "Recordado",
-  "Recent grade": "Grado reciente",
+  "Recent grade": "Nota reciente",
   "Recently read": "leído recientemente",
   "Recently studied": "Estudiado recientemente",
   "Recently watched": "visto recientemente",
@@ -4954,7 +4954,7 @@
   "Words per sentence": "Palabras por oración",
   "Words that have gone quiet: a refresher, as meanings and in sentences.": "Palabras que se han quedado en silencio: un repaso, como significados y en oraciones.",
   "Words that mean the same": "Palabras que significan lo mismo",
-  "Words written": "palabras escritas",
+  "Words written": "Palabras escritas",
   "Words you have not seen in a while": "Palabras que hace tiempo que no ves",
   "Work": "trabajo",
   "Write a first journal entry": "Escribe una primera entrada en el diario.",
@@ -8137,5 +8137,10 @@
   "reviewed today": "repasadas hoy",
   "known words": "palabras conocidas",
   "Add a word or phrase of your own to the dictionary, with its meaning and an example.": "Añade al diccionario una palabra o frase tuya, con su significado y un ejemplo.",
-  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "Una lista de tus palabras desde un archivo JSON, CSV, TSV o de texto; se buscan junto con las demás."
+  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "Una lista de tus palabras desde un archivo JSON, CSV, TSV o de texto; se buscan junto con las demás.",
+  "Journal": "Diario",
+  "Writing tools": "Herramientas de escritura",
+  "Spelling": "Ortografía",
+  "Measures": "Medidas",
+  "Portfolio": "Portafolio"
 }

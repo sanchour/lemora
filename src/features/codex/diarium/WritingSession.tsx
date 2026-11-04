@@ -22,7 +22,7 @@ export function WritingSession({ taskId, words }: { taskId?: string; words: numb
     setStartedAt(startedAt === null ? time : null);
   };
   return (
-    <div className="mb-6 flex flex-wrap items-center gap-3 rounded-xl bg-surface px-4 py-3 text-sm">
+    <div className="mb-6 flex flex-wrap items-center gap-3 border-y border-line/70 py-2.5 text-sm">
       {task && <p className="mr-auto text-ink-soft"><UiText source={'{0} / {1}–{2} words {3}'} values={[words, task.minWords, task.maxWords, <span className="text-ink-faint">· {words < task.minWords ? translateUi('keep going when you are ready') : words <= task.maxWords ? translateUi('within the suggested length') : translateUi('above the suggested length')}</span>]} /></p>}
       <span className="font-semibold tabular-nums" aria-label={translateUi('Writing timer')}>{formatClock(writingTimerMs(elapsed, startedAt, now))}</span>
       <Button size="sm" variant="ghost" onClick={toggle}>{startedAt === null ? translateUi('Start timer') : translateUi('Pause timer')}</Button>

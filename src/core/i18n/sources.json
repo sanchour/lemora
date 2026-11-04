@@ -17229,5 +17229,29 @@
   ],
   "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": [
     "src/features/thesaurus/dictionary/DictionaryToolsPanel.tsx"
+  ],
+  "Journal": [
+    "src/features/codex/diarium/DiariumHome.tsx"
+  ],
+  "Writing tools": [
+    "src/features/codex/diarium/EntryPage.tsx"
+  ],
+  "Spelling": [
+    "src/features/codex/diarium/EntryPage.tsx"
+  ],
+  "Measures": [
+    "src/features/codex/diarium/EntryPage.tsx"
+  ],
+  "Portfolio": [
+    "src/features/codex/diarium/EntryPage.tsx"
+  ],
+  "Words written": [
+    "src/features/codex/diarium/DiariumHome.tsx"
+  ],
+  "Writing streak": [
+    "src/features/codex/diarium/DiariumHome.tsx"
+  ],
+  "Recent grade": [
+    "src/features/codex/diarium/DiariumHome.tsx"
   ]
 }

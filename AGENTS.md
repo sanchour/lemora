@@ -1,5 +1,7 @@
 # Working on Lemora
 
+**Scheduling update · 2026-11-04:** [Lemora 1.1](docs/LEMORA-1.1-PLAN.md) is planned and **WAITING / not started / unclaimed**. Do not take its first task without an explicit user restart. Existing Lemora 1 / Phase U authorisation and status remain separate in [the current plan](docs/LEMORA-PLAN.md). The user explicitly authorised documentation updates in both products for this checkpoint; implementation and actual cross-app reintegration remain waiting.
+
 Lemora is a local-first app for reading, collecting words and writing in a new language: Lingua's
 reading-centred half made into its own product. It shares Lingua's code and git history (Vite 8,
 React 19, TypeScript, Tailwind 4, Dexie, Zustand, motion/react). Repository `sanchour/lemora`,

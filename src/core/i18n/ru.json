@@ -4954,7 +4954,7 @@
   "Words per sentence": "Слов в предложении",
   "Words that have gone quiet: a refresher, as meanings and in sentences.": "Слова, которые замолчали: напоминание о значениях и предложениях.",
   "Words that mean the same": "Слова, которые означают то же самое",
-  "Words written": "Слова написаны",
+  "Words written": "Написано слов",
   "Words you have not seen in a while": "Слова, которые вы давно не видели",
   "Work": "Работа",
   "Write a first journal entry": "Напишите первую запись в дневнике",
@@ -4965,7 +4965,7 @@
   "Write your sentence": "Напишите свое предложение",
   "Writing it out…": "Выписываю это…",
   "Writing out the last few seconds…": "Записываю последние несколько секунд…",
-  "Writing streak": "Написание полосы",
+  "Writing streak": "Серия письма",
   "Xin chào": "Синь Чао",
   "Year": "Год",
   "Year published": "Год публикации",
@@ -8137,5 +8137,10 @@
   "reviewed today": "повторено сегодня",
   "known words": "знакомых слов",
   "Add a word or phrase of your own to the dictionary, with its meaning and an example.": "Добавьте в словарь своё слово или выражение — со значением и примером.",
-  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "Список ваших слов из файла JSON, CSV, TSV или текста; они ищутся вместе с остальными."
+  "A list of your own words from a JSON, CSV, TSV or text file; they are looked up with the rest.": "Список ваших слов из файла JSON, CSV, TSV или текста; они ищутся вместе с остальными.",
+  "Journal": "Дневник",
+  "Writing tools": "Инструменты письма",
+  "Spelling": "Орфография",
+  "Measures": "Показатели",
+  "Portfolio": "Портфолио"
 }
