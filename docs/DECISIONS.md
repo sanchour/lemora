@@ -2244,3 +2244,27 @@ silent matching of edited text. Completion and verification boundaries are recor
 ## 2026-11-03 — 6-29 G4: the atlas, laid out without a physics library
 
 The plan named d3-force as 6-29's one new dependency. Built, the two-level layout needed none: regions are discs placed by 600 rounds of pulls along shared threads and pushes that keep them apart, then each region's words fill it like a sunflower (the most common in the middle) and settle by their own threads. In the 5,000-word Spanish profile that is well under a second in the worker, and nothing in it is random, so the map is the same everywhere. Two things only the browser showed: a push from every word in a region drove its words to the rim (only near words push now), and 1,193 loose words on a single ring read as a wall around the map (they fill a band, drawn lighter). **The cache holds the whole scene and is rebuilt only when the words, the dictionary or the pack change**; memory is worked out on every open and laid over it, so a review never moves the map. The first frame needs one row, one `words` query and a 7 ms scene (about 85 ms in all for 5,000 words). Drawing a frame costs 2 to 6 ms; at fit all only region names and a few landmarks are labelled, and the label budget grows with the zoom. A view kept over empty paper opens fitted instead (it happened in testing). The tree's made-from index is built in the worker once a session from the whole dictionary rather than stored: a stored copy would have been a hidden row in `fullDict`, which counts its rows as words.
+
+## 2026-11-04 · Lemora 1.1 planned in depth: four product decisions
+
+Asked while planning Lemora 1.1 in depth ([the plan](LEMORA-1.1-PLAN.md), specs in [docs/1.1/](1.1/CONVENTIONS.md)); 1.1 stays waiting.
+
+1. **One language room for every language** (the user). Alphabet grows into a room with Letters (non-Latin scripts only),
+   Sounds, Marks, Notes and Regions, at the same route (`/cursus/alphabets`), so shared links and cherry-picks keep working.
+   This replaces step 3.15's "Alphabet only for non-Latin". The deep language tools' teaching is written in the shared
+   `core/grammar/topics/` (a new optional `Topic.tool`) and shown in Notes; the Grammatica curriculum room stays excluded.
+   The Sounds tab showing for Latin-script languages too is the plan's reading of this, not the user's words. **The
+   room's name is not decided**: the plan proposes *Glossa*, pending the user.
+2. **Slang & Dialects is the Regions tab** of that room (the user), built on one regional builder that also delivers 6-23
+   D4 and F4/F5, so there is one lexicon.
+3. **Varieties with no open data are written by hand from cited sources and badged "unreviewed"** until a native
+   speaker checks them (the user). Measured: raw Wiktionary has no label for Paisa, Caleño or Costeño.
+4. **Desktop only for 1.1** (the user). New 1.1 features are checked at 1280, 1440 and 1366×768 in both themes; no
+   phone or touch checks, and existing responsive code stays as it is. This narrows the 1.1 rows that said
+   "responsive", "touch" or "phone"; CLAUDE.md's general "Lemora is responsive" still describes what Lemora 1 built.
+
+Found while planning (measured, read-only): the dictionary build keeps only whitelisted region labels
+(`scripts/lang-data/dictionary.ts` `LABELS`), so Dominican Republic (473 raw senses), Venezuela (749), Puerto Rico (402),
+Costa Rica (440) and Central America are dropped. Regions reads them from its own `public/regions/` files; the dictionaries
+are **not** rebuilt (that would re-download them for every learner and split them from Lingua's). `Text.stats.knownShare`
+counts learning words as known, so 1.1's reading fit adds a known-only share first.

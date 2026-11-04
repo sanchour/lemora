@@ -1,6 +1,6 @@
 # Lemora · The plan and where it stands
 
-**Next generation planned · 2026-11-04:** [Lemora 1.1](LEMORA-1.1-PLAN.md) gathers all relevant Lingua 6 work, including Atlas, deep 6-23 tools, Slang & Dialects, adaptive learning and relevant experiments, plus shared verification/design work from Lingua 5/7. **1.1 is WAITING / unclaimed; do not start it without explicit user resumption.** Existing Lemora 1 / Phase U work below keeps its own status and authorisation. No application implementation is performed by this planning checkpoint.
+**Next generation planned · 2026-11-04:** [Lemora 1.1](LEMORA-1.1-PLAN.md) gathers all relevant Lingua 6 work, including Atlas, deep 6-23 tools, Slang & Dialects, adaptive learning and relevant experiments, plus shared verification/design work from Lingua 5/7. **1.1 is WAITING / unclaimed; do not start it without explicit user resumption.** Existing Lemora 1 / Phase U work below keeps its own status and authorisation. No application implementation is performed by this planning checkpoint. Planned in depth the same day: numbered pushes and specs in [docs/1.1/](1.1/CONVENTIONS.md).
 
 The brief is the user's "Project LEMORA" master prompt (2026-11-03). Its findings are in
 [EXTRACTION-AUDIT.md](EXTRACTION-AUDIT.md). The way back to Lingua is in
