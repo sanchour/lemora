@@ -95,9 +95,9 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
           </span>
         </span>
 
-        <span className="mt-8 flex items-center justify-center gap-5">
+        <span className="mt-6 flex flex-col items-center gap-3 text-center">
           {/* The cute clock: an hour's face with today's slice in peach, drawn in the hand of the first start. */}
-          <svg viewBox="0 0 32 32" className="size-[84px] shrink-0" strokeWidth={1.1} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <svg viewBox="0 0 32 32" className="size-[80px] shrink-0" strokeWidth={1.1} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             {fractionOfHour >= 1 ? <circle cx={16} cy={16} r={11.5} fill={PEACH} stroke="none" /> : fractionOfHour > 0 ? <path d={clockWedge(fractionOfHour)} fill={PEACH} stroke="none" /> : null}
             {/* A pen-drawn ring, a little open and a little uneven, with a second thin pass beside it; four small ticks and one hand. */}
             <path d="M16.4 3.1C23.6 3 29.1 8.6 28.9 15.8C28.7 23 23.2 28.9 15.9 28.8C8.7 28.7 3.2 23.1 3.2 16C3.2 9 8.4 3.5 15 3.2" fill="none" stroke="var(--ink)" strokeWidth={1.3} />
@@ -107,7 +107,7 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
             <circle cx={16} cy={16} r={1.2} fill="var(--ink)" stroke="none" />
           </svg>
           <span className="min-w-0">
-            <span className="flex items-baseline gap-1.5">
+            <span className="flex items-baseline justify-center gap-1.5">
               <span className="font-serif text-[52px] leading-none font-semibold text-ink tabular-nums">{minutesToday}</span>
               <span className="font-serif text-[18px] text-ink-soft">/ {goalMinutes} <UiText source={'min'} /></span>
             </span>
@@ -119,7 +119,7 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
         </span>
 
         {/* The weekly tracker: the last seven days, each with its day letter and minutes; today's in the accent, a met day in sage. */}
-        <span className="mt-8 block border-t border-line/60 pt-3">
+        <span className="mt-6 block border-t border-line/60 pt-3">
           <span className="flex items-baseline justify-between text-[10.5px] font-bold tracking-[0.12em] text-ink-faint uppercase">
             <UiText source={'This week'} />
             <span className="font-semibold tracking-normal normal-case tabular-nums">{weekMinutes} <UiText source={'min'} /></span>

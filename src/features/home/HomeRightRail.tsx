@@ -78,8 +78,13 @@ export function HomeRightRail() {
               )}
             </header>
 
+            {/* A pen line under the greeting, over the three studies. */}
+            <svg aria-hidden viewBox="0 0 400 8" preserveAspectRatio="none" className="mt-5 h-2 w-full overflow-visible text-accent">
+              <path d="M2 4.6C60 2 120 6.8 200 4C280 1.6 340 6.4 398 3.6" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" vectorEffect="non-scaling-stroke" opacity={0.5} />
+            </svg>
+
             {/* 1. Where you left off & Cute Time a Day Meter (Side by side, no background) */}
-            <section aria-label="Current studies" className="mt-4 grid grid-cols-1 items-stretch gap-6 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1.2fr)]">
+            <section aria-label="Current studies" className="mt-5 grid grid-cols-1 items-stretch gap-6 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1.2fr)]">
               <WhereLeftOffCard data={leftOff} variant="hero" className="h-full" />
               <PenDivider />
               <WordsTodayCard className="h-full" />

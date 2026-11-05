@@ -270,7 +270,7 @@ export function WordsTodayCard({ className }: { className?: string }) {
           ))}
         </ul>
       ) : (
-        <p className="mt-4 max-w-[14rem] text-[13px] text-ink-faint"><UiText source={'Nothing due today. Add words to a deck to see them here.'} /></p>
+        <span className="flex flex-1 items-center"><p className="max-w-[14rem] text-[13px] text-ink-faint"><UiText source={'Nothing due today. Add words to a deck to see them here.'} /></p></span>
       )}
       <span className="mt-4 inline-flex items-center gap-1 text-[12px] font-semibold text-ink-soft transition-colors group-hover:text-accent-text">
         <UiText source={'Review'} /> <ArrowRight size={12} aria-hidden />
@@ -296,7 +296,7 @@ export function WhereLeftOffCard({
         <span className="font-serif text-[18px] font-bold tracking-tight text-ink"><UiText source={'Where you left off'} /></span>
       </span>
 
-      <span className="mt-5 block h-44 w-32 shrink-0 overflow-hidden rounded-xl bg-sunken shadow-elev-2 transition-transform duration-200 group-hover:-rotate-1">
+      <span className="mt-5 block h-52 w-[9.5rem] shrink-0 overflow-hidden rounded-xl bg-sunken shadow-elev-2 transition-transform duration-200 group-hover:-rotate-1">
         {data.book ? (
           <BookCover text={data.book} size="sm" className="size-full object-cover" />
         ) : (
@@ -516,7 +516,7 @@ export function WhatNextSection({
 
   return (
     <section aria-label="What next" className="space-y-2.5">
-      <h2 className="font-serif text-[22px] font-bold tracking-tight text-ink sm:text-[24px]">
+      <h2 className="text-center font-serif text-[22px] font-bold tracking-tight text-ink sm:text-[24px]">
         <UiText source={'What next'} />
       </h2>
 
@@ -591,7 +591,7 @@ export function DiscoverMoreSection({
   const arrow = 'grid size-7.5 place-items-center rounded-full border border-line/70 bg-surface/80 text-ink shadow-2xs transition-all hover:border-accent hover:bg-raised active:scale-95 disabled:pointer-events-none disabled:opacity-30';
 
   return (
-    <section aria-label="Discover more" className="space-y-2.5">
+    <section aria-label="Discover more" className="-mt-5 space-y-2.5">
       <div className="flex items-center justify-between gap-3">
         <Link to="/explora" className="group inline-flex items-center gap-1.5 font-serif text-[22px] font-bold tracking-tight text-ink transition-colors hover:text-accent-text sm:text-[24px]">
           <span><UiText source={'Discover more'} /></span>
