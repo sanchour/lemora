@@ -17447,5 +17447,179 @@
   ],
   "Picture books: StoryWeaver by Pratham Books, CC BY 4.0, each credited on its page.": [
     "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "day streak": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "words to review": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Begin": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Read on": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "The reader’s edition": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "The Daily Reader": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Nothing begun yet. Open your first text and let the words find you, one tap at a time.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "You are {0}% of the way through. Pick up where you left off: the page is waiting.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "In brief": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Words of the day": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "No words are due. A quiet day for the cards.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "{0} to review": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "The day’s goal": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "minutes today": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Day {0} of your streak.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Begin a streak today.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "From the archive": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Ready to begin, {0}?": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Back to “{0}”?": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "words due": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "min today": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Review your words": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "{0} words are waiting": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Reach your goal": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "{0} of {1} min": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Find something new": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Today’s treasure": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Goal reached. Well done!": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Reach your goal to open it": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Quests": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Begin your first text": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "No cards due": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Open your first book": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Review {0} words": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Study for {0} minutes": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "{0} of {1} min today": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "{0} words to review": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Up next for you": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Picked for you": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Browse everything in Explora": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Home style": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Choose a look for Home": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Try another look for Home": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Usual": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Home as it is: three studies side by side.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Gazette": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "A newspaper front page: a lead story, briefs and ruled columns.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Bento": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "A dashboard of tiles: a big book, a goal ring, a streak, small tools.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Journey": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "A game-like trail of today’s steps, with a chest at the end.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Reading room": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "A cosy shelf of your books, a stopwatch, cards and sticky notes.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Stream": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "A streaming service: a big billboard, then rows of covers to pick from.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "A bullet journal: dotted paper, a checklist, a habit tracker, taped-in photos.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Focus": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Almost nothing: one sentence, one button, a hairline of numbers.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
   ]
 }

@@ -258,6 +258,8 @@ export interface Settings {
     homeLayout: 'today' | 'classic' | 'topline' | 'rail' | 'shelf' | 'desk';
     /** Lemora U3: the tools on Home (on unless turned off), and the Ask button at the bottom right (on unless turned off). */
     homeTools?: boolean;
+    /** One of the alternative looks for Home (features/home/styles); unset is the usual Home. */
+    homeStyle?: 'editorial' | 'bento' | 'journey' | 'library' | 'focus' | 'stream' | 'notebook';
     /** Explora's category tabs as they were: round tabs on a soft background, the dark one selected. */
     classicExploraTabs?: boolean;
     /** Home's greeting and date: at the left (default) or centred. */
