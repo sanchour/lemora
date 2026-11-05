@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.38** · 2026-11-05 · Explora Flick: short-form scroller
 - **0.1.0-alpha.37** · 2026-11-05 · Outlined Continue reading, themed What next flourish, bordered Explora tabs, drawn Ludus game cards
 - **0.1.0-alpha.36** · 2026-11-05 · Explora: orange tabs, level control, comics series, magazine covers
 - **0.1.0-alpha.35** · 2026-11-05 · Home: Discover prompts, Continue reading button, tools centred under Discover
