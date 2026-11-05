@@ -240,6 +240,27 @@ export function GreetingWithNameUnderline({
 
 // ── Where You Left Off ───────────────────────────────────────────────────────
 
+/** A thick pen line with a little flower in its middle: two brush strokes that taper away from it. */
+export function PenFlourish({ className }: { className?: string }) {
+  const side = (flip: boolean) => (
+    <svg aria-hidden viewBox="0 0 200 14" preserveAspectRatio="none" className={cx('h-3.5 min-w-0 flex-1 overflow-visible', flip && '-scale-x-100')}>
+      <path d="M0 9C40 4 90 11 150 7C170 5.6 186 6.6 198 7" fill="none" stroke="currentColor" strokeWidth={3.4} strokeLinecap="round" vectorEffect="non-scaling-stroke" opacity={0.6} />
+      <path d="M20 12C70 9 120 13 170 10" fill="none" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" vectorEffect="non-scaling-stroke" opacity={0.35} />
+    </svg>
+  );
+  return (
+    <div aria-hidden className={cx('flex items-center gap-3 text-accent', className)}>
+      {side(false)}
+      <svg viewBox="0 0 44 22" className="h-[22px] w-11 shrink-0 overflow-visible">
+        <path d="M22 1C23.4 7 26 9.6 32 11C26 12.4 23.4 15 22 21C20.6 15 18 12.4 12 11C18 9.6 20.6 7 22 1Z" fill="currentColor" opacity={0.85} />
+        <circle cx={5} cy={11} r={2} fill="currentColor" opacity={0.6} />
+        <circle cx={39} cy={11} r={2} fill="currentColor" opacity={0.6} />
+      </svg>
+      {side(true)}
+    </div>
+  );
+}
+
 /** A pen-drawn vertical line, in the accent, a little uneven, fading at its ends. */
 export function PenDivider({ className }: { className?: string }) {
   return (
@@ -260,20 +281,22 @@ export function WordsTodayCard({ className }: { className?: string }) {
         <Layers size={16} strokeWidth={2.3} className="text-accent-text" aria-hidden />
         <span className="font-serif text-[18px] font-bold tracking-tight text-ink transition-colors group-hover:text-accent-text"><UiText source={'Words for today'} /></span>
       </span>
-      {words?.length ? (
-        <ul className="mt-4 space-y-2.5">
-          {words.map((w) => (
-            <li key={w.term} className="leading-tight">
-              <span className="block font-serif text-[20px] font-semibold text-ink">{w.term}</span>
-              <span className="block max-w-[15rem] truncate text-[12.5px] text-ink-faint">{w.meaning}</span>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <span className="flex flex-1 items-center"><p className="max-w-[14rem] text-[13px] text-ink-faint"><UiText source={'Nothing due today. Add words to a deck to see them here.'} /></p></span>
-      )}
-      <span className="mt-4 inline-flex items-center gap-1 text-[12px] font-semibold text-ink-soft transition-colors group-hover:text-accent-text">
-        <UiText source={'Review'} /> <ArrowRight size={12} aria-hidden />
+      <span className="flex flex-1 flex-col items-center justify-center pb-6">
+        {words?.length ? (
+          <ul className="space-y-2.5">
+            {words.map((w) => (
+              <li key={w.term} className="leading-tight">
+                <span className="block font-serif text-[20px] font-semibold text-ink">{w.term}</span>
+                <span className="block max-w-[15rem] truncate text-[12.5px] text-ink-faint">{w.meaning}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="max-w-[14rem] text-[13px] text-ink-faint"><UiText source={'Nothing due today. Add words to a deck to see them here.'} /></p>
+        )}
+        <span className="mt-4 inline-flex items-center gap-1 text-[12px] font-semibold text-ink-soft transition-colors group-hover:text-accent-text">
+          <UiText source={'Review'} /> <ArrowRight size={12} aria-hidden />
+        </span>
       </span>
     </Link>
   );
@@ -296,7 +319,7 @@ export function WhereLeftOffCard({
         <span className="font-serif text-[18px] font-bold tracking-tight text-ink"><UiText source={'Where you left off'} /></span>
       </span>
 
-      <span className="mt-5 block h-52 w-[9.5rem] shrink-0 overflow-hidden rounded-xl bg-sunken shadow-elev-2 transition-transform duration-200 group-hover:-rotate-1">
+      <span className="mt-3 block h-56 w-40 shrink-0 overflow-hidden rounded-xl bg-sunken shadow-elev-2 transition-transform duration-200 group-hover:-rotate-1">
         {data.book ? (
           <BookCover text={data.book} size="sm" className="size-full object-cover" />
         ) : (
@@ -304,7 +327,6 @@ export function WhereLeftOffCard({
         )}
       </span>
 
-      <h3 className="mt-4 line-clamp-2 max-w-[16rem] font-serif text-[19px] leading-tight font-bold tracking-tight text-ink transition-colors group-hover:text-accent-text">{data.title}</h3>
       <span className="mt-3 flex w-40 items-center gap-2">
         <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-sunken">
           <span className="block h-full bg-accent transition-all duration-300" style={{ width: `${Math.max(4, data.percent)}%` }} />
@@ -516,9 +538,10 @@ export function WhatNextSection({
 
   return (
     <section aria-label="What next" className="space-y-2.5">
-      <h2 className="text-center font-serif text-[22px] font-bold tracking-tight text-ink sm:text-[24px]">
+      <h2 className="text-center font-serif text-[26px] font-bold tracking-tight text-ink sm:text-[30px]">
         <UiText source={'What next'} />
       </h2>
+      <PenFlourish className="mx-auto max-w-md" />
 
       <div aria-label="What next suggestions" className="grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 lg:grid-cols-5">
         {shown.map((item) => {
@@ -527,17 +550,17 @@ export function WhatNextSection({
           return (
             // No card: a drawn icon on a soft blob and the step's name; the one line of why appears when you point at it.
             <Link key={item.id} to={item.to} className="group relative flex min-w-0 flex-col items-center px-1 pt-1 text-center outline-none">
-              <span className="relative grid size-16 place-items-center transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110 group-focus-visible:scale-110">
+              <span className="relative grid size-14 place-items-center transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110 group-focus-visible:scale-110">
                 <svg aria-hidden viewBox="0 0 48 48" className="absolute inset-0 size-full">
                   <path d="M24 3C34 2 45 10 45 22C46 35 37 46 25 45C12 46 2 36 3 24C3 12 12 4 24 3Z" style={{ fill: `color-mix(in oklab, ${item.hue} 26%, transparent)` }} />
                 </svg>
-                <span className="relative">{item.hand ? <Hand name={item.hand} size={34} /> : <Icon size={26} strokeWidth={1.7} aria-hidden className="text-ink" />}</span>
+                <span className="relative">{item.hand ? <Hand name={item.hand} size={30} /> : <Icon size={24} strokeWidth={1.7} aria-hidden className="text-ink" />}</span>
                 {item.fresh && <span className="absolute top-0.5 right-0.5 size-3 rounded-full border-2 border-bg bg-accent" aria-hidden />}
               </span>
-              <h3 className="mt-2 line-clamp-2 font-serif text-[16px] leading-snug font-bold tracking-tight text-ink transition-colors group-hover:text-accent-text group-focus-visible:text-accent-text">
+              <h3 className="mt-1.5 line-clamp-1 font-serif text-[15.5px] leading-snug font-bold tracking-tight text-ink transition-colors group-hover:text-accent-text group-focus-visible:text-accent-text">
                 {literal ? item.title : <UiText source={item.title} />}
               </h3>
-              <p className="mt-0.5 line-clamp-2 min-h-[2.4em] text-[12px] leading-snug text-ink-soft opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+              <p className="pointer-events-none absolute top-full left-1/2 z-20 mt-1 w-56 -translate-x-1/2 rounded-xl border border-line-strong/70 bg-raised px-3 py-2 text-[12px] leading-snug text-ink-soft opacity-0 shadow-elev-2 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
                 {item.id.startsWith('tip:') || item.id.startsWith('next:') ? item.detail : <UiText source={item.detail} />}
               </p>
             </Link>
@@ -591,7 +614,7 @@ export function DiscoverMoreSection({
   const arrow = 'grid size-7.5 place-items-center rounded-full border border-line/70 bg-surface/80 text-ink shadow-2xs transition-all hover:border-accent hover:bg-raised active:scale-95 disabled:pointer-events-none disabled:opacity-30';
 
   return (
-    <section aria-label="Discover more" className="-mt-5 space-y-2.5">
+    <section aria-label="Discover more" className="space-y-2.5">
       <div className="flex items-center justify-between gap-3">
         <Link to="/explora" className="group inline-flex items-center gap-1.5 font-serif text-[22px] font-bold tracking-tight text-ink transition-colors hover:text-accent-text sm:text-[24px]">
           <span><UiText source={'Discover more'} /></span>

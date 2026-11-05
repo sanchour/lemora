@@ -15,6 +15,7 @@ import {
   WhereLeftOffCard,
   WordsTodayCard,
   PenDivider,
+  PenFlourish,
   CursusNextStepCard,
   WhatNextSection,
   DiscoverMoreSection,
@@ -52,17 +53,17 @@ export function HomeRightRail() {
   return (
     <div className="mx-auto max-w-[1152px]">
       {/* ── Two-Column Atelier: Left Canvas (Header + Work area) + Right Rail (Tools high up) ─── */}
-      <main className="space-y-6">
+      <main className="space-y-4">
         <div className={cx('grid grid-cols-1 items-start gap-7', showTools && 'lg:grid-cols-[1fr_auto]')}>
           {/* Left Column: Header + Learning Content ──────────────────────────── */}
           <div className="min-w-0 space-y-3">
             {/* Top Header */}
             <header className={cx('flex flex-col gap-3 pt-1 sm:flex-row sm:items-start', centered ? 'sm:justify-center' : 'sm:justify-between')}>
               <div className={cx(centered && 'text-center')}>
-                <p className="font-sans text-[11px] font-bold tracking-[0.14em] text-ink-faint uppercase">
+                <p className="font-sans text-[11px] font-bold tracking-[0.14em] text-accent-text uppercase">
                   {eyebrow}
                 </p>
-                <h1 className="mt-0.5 font-serif text-[32px] leading-tight font-semibold tracking-tight text-ink sm:text-[36px]">
+                <h1 className="mt-0.5 font-serif text-[36px] leading-tight font-semibold tracking-tight text-ink sm:text-[50px]">
                   <GreetingWithNameUnderline greeting={greeting} name={name} />
                 </h1>
               </div>
@@ -79,12 +80,10 @@ export function HomeRightRail() {
             </header>
 
             {/* A pen line under the greeting, over the three studies. */}
-            <svg aria-hidden viewBox="0 0 400 8" preserveAspectRatio="none" className="mt-5 h-2 w-full overflow-visible text-accent">
-              <path d="M2 4.6C60 2 120 6.8 200 4C280 1.6 340 6.4 398 3.6" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" vectorEffect="non-scaling-stroke" opacity={0.5} />
-            </svg>
+            <PenFlourish className="mt-3" />
 
             {/* 1. Where you left off & Cute Time a Day Meter (Side by side, no background) */}
-            <section aria-label="Current studies" className="mt-5 grid grid-cols-1 items-stretch gap-6 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1.2fr)]">
+            <section aria-label="Current studies" className="mt-3 grid grid-cols-1 items-stretch gap-6 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1.2fr)]">
               <WhereLeftOffCard data={leftOff} variant="hero" className="h-full" />
               <PenDivider />
               <WordsTodayCard className="h-full" />

@@ -95,21 +95,27 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
           </span>
         </span>
 
-        <span className="mt-6 flex flex-col items-center gap-3 text-center">
+        <span className="mt-5 flex flex-col items-center gap-2 text-center">
           {/* The cute clock: an hour's face with today's slice in peach, drawn in the hand of the first start. */}
-          <svg viewBox="0 0 32 32" className="size-[80px] shrink-0" strokeWidth={1.1} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <svg viewBox="0 -4 32 36" className="size-[112px] shrink-0" strokeWidth={1.1} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             {fractionOfHour >= 1 ? <circle cx={16} cy={16} r={11.5} fill={PEACH} stroke="none" /> : fractionOfHour > 0 ? <path d={clockWedge(fractionOfHour)} fill={PEACH} stroke="none" /> : null}
-            {/* A pen-drawn ring, a little open and a little uneven, with a second thin pass beside it; four small ticks and one hand. */}
-            <path d="M16.4 3.1C23.6 3 29.1 8.6 28.9 15.8C28.7 23 23.2 28.9 15.9 28.8C8.7 28.7 3.2 23.1 3.2 16C3.2 9 8.4 3.5 15 3.2" fill="none" stroke="var(--ink)" strokeWidth={1.3} />
+            {/* A stopwatch: its button on top, a pen-drawn ring, a tick for every five minutes, and a hand; the peach slice is the time spent today. */}
+            <path d="M13.2 -2.6H18.8M16 -2.4V3" fill="none" stroke="var(--ink)" strokeWidth={1.4} />
+            <path d="M25.4 5.4L26.9 3.9" fill="none" stroke="var(--ink)" strokeWidth={1.3} />
+            <path d="M16.4 3.1C23.6 3 29.1 8.6 28.9 15.8C28.7 23 23.2 28.9 15.9 28.8C8.7 28.7 3.2 23.1 3.2 16C3.2 9 8.4 3.5 15 3.2" fill="none" stroke="var(--ink)" strokeWidth={1.4} />
             <path d="M15 3.6C21.6 2.6 28 8 28.3 15C28.6 21.8 24.3 27.8 17.5 28.6" fill="none" stroke="var(--ink)" strokeWidth={0.7} opacity={0.4} />
-            <path d="M16 5.4V7.4M26.6 16H24.6M16 26.6V24.6M5.4 16H7.4" stroke="var(--ink)" opacity={0.7} />
-            <path d="M16 16L16.3 9.6" stroke="var(--accent)" strokeWidth={1.6} />
-            <circle cx={16} cy={16} r={1.2} fill="var(--ink)" stroke="none" />
+            {Array.from({ length: 12 }, (_, i) => {
+              const a = (i / 12) * 2 * Math.PI;
+              const r1 = i % 3 === 0 ? 10 : 11;
+              return <path key={i} d={`M${(16 + r1 * Math.sin(a)).toFixed(2)} ${(16 - r1 * Math.cos(a)).toFixed(2)}L${(16 + 12 * Math.sin(a)).toFixed(2)} ${(16 - 12 * Math.cos(a)).toFixed(2)}`} stroke="var(--ink)" opacity={i % 3 === 0 ? 0.85 : 0.45} />;
+            })}
+            <path d="M16 16L16.3 8.6" stroke="var(--accent)" strokeWidth={1.7} />
+            <circle cx={16} cy={16} r={1.4} fill="var(--ink)" stroke="none" />
           </svg>
           <span className="min-w-0">
             <span className="flex items-baseline justify-center gap-1.5">
-              <span className="font-serif text-[52px] leading-none font-semibold text-ink tabular-nums">{minutesToday}</span>
-              <span className="font-serif text-[18px] text-ink-soft">/ {goalMinutes} <UiText source={'min'} /></span>
+              <span className="font-serif text-[30px] leading-none font-semibold text-ink tabular-nums">{minutesToday}</span>
+              <span className="font-serif text-[15px] text-ink-soft">/ {goalMinutes} <UiText source={'min'} /></span>
             </span>
             <span className={cx('mt-1.5 inline-flex items-center gap-1 text-[12.5px] font-semibold', isGoalMet ? 'text-sage-text' : 'text-ink-soft')}>
               {isGoalMet ? <><Sparkles size={12} aria-hidden /> <UiText source={'Goal met'} /></> : <UiText source={descriptor} />}
@@ -119,12 +125,12 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
         </span>
 
         {/* The weekly tracker: the last seven days, each with its day letter and minutes; today's in the accent, a met day in sage. */}
-        <span className="mt-6 block border-t border-line/60 pt-3">
+        <span className="mt-3 block border-t border-line/60 pt-3">
           <span className="flex items-baseline justify-between text-[10.5px] font-bold tracking-[0.12em] text-ink-faint uppercase">
             <UiText source={'This week'} />
             <span className="font-semibold tracking-normal normal-case tabular-nums">{weekMinutes} <UiText source={'min'} /></span>
           </span>
-          <span className="mt-3 flex h-14 items-end gap-1.5">
+          <span className="mt-2 flex h-10 items-end gap-1.5">
             {(days ?? []).map((d, i) => {
               const m = Math.round(d.total / 60_000);
               const last = i === (days?.length ?? 0) - 1;
