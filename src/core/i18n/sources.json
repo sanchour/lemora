@@ -17621,5 +17621,107 @@
   ],
   "Almost nothing: one sentence, one button, a hairline of numbers.": [
     "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "The cards first, while the mind is fresh": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "{0} min of reading, {1}% done": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Today’s goal": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Planner": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "A day planner: hours down the side, today’s steps as blocks, the week as small bars.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Terminal": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "A command line: monospace on a dark screen, bars made of blocks, tools as commands.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Poster": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Bold and flat: thick outlines, hard shadows, huge type, the minutes as the headline.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Last 14 days": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Study time today": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Cards due": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Streak": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Current book": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Study time": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "goal {0} min": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Time by tool": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Nothing recorded yet. Read something and it appears here.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Recent texts": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Progress": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "No texts yet.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Recommended": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Streak {0}d": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "{0} cards due": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Goal {0}%": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Activity, 12 weeks": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Now reading": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Today by tool": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Nothing recorded yet today.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Queue": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Analytics": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "A product dashboard: KPI cards, a trend chart, a donut and a table of recent texts.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "Cockpit": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "A dark monitoring screen: status pills, a gauge, a heat map, bars and a queue.": [
+    "src/features/home/styles/HomeStyleMenu.tsx"
   ]
 }

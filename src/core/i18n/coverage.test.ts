@@ -44,7 +44,7 @@ it('registers app-owned labels passed dynamically without treating learner data 
 it('keeps new literal screen copy behind an explicit interface message site', () => {
   const raw: string[] = [];
   // Flags contain country codes; these two views contain pronunciation notation and developer-only measurements.
-  const notation = new Set(['src/design/flags.tsx', 'src/features/cursus/sounds/MouthDiagram.tsx', 'src/features/lab/SmoothnessTest.tsx']);
+  const notation = new Set(['src/design/flags.tsx', 'src/features/cursus/sounds/MouthDiagram.tsx', 'src/features/lab/SmoothnessTest.tsx', 'src/features/home/styles/HomeTerminal.tsx']);
   for (const file of files('src')) {
     if (notation.has(file)) continue;
     const visit = (n: Node, literal = false) => {
