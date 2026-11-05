@@ -31,7 +31,7 @@ import type { ExploraItem } from '../types';
 import { LevelBadge } from './LevelBadge';
 import { Hand } from '@/design/drawings';
 
-const KIND_ICONS: Record<string, typeof Tv> = {
+export const KIND_ICONS: Record<string, typeof Tv> = {
   series: Tv,
   films: Film,
   books: BookOpen,
@@ -104,41 +104,9 @@ export function HeroBillboard({
   const nextSlide = () => setIndex((i) => (i + 1) % featured.length);
   const prevSlide = () => setIndex((i) => (i - 1 + featured.length) % featured.length);
 
-  const actionLabel = (() => {
-    if (current.kind === 'series' || current.kind === 'films') return translateUi('Watch with Subtitles');
-    if (current.kind === 'books') return translateUi('Read in Codex');
-    if (current.kind === 'audiobooks') return translateUi('Listen in Sonus');
-    if (current.kind === 'podcasts') return translateUi('Follow Podcast');
-    if (current.kind === 'radio') return translateUi('Tune in Live');
-    if (current.kind === 'music') return translateUi('Sing in Sonus');
-    if (current.kind === 'comic') return translateUi('Read');
-    if (current.kind === 'tip') return translateUi('Try it');
-    return translateUi('Open');
-  })();
-
-  const ActionIcon = (() => {
-    if (current.kind === 'series' || current.kind === 'films') return Captions;
-    if (current.kind === 'books') return BookOpen;
-    if (current.kind === 'audiobooks' || current.kind === 'podcasts') return Headphones;
-    if (current.kind === 'radio') return Radio;
-    return Play;
-  })();
-
-  const cover = current.cover ? (
-    <img src={current.cover} alt="" className="size-full object-cover" />
-  ) : current.kind === 'tip' ? (
-    <div className="grid size-full place-items-center bg-accent-soft"><Hand name="candle" size={72} /></div>
-  ) : poster ? (
-    <img src={poster} alt="" className="size-full object-cover" />
-  ) : current.book ? (
-    <Artwork title={current.book.title} coverUrl={current.book.coverUrl} className="size-full object-cover" />
-  ) : current.station ? (
-    <Artwork title={current.station.name} coverUrl={current.station.favicon} className="size-full object-cover" />
-  ) : current.pick ? (
-    <Art query={pickImageQuery(current.pick, current.kind as PickGroup, lang)} fit="cover" fallback={<CoverFallback title={current.title} />} />
-  ) : (
-    <CoverFallback title={current.title} />
-  );
+  const actionLabel = actionLabelFor(current.kind, translateUi);
+  const ActionIcon = actionIconFor(current.kind);
+  const cover = <ItemCover item={current} lang={lang} poster={poster} />;
 
   return (
     // A book on the reading table (Lemora): paper, a cover standing like a book, the blurb set like the back of one.
@@ -231,6 +199,46 @@ export function HeroBillboard({
         </div>
       )}
     </div>
+  );
+}
+
+/** The primary action's words for an item of this kind (the hero and the feed). */
+export function actionLabelFor(kind: ExploraItem['kind'], translateUi: (s: string) => string): string {
+  if (kind === 'series' || kind === 'films') return translateUi('Watch with Subtitles');
+  if (kind === 'books') return translateUi('Read in Codex');
+  if (kind === 'audiobooks') return translateUi('Listen in Sonus');
+  if (kind === 'podcasts') return translateUi('Follow Podcast');
+  if (kind === 'radio') return translateUi('Tune in Live');
+  if (kind === 'music') return translateUi('Sing in Sonus');
+  if (kind === 'comic') return translateUi('Read');
+  if (kind === 'tip') return translateUi('Try it');
+  return translateUi('Open');
+}
+
+export function actionIconFor(kind: ExploraItem['kind']): typeof Tv {
+  if (kind === 'series' || kind === 'films') return Captions;
+  if (kind === 'books') return BookOpen;
+  if (kind === 'audiobooks' || kind === 'podcasts') return Headphones;
+  if (kind === 'radio') return Radio;
+  return Play;
+}
+
+/** The item's picture: its own cover, a poster, an audiobook's or station's artwork, a found image, or a plain binding. */
+export function ItemCover({ item, lang, poster }: { item: ExploraItem; lang: string; poster?: string }) {
+  return item.cover ? (
+    <img src={item.cover} alt="" className="size-full object-cover" />
+  ) : item.kind === 'tip' ? (
+    <div className="grid size-full place-items-center bg-accent-soft"><Hand name="candle" size={72} /></div>
+  ) : poster ? (
+    <img src={poster} alt="" className="size-full object-cover" />
+  ) : item.book ? (
+    <Artwork title={item.book.title} coverUrl={item.book.coverUrl} className="size-full object-cover" />
+  ) : item.station ? (
+    <Artwork title={item.station.name} coverUrl={item.station.favicon} className="size-full object-cover" />
+  ) : item.pick ? (
+    <Art query={pickImageQuery(item.pick, item.kind as PickGroup, lang)} fit="cover" fallback={<CoverFallback title={item.title} />} />
+  ) : (
+    <CoverFallback title={item.title} />
   );
 }
 

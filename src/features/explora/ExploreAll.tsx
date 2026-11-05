@@ -23,6 +23,7 @@ import { HeroBillboard } from './components/HeroBillboard';
 import { MediaShelf } from './components/MediaShelf';
 import { MediaCard } from './components/MediaCard';
 import { MediaDetailModal } from './components/MediaDetailModal';
+import { ExploraFeed } from './ExploraFeed';
 import {
   BooksShelf,
   NewsSection,
@@ -182,6 +183,7 @@ export function ExploreAll({
   const [category, setCategoryState] = useState<ExploraCategory>(initialCategory);
   // The level filter lives in the page header (Lemora U4): around the learner's level unless chosen otherwise.
   const [selectedItem, setSelectedItem] = useState<ExploraItem | null>(null);
+  const [flickOpen, setFlickOpen] = useState(false);
 
   const saved = useSaved(lang);
   const streaming = useStreaming();
@@ -454,6 +456,7 @@ export function ExploreAll({
         learnerLevel={level}
         levelFilter={levelFilter}
         onSelectLevelFilter={onSelectLevelFilter}
+        onFlick={() => setFlickOpen(true)}
       />
 
       {/* Search Results View (when user has typed in top search bar) */}
@@ -711,6 +714,21 @@ export function ExploreAll({
             </div>
           ) : null}
         </>
+      )}
+
+      {/* Flick: the full-screen scroller. Everything Explora has, one thing at a time. */}
+      {flickOpen && (
+        <ExploraFeed
+          items={items}
+          lang={lang}
+          learnerLevel={level}
+          lookups={lookups}
+          savedIds={saved}
+          onToggleSave={(id) => toggleSaved(lang, id)}
+          onOpen={(item) => void handlePrimaryAction(item)}
+          onDetails={(item) => setSelectedItem(item)}
+          onClose={() => setFlickOpen(false)}
+        />
       )}
 
       {/* Quick View Streaming Detail Modal */}

@@ -8164,5 +8164,13 @@
   "A short, funny comic about a young witch and her cat, page by page.": "قصة مصوّرة قصيرة وطريفة عن ساحرة صغيرة وقطتها، صفحة بصفحة.",
   "episodes": "حلقات",
   "Earlier Explora tabs": "تبويبات Explora السابقة",
-  "Explora’s category tabs as they were: round tabs on a soft background, the dark one selected. Off gives plain tabs, the chosen one filled orange.": "تبويبات فئات Explora كما كانت: مستديرة على خلفية ناعمة والمحدد داكن. عند الإيقاف: تبويبات بسيطة والمحدد بلون برتقالي."
+  "Explora’s category tabs as they were: round tabs on a soft background, the dark one selected. Off gives plain tabs, the chosen one filled orange.": "تبويبات فئات Explora كما كانت: مستديرة على خلفية ناعمة والمحدد داكن. عند الإيقاف: تبويبات بسيطة والمحدد بلون برتقالي.",
+  "Flick": "تصفّح",
+  "Flick through Explora": "تصفّح إكسبلورا",
+  "Flick through Explora, one thing at a time": "تصفّح إكسبلورا، عنصرًا في كل مرة",
+  "You’ve seen it all": "لقد رأيت كل شيء",
+  "{0} saved so far. Your saved things wait in Explora › Saved.": "تم حفظ {0} حتى الآن. محفوظاتك في إكسبلورا › المحفوظات.",
+  "Shuffle again": "اخلط من جديد",
+  "Back to Explora": "العودة إلى إكسبلورا",
+  "↑ ↓ to move · S to save · Enter to open · Esc to close": "↑ ↓ للتنقل · S للحفظ · Enter للفتح · Esc للإغلاق"
 }

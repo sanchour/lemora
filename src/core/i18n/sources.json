@@ -17324,5 +17324,30 @@
   ],
   "Explora’s category tabs as they were: round tabs on a soft background, the dark one selected. Off gives plain tabs, the chosen one filled orange.": [
     "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "Flick": [
+    "src/features/explora/ExploraFeed.tsx",
+    "src/features/explora/components/ExploraHeaderBar.tsx"
+  ],
+  "Flick through Explora": [
+    "src/features/explora/ExploraFeed.tsx"
+  ],
+  "Flick through Explora, one thing at a time": [
+    "src/features/explora/components/ExploraHeaderBar.tsx"
+  ],
+  "You’ve seen it all": [
+    "src/features/explora/ExploraFeed.tsx"
+  ],
+  "{0} saved so far. Your saved things wait in Explora › Saved.": [
+    "src/features/explora/ExploraFeed.tsx"
+  ],
+  "Shuffle again": [
+    "src/features/explora/ExploraFeed.tsx"
+  ],
+  "Back to Explora": [
+    "src/features/explora/ExploraFeed.tsx"
+  ],
+  "↑ ↓ to move · S to save · Enter to open · Esc to close": [
+    "src/features/explora/ExploraFeed.tsx"
   ]
 }
