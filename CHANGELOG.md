@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.34** · 2026-11-05 · Home: equal studies columns, sprig flourish
 - **0.1.0-alpha.33** · 2026-11-05 · Home: flourish lines, stopwatch, hover popovers, Discover peek
 - **0.1.0-alpha.32** · 2026-11-05 · Home: pen line under the greeting, centred clock, bigger book
 - **0.1.0-alpha.31** · 2026-11-05 · Home: aligned studies columns, icon-only What next with hover description
