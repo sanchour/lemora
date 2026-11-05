@@ -243,6 +243,26 @@ export async function dueTerms(lang: string, limit = 10, now = Date.now(), datab
   return [...new Set(notes.flatMap((n) => (n && !n.deletedAt ? [n.term] : [])))].slice(0, limit);
 }
 
+/** A few words for today: the terms and meanings of the cards due (reviews first, then new ones), one card per word. */
+export async function dueWords(lang: string, limit = 4, now = Date.now(), database: LinguaDB = db): Promise<Array<{ term: string; meaning: string }>> {
+  const decks = await studyDecks(lang, null, database);
+  const cards = (await Promise.all(decks.map((d) => dueCards(d, now, database)))).flat().sort((a, b) => Number(b.state !== 0) - Number(a.state !== 0));
+  const notes = await database.notes.bulkGet([...new Set(cards.map((c) => c.noteId))]);
+  const seen = new Set<string>();
+  const out: Array<{ term: string; meaning: string }> = [];
+  for (const n of notes) {
+    if (!n || n.deletedAt || seen.has(n.term)) continue;
+    seen.add(n.term);
+    out.push({ term: n.term, meaning: n.meaning });
+    if (out.length >= limit) break;
+  }
+  return out;
+}
+
+export function useDueWords(lang: string, limit = 4) {
+  return useLiveQuery(() => dueWords(lang, limit), [lang, limit]);
+}
+
 export function useDueSummary(lang: string): DueSummary | undefined {
   return useLiveQuery(() => dueSummary(lang), [lang]);
 }

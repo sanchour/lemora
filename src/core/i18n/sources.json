@@ -17290,5 +17290,11 @@
   ],
   "The date and greeting at the top of Home, in the middle of the page instead of at the left.": [
     "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "Words for today": [
+    "src/features/home/homeComponents.tsx"
+  ],
+  "Nothing due today. Add words to a deck to see them here.": [
+    "src/features/home/homeComponents.tsx"
   ]
 }

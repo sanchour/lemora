@@ -85,7 +85,7 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
         type="button"
         onClick={() => setSliderOpen(true)}
         aria-label={translateUi('Time today · Change daily goal')}
-        className={cx('group flex w-full cursor-pointer flex-col rounded-2xl p-1 text-left', className)}
+        className={cx('group flex w-full max-w-[460px] cursor-pointer flex-col rounded-2xl p-1 text-left', className)}
       >
         <span className="flex items-center gap-2">
           <h2 className="font-serif text-[21px] font-semibold tracking-tight text-ink"><UiText source={'Time today'} /></h2>
@@ -94,9 +94,9 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
           </span>
         </span>
 
-        <span className="mt-2 flex items-center gap-4">
+        <span className="mt-5 flex items-center gap-5">
           {/* The cute clock: an hour's face with today's slice in peach, drawn in the hand of the first start. */}
-          <svg viewBox="0 0 32 32" className="size-[56px] shrink-0" strokeWidth={1.1} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <svg viewBox="0 0 32 32" className="size-[84px] shrink-0" strokeWidth={1.1} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             {fractionOfHour >= 1 ? <circle cx={16} cy={16} r={11.5} fill={PEACH} stroke="none" /> : fractionOfHour > 0 ? <path d={clockWedge(fractionOfHour)} fill={PEACH} stroke="none" /> : null}
             {/* A pen-drawn ring, a little open and a little uneven, with a second thin pass beside it; four small ticks and one hand. */}
             <path d="M16.4 3.1C23.6 3 29.1 8.6 28.9 15.8C28.7 23 23.2 28.9 15.9 28.8C8.7 28.7 3.2 23.1 3.2 16C3.2 9 8.4 3.5 15 3.2" fill="none" stroke="var(--ink)" strokeWidth={1.3} />
@@ -107,7 +107,7 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
           </svg>
           <span className="min-w-0">
             <span className="flex items-baseline gap-1.5">
-              <span className="font-serif text-[38px] leading-none font-semibold text-ink tabular-nums">{minutesToday}</span>
+              <span className="font-serif text-[52px] leading-none font-semibold text-ink tabular-nums">{minutesToday}</span>
               <span className="font-serif text-[18px] text-ink-soft">/ {goalMinutes} <UiText source={'min'} /></span>
             </span>
             <span className={cx('mt-1.5 inline-flex items-center gap-1 text-[12.5px] font-semibold', isGoalMet ? 'text-sage-text' : 'text-ink-soft')}>
@@ -118,12 +118,12 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
         </span>
 
         {/* The weekly tracker: the last seven days, each with its day letter and minutes; today's in the accent, a met day in sage. */}
-        <span className="mt-2 block border-t border-line/60 pt-1.5">
+        <span className="mt-10 block border-t border-line/60 pt-3">
           <span className="flex items-baseline justify-between text-[10.5px] font-bold tracking-[0.12em] text-ink-faint uppercase">
             <UiText source={'This week'} />
             <span className="font-semibold tracking-normal normal-case tabular-nums">{weekMinutes} <UiText source={'min'} /></span>
           </span>
-          <span className="mt-1 flex h-11 items-end gap-1.5">
+          <span className="mt-3 flex h-32 items-end gap-1.5">
             {(days ?? []).map((d, i) => {
               const m = Math.round(d.total / 60_000);
               const last = i === (days?.length ?? 0) - 1;

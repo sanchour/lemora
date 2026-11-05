@@ -1,7 +1,9 @@
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import {
   ArrowRight,
   BookOpen,
+  ChevronLeft,
   ChevronRight,
   Route,
   Languages,
@@ -16,8 +18,10 @@ import { LevelBadge } from '@/features/explora/components/LevelBadge';
 import { Art } from '@/features/mundus/Art';
 import { LESSON_ICON } from '@/features/cursus/course/parts';
 import { patchSetting } from '@/data/settings';
+import { useDueWords } from '@/data/study';
+import { useApp } from '@/app/context';
 import type { Settings } from '@/data/settings';
-import { UiText } from '@/design/i18n/UiText';
+import { UiText, useUi } from '@/design/i18n/UiText';
 import { cx } from '@/lib/cx';
 import { Hand } from '@/design/drawings';
 import {
@@ -236,85 +240,80 @@ export function GreetingWithNameUnderline({
 
 // ── Where You Left Off ───────────────────────────────────────────────────────
 
+/** A pen-drawn horizontal line, in the accent, a little uneven. */
+function PenRule({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 200 8" preserveAspectRatio="none" aria-hidden className={cx('h-2 w-full overflow-visible text-accent', className)}>
+      <path d="M2 4.5C30 2 60 6.5 100 4C140 1.8 170 6 198 3.6" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" vectorEffect="non-scaling-stroke" opacity={0.55} />
+    </svg>
+  );
+}
+
+/** Words for today: a few from the Thesaurus cards that are due, small and quiet. */
+function WordsToday() {
+  const { language } = useApp();
+  const words = useDueWords(language.id, 4);
+  return (
+    <Link to="/thesaurus/study/all?mode=recall" className="group/words block">
+      <span className="flex items-baseline justify-between">
+        <span className="font-serif text-[16px] font-bold tracking-tight text-ink"><UiText source={'Words for today'} /></span>
+        <ArrowRight size={13} aria-hidden className="text-ink-faint transition-transform group-hover/words:translate-x-0.5 group-hover/words:text-accent-text" />
+      </span>
+      {words?.length ? (
+        <ul className="mt-1.5 space-y-0.5">
+          {words.map((w) => (
+            <li key={w.term} className="flex items-baseline gap-2 text-[13px] leading-snug">
+              <span className="font-serif font-semibold text-ink">{w.term}</span>
+              <span className="min-w-0 flex-1 truncate text-ink-faint">{w.meaning}</span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mt-1.5 text-[12.5px] text-ink-faint"><UiText source={'Nothing due today. Add words to a deck to see them here.'} /></p>
+      )}
+    </Link>
+  );
+}
+
 export function WhereLeftOffCard({
   data,
-  variant = 'hero',
+  variant: _variant = 'hero',
   className,
 }: {
   data: LeftOffData;
   variant?: 'hero' | 'banner' | 'lectern';
   className?: string;
 }) {
-  const isBanner = variant === 'banner';
-  const isLectern = variant === 'lectern';
-
+  // A tall, narrow card: the last book in Codex with a large cover, a pen line, then the day's words from Thesaurus.
   return (
-    <Link
-      to={data.to}
-      className={cx(
-        'group flex flex-col justify-between rounded-[24px] bg-transparent p-4 transition-shadow hover:shadow-elev-1 sm:p-5',
-        className,
-      )}
-    >
-      {/* Central, Fat, Clear Header */}
-      <div className="mb-2 flex flex-col items-center text-center">
-        <div className="inline-flex items-center gap-2">
-          <BookOpen size={18} strokeWidth={2.3} className="text-accent-text" aria-hidden />
-          <h2 className="font-serif text-[20px] font-bold tracking-tight text-ink sm:text-[22px]">
-            <UiText source={'Where you left off'} />
-          </h2>
-        </div>
-        {data.percent > 0 && (
-          <span className="mt-0.5 font-sans text-[12px] font-semibold text-accent-text">
-            <UiText source={'{0}% completed'} values={[data.percent]} />
-          </span>
-        )}
-      </div>
+    <div className={cx('flex flex-col rounded-[24px] bg-transparent p-4 sm:p-5', className)}>
+      <Link to={data.to} className="group flex flex-col items-center text-center">
+        <span className="inline-flex items-center gap-2">
+          <BookOpen size={16} strokeWidth={2.3} className="text-accent-text" aria-hidden />
+          <span className="font-serif text-[18px] font-bold tracking-tight text-ink"><UiText source={'Where you left off'} /></span>
+        </span>
 
-      <div className={cx('my-auto flex gap-4 sm:gap-5', isBanner ? 'items-center' : 'items-center')}>
-        {/* Book Cover */}
-        <div
-          className={cx(
-            'shrink-0 overflow-hidden rounded-xl bg-sunken shadow-elev-1',
-            isBanner ? 'h-28 w-20 sm:h-32 sm:w-22' : isLectern ? 'h-32 w-22 sm:h-36 sm:w-24' : 'h-20 w-14 sm:h-20 sm:w-14',
-          )}
-        >
+        <span className="mt-6 block h-44 w-32 shrink-0 overflow-hidden rounded-xl bg-sunken shadow-elev-2 transition-transform duration-200 group-hover:-rotate-1">
           {data.book ? (
             <BookCover text={data.book} size="sm" className="size-full object-cover" />
           ) : (
-            <div className="grid size-full place-items-center bg-accent-soft text-accent-text">
-              <BookOpen size={isBanner ? 32 : 24} />
-            </div>
+            <span className="grid size-full place-items-center bg-accent-soft text-accent-text"><BookOpen size={34} /></span>
           )}
-        </div>
+        </span>
 
-        {/* Content Info */}
-        <div className="min-w-0 flex-1">
-          <h3 className="line-clamp-2 font-serif text-[19px] font-bold tracking-tight text-ink transition-colors group-hover:text-accent-text sm:text-[21px]">
-            {data.title}
-          </h3>
-          <p className="mt-1 line-clamp-1 font-sans text-[13.5px] font-medium text-ink-soft">
-            {data.author}
-          </p>
+        <h3 className="mt-4 line-clamp-2 font-serif text-[19px] leading-tight font-bold tracking-tight text-ink transition-colors group-hover:text-accent-text">{data.title}</h3>
+        <span className="mt-0.5 line-clamp-1 text-[12.5px] font-medium text-ink-soft">{data.author}</span>
+        <span className="mt-2.5 h-1.5 w-40 overflow-hidden rounded-full bg-sunken">
+          <span className="block h-full bg-accent transition-all duration-300" style={{ width: `${Math.max(5, data.percent)}%` }} />
+        </span>
+        <span className="mt-1.5 text-[11.5px] font-semibold text-accent-text">
+          {data.percent > 0 ? <UiText source={'{0}% completed'} values={[data.percent]} /> : <UiText source={'Start reading'} />}
+        </span>
+      </Link>
 
-          {/* Progress Bar */}
-          <div className="mt-3.5 h-1.5 w-full max-w-sm overflow-hidden rounded-full bg-sunken">
-            <div
-              className="h-full bg-accent transition-all duration-300"
-              style={{ width: `${Math.max(5, data.percent)}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Resume Button */}
-        <div className="hidden shrink-0 sm:block">
-          <span className="inline-flex h-9 items-center gap-1.5 rounded-full bg-accent-fill px-4 font-sans text-[13px] font-bold text-on-accent shadow-elev-1 transition-transform group-hover:translate-x-0.5">
-            <UiText source={data.percent > 0 ? 'Resume' : 'Start reading'} />
-            <ArrowRight size={14} aria-hidden />
-          </span>
-        </div>
-      </div>
-    </Link>
+      <PenRule className="my-4" />
+      <WordsToday />
+    </div>
   );
 }
 
@@ -531,10 +530,10 @@ export function WhatNextSection({
             <Link
               key={item.id}
               to={item.to}
-              className="group relative flex min-w-0 flex-col items-start rounded-[20px] border border-line px-3.5 pt-2.5 pb-2.5 transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-line-strong"
+              className="group relative flex min-w-0 flex-col items-start rounded-[20px] border border-line px-3.5 pt-2.5 pb-2.5 transition-colors duration-200 hover:border-accent"
             >
               <span className="flex w-full items-center gap-2.5">
-                <span className="relative grid size-9 shrink-0 place-items-center rounded-full transition-transform duration-300 group-hover:-rotate-6" style={{ background: `color-mix(in oklab, ${item.hue} 16%, transparent)` }}>
+                <span className="relative grid size-9 shrink-0 place-items-center rounded-full transition-transform duration-300" style={{ background: `color-mix(in oklab, ${item.hue} 16%, transparent)` }}>
                   {item.hand ? <Hand name={item.hand} size={22} /> : <Icon size={17} strokeWidth={1.8} aria-hidden className="text-ink-soft" />}
                   {item.fresh && <span className="absolute -top-0.5 -right-0.5 size-2.5 rounded-full bg-accent" aria-hidden />}
                 </span>
@@ -569,85 +568,72 @@ export function DiscoverMoreSection({
   items: DiscoverItem[];
   variant?: 'shelf' | 'cards4' | 'cards2' | 'grid4';
 }) {
+  const translateUi = useUi();
+  const rowRef = useRef<HTMLDivElement>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+
+  const updateScrollState = useCallback(() => {
+    const el = rowRef.current;
+    if (!el) return;
+    setCanPrev(el.scrollLeft > 6);
+    setCanNext(el.scrollLeft < el.scrollWidth - el.clientWidth - 6);
+  }, []);
+
+  // Start scrolled to the left whenever the picks change.
+  useLayoutEffect(() => {
+    if (rowRef.current) rowRef.current.scrollLeft = 0;
+    updateScrollState();
+  }, [items, updateScrollState]);
+
+  useEffect(() => {
+    window.addEventListener('resize', updateScrollState);
+    return () => window.removeEventListener('resize', updateScrollState);
+  }, [updateScrollState]);
+
+  const scrollByAmount = (dir: number) => {
+    const el = rowRef.current;
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.75, behavior: 'smooth' });
+  };
+
+  const arrow = 'grid size-7.5 place-items-center rounded-full border border-line/70 bg-surface/80 text-ink shadow-2xs transition-all hover:border-accent hover:bg-raised active:scale-95 disabled:pointer-events-none disabled:opacity-30';
+
   return (
     <section aria-label="Discover more" className="space-y-2.5">
-      {/* Header: "Discover more >" link */}
       <div className="flex items-center justify-between gap-3">
-        <Link
-          to="/explora"
-          className="group inline-flex items-center gap-1.5 font-serif text-[22px] font-bold tracking-tight text-ink transition-colors hover:text-accent-text sm:text-[24px]"
-        >
+        <Link to="/explora" className="group inline-flex items-center gap-1.5 font-serif text-[22px] font-bold tracking-tight text-ink transition-colors hover:text-accent-text sm:text-[24px]">
           <span><UiText source={'Discover more'} /></span>
-          <ChevronRight
-            size={20}
-            strokeWidth={2.4}
-            className="text-ink-soft transition-transform group-hover:translate-x-0.5 group-hover:text-accent-text"
-            aria-hidden
-          />
+          <ChevronRight size={20} strokeWidth={2.4} className="text-ink-soft transition-transform group-hover:translate-x-0.5 group-hover:text-accent-text" aria-hidden />
         </Link>
+        <div className="flex shrink-0 items-center gap-1.5">
+          <button type="button" onClick={() => scrollByAmount(-1)} disabled={!canPrev} aria-label={translateUi('Scroll left')} className={arrow}><ChevronLeft size={15} /></button>
+          <button type="button" onClick={() => scrollByAmount(1)} disabled={!canNext} aria-label={translateUi('Scroll right')} className={arrow}><ChevronRight size={15} /></button>
+        </div>
       </div>
 
-      {/* Explora-style cards, all the same size, five side by side */}
-      <div aria-label="Discover more media" className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 lg:grid-cols-5">
-        {items.slice(0, 5).map((item) => {
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.id}
-              to={item.to}
-              className="group block min-w-0 text-left"
-            >
-              {/* Unified Aspect Ratio Container (All exact same size, no grow on hover) */}
-              <div className="relative aspect-[5/2] w-full overflow-hidden rounded-[18px] sm:rounded-[20px] border border-line/60 bg-surface shadow-elev-1 transition-[border-color,box-shadow] duration-200 group-hover:border-line-strong group-hover:shadow-elev-2">
-                {/* Artwork Layer */}
-                <Art
-                  query={item.query ?? null}
-                  fallback={<DefaultArtCover kind={item.kind} title={item.title} />}
-                  className="size-full object-cover"
-                />
-
-                {/* Soft Vignette Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-85 transition-opacity group-hover:opacity-95" />
-
-                {/* Top Left: Explora LevelBadge */}
-                <div className="absolute top-2.5 left-2.5 z-10 flex items-center gap-1.5">
-                  <LevelBadge level={item.level} size="sm" />
-                </div>
-
-                {/* Top Right: Tag Pill */}
-                <div className="absolute top-2.5 right-2.5 z-10">
-                  <span className="rounded-full bg-black/55 backdrop-blur-sm px-2.5 py-0.5 text-[10.5px] font-bold text-white/90 shadow-2xs">
-                    {item.tag}
-                  </span>
-                </div>
-
-                {/* Bottom Left: Explora Media Kind Pill */}
-                <div className="absolute bottom-2.5 left-2.5 z-10 flex items-center gap-1 rounded-full bg-black/60 backdrop-blur-sm px-2.5 py-0.5 text-[10.5px] font-bold text-white/95 shadow-sm">
-                  <Icon size={11} aria-hidden />
-                  <span>
-                    {item.kind === 'books'
-                      ? 'Codex'
-                      : item.kind === 'podcasts'
-                        ? 'Sonus'
-                        : item.kind === 'series' || item.kind === 'films'
-                          ? 'Visio'
-                          : 'Thesaurus'}
-                  </span>
-                </div>
-              </div>
-
-              {/* Caption Information */}
-              <div className="mt-2 px-0.5">
-                <h4 className="line-clamp-1 font-serif text-[14px] sm:text-[15px] font-bold text-ink transition-colors group-hover:text-accent-text">
-                  {item.title}
-                </h4>
-                <p className="mt-0.5 truncate font-sans text-[11.5px] font-medium text-ink-soft">
-                  {item.sub || item.detail}
-                </p>
-              </div>
-            </Link>
-          );
-        })}
+      {/* Square cards with soft corners, all the same size, scrolling sideways. */}
+      <div
+        ref={rowRef}
+        onScroll={updateScrollState}
+        tabIndex={0}
+        aria-label="Discover more media"
+        className="scrollbar-none -mx-4 flex snap-x justify-start gap-3.5 overflow-x-auto overscroll-x-contain px-4 pt-0.5 pb-2 outline-none [overflow-anchor:none] sm:mx-0 sm:px-0"
+        style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x pan-y' }}
+      >
+        {items.map((item) => (
+          <Link key={item.id} to={item.to} className="group block w-[184px] shrink-0 snap-start text-left">
+            <div className="relative aspect-square w-full overflow-hidden rounded-[28px] border border-line/60 bg-surface transition-colors duration-200 group-hover:border-accent">
+              <Art query={item.query ?? null} fallback={<DefaultArtCover kind={item.kind} title={item.title} />} className="size-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute top-3 left-3 z-10"><LevelBadge level={item.level} size="sm" /></div>
+              <span className="absolute top-3 right-3 z-10 rounded-full bg-black/55 px-2.5 py-0.5 text-[10.5px] font-bold text-white/90 backdrop-blur-sm">{item.tag}</span>
+            </div>
+            <div className="mt-2 px-1">
+              <h4 className="line-clamp-1 font-serif text-[14.5px] font-bold text-ink transition-colors group-hover:text-accent-text">{item.title}</h4>
+              <p className="mt-0.5 truncate font-sans text-[11.5px] font-medium text-ink-soft">{item.sub || item.detail}</p>
+            </div>
+          </Link>
+        ))}
       </div>
     </section>
   );

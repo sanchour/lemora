@@ -50,7 +50,7 @@ export function HomeRightRail() {
   return (
     <div className="mx-auto max-w-[1152px]">
       {/* ── Two-Column Atelier: Left Canvas (Header + Work area) + Right Rail (Tools high up) ─── */}
-      <main className="space-y-3">
+      <main className="space-y-6">
         <div className={cx('grid grid-cols-1 items-start gap-7', showTools && 'lg:grid-cols-[1fr_auto]')}>
           {/* Left Column: Header + Learning Content ──────────────────────────── */}
           <div className="min-w-0 space-y-3">
@@ -77,10 +77,12 @@ export function HomeRightRail() {
             </header>
 
             {/* 1. Where you left off & Cute Time a Day Meter (Side by side, no background) */}
-            <section aria-label="Current studies" className="mt-2 grid grid-cols-1 items-stretch gap-4 md:grid-cols-[1.4fr_auto_1fr]">
-              <WhereLeftOffCard data={leftOff} variant="hero" className="h-full bg-transparent" />
+            <section aria-label="Current studies" className="mt-4 grid grid-cols-1 items-stretch gap-5 md:grid-cols-[300px_auto_minmax(0,1fr)]">
+              <WhereLeftOffCard data={leftOff} variant="hero" className="h-full" />
               {/* A thin accent line between the two. */}
-              <span aria-hidden className="hidden w-px self-stretch rounded-full bg-accent/45 md:block" />
+              <svg aria-hidden viewBox="0 0 8 200" preserveAspectRatio="none" className="hidden w-2 self-stretch overflow-visible text-accent md:block">
+                <path d="M4.5 2C2 40 6.5 80 4 120C2 155 6 185 3.6 198" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" vectorEffect="non-scaling-stroke" opacity={0.55} />
+              </svg>
               <TimeADayMeter lang={language.id} goalMinutes={goal} className="h-full bg-transparent" />
             </section>
 
