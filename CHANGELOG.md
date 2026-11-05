@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.36** · 2026-11-05 · Explora: orange tabs, level control, comics series, magazine covers
 - **0.1.0-alpha.35** · 2026-11-05 · Home: Discover prompts, Continue reading button, tools centred under Discover
 - **0.1.0-alpha.34** · 2026-11-05 · Home: equal studies columns, sprig flourish
 - **0.1.0-alpha.33** · 2026-11-05 · Home: flourish lines, stopwatch, hover popovers, Discover peek
