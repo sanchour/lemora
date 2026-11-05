@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'motion/react';
-import { Sparkles, X } from 'lucide-react';
+import { Clock, Sparkles, X } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { DAILY_MINUTES } from '@/app/onboarding/GoalStep';
 import { updateLanguage } from '@/data/languages';
@@ -85,16 +85,17 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
         type="button"
         onClick={() => setSliderOpen(true)}
         aria-label={translateUi('Time today · Change daily goal')}
-        className={cx('group flex mx-auto w-full max-w-[380px] cursor-pointer flex-col rounded-2xl p-1 text-left', className)}
+        className={cx('group mx-auto flex w-full max-w-[380px] cursor-pointer flex-col justify-start rounded-2xl p-1 text-left', className)}
       >
-        <span className="flex items-center gap-2">
-          <h2 className="font-serif text-[21px] font-semibold tracking-tight text-ink"><UiText source={'Time today'} /></h2>
-          <span className="ml-auto text-[12px] font-semibold text-ink-faint transition-colors group-hover:text-ink-soft">
+        <span className="flex items-center justify-center gap-2">
+          <Clock size={16} strokeWidth={2.3} className="text-accent-text" aria-hidden />
+          <h2 className="font-serif text-[18px] font-bold tracking-tight text-ink"><UiText source={'Time today'} /></h2>
+          <span className="ml-1 text-[12px] font-semibold text-ink-faint transition-colors group-hover:text-ink-soft">
             <UiText source={'Goal'} /> · {goalMinutes} <UiText source={'min'} />
           </span>
         </span>
 
-        <span className="mt-5 flex items-center gap-5">
+        <span className="mt-8 flex items-center justify-center gap-5">
           {/* The cute clock: an hour's face with today's slice in peach, drawn in the hand of the first start. */}
           <svg viewBox="0 0 32 32" className="size-[84px] shrink-0" strokeWidth={1.1} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             {fractionOfHour >= 1 ? <circle cx={16} cy={16} r={11.5} fill={PEACH} stroke="none" /> : fractionOfHour > 0 ? <path d={clockWedge(fractionOfHour)} fill={PEACH} stroke="none" /> : null}
@@ -118,12 +119,12 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
         </span>
 
         {/* The weekly tracker: the last seven days, each with its day letter and minutes; today's in the accent, a met day in sage. */}
-        <span className="mt-6 block border-t border-line/60 pt-3">
+        <span className="mt-8 block border-t border-line/60 pt-3">
           <span className="flex items-baseline justify-between text-[10.5px] font-bold tracking-[0.12em] text-ink-faint uppercase">
             <UiText source={'This week'} />
             <span className="font-semibold tracking-normal normal-case tabular-nums">{weekMinutes} <UiText source={'min'} /></span>
           </span>
-          <span className="mt-3 flex h-24 items-end gap-1.5">
+          <span className="mt-3 flex h-14 items-end gap-1.5">
             {(days ?? []).map((d, i) => {
               const m = Math.round(d.total / 60_000);
               const last = i === (days?.length ?? 0) - 1;

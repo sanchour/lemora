@@ -255,7 +255,7 @@ export function WordsTodayCard({ className }: { className?: string }) {
   const { language } = useApp();
   const words = useDueWords(language.id, 5);
   return (
-    <Link to="/thesaurus/study/all?mode=recall" className={cx('group flex flex-col items-center justify-center text-center', className)}>
+    <Link to="/thesaurus/study/all?mode=recall" className={cx('group flex flex-col items-center justify-start text-center', className)}>
       <span className="inline-flex items-center gap-2">
         <Layers size={16} strokeWidth={2.3} className="text-accent-text" aria-hidden />
         <span className="font-serif text-[18px] font-bold tracking-tight text-ink transition-colors group-hover:text-accent-text"><UiText source={'Words for today'} /></span>
@@ -288,10 +288,9 @@ export function WhereLeftOffCard({
   variant?: 'hero' | 'banner' | 'lectern';
   className?: string;
 }) {
-  // The last book in Codex, centred: a large cover, its title, and a quiet line of progress.
-  const pagesLeft = data.book?.wordCount ? Math.max(1, Math.ceil((data.book.wordCount * (1 - data.percent / 100)) / 250)) : 0;
+  // The last book in Codex, centred: a large cover, its title, and a bar with a small percentage.
   return (
-    <Link to={data.to} className={cx('group flex flex-col items-center justify-center text-center', className)}>
+    <Link to={data.to} className={cx('group flex flex-col items-center justify-start text-center', className)}>
       <span className="inline-flex items-center gap-2">
         <BookOpen size={16} strokeWidth={2.3} className="text-accent-text" aria-hidden />
         <span className="font-serif text-[18px] font-bold tracking-tight text-ink"><UiText source={'Where you left off'} /></span>
@@ -306,18 +305,11 @@ export function WhereLeftOffCard({
       </span>
 
       <h3 className="mt-4 line-clamp-2 max-w-[16rem] font-serif text-[19px] leading-tight font-bold tracking-tight text-ink transition-colors group-hover:text-accent-text">{data.title}</h3>
-      <span className="mt-0.5 line-clamp-1 text-[12.5px] font-medium text-ink-soft">{data.author}</span>
-      <span className="mt-2.5 h-1.5 w-36 overflow-hidden rounded-full bg-sunken">
-        <span className="block h-full bg-accent transition-all duration-300" style={{ width: `${Math.max(5, data.percent)}%` }} />
-      </span>
-      <span className="mt-1.5 text-[11.5px] font-semibold text-ink-faint tabular-nums">
-        {data.percent > 0 ? (
-          <>
-            {data.percent}%{pagesLeft > 0 && <> · <UiText source={'{0} pages left'} values={[pagesLeft]} /></>}
-          </>
-        ) : (
-          <span className="text-accent-text"><UiText source={'Start reading'} /></span>
-        )}
+      <span className="mt-3 flex w-40 items-center gap-2">
+        <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-sunken">
+          <span className="block h-full bg-accent transition-all duration-300" style={{ width: `${Math.max(4, data.percent)}%` }} />
+        </span>
+        <span className="text-[11px] font-semibold text-ink-faint tabular-nums">{data.percent}%</span>
       </span>
     </Link>
   );
@@ -528,59 +520,26 @@ export function WhatNextSection({
         <UiText source={'What next'} />
       </h2>
 
-      <div aria-label="What next suggestions" className="grid grid-cols-2 gap-4 pt-1 sm:grid-cols-3 lg:grid-cols-5">
-        {shown.map((item, i) => {
+      <div aria-label="What next suggestions" className="grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 lg:grid-cols-5">
+        {shown.map((item) => {
           const Icon = item.icon;
-          const tilt = ['-rotate-[1.2deg]', 'rotate-[0.9deg]', '-rotate-[0.6deg]', 'rotate-[1.3deg]', '-rotate-[0.9deg]'][i % 5];
+          const literal = item.id.startsWith('tip:') || item.id.startsWith('next:') || item.title.startsWith('Review ') || item.title.startsWith('Read “') || item.title.startsWith('The next ');
           return (
-            // A paper sticker: tinted, with a pen-drawn wobbly outline, a blob behind its drawing, a stamp for what it is, tilted a little.
-            <Link
-              key={item.id}
-              to={item.to}
-              className={cx('group relative flex min-w-0 flex-col items-start px-4 pt-4 pb-4 transition-transform duration-300 ease-out hover:rotate-0 hover:scale-[1.02]', tilt)}
-              style={{ ['--hue' as string]: item.hue }}
-            >
-              <svg aria-hidden viewBox="0 0 100 100" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 size-full overflow-visible">
-                <path
-                  d="M12 3C32 1 68 4 88 2Q98 2 98 12C99 35 96 65 98 88Q98 98 88 98C68 96 32 99 12 97Q2 98 3 88C1 65 4 35 2 12Q2 3 12 3Z"
-                  fill="color-mix(in oklab, var(--hue) 11%, var(--bg))"
-                  stroke="color-mix(in oklab, var(--hue) 60%, var(--ink))"
-                  strokeOpacity={0.45}
-                  strokeWidth={1.6}
-                  strokeLinejoin="round"
-                  vectorEffect="non-scaling-stroke"
-                  className="transition-[stroke,stroke-opacity] duration-200 group-hover:stroke-accent group-hover:[stroke-opacity:1]"
-                />
-              </svg>
-
-              <span className="relative flex w-full items-start justify-between">
-                <span className="relative grid size-12 place-items-center transition-transform duration-300 group-hover:-rotate-12 group-hover:scale-110">
-                  <svg aria-hidden viewBox="0 0 48 48" className="absolute inset-0 size-full">
-                    <path d="M24 3C34 2 45 10 45 22C46 35 37 46 25 45C12 46 2 36 3 24C3 12 12 4 24 3Z" fill="color-mix(in oklab, var(--hue) 28%, transparent)" />
-                  </svg>
-                  <span className="relative">{item.hand ? <Hand name={item.hand} size={27} /> : <Icon size={21} strokeWidth={1.8} aria-hidden className="text-ink" />}</span>
-                  {item.fresh && <span className="absolute -top-0.5 -right-0.5 size-3 rounded-full border-2 border-bg bg-accent" aria-hidden />}
-                </span>
-                <span className="mt-0.5 rotate-3 rounded-full border border-dashed px-2 py-0.5 text-[9.5px] font-bold tracking-[0.1em] uppercase" style={{ borderColor: 'color-mix(in oklab, var(--hue) 65%, var(--ink))', color: 'color-mix(in oklab, var(--hue) 55%, var(--ink))' }}>
-                  <UiText source={item.badge} />
-                </span>
+            // No card: a drawn icon on a soft blob and the step's name; the one line of why appears when you point at it.
+            <Link key={item.id} to={item.to} className="group relative flex min-w-0 flex-col items-center px-1 pt-1 text-center outline-none">
+              <span className="relative grid size-16 place-items-center transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110 group-focus-visible:scale-110">
+                <svg aria-hidden viewBox="0 0 48 48" className="absolute inset-0 size-full">
+                  <path d="M24 3C34 2 45 10 45 22C46 35 37 46 25 45C12 46 2 36 3 24C3 12 12 4 24 3Z" style={{ fill: `color-mix(in oklab, ${item.hue} 26%, transparent)` }} />
+                </svg>
+                <span className="relative">{item.hand ? <Hand name={item.hand} size={34} /> : <Icon size={26} strokeWidth={1.7} aria-hidden className="text-ink" />}</span>
+                {item.fresh && <span className="absolute top-0.5 right-0.5 size-3 rounded-full border-2 border-bg bg-accent" aria-hidden />}
               </span>
-
-              <h3 className="relative mt-3 line-clamp-2 font-serif text-[17.5px] font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent-text">
-                {item.title.startsWith('Review ') || item.title.startsWith('Read “') || item.title.startsWith('The next ') || item.id.startsWith('next:') || item.id.startsWith('tip:') ? item.title : <UiText source={item.title} />}
+              <h3 className="mt-2 line-clamp-2 font-serif text-[16px] leading-snug font-bold tracking-tight text-ink transition-colors group-hover:text-accent-text group-focus-visible:text-accent-text">
+                {literal ? item.title : <UiText source={item.title} />}
               </h3>
-              <p className="relative mt-1 line-clamp-2 text-[12.5px] leading-snug text-ink-soft">{item.id.startsWith('tip:') || item.id.startsWith('next:') ? item.detail : <UiText source={item.detail} />}</p>
-
-              <span className="relative mt-3 flex w-full items-center justify-between">
-                {item.percent !== undefined ? (
-                  <span className="mr-3 h-[4px] flex-1 overflow-hidden rounded-full bg-line/70" aria-hidden>
-                    <span className="block h-full origin-left rounded-full" style={{ transform: `scaleX(${item.percent / 100})`, background: item.hue }} />
-                  </span>
-                ) : (
-                  <svg aria-hidden viewBox="0 0 60 6" className="h-1.5 w-14 text-accent opacity-60"><path d="M2 3C10 0.5 16 5.5 25 3C34 0.5 40 5.5 58 2.5" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" /></svg>
-                )}
-                <span className="grid size-6 place-items-center rounded-full bg-ink/90 text-bg transition-transform duration-200 group-hover:translate-x-0.5 group-hover:bg-accent-fill"><ArrowRight size={12} aria-hidden /></span>
-              </span>
+              <p className="mt-0.5 line-clamp-2 min-h-[2.4em] text-[12px] leading-snug text-ink-soft opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+                {item.id.startsWith('tip:') || item.id.startsWith('next:') ? item.detail : <UiText source={item.detail} />}
+              </p>
             </Link>
           );
         })}
@@ -654,8 +613,8 @@ export function DiscoverMoreSection({
         style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x pan-y' }}
       >
         {items.map((item) => (
-          <Link key={item.id} to={item.to} className="group block w-[295px] shrink-0 snap-start text-left">
-            <div className="relative aspect-[295/204] w-full overflow-hidden rounded-[28px] border border-line/60 bg-surface transition-colors duration-200 group-hover:border-accent">
+          <Link key={item.id} to={item.to} className="group block w-[298px] shrink-0 snap-start text-left">
+            <div className="relative aspect-[298/184] w-full overflow-hidden rounded-[28px] border border-line/60 bg-surface transition-colors duration-200 group-hover:border-accent">
               <Art query={item.query ?? null} fallback={<DefaultArtCover kind={item.kind} title={item.title} />} className="size-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute top-3 left-3 z-10"><LevelBadge level={item.level} size="sm" /></div>
