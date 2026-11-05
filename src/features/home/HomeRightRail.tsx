@@ -11,11 +11,11 @@ import {
   useHomeDiscover,
 } from './homeData';
 import {
-  ToolsBar,
   WhereLeftOffCard,
   WordsTodayCard,
   PenDivider,
   PenFlourish,
+  ToolsRow,
   CursusNextStepCard,
   WhatNextSection,
   DiscoverMoreSection,
@@ -54,7 +54,7 @@ export function HomeRightRail() {
     <div className="mx-auto max-w-[1152px]">
       {/* ── Two-Column Atelier: Left Canvas (Header + Work area) + Right Rail (Tools high up) ─── */}
       <main className="space-y-4">
-        <div className={cx('grid grid-cols-1 items-start gap-7', showTools && 'lg:grid-cols-[1fr_auto]')}>
+        <div className="grid grid-cols-1 items-start gap-7">
           {/* Left Column: Header + Learning Content ──────────────────────────── */}
           <div className="min-w-0 space-y-3">
             {/* Top Header */}
@@ -98,13 +98,6 @@ export function HomeRightRail() {
               </section>
             )}
           </div>
-
-          {/* Right Column: Tools, its heading on the greeting's line and its icons level with the cards ─── */}
-          {showTools && (
-            <div className="pt-0.5 lg:pt-1">
-              <ToolsBar mode="rail" />
-            </div>
-          )}
         </div>
 
         {/* ── Full-Width Sections: What next & Discover more (close to Next in Cursus) ── */}
@@ -113,6 +106,9 @@ export function HomeRightRail() {
 
         {/* 4. Discover more: In style of Explora (all same size cards, daily rotating) */}
         <DiscoverMoreSection items={discoverItems} />
+
+        {/* 5. The tools, centred under Discover more (Settings › Appearance can turn them off). */}
+        {showTools && <ToolsRow />}
       </main>
     </div>
   );

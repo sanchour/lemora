@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import {
   ArrowRight,
   BookOpen,
+  Compass,
   ChevronLeft,
   ChevronRight,
   Route,
@@ -279,30 +280,51 @@ export function PenDivider({ className }: { className?: string }) {
 export function WordsTodayCard({ className }: { className?: string }) {
   const { language } = useApp();
   const words = useDueWords(language.id, 5);
+  const none = words !== undefined && words.length === 0;
+  // Nothing due: a way into Discover instead.
   return (
-    <Link to="/thesaurus/study/all?mode=recall" className={cx('group flex flex-col items-center justify-start text-center', className)}>
+    <Link to={none ? '/explora' : '/thesaurus/study/all?mode=recall'} className={cx('group flex flex-col items-center justify-start text-center', className)}>
       <span className="inline-flex items-center gap-2">
         <Layers size={16} strokeWidth={2.3} className="text-accent-text" aria-hidden />
         <span className="font-serif text-[18px] font-bold tracking-tight text-ink transition-colors group-hover:text-accent-text"><UiText source={'Words for today'} /></span>
       </span>
-      <span className="flex flex-1 flex-col items-center justify-center pb-6">
-        {words?.length ? (
+      {none ? (
+        <DiscoverPrompt title="Find words to learn" text="Stories, songs and decks to start your word list, in Discover." />
+      ) : (
+        <span className="flex flex-1 flex-col items-center justify-center pb-6">
           <ul className="space-y-2.5">
-            {words.map((w) => (
+            {(words ?? []).map((w) => (
               <li key={w.term} className="leading-tight">
                 <span className="block font-serif text-[20px] font-semibold text-ink">{w.term}</span>
                 <span className="block max-w-[15rem] truncate text-[12.5px] text-ink-faint">{w.meaning}</span>
               </li>
             ))}
           </ul>
-        ) : (
-          <p className="max-w-[14rem] text-[13px] text-ink-faint"><UiText source={'Nothing due today. Add words to a deck to see them here.'} /></p>
-        )}
-        <span className="mt-4 inline-flex items-center gap-1 text-[12px] font-semibold text-ink-soft transition-colors group-hover:text-accent-text">
-          <UiText source={'Review'} /> <ArrowRight size={12} aria-hidden />
+          <span className="mt-4 inline-flex items-center gap-1 text-[12px] font-semibold text-ink-soft transition-colors group-hover:text-accent-text">
+            <UiText source={'Review'} /> <ArrowRight size={12} aria-hidden />
+          </span>
         </span>
-      </span>
+      )}
     </Link>
+  );
+}
+
+/** Shown where there is nothing yet (no book being read, no words due): a way into Explora. */
+function DiscoverPrompt({ title, text }: { title: string; text: string }) {
+  return (
+    <span className="flex flex-1 flex-col items-center justify-center gap-2 pb-6">
+      <span className="relative grid size-16 place-items-center transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105">
+        <svg aria-hidden viewBox="0 0 48 48" className="absolute inset-0 size-full">
+          <path d="M24 3C34 2 45 10 45 22C46 35 37 46 25 45C12 46 2 36 3 24C3 12 12 4 24 3Z" style={{ fill: 'color-mix(in oklab, var(--accent) 22%, transparent)' }} />
+        </svg>
+        <Compass size={26} strokeWidth={1.7} aria-hidden className="relative text-ink" />
+      </span>
+      <span className="font-serif text-[17px] leading-snug font-bold text-ink transition-colors group-hover:text-accent-text"><UiText source={title} /></span>
+      <span className="max-w-[14rem] text-[12.5px] leading-snug text-ink-faint"><UiText source={text} /></span>
+      <span className="mt-1 inline-flex h-8 items-center gap-1.5 rounded-full border border-accent/50 px-3.5 text-[12.5px] font-bold text-accent-text transition-colors group-hover:bg-accent-soft">
+        <UiText source={'Discover'} /> <ArrowRight size={13} aria-hidden />
+      </span>
+    </span>
   );
 }
 
@@ -315,7 +337,19 @@ export function WhereLeftOffCard({
   variant?: 'hero' | 'banner' | 'lectern';
   className?: string;
 }) {
-  // The last book in Codex, centred: a large cover, its title, and a bar with a small percentage.
+  // The last book in Codex, centred: a large cover, a Continue reading button, and a bar with a small percentage.
+  // With no book being read, a way into Discover instead.
+  if (!data.book) {
+    return (
+      <Link to="/explora" className={cx('group flex flex-col items-center justify-start text-center', className)}>
+        <span className="inline-flex items-center gap-2">
+          <Compass size={16} strokeWidth={2.3} className="text-accent-text" aria-hidden />
+          <span className="font-serif text-[18px] font-bold tracking-tight text-ink"><UiText source={'Start reading'} /></span>
+        </span>
+        <DiscoverPrompt title="Find something to read" text="Books, comics and news at your level, waiting in Discover." />
+      </Link>
+    );
+  }
   return (
     <Link to={data.to} className={cx('group flex flex-col items-center justify-start text-center', className)}>
       <span className="inline-flex items-center gap-2">
@@ -323,12 +357,12 @@ export function WhereLeftOffCard({
         <span className="font-serif text-[18px] font-bold tracking-tight text-ink"><UiText source={'Where you left off'} /></span>
       </span>
 
-      <span className="mt-3 block h-56 w-40 shrink-0 overflow-hidden rounded-xl bg-sunken shadow-elev-2 transition-transform duration-200 group-hover:-rotate-1">
-        {data.book ? (
-          <BookCover text={data.book} size="sm" className="size-full object-cover" />
-        ) : (
-          <span className="grid size-full place-items-center bg-accent-soft text-accent-text"><BookOpen size={34} /></span>
-        )}
+      <span className="mt-3 block h-[15.5rem] w-48 shrink-0 overflow-hidden rounded-xl bg-sunken shadow-elev-2 transition-transform duration-200 group-hover:-rotate-1">
+        <BookCover text={data.book} size="sm" className="size-full object-cover" />
+      </span>
+
+      <span className="mt-3 inline-flex h-9 items-center gap-1.5 rounded-full bg-accent-fill px-4 text-[13px] font-bold text-on-accent shadow-elev-1 transition-transform group-hover:translate-x-0.5">
+        <UiText source={'Continue reading'} /> <ArrowRight size={14} aria-hidden />
       </span>
 
       <span className="mt-3 flex w-40 items-center gap-2">
@@ -655,6 +689,23 @@ export function DiscoverMoreSection({
         ))}
       </div>
     </section>
+  );
+}
+
+/** The tools as a centred row of circles, under Discover more. */
+export function ToolsRow() {
+  const tools = useHomeTools();
+  return (
+    <nav aria-label="Tools" className="flex flex-wrap items-start justify-center gap-x-7 gap-y-3 pb-4">
+      {tools.map((tool) => (
+        <Link key={tool.id} to={tool.to} aria-label={`${tool.name} · ${tool.role}`} title={tool.role} className="group flex w-16 flex-col items-center gap-1.5 text-center outline-none">
+          <span className="flex size-12 items-center justify-center rounded-full border-[1.5px] border-line-strong/80 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:border-accent group-focus-visible:ring-2 group-focus-visible:ring-accent">
+            <ToolDuotoneIcon id={tool.id} className="size-7 text-ink" />
+          </span>
+          <span className="font-serif text-[12.5px] leading-tight font-bold text-ink transition-colors group-hover:text-accent-text"><UiText source={tool.name} /></span>
+        </Link>
+      ))}
+    </nav>
   );
 }
 

@@ -17299,5 +17299,14 @@
   ],
   "{0} pages left": [
     "src/features/home/homeComponents.tsx"
+  ],
+  "Books, comics and news at your level, waiting in Discover.": [
+    "src/features/home/homeComponents.tsx"
+  ],
+  "Find words to learn": [
+    "src/features/home/homeComponents.tsx"
+  ],
+  "Stories, songs and decks to start your word list, in Discover.": [
+    "src/features/home/homeComponents.tsx"
   ]
 }
