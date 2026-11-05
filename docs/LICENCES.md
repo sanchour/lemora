@@ -27,6 +27,9 @@ families), Inter, Hanken Grotesk, Alegreya, EB Garamond, Lexend, Comfortaa, Amir
 | Comics (Explora) | *Pepper&Carrot* by David Revoy, www.peppercarrot.com, CC BY 4.0. Shown with its credit; pictures are read from the site |
 | Magazine (Explora) | Global Voices, globalvoices.org, CC BY 3.0 (volunteer-written and translated stories). Each story kept in Codex ends with its credit |
 | Free books | Project Gutenberg (public domain in the US), Wikisource (public domain and CC BY-SA), Wikipedia (CC BY-SA) |
+| Explora catalogue (fr, es, de, ru, zh, ar) | `src/core/explora/data/*.json`, written by `scripts/build-catalogue.mjs`. **Classics:** Project Gutenberg, only works by authors who died before 1956 (free in the US and the EU), single-language editions, read through the HTML edition. **Short reads:** Wikisource pages, public domain texts (transcriptions CC BY-SA, which stays CC BY-SA if copied). **Picture books:** StoryWeaver by Pratham Books, CC BY 4.0; the app keeps only the title, credits, level, cover address and link, shows the credit with the shelf and opens the book on StoryWeaver (its API does not allow apps to read it). **Recordings:** LibriVox (public domain), found on archive.org and streamed, never bundled |
+| Sayings of the day (Explora) | Traditional proverbs, anonymous folk wisdom, written in `src/core/explora/proverbs.ts` |
+| Today in history (Explora) | Wikipedia's "On this day" feed, CC BY-SA, fetched on request |
 | Audiobooks, lyrics, radio | LibriVox (public domain), LRCLIB, radio-browser.info: fetched on request, never bundled |
 | Natural voices | Piper voices from rhasspy/piper-voices on Hugging Face; each voice has its own licence, shown with it; downloaded only when chosen |
 | First books and level examples | Written for Lingua and Lemora |
