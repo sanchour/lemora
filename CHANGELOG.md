@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.32** · 2026-11-05 · Home: pen line under the greeting, centred clock, bigger book
 - **0.1.0-alpha.31** · 2026-11-05 · Home: aligned studies columns, icon-only What next with hover description
 - **0.1.0-alpha.30** · 2026-11-05 · Home: three studies side by side, wide Discover cards, sticker What next with tips
 - **0.1.0-alpha.29** · 2026-11-05 · Home: left-off card with Words for today, square Discover cards, accent hover
