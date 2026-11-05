@@ -83,7 +83,7 @@ export function HomeRightRail() {
             <PenFlourish className="mt-3" />
 
             {/* 1. Where you left off & Cute Time a Day Meter (Side by side, no background) */}
-            <section aria-label="Current studies" className="mt-3 grid grid-cols-1 items-stretch gap-6 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1.2fr)]">
+            <section aria-label="Current studies" className="mt-3 grid grid-cols-1 items-stretch gap-6 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)]">
               <WhereLeftOffCard data={leftOff} variant="hero" className="h-full" />
               <PenDivider />
               <WordsTodayCard className="h-full" />

@@ -251,10 +251,14 @@ export function PenFlourish({ className }: { className?: string }) {
   return (
     <div aria-hidden className={cx('flex items-center gap-3 text-accent', className)}>
       {side(false)}
-      <svg viewBox="0 0 44 22" className="h-[22px] w-11 shrink-0 overflow-visible">
-        <path d="M22 1C23.4 7 26 9.6 32 11C26 12.4 23.4 15 22 21C20.6 15 18 12.4 12 11C18 9.6 20.6 7 22 1Z" fill="currentColor" opacity={0.85} />
-        <circle cx={5} cy={11} r={2} fill="currentColor" opacity={0.6} />
-        <circle cx={39} cy={11} r={2} fill="currentColor" opacity={0.6} />
+      <svg viewBox="0 0 44 22" className="h-[22px] w-11 shrink-0 overflow-visible" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+        {/* A little sprig drawn in one go: two leaves, a curl and a seed. */}
+        <path d="M21.6 12C18.4 6.4 13 4.8 8.6 7C11.6 11.4 17 12.8 21.6 12Z" fill="currentColor" fillOpacity={0.22} />
+        <path d="M22.4 12C25.8 6.2 31.4 4.4 35.6 6.8C32.4 11.4 26.8 12.8 22.4 12Z" fill="currentColor" fillOpacity={0.22} />
+        <path d="M21.6 12C16 10.6 12 8.4 9.6 7.4M22.4 12C28 10.4 32 8 34.6 7" strokeWidth={0.9} opacity={0.7} />
+        <path d="M22 12.4C22.6 15 21.4 17.6 19 18.4C17 19 15.6 17.6 16.4 16.2C17 15.2 18.4 15.6 18.2 16.6" />
+        <circle cx={26.6} cy={17.6} r={1.5} fill="currentColor" stroke="none" />
+        <circle cx={31.2} cy={15.8} r={0.9} fill="currentColor" stroke="none" opacity={0.6} />
       </svg>
       {side(true)}
     </div>
@@ -614,7 +618,7 @@ export function DiscoverMoreSection({
   const arrow = 'grid size-7.5 place-items-center rounded-full border border-line/70 bg-surface/80 text-ink shadow-2xs transition-all hover:border-accent hover:bg-raised active:scale-95 disabled:pointer-events-none disabled:opacity-30';
 
   return (
-    <section aria-label="Discover more" className="space-y-2.5">
+    <section aria-label="Discover more" className="mt-9 space-y-2.5">
       <div className="flex items-center justify-between gap-3">
         <Link to="/explora" className="group inline-flex items-center gap-1.5 font-serif text-[22px] font-bold tracking-tight text-ink transition-colors hover:text-accent-text sm:text-[24px]">
           <span><UiText source={'Discover more'} /></span>
