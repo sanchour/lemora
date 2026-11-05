@@ -67,7 +67,7 @@ export function MediaShelf({ id, title, count, badge, children }: MediaShelfProp
           <div className="flex items-center gap-2">
             <h2
               id={`shelf-title-${id}`}
-              className="font-serif text-[17px] sm:text-[19px] font-semibold text-ink truncate tracking-tight"
+              className="font-serif text-[21px] sm:text-[24px] font-semibold text-ink truncate tracking-tight"
             >
               {title}
             </h2>

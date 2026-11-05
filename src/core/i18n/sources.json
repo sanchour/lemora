@@ -17308,5 +17308,21 @@
   ],
   "Stories, songs and decks to start your word list, in Discover.": [
     "src/features/home/homeComponents.tsx"
+  ],
+  "A short, funny comic about a young witch and her cat, page by page.": [
+    "src/features/explora/ComicSeries.tsx"
+  ],
+  "episodes": [
+    "src/features/explora/ComicSeries.tsx",
+    "src/features/explora/components/ComicsSection.tsx"
+  ],
+  "Series": [
+    "src/features/explora/components/ComicsSection.tsx"
+  ],
+  "Earlier Explora tabs": [
+    "src/features/ordo/sections/AppearanceSection.tsx"
+  ],
+  "Explora’s category tabs as they were: round tabs on a soft background, the dark one selected. Off gives plain tabs, the chosen one filled orange.": [
+    "src/features/ordo/sections/AppearanceSection.tsx"
   ]
 }

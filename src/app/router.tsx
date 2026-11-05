@@ -7,6 +7,7 @@ import {
   AtlasRoom,
   FirstBook,
   ComicReader,
+  ComicSeriesPage,
   BibliothecaPage,
   BookDetailsPage,
   CodexPage,
@@ -55,6 +56,7 @@ export const router = createBrowserRouter(
         // Explora & Bibliotheca: what there is to read, and what you have.
         { path: 'explora', element: <ExploraPage /> },
         { path: 'explora/comic/:episode', element: <ComicReader /> },
+        { path: 'explora/comics/:series', element: <ComicSeriesPage /> },
         { path: 'bibliotheca', element: <BibliothecaPage /> },
         { path: 'codex', element: <CodexPage /> },
         { path: 'codex/graded', element: <CodexPage /> },

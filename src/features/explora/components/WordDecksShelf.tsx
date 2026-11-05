@@ -45,9 +45,11 @@ interface WordDecksShelfProps {
   lang: string;
   learnerLevel: Level;
   levelFilter: LevelFilter;
+  /** The one-line description under each deck (off on the All tab). */
+  blurbs?: boolean;
 }
 
-export function WordDecksShelf({ lang, learnerLevel, levelFilter }: WordDecksShelfProps) {
+export function WordDecksShelf({ lang, learnerLevel, levelFilter, blurbs = true }: WordDecksShelfProps) {
   const translateUi = useUi();
   const navigate = useNavigate();
   const list = useStarterList(lang);
@@ -185,9 +187,11 @@ export function WordDecksShelf({ lang, learnerLevel, levelFilter }: WordDecksShe
               <h4 className="line-clamp-1 font-serif text-[13.5px] font-semibold text-ink group-hover:text-accent-text transition-colors">
                 {deck.name}
               </h4>
-              <p className="mt-0.5 truncate text-[11.5px] font-medium text-ink-soft">
-                {deck.blurb}
-              </p>
+              {blurbs && (
+                <p className="mt-0.5 truncate text-[11.5px] font-medium text-ink-soft">
+                  {deck.blurb}
+                </p>
+              )}
             </div>
           </div>
         );

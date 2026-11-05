@@ -155,6 +155,7 @@ export function ExploreAll({
   level,
   searchQuery = '',
   levelFilter = 'mine',
+  onSelectLevelFilter,
 }: {
   lang: string;
   picks: Picks | null;
@@ -162,6 +163,7 @@ export function ExploreAll({
   searchQuery?: string;
   onSearchChange?: (q: string) => void;
   levelFilter?: LevelFilter;
+  onSelectLevelFilter?: (filter: LevelFilter) => void;
 }) {
   const translateUi = useUi();
   const navigate = useNavigate();
@@ -449,6 +451,9 @@ export function ExploreAll({
         category={category}
         onSelectCategory={setCategory}
         savedCount={saved.length}
+        learnerLevel={level}
+        levelFilter={levelFilter}
+        onSelectLevelFilter={onSelectLevelFilter}
       />
 
       {/* Search Results View (when user has typed in top search bar) */}
@@ -591,7 +596,7 @@ export function ExploreAll({
               })}
 
               {/* 3. Word Decks, random every time but based on level */}
-              <WordDecksShelf lang={lang} learnerLevel={level} levelFilter={levelFilter} />
+              <WordDecksShelf lang={lang} learnerLevel={level} levelFilter={levelFilter} blurbs={false} />
 
               {/* Lemora U4: comics and the magazine, free and legal to use */}
               <ComicShelf lang={lang} />

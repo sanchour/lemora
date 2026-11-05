@@ -165,6 +165,12 @@ export function AppearanceSection({
           onChange={(on) => void patchSetting('ui', { homeHeaderCentered: on })}
         />
         <ToggleRow
+          title={translateUi('Earlier Explora tabs')}
+          description={translateUi('Explora’s category tabs as they were: round tabs on a soft background, the dark one selected. Off gives plain tabs, the chosen one filled orange.')}
+          checked={settings?.ui.classicExploraTabs === true}
+          onChange={(on) => void patchSetting('ui', { classicExploraTabs: on })}
+        />
+        <ToggleRow
           title={translateUi('Earlier My decks design')}
           description={translateUi('Thesaurus › My decks as it was: Today as a book, the decks in a table below it.')}
           checked={settings?.ui.classicDecks === true}

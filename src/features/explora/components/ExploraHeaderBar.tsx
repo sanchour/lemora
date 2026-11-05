@@ -12,21 +12,24 @@ import {
   Layers,
   Lightbulb,
   Music,
-  Sparkles,
+  LayoutGrid,
   Star,
 } from 'lucide-react';
 import type { Level } from '@/core/lang/levels';
 import type { LevelFilter } from '@/core/mundus/explore';
-import { LEVELS, LEVEL_HUE } from '@/core/mundus/explore';
-import type { PickLevel } from '@/core/mundus/types';
+import { LEVELS } from '@/core/mundus/explore';
 import { cx } from '@/lib/cx';
 import type { ExploraCategory } from '../types';
 import { shows } from '@/product';
+import { useApp } from '@/app/context';
 
 interface ExploraHeaderBarProps {
   category: ExploraCategory;
   onSelectCategory: (cat: ExploraCategory) => void;
   savedCount: number;
+  learnerLevel: Level;
+  levelFilter: LevelFilter;
+  onSelectLevelFilter?: (filter: LevelFilter) => void;
 }
 
 interface LevelFilterProps {
@@ -35,11 +38,20 @@ interface LevelFilterProps {
   onSelectLevelFilter: (filter: LevelFilter) => void;
 }
 
-export function ExploraHeaderBar({ category, onSelectCategory, savedCount }: ExploraHeaderBarProps) {
+export function ExploraHeaderBar({ category, onSelectCategory, savedCount, learnerLevel, levelFilter, onSelectLevelFilter }: ExploraHeaderBarProps) {
   const translateUi = useUi();
+  // Settings › Appearance can bring back the earlier look: round tabs on a soft background, the dark one selected.
+  const classic = useApp().settings.ui.classicExploraTabs === true;
+  const tab = (active: boolean) =>
+    cx(
+      'group flex h-8 shrink-0 items-center gap-1.5 rounded-full px-3 text-[12.5px] font-bold transition-all duration-150 active:scale-95',
+      classic
+        ? active ? 'bg-inverse text-on-inverse shadow-elev-1' : 'bg-surface/70 text-ink-soft hover:bg-surface hover:text-ink'
+        : active ? 'bg-accent-fill text-on-accent shadow-elev-1' : 'text-ink-soft hover:text-accent-text',
+    );
   // Lemora U4: All · Books · Articles · Comics and magazines · Word decks · Ludus · Things to try (and Lingua's rooms where it has them).
   const categories = ([
-    { id: 'all', label: 'All', icon: Sparkles },
+    { id: 'all', label: 'All', icon: LayoutGrid },
     { id: 'books', label: 'Books', icon: BookOpen },
     { id: 'articles', label: 'Articles', icon: Newspaper },
     { id: 'comics', label: 'Comics and magazines', icon: BookImage },
@@ -50,14 +62,14 @@ export function ExploraHeaderBar({ category, onSelectCategory, savedCount }: Exp
     { id: 'ludus', label: 'Ludus', icon: Gamepad2 },
     // Lemora keeps Things to try here, with what to discover (src/product.ts); Lingua has it in Mundus.
     ...(shows('try') && !shows('mundus') ? [{ id: 'try' as const, label: 'Things to try', icon: Lightbulb }] : []),
-  ] satisfies Array<{ id: ExploraCategory; label: string; icon: typeof Sparkles }>).filter((c) => (c.id === 'screen' ? shows('visio') : c.id === 'audio' ? shows('sonus') : c.id === 'music' ? shows('cantus') || shows('sonus') : true));
+  ] satisfies Array<{ id: ExploraCategory; label: string; icon: typeof LayoutGrid }>).filter((c) => (c.id === 'screen' ? shows('visio') : c.id === 'audio' ? shows('sonus') : c.id === 'music' ? shows('cantus') || shows('sonus') : true));
 
   return (
     <div className="mb-3.5 sm:mb-4 flex flex-wrap items-center justify-between gap-2.5">
       {/* Category Pills (Pure Round & Smooth) */}
       <nav
         aria-label={translateUi('Explore categories')}
-        className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none"
+        className="flex min-w-0 flex-1 items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none"
       >
         {categories.map((c) => {
           const Icon = c.icon;
@@ -68,18 +80,13 @@ export function ExploraHeaderBar({ category, onSelectCategory, savedCount }: Exp
               type="button"
               aria-pressed={active}
               onClick={() => onSelectCategory(c.id)}
-              className={cx(
-                'group flex h-8 shrink-0 items-center gap-1.5 rounded-full px-3 text-[12.5px] font-bold transition-all duration-150 active:scale-95',
-                active
-                  ? 'bg-inverse text-on-inverse shadow-elev-1'
-                  : 'bg-surface/70 text-ink-soft hover:bg-surface hover:text-ink',
-              )}
+              className={tab(active)}
             >
               <Icon
                 size={13.5}
                 className={cx(
                   'transition-transform duration-150',
-                  active ? 'text-on-inverse' : 'text-ink-faint group-hover:text-ink',
+                  active ? (classic ? 'text-on-inverse' : 'text-on-accent') : 'text-ink-faint group-hover:text-accent-text',
                 )}
               />
               <span>{translateUi(c.label)}</span>
@@ -92,16 +99,11 @@ export function ExploraHeaderBar({ category, onSelectCategory, savedCount }: Exp
             type="button"
             aria-pressed={category === 'saved'}
             onClick={() => onSelectCategory('saved')}
-            className={cx(
-              'group flex h-8 shrink-0 items-center gap-1.5 rounded-full px-3 text-[12.5px] font-bold transition-all duration-150 active:scale-95',
-              category === 'saved'
-                ? 'bg-inverse text-on-inverse shadow-elev-1'
-                : 'bg-surface/70 text-ink-soft hover:bg-surface hover:text-ink',
-            )}
+            className={tab(category === 'saved')}
           >
             <Bookmark
               size={13.5}
-              className={category === 'saved' ? 'text-on-inverse fill-current' : 'text-ink-faint'}
+              className={category === 'saved' ? (classic ? 'text-on-inverse fill-current' : 'text-on-accent fill-current') : 'text-ink-faint'}
             />
             <span><UiText source={'Saved'} /></span>
             <span
@@ -116,133 +118,69 @@ export function ExploraHeaderBar({ category, onSelectCategory, savedCount }: Exp
         )}
       </nav>
 
+      {onSelectLevelFilter && <LevelFilterButton learnerLevel={learnerLevel} levelFilter={levelFilter} onSelectLevelFilter={onSelectLevelFilter} />}
     </div>
   );
 }
 
-/** Lemora U4: the level, as a round icon beside Explora's other icons; it opens the same short list. */
+/** The level, in the same quiet style as the tabs: "Level B2" with a pen underline; it opens a small list of levels, the chosen one filled orange. */
 export function LevelFilterButton({ learnerLevel, levelFilter, onSelectLevelFilter }: LevelFilterProps) {
   const translateUi = useUi();
-  const [levelMenuOpen, setLevelMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Close menu on click outside
   useEffect(() => {
-    if (!levelMenuOpen) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setLevelMenuOpen(false);
-      }
+    if (!open) return;
+    const outside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setOpen(false);
     };
-    window.addEventListener('mousedown', handleClickOutside);
-    return () => window.removeEventListener('mousedown', handleClickOutside);
-  }, [levelMenuOpen]);
+    const esc = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('mousedown', outside);
+    window.addEventListener('keydown', esc);
+    return () => {
+      window.removeEventListener('mousedown', outside);
+      window.removeEventListener('keydown', esc);
+    };
+  }, [open]);
 
-  const levelFilterLabel = (() => {
-    if (levelFilter === 'mine') return translateUi('Around {0}', [learnerLevel]);
-    if (levelFilter === 'any') return translateUi('All levels');
-    return `Level ${levelFilter}`;
-  })();
-
-  const activeHue =
-    levelFilter === 'mine'
-      ? (LEVEL_HUE[learnerLevel as PickLevel] ?? '#cf9640')
-      : levelFilter === 'any'
-        ? '#888'
-        : (LEVEL_HUE[levelFilter as PickLevel] ?? '#cf9640');
+  const shown = levelFilter === 'any' ? translateUi('All') : levelFilter === 'mine' ? learnerLevel : levelFilter;
+  const label = levelFilter === 'mine' ? translateUi('Around {0}', [learnerLevel]) : levelFilter === 'any' ? translateUi('All levels') : `Level ${levelFilter}`;
+  const pick = (f: LevelFilter) => {
+    onSelectLevelFilter(f);
+    setOpen(false);
+  };
+  const row = (active: boolean) => cx('flex h-8 items-center justify-center gap-1.5 rounded-full px-3 text-[12.5px] font-bold transition-colors', active ? 'bg-accent-fill text-on-accent' : 'text-ink-soft hover:text-accent-text');
 
   return (
-      <div ref={menuRef} className="relative shrink-0">
-        <button
-          type="button"
-          aria-expanded={levelMenuOpen}
-          aria-haspopup="true"
-          aria-label={translateUi('Filter by level: currently {0}', [levelFilterLabel])}
-          title={levelFilterLabel}
-          onClick={() => setLevelMenuOpen((prev) => !prev)}
-          className="relative grid size-10 place-items-center rounded-full border border-line/70 text-[12.5px] font-bold text-ink transition-transform hover:scale-105 active:scale-95"
-          style={{ boxShadow: `inset 0 0 0 2.5px color-mix(in oklab, ${activeHue} 70%, transparent)` }}
-        >
-          {levelFilter === 'any' ? '∗' : levelFilter === 'mine' ? learnerLevel : levelFilter}
-        </button>
+    <div ref={menuRef} className="relative shrink-0">
+      <button type="button" aria-expanded={open} aria-haspopup="true" aria-label={translateUi('Filter by level: currently {0}', [label])} title={label} onClick={() => setOpen((v) => !v)} className="group flex h-8 items-center gap-1.5 rounded-full px-2 text-[12.5px] font-bold text-ink-soft transition-colors hover:text-accent-text">
+        <span className="text-[11px] font-bold tracking-[0.12em] text-ink-faint uppercase"><UiText source={'Level'} /></span>
+        <span className="relative font-serif text-[16px] font-bold text-accent-text">
+          {shown}
+          <svg aria-hidden viewBox="0 0 30 6" preserveAspectRatio="none" className="absolute inset-x-0 -bottom-1 h-1.5 w-full overflow-visible"><path d="M1 3.4C8 1.2 14 5 20 2.8C23 1.8 26 2.6 29 2.2" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" vectorEffect="non-scaling-stroke" opacity={0.7} /></svg>
+        </span>
+      </button>
 
-        {/* Minimal Round Popover Menu */}
-        {levelMenuOpen && (
-          <div className="absolute right-0 top-full mt-2 z-50 w-56 rounded-2xl border border-line/80 bg-raised/98 p-2.5 shadow-elev-3 backdrop-blur-xl animate-in fade-in zoom-in-95 duration-100">
-            {/* Around my level pill */}
-            <button
-              type="button"
-              onClick={() => {
-                onSelectLevelFilter('mine');
-                setLevelMenuOpen(false);
-              }}
-              className={cx(
-                'flex w-full items-center justify-between rounded-full px-3 py-1.5 text-left text-[12px] font-semibold transition-colors',
-                levelFilter === 'mine'
-                  ? 'bg-accent/15 text-accent-text font-bold'
-                  : 'hover:bg-sunken text-ink',
-              )}
-            >
-              <div className="flex items-center gap-1.5">
-                <Star size={12} className="text-accent fill-accent" />
-                <span><UiText source={'Around {0}'} values={[learnerLevel]} /></span>
-              </div>
-              {levelFilter === 'mine' && <Check size={13} className="text-accent stroke-[3]" />}
-            </button>
-
-            <div className="my-2 border-t border-line/60" />
-
-            {/* Row of pure round level circles: just the level! (A1, A2, B1, B2, C1) */}
-            <div className="grid grid-cols-5 gap-1.5 px-0.5 my-1">
-              {LEVELS.map((lvl) => {
-                const isSelected = levelFilter === lvl;
-                const isLearner = lvl === learnerLevel;
-
-                return (
-                  <button
-                    key={lvl}
-                    type="button"
-                    title={isLearner ? `${lvl} (Your Level)` : lvl}
-                    onClick={() => {
-                      onSelectLevelFilter(lvl);
-                      setLevelMenuOpen(false);
-                    }}
-                    className={cx(
-                      'relative flex size-8.5 items-center justify-center rounded-full text-[11.5px] font-bold text-white shadow-xs transition-all duration-150 hover:scale-110 active:scale-90',
-                      isSelected && 'ring-2 ring-accent ring-offset-2 ring-offset-raised',
-                    )}
-                    style={{ background: LEVEL_HUE[lvl] }}
-                  >
-                    {lvl}
-                    {isLearner && (
-                      <span className="absolute -top-0.5 -right-0.5 size-2 rounded-full bg-amber-400 ring-1 ring-raised" />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="my-2 border-t border-line/60" />
-
-            {/* Option: All levels */}
-            <button
-              type="button"
-              onClick={() => {
-                onSelectLevelFilter('any');
-                setLevelMenuOpen(false);
-              }}
-              className={cx(
-                'flex w-full items-center justify-between rounded-full px-3 py-1.5 text-left text-[12px] font-semibold transition-colors',
-                levelFilter === 'any'
-                  ? 'bg-accent/15 text-accent-text font-bold'
-                  : 'hover:bg-sunken text-ink-soft hover:text-ink',
-              )}
-            >
-              <span><UiText source={'All levels'} /></span>
-              {levelFilter === 'any' && <Check size={13} className="text-accent stroke-[3]" />}
-            </button>
+      {open && (
+        <div className="absolute right-0 top-full z-50 mt-2 w-72 rounded-2xl border border-line/80 bg-raised p-3 shadow-elev-3">
+          <button type="button" onClick={() => pick('mine')} className={cx(row(levelFilter === 'mine'), 'w-full justify-between')}>
+            <span className="inline-flex items-center gap-1.5"><Star size={12} className="fill-current" aria-hidden /> <UiText source={'Around {0}'} values={[learnerLevel]} /></span>
+            {levelFilter === 'mine' && <Check size={13} className="stroke-[3]" aria-hidden />}
+          </button>
+          <div className="my-2 grid grid-cols-5 gap-1">
+            {LEVELS.map((lvl) => (
+              <button key={lvl} type="button" title={lvl === learnerLevel ? `${lvl} (${translateUi('Your level')})` : lvl} onClick={() => pick(lvl)} className={cx(row(levelFilter === lvl), 'relative px-0')}>
+                {lvl}
+                {lvl === learnerLevel && <span aria-hidden className="absolute top-0.5 right-1 size-1.5 rounded-full bg-accent" />}
+              </button>
+            ))}
           </div>
-        )}
-      </div>
+          <button type="button" onClick={() => pick('any')} className={cx(row(levelFilter === 'any'), 'w-full justify-between')}>
+            <span><UiText source={'All levels'} /></span>
+            {levelFilter === 'any' && <Check size={13} className="stroke-[3]" aria-hidden />}
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
