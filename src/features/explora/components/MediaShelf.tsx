@@ -11,10 +11,12 @@ interface MediaShelfProps {
   count?: number;
   badge?: ReactNode;
   children: ReactNode[];
+  /** Each item's width (a Tailwind width class); the default fits a poster. */
+  itemClass?: string;
 }
 
 // No line under the title (the user, 2026-11-04): `subtitle` is kept for callers, and not shown.
-export function MediaShelf({ id, title, count, badge, children }: MediaShelfProps) {
+export function MediaShelf({ id, title, count, badge, children, itemClass = 'w-[155px] sm:w-[185px] md:w-[205px] lg:w-[215px]' }: MediaShelfProps) {
   const translateUi = useUi();
   const { pointer } = useLayout();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -136,7 +138,7 @@ export function MediaShelf({ id, title, count, badge, children }: MediaShelfProp
           {children.map((child, idx) => (
             <div
               key={idx}
-              className="w-[155px] sm:w-[185px] md:w-[205px] lg:w-[215px] shrink-0"
+              className={`${itemClass} shrink-0`}
             >
               {child}
             </div>

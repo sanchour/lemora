@@ -10,6 +10,8 @@ import { useApp } from '@/app/context';
 import { PageHeader } from '@/app/PageHeader';
 import { getLanguage } from '@/core/lang/languages';
 import { ExploreAll } from '@/features/explora/ExploreAll';
+import { FlickMark } from '@/features/explora/ExploraFeed';
+import { UiText } from '@/design/i18n/UiText';
 import { useGuide } from '@/features/mundus/useGuide';
 
 /**
@@ -26,6 +28,7 @@ export default function ExploraPage() {
   const navigate = useNavigate();
   const [levelFilter, setLevelFilter] = useState<LevelFilter>('mine');
   const [searchOpen, setSearchOpen] = useState(false);
+  const [flickOpen, setFlickOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const searchInputRef = useRef<HTMLInputElement>(null);
 
@@ -50,6 +53,10 @@ export default function ExploraPage() {
         ])}
         actions={
           <div className="relative flex items-center gap-2">
+            {/* Flick, the full-screen scroller (desktop), beside the library. */}
+            <button type="button" onClick={() => setFlickOpen(true)} title={translateUi('Flick through Explora, one thing at a time')} className="hidden h-10 items-center gap-1.5 rounded-full border border-accent/60 bg-accent-soft pr-4 pl-2.5 text-[13px] font-bold text-accent-text transition-all hover:-translate-y-0.5 hover:border-accent hover:shadow-elev-1 active:scale-95 md:inline-flex">
+              <FlickMark size={24} className="text-accent-text" /> <UiText source={'Flick'} />
+            </button>
             {/* Lemora U4: the library, then search (the level sits with the tabs). */}
             <button type="button" onClick={() => navigate('/bibliotheca')} aria-label={translateUi('Bibliotheca')} title={translateUi('Bibliotheca')} className="grid size-10 place-items-center rounded-full border border-line/70 text-ink-soft transition-transform hover:scale-105 hover:text-ink active:scale-95">
               <Hand name="stack" size={22} />
@@ -128,6 +135,8 @@ export default function ExploraPage() {
           onSearchChange={setSearchQuery}
           levelFilter={levelFilter}
           onSelectLevelFilter={setLevelFilter}
+          flickOpen={flickOpen}
+          onFlickClose={() => setFlickOpen(false)}
         />
       )}
     </>

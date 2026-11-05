@@ -12,7 +12,6 @@ import {
   Layers,
   Lightbulb,
   Music,
-  GalleryVertical,
   LayoutGrid,
   Star,
 } from 'lucide-react';
@@ -31,8 +30,6 @@ interface ExploraHeaderBarProps {
   learnerLevel: Level;
   levelFilter: LevelFilter;
   onSelectLevelFilter?: (filter: LevelFilter) => void;
-  /** Opens Flick, the full-screen scroller (desktop). */
-  onFlick?: () => void;
 }
 
 interface LevelFilterProps {
@@ -41,7 +38,7 @@ interface LevelFilterProps {
   onSelectLevelFilter: (filter: LevelFilter) => void;
 }
 
-export function ExploraHeaderBar({ category, onSelectCategory, savedCount, learnerLevel, levelFilter, onSelectLevelFilter, onFlick }: ExploraHeaderBarProps) {
+export function ExploraHeaderBar({ category, onSelectCategory, savedCount, learnerLevel, levelFilter, onSelectLevelFilter }: ExploraHeaderBarProps) {
   const translateUi = useUi();
   // Settings › Appearance can bring back the earlier look: round tabs on a soft background, the dark one selected.
   const classic = useApp().settings.ui.classicExploraTabs === true;
@@ -56,8 +53,8 @@ export function ExploraHeaderBar({ category, onSelectCategory, savedCount, learn
   const categories = ([
     { id: 'all', label: 'All', icon: LayoutGrid },
     { id: 'books', label: 'Books', icon: BookOpen },
-    { id: 'articles', label: 'Articles', icon: Newspaper },
-    { id: 'comics', label: 'Comics and magazines', icon: BookImage },
+    { id: 'articles', label: 'News & magazines', icon: Newspaper },
+    { id: 'comics', label: 'Picture & comics', icon: BookImage },
     { id: 'screen', label: 'Series & Films', icon: Film },
     { id: 'audio', label: 'Audio & Podcasts', icon: Headphones },
     { id: 'music', label: 'Music & Radio', icon: Music },
@@ -121,14 +118,7 @@ export function ExploraHeaderBar({ category, onSelectCategory, savedCount, learn
         )}
       </nav>
 
-      <div className="flex items-center gap-4">
-        {onFlick && (
-          <button type="button" onClick={onFlick} title={translateUi('Flick through Explora, one thing at a time')} className="hidden h-8 shrink-0 items-center gap-1.5 rounded-full border border-accent bg-accent-soft md:inline-flex px-3.5 text-[12.5px] font-bold text-accent-text transition-all duration-150 hover:bg-accent-fill hover:text-on-accent active:scale-95">
-            <GalleryVertical size={14} aria-hidden /> <UiText source={'Flick'} />
-          </button>
-        )}
       {onSelectLevelFilter && <LevelFilterButton learnerLevel={learnerLevel} levelFilter={levelFilter} onSelectLevelFilter={onSelectLevelFilter} />}
-      </div>
     </div>
   );
 }

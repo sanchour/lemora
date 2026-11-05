@@ -11,6 +11,7 @@ import { posterUrl } from '@/services/mundus/tmdb';
 import type { PickLookup } from '@/features/mundus/hooks';
 import type { ExploraItem } from '../types';
 import { LevelBadge } from './LevelBadge';
+import { BookCover } from '@/features/codex/library/BookCover';
 
 interface MediaCardProps {
   item: ExploraItem;
@@ -64,7 +65,11 @@ export function MediaCard({
         )}
       >
         {/* Artwork Layer */}
-        {poster ? (
+        {item.catalogue && !item.cover ? (
+          <BookCover text={{ id: item.id, title: item.title, author: item.sub, lang }} className="size-full object-cover" />
+        ) : item.cover ? (
+          <img src={item.cover} alt="" loading="lazy" decoding="async" className="size-full object-cover transition-transform duration-400 group-hover:scale-105" />
+        ) : poster ? (
           <img
             src={poster}
             alt=""
@@ -180,6 +185,14 @@ function KindTag({ item }: { item: ExploraItem }) {
       </span>
     );
   }
+  if (item.kind === 'read') {
+    return (
+      <span className="flex items-center gap-1 rounded-full bg-black/55 backdrop-blur-sm px-2.5 py-0.5 text-[10.5px]">
+        <BookOpen size={11} />
+        {item.catalogue?.minutes ? <UiText source={'{0} min'} values={[item.catalogue.minutes]} /> : <UiText source={'Picture book'} />}
+      </span>
+    );
+  }
   if (item.kind === 'audiobooks' || item.kind === 'podcasts') {
     return (
       <span className="flex items-center gap-1 rounded-full bg-black/55 backdrop-blur-sm px-2.5 py-0.5 text-[10.5px]">
@@ -203,7 +216,7 @@ function DefaultCover({ kind }: { kind: string }) {
   const Icon = (() => {
     if (kind === 'series') return Tv;
     if (kind === 'films') return Film;
-    if (kind === 'books') return BookOpen;
+    if (kind === 'books' || kind === 'read') return BookOpen;
     if (kind === 'audiobooks' || kind === 'podcasts') return Headphones;
     if (kind === 'radio') return Radio;
     if (kind === 'music') return Music;

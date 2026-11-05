@@ -1,0 +1,827 @@
+{
+ "items": [
+  {
+   "id": "pg4650",
+   "kind": "classic",
+   "title": "Candide",
+   "author": "Voltaire",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 4650
+   },
+   "audio": "candide_ou_loptimisme_b_librivox"
+  },
+  {
+   "id": "pg800",
+   "kind": "classic",
+   "title": "Le tour du monde en quatre-vingts jours",
+   "author": "Jules Verne",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 800
+   }
+  },
+  {
+   "id": "pg4791",
+   "kind": "classic",
+   "title": "Voyage au centre de la Terre",
+   "author": "Jules Verne",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 4791
+   }
+  },
+  {
+   "id": "pg5097",
+   "kind": "classic",
+   "title": "Vingt mille lieues sous les mers",
+   "author": "Jules Verne",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 5097
+   }
+  },
+  {
+   "id": "pg7442",
+   "kind": "classic",
+   "title": "Michel Strogoff",
+   "author": "Jules Verne",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 7442
+   },
+   "audio": "michelstrogoff_2606_librivox"
+  },
+  {
+   "id": "pg14287",
+   "kind": "classic",
+   "title": "L’Île mystérieuse",
+   "author": "Jules Verne",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 14287
+   }
+  },
+  {
+   "id": "pg10746",
+   "kind": "classic",
+   "title": "Boule de suif",
+   "author": "Guy de Maupassant",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 10746
+   }
+  },
+  {
+   "id": "pg11770",
+   "kind": "classic",
+   "title": "Lettres de mon moulin",
+   "author": "Alphonse Daudet",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 11770
+   }
+  },
+  {
+   "id": "pg13256",
+   "kind": "classic",
+   "title": "Le Petit Chose",
+   "author": "Alphonse Daudet",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 13256
+   }
+  },
+  {
+   "id": "pg4559",
+   "kind": "classic",
+   "title": "Poil de Carotte",
+   "author": "Jules Renard",
+   "level": "B1",
+   "from": {
+    "type": "gutenberg",
+    "id": 4559
+   }
+  },
+  {
+   "id": "pg55456",
+   "kind": "classic",
+   "title": "Aventures d’Alice au pays des merveilles",
+   "author": "Lewis Carroll",
+   "level": "B1",
+   "from": {
+    "type": "gutenberg",
+    "id": 55456
+   }
+  },
+  {
+   "id": "pg17941",
+   "kind": "classic",
+   "title": "Fables de La Fontaine (tome 1)",
+   "author": "Jean de La Fontaine",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 17941
+   }
+  },
+  {
+   "id": "pg56054",
+   "kind": "classic",
+   "title": "Les Trois Mousquetaires",
+   "author": "Alexandre Dumas",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 56054
+   },
+   "audio": "trois_mousquetaires_0810_librivox"
+  },
+  {
+   "id": "pg17989",
+   "kind": "classic",
+   "title": "Le Comte de Monte-Cristo (tome 1)",
+   "author": "Alexandre Dumas",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 17989
+   }
+  },
+  {
+   "id": "pg17489",
+   "kind": "classic",
+   "title": "Les Misérables (tome 1)",
+   "author": "Victor Hugo",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 17489
+   }
+  },
+  {
+   "id": "pg19657",
+   "kind": "classic",
+   "title": "Notre-Dame de Paris",
+   "author": "Victor Hugo",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 19657
+   }
+  },
+  {
+   "id": "pg14155",
+   "kind": "classic",
+   "title": "Madame Bovary",
+   "author": "Gustave Flaubert",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 14155
+   },
+   "audio": "madame_bovary_neb_librivox"
+  },
+  {
+   "id": "pg12065",
+   "kind": "classic",
+   "title": "Trois contes",
+   "author": "Gustave Flaubert",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 12065
+   }
+  },
+  {
+   "id": "pg1256",
+   "kind": "classic",
+   "title": "Cyrano de Bergerac",
+   "author": "Edmond Rostand",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 1256
+   }
+  },
+  {
+   "id": "pg798",
+   "kind": "classic",
+   "title": "Le Rouge et le Noir",
+   "author": "Stendhal",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 798
+   }
+  },
+  {
+   "id": "pg16239",
+   "kind": "classic",
+   "title": "Colomba",
+   "author": "Prosper Mérimée",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 16239
+   }
+  },
+  {
+   "id": "pg11131",
+   "kind": "classic",
+   "title": "Pierre et Jean",
+   "author": "Guy de Maupassant",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 11131
+   }
+  },
+  {
+   "id": "pg5781",
+   "kind": "classic",
+   "title": "Le Grand Meaulnes",
+   "author": "Alain-Fournier",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 5781
+   },
+   "audio": "grand_meaulnes_2004_librivox"
+  },
+  {
+   "id": "pg6099",
+   "kind": "classic",
+   "title": "Les Fleurs du mal",
+   "author": "Charles Baudelaire",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 6099
+   }
+  },
+  {
+   "id": "pg32854",
+   "kind": "classic",
+   "title": "Arsène Lupin, gentleman-cambrioleur",
+   "author": "Maurice Leblanc",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 32854
+   },
+   "audio": "arsene_lupin_gentleman_cambrioleur_cm_0808_librivox"
+  },
+  {
+   "id": "pg13013",
+   "kind": "classic",
+   "title": "François le Bossu",
+   "author": "Sophie comtesse de Ségur",
+   "level": "B1",
+   "from": {
+    "type": "gutenberg",
+    "id": 13013
+   }
+  },
+  {
+   "id": "ws:Fables de La Fontaine (éd. 1874)/La Cigale et la Fourmi",
+   "kind": "short",
+   "title": "La Cigale et la Fourmi",
+   "author": "Jean de La Fontaine",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "Fables de La Fontaine (éd. 1874)/La Cigale et la Fourmi"
+   }
+  },
+  {
+   "id": "ws:Le Corbeau et le Renard (La Fontaine)",
+   "kind": "short",
+   "title": "Le Corbeau et le Renard",
+   "author": "Jean de La Fontaine",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "Le Corbeau et le Renard (La Fontaine)"
+   }
+  },
+  {
+   "id": "ws:Le Loup et l’Agneau (La Fontaine)",
+   "kind": "short",
+   "title": "Le Loup et l’Agneau",
+   "author": "Jean de La Fontaine",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "Le Loup et l’Agneau (La Fontaine)"
+   }
+  },
+  {
+   "id": "ws:Fables de La Fontaine (éd. 1874)/Le Lièvre et la Tortue",
+   "kind": "short",
+   "title": "Le Lièvre et la Tortue",
+   "author": "Jean de La Fontaine",
+   "level": "B2",
+   "minutes": 2,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "Fables de La Fontaine (éd. 1874)/Le Lièvre et la Tortue"
+   }
+  },
+  {
+   "id": "ws:Fables de La Fontaine (éd. 1874)/Le Chêne et le Roseau",
+   "kind": "short",
+   "title": "Le Chêne et le Roseau",
+   "author": "Jean de La Fontaine",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "Fables de La Fontaine (éd. 1874)/Le Chêne et le Roseau"
+   }
+  },
+  {
+   "id": "ws:Fables de La Fontaine (éd. 1874)/La Grenouille qui se veut faire aussi grosse que le Bœuf",
+   "kind": "short",
+   "title": "La Grenouille qui se veut faire aussi grosse que le Bœuf",
+   "author": "Jean de La Fontaine",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "Fables de La Fontaine (éd. 1874)/La Grenouille qui se veut faire aussi grosse que le Bœuf"
+   }
+  },
+  {
+   "id": "ws:Le Rat de Ville, et le Rat des Champs (La Fontaine)",
+   "kind": "short",
+   "title": "Le Rat de ville et le Rat des champs",
+   "author": "Jean de La Fontaine",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "Le Rat de Ville, et le Rat des Champs (La Fontaine)"
+   }
+  },
+  {
+   "id": "ws:Contes de Perrault (éd. 1902)/Cendrillon ou la petite Pantoufle de verre",
+   "kind": "short",
+   "title": "Cendrillon",
+   "author": "Charles Perrault",
+   "level": "B1",
+   "minutes": 11,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Contes de Perrault (éd. 1902)/Cendrillon ou la petite Pantoufle de verre"
+   }
+  },
+  {
+   "id": "ws:Contes de Perrault (éd. 1902)/Le maître Chat ou le Chat botté",
+   "kind": "short",
+   "title": "Le Chat botté",
+   "author": "Charles Perrault",
+   "level": "B1",
+   "minutes": 8,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Contes de Perrault (éd. 1902)/Le maître Chat ou le Chat botté"
+   }
+  },
+  {
+   "id": "ws:Les Contemplations/« Demain, dès l’aube, à l’heure où blanchit la campagne »",
+   "kind": "short",
+   "title": "Demain, dès l’aube…",
+   "author": "Victor Hugo",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Les Contemplations/« Demain, dès l’aube, à l’heure où blanchit la campagne »"
+   }
+  },
+  {
+   "id": "ws:Les Fleurs du mal (1861)/L’Albatros",
+   "kind": "short",
+   "title": "L’Albatros",
+   "author": "Charles Baudelaire",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Les Fleurs du mal (1861)/L’Albatros"
+   }
+  },
+  {
+   "id": "ws:Les Odes (Ronsard)/« Mignonne, allons voir si la rose »",
+   "kind": "short",
+   "title": "Mignonne, allons voir si la rose",
+   "author": "Pierre de Ronsard",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Les Odes (Ronsard)/« Mignonne, allons voir si la rose »"
+   }
+  },
+  {
+   "id": "ws:Alcools/Le Pont Mirabeau",
+   "kind": "short",
+   "title": "Le Pont Mirabeau",
+   "author": "Guillaume Apollinaire",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Alcools/Le Pont Mirabeau"
+   }
+  },
+  {
+   "id": "ws:Poésies (Rimbaud)/éd. Vanier, 1895/Sensation",
+   "kind": "short",
+   "title": "Sensation",
+   "author": "Arthur Rimbaud",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Poésies (Rimbaud)/éd. Vanier, 1895/Sensation"
+   }
+  },
+  {
+   "id": "ws:Méditations poétiques (éd. originale 1820)/Le Lac",
+   "kind": "short",
+   "title": "Le Lac",
+   "author": "Alphonse de Lamartine",
+   "level": "C1",
+   "minutes": 3,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Méditations poétiques (éd. originale 1820)/Le Lac"
+   }
+  },
+  {
+   "id": "ws:Lettres de mon moulin/La chèvre de monsieur Seguin",
+   "kind": "short",
+   "title": "La Chèvre de monsieur Seguin",
+   "author": "Alphonse Daudet",
+   "level": "B1",
+   "minutes": 10,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "Lettres de mon moulin/La chèvre de monsieur Seguin"
+   }
+  },
+  {
+   "id": "ws:Lettres de mon moulin/Les étoiles",
+   "kind": "short",
+   "title": "Les Étoiles",
+   "author": "Alphonse Daudet",
+   "level": "B1",
+   "minutes": 10,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "Lettres de mon moulin/Les étoiles"
+   }
+  },
+  {
+   "id": "ws:Miss Harriet (recueil)/Édition Conard, 1910/La Ficelle",
+   "kind": "short",
+   "title": "La Ficelle",
+   "author": "Guy de Maupassant",
+   "level": "B2",
+   "minutes": 11,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "Miss Harriet (recueil)/Édition Conard, 1910/La Ficelle"
+   }
+  },
+  {
+   "id": "ws:Contes du jour et de la nuit (éd. Flammarion, 1885)/La Parure",
+   "kind": "short",
+   "title": "La Parure",
+   "author": "Guy de Maupassant",
+   "level": "B2",
+   "minutes": 14,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "Contes du jour et de la nuit (éd. Flammarion, 1885)/La Parure"
+   }
+  },
+  {
+   "id": "ws:Le Petit Poucet (Perrault)",
+   "kind": "short",
+   "title": "Le Petit Poucet",
+   "author": "Charles Perrault",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Le Petit Poucet (Perrault)"
+   }
+  },
+  {
+   "id": "ws:La Belle au bois dormant (Perrault)",
+   "kind": "short",
+   "title": "La Belle au bois dormant",
+   "author": "Charles Perrault",
+   "level": "B1",
+   "minutes": 2,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "La Belle au bois dormant (Perrault)"
+   }
+  },
+  {
+   "id": "ws:Le Petit Chaperon rouge (Perrault)",
+   "kind": "short",
+   "title": "Le Petit Chaperon rouge",
+   "author": "Charles Perrault",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Le Petit Chaperon rouge (Perrault)"
+   }
+  },
+  {
+   "id": "ws:La Chèvre de monsieur Seguin",
+   "kind": "short",
+   "title": "La Chèvre de monsieur Seguin",
+   "author": "Alphonse Daudet",
+   "level": "B1",
+   "minutes": 10,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "La Chèvre de monsieur Seguin"
+   }
+  },
+  {
+   "id": "ws:La Parure",
+   "kind": "short",
+   "title": "La Parure",
+   "author": "Guy de Maupassant",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "La Parure"
+   }
+  },
+  {
+   "id": "ws:Les Fées",
+   "kind": "short",
+   "title": "Les Fées",
+   "author": "Charles Perrault",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Les Fées"
+   }
+  },
+  {
+   "id": "ws:Les Fleurs du mal (1861)/Spleen (« J’ai plus de souvenirs que si j’avais mille ans »)",
+   "kind": "short",
+   "title": "Spleen",
+   "author": "Charles Baudelaire",
+   "level": "C1",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Les Fleurs du mal (1861)/Spleen (« J’ai plus de souvenirs que si j’avais mille ans »)"
+   }
+  },
+  {
+   "id": "ws:Les Fleurs du mal (1861)/L’Invitation au voyage",
+   "kind": "short",
+   "title": "L’Invitation au voyage",
+   "author": "Charles Baudelaire",
+   "level": "C1",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Les Fleurs du mal (1861)/L’Invitation au voyage"
+   }
+  },
+  {
+   "id": "sw4252",
+   "kind": "picture",
+   "title": "Le gros roi et le chien maigre",
+   "author": "Sak Untala, Parismita",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/721909/size3/578f72502f01ea8298384a08257557b2.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "4252-fat-king-thin-dog"
+   }
+  },
+  {
+   "id": "sw98010",
+   "kind": "picture",
+   "title": "Le Porridge",
+   "author": "Patricia Roth, Translators withoutBorders, Catherine Groenewald",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/151769/size3/773091332b87122b8e66a39000540408.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "98010-le-porridge"
+   }
+  },
+  {
+   "id": "sw70957",
+   "kind": "picture",
+   "title": "Raconte Moi... Maintenant ! Les Couleurs",
+   "author": "Nadine Verdier, Translators withoutBorders, Rijuta Ghate",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/700102/size3/610c0cae5d16405f1f342e373837d71f.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "70957-raconte-moi-maintenant-les-couleurs"
+   }
+  },
+  {
+   "id": "sw91197",
+   "kind": "picture",
+   "title": "Un Homme Très Grand",
+   "author": "Isabelle  Duston, Veronique Biddau, Catherine Groenewald",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/130941/size3/4d838d03634aeb299865d8b14fd8b1f5.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "91197-un-homme-tres-grand"
+   }
+  },
+  {
+   "id": "sw4196",
+   "kind": "picture",
+   "title": "C'est de la faute du chat!",
+   "author": "Sak Untala, Priya Kuriyan",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/696669/size3/8717a72070ac52bd090aeebc8e6b36e6.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "4196-it-is-all-the-cats-fault"
+   }
+  },
+  {
+   "id": "sw62975",
+   "kind": "picture",
+   "title": "Le Bébé Éléphant Est Très Curieux",
+   "author": "Isabelle  Duston, Veronique Biddau, Wiehan de Jager",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/126984/size3/3aa2f0a919d25e463ac0ec847afc5a80.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "62975-le-bebe-elephant-est-tres-curieux"
+   }
+  },
+  {
+   "id": "sw4200",
+   "kind": "picture",
+   "title": "Bonne nuit, Tinku !",
+   "author": "Sak Untala, Sonal Goyal, Sumit Sakhuja",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/720891/size3/170e9090f77038f09c412e3f74f4d3ee.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "4200-goodnight-tinku"
+   }
+  },
+  {
+   "id": "sw97920",
+   "kind": "picture",
+   "title": "Comment La Fourmi Sauva La Colombe",
+   "author": "Isabelle  Duston, Veronique Biddau, Wiehan de Jager",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/141891/size3/134ad8caa3025116bcdc29245beb43da.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "97920-comment-la-fourmi-sauva-la-colombe"
+   }
+  },
+  {
+   "id": "sw95306",
+   "kind": "picture",
+   "title": "Mais qui a volé les petits gâteaux ?",
+   "author": "Sak Untala, Rajiv Eipe",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/715247/size3/4b5135f1f81b66b7a6e6a56f4947dabc.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "95306-ammachi-s-incredible-investigation"
+   }
+  },
+  {
+   "id": "sw96540",
+   "kind": "picture",
+   "title": "Des Amis Devenus Ennemis",
+   "author": "Lina Scarpellini, Translators withoutBorders, Rob Owen",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/139313/size3/1cba0e9e0e4a8a62dbb67f61df601710.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "96540-des-amis-devenus-ennemis"
+   }
+  },
+  {
+   "id": "sw65431",
+   "kind": "picture",
+   "title": "La Poule Et Le Millepatte",
+   "author": "Isabelle  Duston, Veronique Biddau, Magriet Brink",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/126966/size3/00f41c902b3ca2a809716cc279a695ab.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "65431-la-poule-et-le-millepatte"
+   }
+  },
+  {
+   "id": "sw99694",
+   "kind": "picture",
+   "title": "À fond les ballons !",
+   "author": "Sak Untala, Tanvi Bhat",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/495678/size3/30c9c6f01105d7fa1d9b37bd919d931f.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "99694-my-brother-s-wheeeeelchair"
+   }
+  },
+  {
+   "id": "sw98302",
+   "kind": "picture",
+   "title": "Anansi, La Fainéante",
+   "author": "Isabelle Barth, Translators withoutBorders, Wiehan de Jager",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/141916/size3/8c5af656393928f97fa73d07f95af337.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "98302-anansi-la-faineante"
+   }
+  },
+  {
+   "id": "sw94916",
+   "kind": "picture",
+   "title": "L'oiseau d'or",
+   "author": "Sak Untala, Swarga Bhattacharya",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/96023/size3/a101742421bf42ffe882d16bdf4f5819.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "94916-the-golden-bird"
+   }
+  },
+  {
+   "id": "sw96628",
+   "kind": "picture",
+   "title": "Qui a volé le beau sourire de Bhaiya?",
+   "author": "Sak Untala, Sunaina  Coelho",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/524480/size3/06c407a5aec36554f78c7d6dbddfbb88.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "96628-who-stole-bhaiya-s-smile"
+   }
+  }
+ ]
+}

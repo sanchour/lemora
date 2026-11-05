@@ -1,0 +1,701 @@
+{
+ "items": [
+  {
+   "id": "pg320",
+   "kind": "classic",
+   "title": "El Lazarillo de Tormes",
+   "author": "Anonymous",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 320
+   }
+  },
+  {
+   "id": "pg2000",
+   "kind": "classic",
+   "title": "Don Quijote",
+   "author": "Miguel de Cervantes Saavedra",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 2000
+   },
+   "audio": "donquijote_2507_librivox"
+  },
+  {
+   "id": "pg17340",
+   "kind": "classic",
+   "title": "Marianela",
+   "author": "Benito Pérez Galdós",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 17340
+   },
+   "audio": "marianela_2104_librivox"
+  },
+  {
+   "id": "pg17223",
+   "kind": "classic",
+   "title": "Pepita Jiménez",
+   "author": "Juan Valera",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 17223
+   },
+   "audio": "pepitajimenez_2510_librivox"
+  },
+  {
+   "id": "pg13507",
+   "kind": "classic",
+   "title": "Cuentos de amor, de locura y de muerte",
+   "author": "Horacio Quiroga",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 13507
+   }
+  },
+  {
+   "id": "pg21282",
+   "kind": "classic",
+   "title": "Tradiciones peruanas",
+   "author": "Ricardo Palma",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 21282
+   },
+   "audio": "tradicionesperuanas_2101_librivox"
+  },
+  {
+   "id": "pg23600",
+   "kind": "classic",
+   "title": "La gaviota",
+   "author": "Fernán Caballero",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 23600
+   }
+  },
+  {
+   "id": "pg29506",
+   "kind": "classic",
+   "title": "El sombrero de tres picos",
+   "author": "Pedro Antonio de Alarcón",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 29506
+   }
+  },
+  {
+   "id": "pg29731",
+   "kind": "classic",
+   "title": "El Capitán Veneno",
+   "author": "Pedro Antonio de Alarcón",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 29731
+   },
+   "audio": "capitan_veneno_1002_librivox"
+  },
+  {
+   "id": "pg29497",
+   "kind": "classic",
+   "title": "Fábulas literarias",
+   "author": "Tomás de Iriarte",
+   "level": "B1",
+   "from": {
+    "type": "gutenberg",
+    "id": 29497
+   },
+   "audio": "fabulasliterarias_1702_librivox"
+  },
+  {
+   "id": "pg55206",
+   "kind": "classic",
+   "title": "Fábulas de Samaniego",
+   "author": "Félix María Samaniego",
+   "level": "B1",
+   "from": {
+    "type": "gutenberg",
+    "id": 55206
+   }
+  },
+  {
+   "id": "pg14765",
+   "kind": "classic",
+   "title": "Martín Fierro",
+   "author": "José Hernández",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 14765
+   },
+   "audio": "martinfierro_1402_librivox"
+  },
+  {
+   "id": "pg1619",
+   "kind": "classic",
+   "title": "La Celestina",
+   "author": "Fernando de Rojas",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 1619
+   }
+  },
+  {
+   "id": "pg52894",
+   "kind": "classic",
+   "title": "Azul…",
+   "author": "Rubén Darío",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 52894
+   }
+  },
+  {
+   "id": "pg55514",
+   "kind": "classic",
+   "title": "Cuentos de amor",
+   "author": "Emilia condesa de Pardo Bazán",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 55514
+   }
+  },
+  {
+   "id": "pg14944",
+   "kind": "classic",
+   "title": "La barraca",
+   "author": "Vicente Blasco Ibáñez",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 14944
+   },
+   "audio": "labarraca_2002_librivox"
+  },
+  {
+   "id": "pg33267",
+   "kind": "classic",
+   "title": "Facundo",
+   "author": "Domingo Faustino Sarmiento",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 33267
+   }
+  },
+  {
+   "id": "pg49836",
+   "kind": "classic",
+   "title": "Niebla",
+   "author": "Miguel de Unamuno",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 49836
+   },
+   "audio": "niebla_1701_librivox"
+  },
+  {
+   "id": "pg46000",
+   "kind": "classic",
+   "title": "Cuentos ingenuos",
+   "author": "Felipe Trigo",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 46000
+   },
+   "audio": "cuentos_ingenuos_2108_librivox"
+  },
+  {
+   "id": "pg75126",
+   "kind": "classic",
+   "title": "Sab",
+   "author": "Gertrudis Gómez de Avellaneda",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 75126
+   },
+   "audio": "sab_2508_librivox"
+  },
+  {
+   "id": "ws:La cigarra y la hormiga (Samaniego)",
+   "kind": "short",
+   "title": "La cigarra y la hormiga",
+   "author": "Félix María de Samaniego",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "La cigarra y la hormiga (Samaniego)"
+   }
+  },
+  {
+   "id": "ws:El cuervo y el zorro",
+   "kind": "short",
+   "title": "El cuervo y el zorro",
+   "author": "Félix María de Samaniego",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "El cuervo y el zorro"
+   }
+  },
+  {
+   "id": "ws:El burro flautista",
+   "kind": "short",
+   "title": "El burro flautista",
+   "author": "Tomás de Iriarte",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "El burro flautista"
+   }
+  },
+  {
+   "id": "ws:El escarabajo (Tomás de Iriarte)",
+   "kind": "short",
+   "title": "El escarabajo",
+   "author": "Tomás de Iriarte",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "El escarabajo (Tomás de Iriarte)"
+   }
+  },
+  {
+   "id": "ws:El lobo y el pastor (Iriarte)",
+   "kind": "short",
+   "title": "El lobo y el pastor",
+   "author": "Tomás de Iriarte",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "El lobo y el pastor (Iriarte)"
+   }
+  },
+  {
+   "id": "ws:La campana y el esquilón",
+   "kind": "short",
+   "title": "La campana y el esquilón",
+   "author": "Tomás de Iriarte",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "La campana y el esquilón"
+   }
+  },
+  {
+   "id": "ws:La hormiga y la pulga",
+   "kind": "short",
+   "title": "La hormiga y la pulga",
+   "author": "Tomás de Iriarte",
+   "level": "B1",
+   "minutes": 2,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "La hormiga y la pulga"
+   }
+  },
+  {
+   "id": "ws:Rimas (Bécquer, 1885)/Rima XXI",
+   "kind": "short",
+   "title": "Rima XXI",
+   "author": "Gustavo Adolfo Bécquer",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Rimas (Bécquer, 1885)/Rima XXI"
+   }
+  },
+  {
+   "id": "ws:Rimas (Bécquer, 1885)/Rima LIII",
+   "kind": "short",
+   "title": "Volverán las oscuras golondrinas",
+   "author": "Gustavo Adolfo Bécquer",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Rimas (Bécquer, 1885)/Rima LIII"
+   }
+  },
+  {
+   "id": "ws:Rimas (Bécquer, 1885)/Rima XII",
+   "kind": "short",
+   "title": "Rima XII",
+   "author": "Gustavo Adolfo Bécquer",
+   "level": "B2",
+   "minutes": 2,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Rimas (Bécquer, 1885)/Rima XII"
+   }
+  },
+  {
+   "id": "ws:Sonatina",
+   "kind": "short",
+   "title": "Sonatina",
+   "author": "Rubén Darío",
+   "level": "B2",
+   "minutes": 2,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Sonatina"
+   }
+  },
+  {
+   "id": "ws:Lo fatal",
+   "kind": "short",
+   "title": "Lo fatal",
+   "author": "Rubén Darío",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Lo fatal"
+   }
+  },
+  {
+   "id": "ws:La saeta (Machado)",
+   "kind": "short",
+   "title": "La saeta",
+   "author": "Antonio Machado",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "La saeta (Machado)"
+   }
+  },
+  {
+   "id": "ws:El viajero (Machado)",
+   "kind": "short",
+   "title": "El viajero",
+   "author": "Antonio Machado",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "El viajero (Machado)"
+   }
+  },
+  {
+   "id": "ws:La gallina degollada",
+   "kind": "short",
+   "title": "La gallina degollada",
+   "author": "Horacio Quiroga",
+   "level": "B2",
+   "minutes": 12,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "La gallina degollada"
+   }
+  },
+  {
+   "id": "ws:La tortuga gigante",
+   "kind": "short",
+   "title": "La tortuga gigante",
+   "author": "Horacio Quiroga",
+   "level": "B1",
+   "minutes": 9,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "La tortuga gigante"
+   }
+  },
+  {
+   "id": "ws:Las medias de los flamencos",
+   "kind": "short",
+   "title": "Las medias de los flamencos",
+   "author": "Horacio Quiroga",
+   "level": "B1",
+   "minutes": 7,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "Las medias de los flamencos"
+   }
+  },
+  {
+   "id": "ws:El rayo de luna",
+   "kind": "short",
+   "title": "El rayo de luna",
+   "author": "Gustavo Adolfo Bécquer",
+   "level": "B2",
+   "minutes": 18,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "El rayo de luna"
+   }
+  },
+  {
+   "id": "ws:Los ojos verdes",
+   "kind": "short",
+   "title": "Los ojos verdes",
+   "author": "Gustavo Adolfo Bécquer",
+   "level": "B2",
+   "minutes": 14,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "Los ojos verdes"
+   }
+  },
+  {
+   "id": "ws:Cuento de Navidad (Pardo Bazán)",
+   "kind": "short",
+   "title": "Cuento de Navidad",
+   "author": "Emilia Pardo Bazán",
+   "level": "B2",
+   "minutes": 7,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "Cuento de Navidad (Pardo Bazán)"
+   }
+  },
+  {
+   "id": "ws:Cultivo una rosa blanca",
+   "kind": "short",
+   "title": "Cultivo una rosa blanca",
+   "author": "José Martí",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Cultivo una rosa blanca"
+   }
+  },
+  {
+   "id": "ws:Versos sencillos/I",
+   "kind": "short",
+   "title": "Yo soy un hombre sincero",
+   "author": "José Martí",
+   "level": "B1",
+   "minutes": 2,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Versos sencillos/I"
+   }
+  },
+  {
+   "id": "sw423522",
+   "kind": "picture",
+   "title": "¡Todo revuelto!",
+   "author": "Némesis Zerga, Sheena Deviah",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/727060/size3/c9b0c085cabd2aea8920ddfc909b90f4.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "423522-all-jumbled-up"
+   }
+  },
+  {
+   "id": "sw594896",
+   "kind": "picture",
+   "title": "¡Hola, Sol!",
+   "author": "Némesis Zerga, Rajiv Eipe",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/803649/size3/9819ed82417e85b9cd4cec2fe58805c6.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "594896-hello-sun"
+   }
+  },
+  {
+   "id": "sw19962",
+   "kind": "picture",
+   "title": "Hormigas Ocupadas",
+   "author": "Ximena Daud, Deepa Balsavar",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/704670/size3/241eb27666dc624a6d0b5f5b2871e868.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "19962-hormigas-ocupadas"
+   }
+  },
+  {
+   "id": "sw128208",
+   "kind": "picture",
+   "title": "¿Una calle o un zoo?",
+   "author": "Aboli Chowdhary, Priya Kuriyan",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/703806/size3/ca4ec79c4a3534baf1250338357fe8ec.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "128208-oona-kayye-o-oon-zoo"
+   }
+  },
+  {
+   "id": "sw193225",
+   "kind": "picture",
+   "title": "¿Qué pasaría si...?",
+   "author": "Sigo leyendo, Vivekananda Roy Ghatak",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/726929/size3/15b2e1748d152812ed5526070aca52ef.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "193225-what-will-happen"
+   }
+  },
+  {
+   "id": "sw182012",
+   "kind": "picture",
+   "title": "Los fantásticos lentes de Amelia",
+   "author": "Fadua Calcedo Díaz del Castillo, Camila Jara Piccardo",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/249640/size3/06b2a32892f6036695f9d95090153b35.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "182012-amelia-s-fantastic-glasses"
+   }
+  },
+  {
+   "id": "sw193695",
+   "kind": "picture",
+   "title": "Una piedra en mi zapato",
+   "author": "Sigo leyendo, Jaikar Marur",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/121481/size3/c893d6b00cb5ea4c294f7aa4937bca42.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "193695-a-pebble-in-my-shoe"
+   }
+  },
+  {
+   "id": "sw95512",
+   "kind": "picture",
+   "title": "El dilema de Sr. Ciempiés",
+   "author": "Aboli Chowdhary, Tanvi Bhat",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/646248/size3/785eeebf26aca45dc9fc4f56cedba1a6.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "95512-el-dilemma-de-senyor-ciempies"
+   }
+  },
+  {
+   "id": "sw128983",
+   "kind": "picture",
+   "title": "Una sonrisa de mariposa",
+   "author": "Aboli Chowdhary, Lavanya  Naidu",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/712825/size3/46977bed0760c446c9dd926ee5c83ee5.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "128983-oona-sonrisa-dey-mariposa"
+   }
+  },
+  {
+   "id": "sw396205",
+   "kind": "picture",
+   "title": "Un perro llamado 'Shu'",
+   "author": "Susana Ramírez, Sarthak Sinha",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/723776/size3/3c4685534dd86b57918f11d2c9c9e01b.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "396205-a-dog-called-shoo"
+   }
+  },
+  {
+   "id": "sw93554",
+   "kind": "picture",
+   "title": "El pájaro elefante",
+   "author": "Aboli Chowdhary, Sonal Goyal, Sumit Sakhuja",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/27020/size3/17058267175af8fd5a857fa240a3d630.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "93554-el-paaharo-elephante"
+   }
+  },
+  {
+   "id": "sw432309",
+   "kind": "picture",
+   "title": "Cuando crezca",
+   "author": "Susana Ramírez, Tarique Aziz",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/524494/size3/593a3b57ef62de289db490553a419cf1.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "432309-when-i-grow-up"
+   }
+  },
+  {
+   "id": "sw424089",
+   "kind": "picture",
+   "title": "No me creerás",
+   "author": "Némesis Zerga, Bhargavi Rudraraju",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/779402/size3/042eb258adf24d4467bf65854d88621c.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "424089-you-won-t-believe-me"
+   }
+  },
+  {
+   "id": "sw16205",
+   "kind": "picture",
+   "title": "¿Qué edad tiene Muttajji?",
+   "author": "Benjamin Nichols, Kaveri Gopalakrishnan",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/723800/size3/30b6242b35da965c70816bf0f26308c3.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "16205-how-old-is-mutajji"
+   }
+  },
+  {
+   "id": "sw432310",
+   "kind": "picture",
+   "title": "Un arreglo a tiempo",
+   "author": "Susana Ramírez, Ankitha Kini",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/717377/size3/de7ac270e794445be00068049e544ed0.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "432310-a-stitch-in-time"
+   }
+  }
+ ]
+}

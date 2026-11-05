@@ -16539,16 +16539,20 @@
     "src/features/codex/reader/ReadingTools.tsx"
   ],
   "Short story": [
-    "src/core/reading/graded.ts"
+    "src/core/reading/graded.ts",
+    "src/features/explora/components/ExploraShelves.tsx"
   ],
   "Fable": [
-    "src/core/reading/graded.ts"
+    "src/core/reading/graded.ts",
+    "src/features/explora/components/ExploraShelves.tsx"
   ],
   "Poem": [
-    "src/core/reading/graded.ts"
+    "src/core/reading/graded.ts",
+    "src/features/explora/components/ExploraShelves.tsx"
   ],
   "Essay": [
-    "src/core/reading/graded.ts"
+    "src/core/reading/graded.ts",
+    "src/features/explora/components/ExploraShelves.tsx"
   ],
   "Speech": [
     "src/core/reading/graded.ts"
@@ -16569,7 +16573,8 @@
     "src/core/reading/graded.ts"
   ],
   "Fairy tale": [
-    "src/core/reading/graded.ts"
+    "src/core/reading/graded.ts",
+    "src/features/explora/components/ExploraShelves.tsx"
   ],
   "Myth or legend": [
     "src/core/reading/graded.ts"
@@ -17347,7 +17352,100 @@
   "Back to Explora": [
     "src/features/explora/ExploraFeed.tsx"
   ],
-  "↑ ↓ to move · S to save · Enter to open · Esc to close": [
+  "← → to move · S to save · Enter to open · Esc to close": [
     "src/features/explora/ExploraFeed.tsx"
+  ],
+  "Picture & comics": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "News & magazines": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "News and magazines": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "That collection isn’t here.": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Listen to the recording": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Short reads": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Picture books": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Classics": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Collections": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "{0} reads": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Saying of the day": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Tap to read it word by word": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Poem of the day": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Today in history": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Read about it": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Picture book": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Fables and fairy tales": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Old stories everyone knows, short enough to finish today.": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Poems in a minute": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Famous poems, a few lines each, good to read aloud.": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "First picture books": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Big pictures, a line or two a page: the gentlest start.": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Read along with a recording": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Classics that a volunteer has recorded: follow the text as you listen.": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Short stories": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "A whole story in one sitting, by the masters of the form.": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Under five minutes": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "The quickest reads in Explora, for a coffee break.": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Classics: Project Gutenberg, public domain.": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Short reads: Wikisource, public domain texts (transcriptions CC BY-SA).": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Picture books: StoryWeaver by Pratham Books, CC BY 4.0, each credited on its page.": [
+    "src/features/explora/components/ExploraShelves.tsx"
   ]
 }

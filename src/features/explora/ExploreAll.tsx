@@ -24,6 +24,9 @@ import { MediaShelf } from './components/MediaShelf';
 import { MediaCard } from './components/MediaCard';
 import { MediaDetailModal } from './components/MediaDetailModal';
 import { ExploraFeed } from './ExploraFeed';
+import { ClassicsShelf, CollectionsShelf, DailyCards, PictureBooksGrid, PictureBooksShelf, ShortReadsShelf, useCatalogueItems, useOpenCatalogue } from './components/ExploraShelves';
+import type { CatalogueItem } from '@/core/explora/catalogue';
+import { mixByKind } from '@/core/explora/mix';
 import {
   BooksShelf,
   NewsSection,
@@ -31,8 +34,9 @@ import {
   WikipediaShelf,
 } from './components/BooksSection';
 import { WordDecksShelf } from './components/WordDecksShelf';
-import { ComicShelf, ComicsSection, MagazineSection } from './components/ComicsSection';
-import { LudusShelf } from './components/LudusShelf';
+import { ComicShelf, MagazineSection } from './components/ComicsSection';
+import { PEPPER_CREDIT } from '@/core/comics/peppercarrot';
+import { LudusRow, LudusShelf } from './components/LudusShelf';
 import { comicCover, comicEpisodes } from '@/core/comics/peppercarrot';
 import { FIRST_BOOKS } from '@/core/lang/firstBooks';
 import { tipsFor } from '@/core/mundus/tips';
@@ -150,6 +154,16 @@ export function pickHeroItems(
   return chosen.slice(0, count);
 }
 
+const GENRE_WORD: Record<string, string> = { fable: 'A fable', tale: 'A fairy tale', poem: 'A poem', story: 'A short story', essay: 'An essay' };
+
+/** A catalogue item as an Explora item, so the hero, search, Flick and the Books tab know it too. */
+export function catalogueToItem(c: CatalogueItem): ExploraItem {
+  // A classic has no picture of its own: the app draws its cover (Gutenberg's generated ones are slow to come).
+  const cover = c.cover;
+  const blurb = c.kind === 'picture' ? 'A picture book to read with the pictures, free on StoryWeaver.' : c.kind === 'short' ? `${GENRE_WORD[c.genre ?? 'story']}, about ${c.minutes ?? 1} min to read.` : 'A free classic, read in Codex with every word a tap away.';
+  return { id: `cat:${c.id}`, kind: c.kind === 'classic' ? 'books' : 'read', title: c.title, sub: c.author, level: c.level, cover, catalogue: c, blurb };
+}
+
 export function ExploreAll({
   lang,
   picks,
@@ -157,6 +171,8 @@ export function ExploreAll({
   searchQuery = '',
   levelFilter = 'mine',
   onSelectLevelFilter,
+  flickOpen = false,
+  onFlickClose,
 }: {
   lang: string;
   picks: Picks | null;
@@ -165,6 +181,9 @@ export function ExploreAll({
   onSearchChange?: (q: string) => void;
   levelFilter?: LevelFilter;
   onSelectLevelFilter?: (filter: LevelFilter) => void;
+  /** Flick, the full-screen scroller, is opened from the page header. */
+  flickOpen?: boolean;
+  onFlickClose?: () => void;
 }) {
   const translateUi = useUi();
   const navigate = useNavigate();
@@ -183,7 +202,6 @@ export function ExploreAll({
   const [category, setCategoryState] = useState<ExploraCategory>(initialCategory);
   // The level filter lives in the page header (Lemora U4): around the learner's level unless chosen otherwise.
   const [selectedItem, setSelectedItem] = useState<ExploraItem | null>(null);
-  const [flickOpen, setFlickOpen] = useState(false);
 
   const saved = useSaved(lang);
   const streaming = useStreaming();
@@ -196,6 +214,8 @@ export function ExploreAll({
   const stations = useRadioPicks(lang);
   const shelf = useLibrary(lang);
   const audiobooks = useAudiobookPicks(lang);
+  const catalogue = useCatalogueItems(lang);
+  const opener = useOpenCatalogue(lang);
 
   const setCategory = (cat: ExploraCategory) => {
     setCategoryState(cat);
@@ -284,8 +304,9 @@ export function ExploreAll({
     for (const t of (shelf ?? []).filter((t) => t.kind === 'shelfItem' && !t.deletedAt).slice(0, 10)) out.push({ id: `shelf:${t.id}`, kind: 'books', title: t.title, sub: t.author, level: 'B1', estimated: true, cover: t.coverUrl, to: `/codex/book/${t.id}`, blurb: t.author ? `${t.author}, on your shelf.` : 'On your shelf.' });
     const first = FIRST_BOOKS[lang];
     if (first && (level === 'A0' || level === 'A1')) out.push({ id: 'first-book', kind: 'books', title: first.title, level: 'A1', to: '/codex/first', blurb: 'A tiny first book: a line a page, the easiest words.' });
+    for (const c of catalogue) out.push(catalogueToItem(c));
     return out.filter((item) => kindShown(item.kind));
-  }, [picks, stations, audiobooks, lang, shelf, level]);
+  }, [picks, stations, audiobooks, lang, shelf, level, catalogue]);
 
   // Filter items according to active level filter
   const filteredByLevel = useMemo(() => {
@@ -328,6 +349,7 @@ export function ExploreAll({
 
   // Handle direct primary action from cards or hero
   const handlePrimaryAction = async (item: ExploraItem) => {
+    if (item.catalogue) return opener.open(item.catalogue);
     if (item.to) return navigate(item.to);
     if (item.kind === 'books' && item.pick) {
       const pick = item.pick;
@@ -370,6 +392,9 @@ export function ExploreAll({
     }
     setSelectedItem(item);
   };
+
+  // A card opens the details, except an item from the catalogue, which opens to read.
+  const openItem = (item: ExploraItem) => (item.catalogue ? void handlePrimaryAction(item) : setSelectedItem(item));
 
   // Strictly isolate content items by kind:
   const screenItems = useMemo(
@@ -437,7 +462,7 @@ export function ExploreAll({
             }
             saved={saved.includes(item.id)}
             onToggleSave={() => toggleSaved(lang, item.id)}
-            onOpen={() => setSelectedItem(item)}
+            onOpen={() => openItem(item)}
             streamingServices={streaming.services}
             preferredAspect={aspect}
           />
@@ -456,7 +481,6 @@ export function ExploreAll({
         learnerLevel={level}
         levelFilter={levelFilter}
         onSelectLevelFilter={onSelectLevelFilter}
-        onFlick={() => setFlickOpen(true)}
       />
 
       {/* Search Results View (when user has typed in top search bar) */}
@@ -489,7 +513,7 @@ export function ExploreAll({
                   }
                   saved={saved.includes(item.id)}
                   onToggleSave={() => toggleSaved(lang, item.id)}
-                  onOpen={() => setSelectedItem(item)}
+                  onOpen={() => openItem(item)}
                   streamingServices={streaming.services}
                 />
               ))}
@@ -499,11 +523,15 @@ export function ExploreAll({
       ) : category === 'articles' ? (
         <div className="pt-1">
           <NewsSection lang={lang} />
+          <MagazineSection lang={lang} />
           <WikipediaShelf lang={lang} />
         </div>
       ) : category === 'comics' ? (
         <div className="pt-1">
-          <ComicsSection lang={lang} />
+          <ComicShelf lang={lang} />
+          <p className="-mt-3 mb-6 text-[11.5px] text-ink-faint">{PEPPER_CREDIT}</p>
+          <PictureBooksGrid lang={lang} items={catalogue} learner={level} opener={opener} />
+          <PictureBooksSection lang={lang} />
         </div>
       ) : category === 'ludus' ? (
         <div className="pt-1">
@@ -548,13 +576,14 @@ export function ExploreAll({
       ) : category === 'books' ? (
         /* Books Tab: Free Reading suite (Wikipedia, News, Gutenberg/Wikisource, Comics, Graded) */
         <div className="pt-1">
+          <ShortReadsShelf lang={lang} items={catalogue} learner={level} opener={opener} />
           <BooksShelf
             layout="grid"
             lang={lang}
             curatedBooks={allBookItems}
             savedIds={saved}
             onToggleSave={(id) => toggleSaved(lang, id)}
-            onOpenDetails={(item) => setSelectedItem(item)}
+            onOpenDetails={openItem}
             streamingServices={streaming.services}
           />
         </div>
@@ -570,22 +599,42 @@ export function ExploreAll({
               lookups={lookups}
               savedIds={saved}
               onToggleSave={(id) => toggleSaved(lang, id)}
-              onOpenDetails={(item) => setSelectedItem(item)}
+              onOpenDetails={openItem}
               onPrimaryAction={handlePrimaryAction}
               streamingServices={streaming.services}
             />
           )}
 
           {category === 'all' ? (
-            /* ALL TAB: Exact section order requested */
+            /* ALL TAB: the hero, then the free reading under it, then what was here before. */
             <div>
-              {/* 1. Books: free books from gutenberg, wikisource, graded literature and stories */}
+              {/* 1. At your level: a mixed row of every kind */}
+              {renderMediaShelf({
+                id: 'at-your-level',
+                title: translateUi('At your level'),
+                items: mixByKind(filteredByLevel, level, 14, (i) => i.id.startsWith('shelf:') || i.id === 'first-book'),
+                aspect: 'book',
+              })}
+
+              {/* 2. Short reads, 3. picture books (beginners), 4. classics */}
+              <ShortReadsShelf lang={lang} items={catalogue} learner={level} opener={opener} />
+              <PictureBooksShelf lang={lang} items={catalogue} learner={level} opener={opener} />
+              <ClassicsShelf lang={lang} items={catalogue} learner={level} opener={opener} />
+
+              {/* 5. News and magazines */}
+              <MagazineSection lang={lang} title={translateUi('News and magazines')} limit={4} />
+
+              {/* 6. Collections, 7. the daily cards */}
+              <CollectionsShelf items={catalogue} />
+              <DailyCards lang={lang} items={catalogue} opener={opener} />
+
+              {/* 8. What was here before: books, series, word decks, comics, then the rest */}
               <BooksShelf
                 lang={lang}
-                curatedBooks={bookItems}
+                curatedBooks={bookItems.filter((i) => !i.catalogue)}
                 savedIds={saved}
                 onToggleSave={(id) => toggleSaved(lang, id)}
-                onOpenDetails={(item) => setSelectedItem(item)}
+                onOpenDetails={openItem}
                 streamingServices={streaming.services}
               />
 
@@ -601,9 +650,11 @@ export function ExploreAll({
               {/* 3. Word Decks, random every time but based on level */}
               <WordDecksShelf lang={lang} learnerLevel={level} levelFilter={levelFilter} blurbs={false} />
 
-              {/* Lemora U4: comics and the magazine, free and legal to use */}
+              {/* Lemora U4: comics, free and legal to use */}
               <ComicShelf lang={lang} />
-              <MagazineSection lang={lang} />
+
+              {/* Ludus: a row of games */}
+              <LudusRow />
 
               {/* 4. Audiobooks */}
               {renderMediaShelf({
@@ -726,8 +777,8 @@ export function ExploreAll({
           savedIds={saved}
           onToggleSave={(id) => toggleSaved(lang, id)}
           onOpen={(item) => void handlePrimaryAction(item)}
-          onDetails={(item) => setSelectedItem(item)}
-          onClose={() => setFlickOpen(false)}
+          onDetails={openItem}
+          onClose={() => onFlickClose?.()}
         />
       )}
 

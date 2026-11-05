@@ -2,8 +2,9 @@ import type { Pick, PickGroup, PickLevel } from '@/core/mundus/types';
 import type { RadioStation } from '@/data/types';
 import type { PickedArtist } from '@/features/cantus/discover';
 import type { LibrivoxHit } from '@/services/sonus/librivox';
+import type { CatalogueItem } from '@/core/explora/catalogue';
 
-export type Kind = PickGroup | 'music' | 'radio' | 'audiobooks' | 'comic' | 'tip';
+export type Kind = PickGroup | 'music' | 'radio' | 'audiobooks' | 'comic' | 'tip' | 'read';
 
 export type ExploraCategory = 'all' | 'screen' | 'books' | 'articles' | 'comics' | 'audio' | 'music' | 'words' | 'ludus' | 'try' | 'saved';
 
@@ -22,6 +23,8 @@ export interface ExploraItem {
   cover?: string;
   /** Where the item opens, when it is not a pick (a comic, a tip, a shelved book, the first book). */
   to?: string;
+  /** A free read from Explora's own catalogue (classics, short reads, picture books). */
+  catalogue?: CatalogueItem;
   /** One line about it, shown in the hero. */
   blurb?: string;
 }

@@ -1,0 +1,723 @@
+{
+ "items": [
+  {
+   "id": "pg77905",
+   "kind": "classic",
+   "title": "Deutsche Märchen (Brüder Grimm)",
+   "author": "Jacob Grimm",
+   "level": "B1",
+   "from": {
+    "type": "gutenberg",
+    "id": 77905
+   }
+  },
+  {
+   "id": "pg2229",
+   "kind": "classic",
+   "title": "Faust. Der Tragödie erster Teil",
+   "author": "Johann Wolfgang von Goethe",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 2229
+   },
+   "audio": "faust2_1008_librivox"
+  },
+  {
+   "id": "pg2407",
+   "kind": "classic",
+   "title": "Die Leiden des jungen Werther",
+   "author": "Johann Wolfgang von Goethe",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 2407
+   },
+   "audio": "leiden_werther_librivox"
+  },
+  {
+   "id": "pg5323",
+   "kind": "classic",
+   "title": "Effi Briest",
+   "author": "Theodor Fontane",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 5323
+   },
+   "audio": "effi_briest_1304_librivox"
+  },
+  {
+   "id": "pg22367",
+   "kind": "classic",
+   "title": "Die Verwandlung",
+   "author": "Franz Kafka",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 22367
+   },
+   "audio": "verwandlung_mw_0811_librivox"
+  },
+  {
+   "id": "pg7500",
+   "kind": "classic",
+   "title": "Heidis Lehr- und Wanderjahre",
+   "author": "Johanna Spyri",
+   "level": "B1",
+   "from": {
+    "type": "gutenberg",
+    "id": 7500
+   },
+   "audio": "heidis_lehrjahre_0710"
+  },
+  {
+   "id": "pg17161",
+   "kind": "classic",
+   "title": "Max und Moritz",
+   "author": "Wilhelm Busch",
+   "level": "B1",
+   "from": {
+    "type": "gutenberg",
+    "id": 17161
+   },
+   "audio": "max_und_moritz2_librivox"
+  },
+  {
+   "id": "pg24571",
+   "kind": "classic",
+   "title": "Der Struwwelpeter",
+   "author": "Heinrich Hoffmann",
+   "level": "A2",
+   "from": {
+    "type": "gutenberg",
+    "id": 24571
+   },
+   "audio": "struwwelpeter_de2_librivox"
+  },
+  {
+   "id": "pg19163",
+   "kind": "classic",
+   "title": "Märchen (Andersen)",
+   "author": "H. C. Andersen",
+   "level": "B1",
+   "from": {
+    "type": "gutenberg",
+    "id": 19163
+   }
+  },
+  {
+   "id": "pg6638",
+   "kind": "classic",
+   "title": "Märchen-Almanach (Hauff)",
+   "author": "Wilhelm Hauff",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 6638
+   }
+  },
+  {
+   "id": "pg9158",
+   "kind": "classic",
+   "title": "Fabeln und Erzählungen (Lessing)",
+   "author": "Gotthold Ephraim Lessing",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 9158
+   },
+   "audio": "fabeln_und_erzahlungen_1702_librivox"
+  },
+  {
+   "id": "pg6651",
+   "kind": "classic",
+   "title": "Immensee",
+   "author": "Theodor Storm",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 6651
+   }
+  },
+  {
+   "id": "pg8919",
+   "kind": "classic",
+   "title": "Pole Poppenspäler",
+   "author": "Theodor Storm",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 8919
+   },
+   "audio": "pole_poppenspaeler_ak_librivox"
+  },
+  {
+   "id": "pg45798",
+   "kind": "classic",
+   "title": "Die Judenbuche",
+   "author": "Annette von Droste-Hülshoff",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 45798
+   },
+   "audio": "judenbuche_1004_librivox"
+  },
+  {
+   "id": "pg31538",
+   "kind": "classic",
+   "title": "Peter Schlemihls wundersame Geschichte",
+   "author": "Adelbert von Chamisso",
+   "level": "B2",
+   "from": {
+    "type": "gutenberg",
+    "id": 31538
+   },
+   "audio": "schlemihls_geschichte_0808"
+  },
+  {
+   "id": "pg17362",
+   "kind": "classic",
+   "title": "Der goldene Topf",
+   "author": "E. T. A. Hoffmann",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 17362
+   }
+  },
+  {
+   "id": "pg19778",
+   "kind": "classic",
+   "title": "Alice im Wunderland",
+   "author": "Lewis Carroll",
+   "level": "B1",
+   "from": {
+    "type": "gutenberg",
+    "id": 19778
+   }
+  },
+  {
+   "id": "pg47804",
+   "kind": "classic",
+   "title": "Die Räuber",
+   "author": "Friedrich Schiller",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 47804
+   },
+   "audio": "raeuber_1008_librivox"
+  },
+  {
+   "id": "pg3498",
+   "kind": "classic",
+   "title": "Buch der Lieder",
+   "author": "Heinrich Heine",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 3498
+   },
+   "audio": "buch_der_lieder_0911_librivox"
+  },
+  {
+   "id": "pg6647",
+   "kind": "classic",
+   "title": "Der zerbrochne Krug",
+   "author": "Heinrich von Kleist",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 6647
+   }
+  },
+  {
+   "id": "pg9186",
+   "kind": "classic",
+   "title": "Nathan der Weise",
+   "author": "Gotthold Ephraim Lessing",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 9186
+   }
+  },
+  {
+   "id": "pg29553",
+   "kind": "classic",
+   "title": "Bunte Steine",
+   "author": "Adalbert Stifter",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 29553
+   }
+  },
+  {
+   "id": "pg31204",
+   "kind": "classic",
+   "title": "Peterchens Mondfahrt",
+   "author": "Gerdt von Bassewitz",
+   "level": "B1",
+   "from": {
+    "type": "gutenberg",
+    "id": 31204
+   },
+   "audio": "peterchens_mondfahrt_librivox"
+  },
+  {
+   "id": "pg6696",
+   "kind": "classic",
+   "title": "Die Leute von Seldwyla",
+   "author": "Gottfried Keller",
+   "level": "C1",
+   "from": {
+    "type": "gutenberg",
+    "id": 6696
+   },
+   "audio": "sammlung_seldwyla_1002_librivox"
+  },
+  {
+   "id": "ws:Erlkönig",
+   "kind": "short",
+   "title": "Erlkönig",
+   "author": "Johann Wolfgang von Goethe",
+   "level": "B2",
+   "minutes": 2,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Erlkönig"
+   }
+  },
+  {
+   "id": "ws:Ein Gleiches",
+   "kind": "short",
+   "title": "Ein Gleiches",
+   "author": "Johann Wolfgang von Goethe",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Ein Gleiches"
+   }
+  },
+  {
+   "id": "ws:Der Panther",
+   "kind": "short",
+   "title": "Der Panther",
+   "author": "Rainer Maria Rilke",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Der Panther"
+   }
+  },
+  {
+   "id": "ws:Herbsttag",
+   "kind": "short",
+   "title": "Herbsttag",
+   "author": "Rainer Maria Rilke",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Herbsttag"
+   }
+  },
+  {
+   "id": "ws:Der Handschuh",
+   "kind": "short",
+   "title": "Der Handschuh",
+   "author": "Friedrich Schiller",
+   "level": "B2",
+   "minutes": 3,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Der Handschuh"
+   }
+  },
+  {
+   "id": "ws:Mondnacht",
+   "kind": "short",
+   "title": "Mondnacht",
+   "author": "Joseph von Eichendorff",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Mondnacht"
+   }
+  },
+  {
+   "id": "ws:Die Bürgschaft",
+   "kind": "short",
+   "title": "Die Bürgschaft",
+   "author": "Friedrich Schiller",
+   "level": "C1",
+   "minutes": 6,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Die Bürgschaft"
+   }
+  },
+  {
+   "id": "ws:Die Lorelei",
+   "kind": "short",
+   "title": "Die Lorelei",
+   "author": "Heinrich Heine",
+   "level": "B1",
+   "minutes": 5,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Die Lorelei"
+   }
+  },
+  {
+   "id": "ws:Der Zauberlehrling",
+   "kind": "short",
+   "title": "Der Zauberlehrling",
+   "author": "Johann Wolfgang von Goethe",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Der Zauberlehrling"
+   }
+  },
+  {
+   "id": "ws:Die Bremer Stadtmusikanten (1843)",
+   "kind": "short",
+   "title": "Die Bremer Stadtmusikanten",
+   "author": "Brüder Grimm",
+   "level": "B1",
+   "minutes": 7,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Die Bremer Stadtmusikanten (1843)"
+   }
+  },
+  {
+   "id": "ws:Hänsel und Gretel (1812)",
+   "kind": "short",
+   "title": "Hänsel und Gretel",
+   "author": "Brüder Grimm",
+   "level": "B1",
+   "minutes": 12,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Hänsel und Gretel (1812)"
+   }
+  },
+  {
+   "id": "ws:Rumpelstilzchen (1837)",
+   "kind": "short",
+   "title": "Rumpelstilzchen",
+   "author": "Brüder Grimm",
+   "level": "B1",
+   "minutes": 5,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Rumpelstilzchen (1837)"
+   }
+  },
+  {
+   "id": "ws:Frau Holle (1843)",
+   "kind": "short",
+   "title": "Frau Holle",
+   "author": "Brüder Grimm",
+   "level": "B1",
+   "minutes": 6,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Frau Holle (1843)"
+   }
+  },
+  {
+   "id": "ws:Der Froschkönig oder der eiserne Heinrich (1843)",
+   "kind": "short",
+   "title": "Der Froschkönig",
+   "author": "Brüder Grimm",
+   "level": "B1",
+   "minutes": 7,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Der Froschkönig oder der eiserne Heinrich (1843)"
+   }
+  },
+  {
+   "id": "ws:Der gestiefelte Kater (1812)",
+   "kind": "short",
+   "title": "Der gestiefelte Kater",
+   "author": "Brüder Grimm",
+   "level": "B1",
+   "minutes": 9,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Der gestiefelte Kater (1812)"
+   }
+  },
+  {
+   "id": "ws:Der Hase und der Igel (1857)",
+   "kind": "short",
+   "title": "Der Hase und der Igel",
+   "author": "Brüder Grimm",
+   "level": "B1",
+   "minutes": 7,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Der Hase und der Igel (1857)"
+   }
+  },
+  {
+   "id": "ws:Die Sterntaler",
+   "kind": "short",
+   "title": "Die Sterntaler",
+   "author": "Brüder Grimm",
+   "level": "A2",
+   "minutes": 1,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Die Sterntaler"
+   }
+  },
+  {
+   "id": "ws:Aschenputtel (1857)",
+   "kind": "short",
+   "title": "Aschenputtel",
+   "author": "Brüder Grimm",
+   "level": "B1",
+   "minutes": 13,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Aschenputtel (1857)"
+   }
+  },
+  {
+   "id": "ws:Das Lied von der Glocke (1854)",
+   "kind": "short",
+   "title": "Das Lied von der Glocke",
+   "author": "Friedrich Schiller",
+   "level": "C1",
+   "minutes": 11,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Das Lied von der Glocke (1854)"
+   }
+  },
+  {
+   "id": "ws:Der Wolf und die sieben jungen Geißlein",
+   "kind": "short",
+   "title": "Der Wolf und die sieben jungen Geißlein",
+   "author": "Brüder Grimm",
+   "level": "A2",
+   "minutes": 1,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Der Wolf und die sieben jungen Geißlein"
+   }
+  },
+  {
+   "id": "sw23786",
+   "kind": "picture",
+   "title": "Was findest du in meiner Küche?",
+   "author": "W.J. K, Bhavana  Vyas Vipparthi, Kabini  Amin",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/43965/size3/11274df8077741c549aa2aa11af5aa79.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "23786-what-will-you-find-in-my-kitchen"
+   }
+  },
+  {
+   "id": "sw23908",
+   "kind": "picture",
+   "title": "Die 7 Farben des Regenbogens",
+   "author": "W.J. K, Jesse  Breytenbach",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/40606/size3/43c5c9bb857fff55ea3a117230fc9067.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "23908-die-7-farben-des-regenbogens"
+   }
+  },
+  {
+   "id": "sw7364",
+   "kind": "picture",
+   "title": "Was, wenn???",
+   "author": "Alessio Araujo, Hari Kumar Nair",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/723050/size3/9093d145b12c1371d8ae9d976bfeb4ca.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "7364-what-if"
+   }
+  },
+  {
+   "id": "sw9488",
+   "kind": "picture",
+   "title": "Badezeit für Chunnu und Munnu",
+   "author": "Beby Haryanti Dewi, Sonal Goyal, Sumit Sakhuja",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/721702/size3/fb052d30f4a73aae542e0c8d52969aab.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "9488-english"
+   }
+  },
+  {
+   "id": "sw3892",
+   "kind": "picture",
+   "title": "Unter dem Bett",
+   "author": "Martina Endlein Monteiro, Suvidha Mistry",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/704859/size3/5213e3c314261561008ed455eb6d0fe7.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "3892-german"
+   }
+  },
+  {
+   "id": "sw20187",
+   "kind": "picture",
+   "title": "Ghum-Gums grosses Abenteuer",
+   "author": "Carmen  Erni Jensen, ROSH",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/723978/size3/fef3cb2e4de26e284dc81d72ff16571a.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "20187-ghum-gums-grosses-abenteuer"
+   }
+  },
+  {
+   "id": "sw4009",
+   "kind": "picture",
+   "title": "Didi und der bunte Schatz",
+   "author": "Martina Endlein Monteiro, Kaveri Gopalakrishnan",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/721709/size3/55afba6173fec2f775fdf425b7609188.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "4009-didi-und-der-bunte-schatz"
+   }
+  },
+  {
+   "id": "sw56844",
+   "kind": "picture",
+   "title": "Omis Brille",
+   "author": "Apoorva Advant, Tanaya Vyas",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/700894/size3/0b3a679b1d24e2b4e223307bff56b880.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "56844-german"
+   }
+  },
+  {
+   "id": "sw7266",
+   "kind": "picture",
+   "title": "Pishi gefangen im Sturm",
+   "author": "George Evans, Sangeeta Das",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/722387/size3/073d9b1811b5dd45c355c678228d68cc.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "7266-pishi-caught-in-a-storm"
+   }
+  },
+  {
+   "id": "sw4287",
+   "kind": "picture",
+   "title": "Ein netter Junge",
+   "author": "Arushi Raj, Kaveri Gopalakrishnan, Madhuvanti Anantharajan",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/17917/size3/216c64ecafcc9e69d42b1f995f866844.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "4287-a-kind-boy"
+   }
+  },
+  {
+   "id": "sw416572",
+   "kind": "picture",
+   "title": "Hansel und Gretel",
+   "author": "Siddhanth Anand, Samaira Chanana",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/494675/size3/ca76dca880b32d4b26ceb3473fabcbb4.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "416572-hansel-and-gretel"
+   }
+  },
+  {
+   "id": "sw8932",
+   "kind": "picture",
+   "title": "Chuskit geht in die Schule!",
+   "author": "Srinivasan Chakrapani, Madhuvanti Anantharajan",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/696796/size3/84e50630872438f3eac4b91c9d7b8caf.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "8932-chuskit-geht-in-die-schule"
+   }
+  },
+  {
+   "id": "sw155014",
+   "kind": "picture",
+   "title": "Tine und der Ruf des fernen Berges",
+   "author": "Deepti Chaudhary, Ogin Nayam",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/83442/size3/2499ede9af5c09c5a97f7cea234d4a65.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "155014-tine-und-der-aufruf-des-fernen-berges"
+   }
+  },
+  {
+   "id": "sw469831",
+   "kind": "picture",
+   "title": "Masala-Tee",
+   "author": "Bartosz Piotr Zdanowicz, Sanjay Sarkar",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/720907/size3/a1d4cbb9fca226b83fe34cb0077dbe59.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "469831-masala-chay"
+   }
+  },
+  {
+   "id": "sw596019",
+   "kind": "picture",
+   "title": "Der Fall des fehlenden Wassers",
+   "author": "Santiago, Upamanyu  Bhattacharyya",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/724112/size3/1c190e70406411ab7431038cc2aaea88.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "596019-the-case-of-the-missing-water"
+   }
+  }
+ ]
+}

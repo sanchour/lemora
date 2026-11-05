@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { GAME_GROUPS, GAMES } from '@/core/games/defs';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { GameArt } from '@/features/games/gameArt';
+import { MediaShelf } from './MediaShelf';
 
 
 export function LudusShelf() {
@@ -28,5 +29,21 @@ export function LudusShelf() {
         </section>
       ))}
     </div>
+  );
+}
+
+/** A row of games for the All tab: today's puzzles first, then the word games. */
+export function LudusRow() {
+  const translateUi = useUi();
+  const games = GAMES.filter((g) => g.group === 'today' || g.group === 'word').slice(0, 14);
+  return (
+    <MediaShelf id="ludus-row" title={translateUi('Ludus')} count={games.length} itemClass="w-[160px] sm:w-[180px]">
+      {games.map((game) => (
+        <Link key={game.id} to={`/thesaurus/games/${game.id}`} className="group flex flex-col items-center rounded-[22px] border border-line bg-surface/40 px-3 pt-4 pb-4 text-center transition-all duration-200 hover:-translate-y-1 hover:border-accent/60 hover:shadow-elev-2">
+          <GameArt id={game.id} size={76} className="transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105" />
+          <span className="mt-2 font-serif text-[14.5px] leading-snug font-bold text-ink transition-colors group-hover:text-accent-text"><UiText source={game.title} /></span>
+        </Link>
+      ))}
+    </MediaShelf>
   );
 }

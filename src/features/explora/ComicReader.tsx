@@ -21,7 +21,7 @@ export default function ComicReader() {
   return (
     <div className="mx-auto max-w-4xl pb-10">
       <div className="mb-4 flex items-center gap-3">
-        <Link to="/explora?kind=comics" className="hit inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-ink-soft hover:text-ink"><ArrowLeft size={15} aria-hidden /> <UiText source={'Comics and magazines'} /></Link>
+        <Link to="/explora?kind=comics" className="hit inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-ink-soft hover:text-ink"><ArrowLeft size={15} aria-hidden /> <UiText source={'Picture & comics'} /></Link>
         <span className="ml-auto font-serif text-[15px] text-ink-faint tabular-nums">{page + 1} / {last + 1}</span>
         <IconButton icon={ChevronLeft} label={translateUi('Previous page')} onClick={() => go(page - 1)} disabled={page === 0} />
         <IconButton icon={ChevronRight} label={translateUi('Next page')} onClick={() => go(page + 1)} disabled={page === last} />

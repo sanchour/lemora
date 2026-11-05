@@ -1,0 +1,747 @@
+{
+ "items": [
+  {
+   "id": "ws:Шинель (Гоголь)",
+   "kind": "classic",
+   "title": "Шинель",
+   "author": "Николай Гоголь",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Шинель (Гоголь)"
+   }
+  },
+  {
+   "id": "ws:Муму (Тургенев)",
+   "kind": "classic",
+   "title": "Муму",
+   "author": "Иван Тургенев",
+   "level": "B1",
+   "from": {
+    "type": "wikisource",
+    "title": "Муму (Тургенев)"
+   }
+  },
+  {
+   "id": "ws:Капитанская дочка (Пушкин)",
+   "kind": "classic",
+   "title": "Капитанская дочка",
+   "author": "Александр Пушкин",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Капитанская дочка (Пушкин)"
+   }
+  },
+  {
+   "id": "ws:Пиковая дама (Пушкин)",
+   "kind": "classic",
+   "title": "Пиковая дама",
+   "author": "Александр Пушкин",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Пиковая дама (Пушкин)"
+   }
+  },
+  {
+   "id": "ws:Белые ночи (Достоевский)",
+   "kind": "classic",
+   "title": "Белые ночи",
+   "author": "Фёдор Достоевский",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Белые ночи (Достоевский)"
+   }
+  },
+  {
+   "id": "ws:Дама с собачкой (Чехов)",
+   "kind": "classic",
+   "title": "Дама с собачкой",
+   "author": "Антон Чехов",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Дама с собачкой (Чехов)"
+   }
+  },
+  {
+   "id": "ws:Каштанка (Чехов)",
+   "kind": "classic",
+   "title": "Каштанка",
+   "author": "Антон Чехов",
+   "level": "B1",
+   "from": {
+    "type": "wikisource",
+    "title": "Каштанка (Чехов)"
+   }
+  },
+  {
+   "id": "ws:Тарас Бульба (Гоголь)",
+   "kind": "classic",
+   "title": "Тарас Бульба",
+   "author": "Николай Гоголь",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Тарас Бульба (Гоголь)"
+   }
+  },
+  {
+   "id": "ws:Бедная Лиза (Карамзин)",
+   "kind": "classic",
+   "title": "Бедная Лиза",
+   "author": "Николай Карамзин",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Бедная Лиза (Карамзин)"
+   }
+  },
+  {
+   "id": "ws:Дубровский (Пушкин)",
+   "kind": "classic",
+   "title": "Дубровский",
+   "author": "Александр Пушкин",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Дубровский (Пушкин)"
+   }
+  },
+  {
+   "id": "ws:Нос (Гоголь)",
+   "kind": "classic",
+   "title": "Нос",
+   "author": "Николай Гоголь",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Нос (Гоголь)"
+   }
+  },
+  {
+   "id": "ws:Ася (Тургенев)",
+   "kind": "classic",
+   "title": "Ася",
+   "author": "Иван Тургенев",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Ася (Тургенев)"
+   }
+  },
+  {
+   "id": "ws:Хаджи-Мурат (Толстой)",
+   "kind": "classic",
+   "title": "Хаджи-Мурат",
+   "author": "Лев Толстой",
+   "level": "C1",
+   "from": {
+    "type": "wikisource",
+    "title": "Хаджи-Мурат (Толстой)"
+   }
+  },
+  {
+   "id": "ws:Детство (Толстой)",
+   "kind": "classic",
+   "title": "Детство",
+   "author": "Лев Толстой",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Детство (Толстой)"
+   }
+  },
+  {
+   "id": "ws:Вий (Гоголь)",
+   "kind": "classic",
+   "title": "Вий",
+   "author": "Николай Гоголь",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Вий (Гоголь)"
+   }
+  },
+  {
+   "id": "ws:Мцыри (Лермонтов)",
+   "kind": "classic",
+   "title": "Мцыри",
+   "author": "Михаил Лермонтов",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Мцыри (Лермонтов)"
+   }
+  },
+  {
+   "id": "ws:Евгений Онегин (Пушкин)",
+   "kind": "classic",
+   "title": "Евгений Онегин",
+   "author": "Александр Пушкин",
+   "level": "C1",
+   "from": {
+    "type": "wikisource",
+    "title": "Евгений Онегин (Пушкин)"
+   }
+  },
+  {
+   "id": "ws:Герой нашего времени (Лермонтов)",
+   "kind": "classic",
+   "title": "Герой нашего времени",
+   "author": "Михаил Лермонтов",
+   "level": "C1",
+   "from": {
+    "type": "wikisource",
+    "title": "Герой нашего времени (Лермонтов)"
+   }
+  },
+  {
+   "id": "ws:Отцы и дети (Тургенев)",
+   "kind": "classic",
+   "title": "Отцы и дети",
+   "author": "Иван Тургенев",
+   "level": "C1",
+   "from": {
+    "type": "wikisource",
+    "title": "Отцы и дети (Тургенев)"
+   }
+  },
+  {
+   "id": "ws:Ревизор (Гоголь)",
+   "kind": "classic",
+   "title": "Ревизор",
+   "author": "Николай Гоголь",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Ревизор (Гоголь)"
+   }
+  },
+  {
+   "id": "ws:Записки сумасшедшего (Гоголь)",
+   "kind": "classic",
+   "title": "Записки сумасшедшего",
+   "author": "Николай Гоголь",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Записки сумасшедшего (Гоголь)"
+   }
+  },
+  {
+   "id": "ws:Невский проспект (Гоголь)",
+   "kind": "classic",
+   "title": "Невский проспект",
+   "author": "Николай Гоголь",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Невский проспект (Гоголь)"
+   }
+  },
+  {
+   "id": "ws:Ночь перед Рождеством (Гоголь)",
+   "kind": "classic",
+   "title": "Ночь перед Рождеством",
+   "author": "Николай Гоголь",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Ночь перед Рождеством (Гоголь)"
+   }
+  },
+  {
+   "id": "ws:Бежин луг (Тургенев)",
+   "kind": "classic",
+   "title": "Бежин луг",
+   "author": "Иван Тургенев",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "Бежин луг (Тургенев)"
+   }
+  },
+  {
+   "id": "ws:Ворона и Лисица (Крылов)",
+   "kind": "short",
+   "title": "Ворона и Лисица",
+   "author": "Иван Крылов",
+   "level": "B1",
+   "minutes": 2,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "Ворона и Лисица (Крылов)"
+   }
+  },
+  {
+   "id": "ws:Стрекоза и Муравей (Крылов)",
+   "kind": "short",
+   "title": "Стрекоза и Муравей",
+   "author": "Иван Крылов",
+   "level": "B1",
+   "minutes": 4,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "Стрекоза и Муравей (Крылов)"
+   }
+  },
+  {
+   "id": "ws:Волк и Ягнёнок (Крылов)",
+   "kind": "short",
+   "title": "Волк и Ягнёнок",
+   "author": "Иван Крылов",
+   "level": "B1",
+   "minutes": 2,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "Волк и Ягнёнок (Крылов)"
+   }
+  },
+  {
+   "id": "ws:Мартышка и очки (Крылов)",
+   "kind": "short",
+   "title": "Мартышка и очки",
+   "author": "Иван Крылов",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "Мартышка и очки (Крылов)"
+   }
+  },
+  {
+   "id": "ws:Лебедь, Щука и Рак (Крылов)",
+   "kind": "short",
+   "title": "Лебедь, Щука и Рак",
+   "author": "Иван Крылов",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "Лебедь, Щука и Рак (Крылов)"
+   }
+  },
+  {
+   "id": "ws:Квартет (Крылов)",
+   "kind": "short",
+   "title": "Квартет",
+   "author": "Иван Крылов",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "Квартет (Крылов)"
+   }
+  },
+  {
+   "id": "ws:Слон и Моська (Крылов)",
+   "kind": "short",
+   "title": "Слон и Моська",
+   "author": "Иван Крылов",
+   "level": "B1",
+   "minutes": 1,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "Слон и Моська (Крылов)"
+   }
+  },
+  {
+   "id": "ws:К *** («Я помню чудное мгновенье...») (Пушкин)",
+   "kind": "short",
+   "title": "Я помню чудное мгновенье",
+   "author": "Александр Пушкин",
+   "level": "B2",
+   "minutes": 2,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "К *** («Я помню чудное мгновенье...») (Пушкин)"
+   }
+  },
+  {
+   "id": "ws:Выхожу один я на дорогу (Лермонтов)",
+   "kind": "short",
+   "title": "Выхожу один я на дорогу",
+   "author": "Михаил Лермонтов",
+   "level": "B2",
+   "minutes": 2,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Выхожу один я на дорогу (Лермонтов)"
+   }
+  },
+  {
+   "id": "ws:Парус (Лермонтов)",
+   "kind": "short",
+   "title": "Парус",
+   "author": "Михаил Лермонтов",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Парус (Лермонтов)"
+   }
+  },
+  {
+   "id": "ws:Три медведя (Толстой)",
+   "kind": "short",
+   "title": "Три медведя",
+   "author": "Лев Толстой",
+   "level": "A2",
+   "minutes": 3,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Три медведя (Толстой)"
+   }
+  },
+  {
+   "id": "ws:Филипок (Толстой)",
+   "kind": "short",
+   "title": "Филипок",
+   "author": "Лев Толстой",
+   "level": "A2",
+   "minutes": 2,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "Филипок (Толстой)"
+   }
+  },
+  {
+   "id": "ws:Корова (Толстой)",
+   "kind": "short",
+   "title": "Корова",
+   "author": "Лев Толстой",
+   "level": "A2",
+   "minutes": 3,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "Корова (Толстой)"
+   }
+  },
+  {
+   "id": "ws:Репка (Ушинский)",
+   "kind": "short",
+   "title": "Репка",
+   "author": "Константин Ушинский",
+   "level": "A1",
+   "minutes": 1,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Репка (Ушинский)"
+   }
+  },
+  {
+   "id": "ws:Народные русские сказки (Афанасьев)/Колобок",
+   "kind": "short",
+   "title": "Колобок",
+   "author": "Александр Афанасьев",
+   "level": "A2",
+   "minutes": 2,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Народные русские сказки (Афанасьев)/Колобок"
+   }
+  },
+  {
+   "id": "ws:Народные русские сказки (Афанасьев)/Царевна-лягушка",
+   "kind": "short",
+   "title": "Царевна-лягушка",
+   "author": "Александр Афанасьев",
+   "level": "B1",
+   "minutes": 17,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Народные русские сказки (Афанасьев)/Царевна-лягушка"
+   }
+  },
+  {
+   "id": "ws:Смерть чиновника (Чехов)",
+   "kind": "short",
+   "title": "Смерть чиновника",
+   "author": "Антон Чехов",
+   "level": "B2",
+   "minutes": 5,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "Смерть чиновника (Чехов)"
+   }
+  },
+  {
+   "id": "ws:Тоска (Чехов)",
+   "kind": "short",
+   "title": "Тоска",
+   "author": "Антон Чехов",
+   "level": "B2",
+   "minutes": 8,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "Тоска (Чехов)"
+   }
+  },
+  {
+   "id": "ws:Хамелеон (Чехов)/Версия 2",
+   "kind": "short",
+   "title": "Хамелеон",
+   "author": "Антон Чехов",
+   "level": "B2",
+   "minutes": 7,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "Хамелеон (Чехов)/Версия 2"
+   }
+  },
+  {
+   "id": "ws:Сказка о рыбаке и рыбке (Пушкин)",
+   "kind": "short",
+   "title": "Сказка о рыбаке и рыбке",
+   "author": "Александр Пушкин",
+   "level": "B1",
+   "minutes": 7,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Сказка о рыбаке и рыбке (Пушкин)"
+   }
+  },
+  {
+   "id": "ws:Сказка о попе и о работнике его Балде (Пушкин)",
+   "kind": "short",
+   "title": "Сказка о попе и о работнике его Балде",
+   "author": "Александр Пушкин",
+   "level": "B2",
+   "minutes": 5,
+   "genre": "tale",
+   "from": {
+    "type": "wikisource",
+    "title": "Сказка о попе и о работнике его Балде (Пушкин)"
+   }
+  },
+  {
+   "id": "ws:Зимний вечер (Пушкин)",
+   "kind": "short",
+   "title": "Зимний вечер",
+   "author": "Александр Пушкин",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Зимний вечер (Пушкин)"
+   }
+  },
+  {
+   "id": "ws:Бородино (Лермонтов)",
+   "kind": "short",
+   "title": "Бородино",
+   "author": "Михаил Лермонтов",
+   "level": "B2",
+   "minutes": 6,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "Бородино (Лермонтов)"
+   }
+  },
+  {
+   "id": "sw7498",
+   "kind": "picture",
+   "title": "Маленькие маляры",
+   "author": "Sonya Alexandrova, Tanvi Bhat",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/697317/size3/fae553c96cec531f760c79641f63a924.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "7498-malenkie-maljary"
+   }
+  },
+  {
+   "id": "sw7469",
+   "kind": "picture",
+   "title": "Толстый король и худая собака",
+   "author": "Sonya Alexandrova, Parismita",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/721909/size3/578f72502f01ea8298384a08257557b2.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "7469-tolstyj-korol-i-hudaja-sobaka"
+   }
+  },
+  {
+   "id": "sw20144",
+   "kind": "picture",
+   "title": "Чистая Кошка",
+   "author": "Valentina Sintsova, Deepa Balsavar",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/704876/size3/64305c3dcc61674c119e049ed04c6f3f.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "20144-chistaya-koshka"
+   }
+  },
+  {
+   "id": "sw106907",
+   "kind": "picture",
+   "title": "Ботинки для Льва",
+   "author": "Radeem Navyan, Abraham Muzee",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/93400/size3/c28730d3a177ed74c5613da192f0da2b.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "106907-lions-shoes"
+   }
+  },
+  {
+   "id": "sw7753",
+   "kind": "picture",
+   "title": "День Ежегодной Стрижки",
+   "author": "Sonya Alexandrova, Angie & Upesh",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/703826/size3/83b5807867d46878c98536f0356abdc2.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "7753-den-ezhegodnoj-strizhki"
+   }
+  },
+  {
+   "id": "sw107024",
+   "kind": "picture",
+   "title": "Как Риту письмо отправляла",
+   "author": "Radeem Navyan, Henu",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/696671/size3/5a67c4862d76b9ca92826bddea4fa06d.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "107024-ritu-s-letter-gets-longer"
+   }
+  },
+  {
+   "id": "sw20559",
+   "kind": "picture",
+   "title": "The Big, Big Matchbox",
+   "author": "Lena Gorelik, Meenal Singh",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/43610/size3/37b27665c10faf1bd7e8637da3d93033.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "20559-ogromniy-spichechniy-korobok"
+   }
+  },
+  {
+   "id": "sw7499",
+   "kind": "picture",
+   "title": "Во всем виноват кот!",
+   "author": "Sonya Alexandrova, Priya Kuriyan",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/696669/size3/8717a72070ac52bd090aeebc8e6b36e6.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "7499-vo-vsem-vinovat-kot"
+   }
+  },
+  {
+   "id": "sw19550",
+   "kind": "picture",
+   "title": "Гигантская Слоновая Птица",
+   "author": "Kate Chumbarova, Sonal Goyal, Sumit Sakhuja",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/27020/size3/17058267175af8fd5a857fa240a3d630.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "19550-gigantskaya-slonovaya-ptiza"
+   }
+  },
+  {
+   "id": "sw18563",
+   "kind": "picture",
+   "title": "Трое плачущих - народная китайская сказка",
+   "author": "Svetlana Guljajeva, Greystroke",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/697452/size3/b5e2e167fa9057e1165e90a3e62fce43.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "18563-troe-plachushih-narodnaja-kitajskaja-skazka"
+   }
+  },
+  {
+   "id": "sw20546",
+   "kind": "picture",
+   "title": "Как зубная паста попадает в тюбик?",
+   "author": "Igor Bely, Rajiv Eipe",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/711270/size3/a842e8651f5514894aa0750d1ef205aa.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "20546-kak-zubnaya-pasta-popadaet-v-tyubik"
+   }
+  },
+  {
+   "id": "sw19896",
+   "kind": "picture",
+   "title": "Оттенки красного",
+   "author": "Yulia Kim, Srikrishna Kedilaya",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/722303/size3/513f479b3bc14f0c0484983614f704c6.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "19896-ottenki-krasnogo"
+   }
+  },
+  {
+   "id": "sw582162",
+   "kind": "picture",
+   "title": "Потерянный в Интернете",
+   "author": "Arina Ozarciuc, Gaurav Wakankar",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/181775/size3/f1f3e98219874cda59f16f00331eea98.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "582162-lost-in-the-internet"
+   }
+  },
+  {
+   "id": "sw584436",
+   "kind": "picture",
+   "title": "Шум воды",
+   "author": "Родіка Тостоган, Debasmita Dasgupta",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/721325/size3/07c19bca39403c868921d7fe61cc44d2.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "584436-shum-vody"
+   }
+  },
+  {
+   "id": "sw584606",
+   "kind": "picture",
+   "title": "Кто украл улыбку Байя?",
+   "author": "Khrystyna Dubei, Sunaina  Coelho",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/524480/size3/06c407a5aec36554f78c7d6dbddfbb88.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "584606-who-stole-bhaiya-s-smile"
+   }
+  }
+ ]
+}

@@ -12,7 +12,7 @@ export default function ComicSeries() {
   if (!episodes.length) return <p className="py-20 text-center text-ink-soft"><UiText source={'That comic isn’t here.'} /></p>;
   return (
     <div className="mx-auto max-w-5xl pb-10">
-      <Link to="/explora?kind=comics" className="hit inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-ink-soft hover:text-ink"><ArrowLeft size={15} aria-hidden /> <UiText source={'Comics and magazines'} /></Link>
+      <Link to="/explora?kind=comics" className="hit inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-ink-soft hover:text-ink"><ArrowLeft size={15} aria-hidden /> <UiText source={'Picture & comics'} /></Link>
 
       <header className="mt-4 flex flex-col items-center gap-4 text-center sm:flex-row sm:items-end sm:gap-6 sm:text-left">
         <img src={comicCover(language.id, episodes[0])} alt="" className="h-40 w-30 shrink-0 rounded-xl border border-line bg-raised object-cover shadow-elev-2" />

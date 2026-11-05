@@ -1,0 +1,476 @@
+{
+ "items": [
+  {
+   "id": "ws:كليلة ودمنة",
+   "kind": "classic",
+   "title": "كليلة ودمنة",
+   "author": "ابن المقفع",
+   "level": "C1",
+   "from": {
+    "type": "wikisource",
+    "title": "كليلة ودمنة"
+   }
+  },
+  {
+   "id": "ws:ألف ليلة وليلة",
+   "kind": "classic",
+   "title": "ألف ليلة وليلة",
+   "author": "مجهول",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "ألف ليلة وليلة"
+   }
+  },
+  {
+   "id": "ws:الأجنحة المتكسرة",
+   "kind": "classic",
+   "title": "الأجنحة المتكسرة",
+   "author": "جبران خليل جبران",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "الأجنحة المتكسرة"
+   }
+  },
+  {
+   "id": "ws:دمعة وابتسامة (1914)",
+   "kind": "classic",
+   "title": "دمعة وابتسامة",
+   "author": "جبران خليل جبران",
+   "level": "B2",
+   "from": {
+    "type": "wikisource",
+    "title": "دمعة وابتسامة (1914)"
+   }
+  },
+  {
+   "id": "ws:حي بن يقظان",
+   "kind": "classic",
+   "title": "حي بن يقظان",
+   "author": "ابن طفيل",
+   "level": "C1",
+   "from": {
+    "type": "wikisource",
+    "title": "حي بن يقظان"
+   }
+  },
+  {
+   "id": "ws:رسالة الغفران",
+   "kind": "classic",
+   "title": "رسالة الغفران",
+   "author": "أبو العلاء المعري",
+   "level": "C1",
+   "from": {
+    "type": "wikisource",
+    "title": "رسالة الغفران"
+   }
+  },
+  {
+   "id": "ws:مقامات الحريري",
+   "kind": "classic",
+   "title": "مقامات الحريري",
+   "author": "الحريري",
+   "level": "C1",
+   "from": {
+    "type": "wikisource",
+    "title": "مقامات الحريري"
+   }
+  },
+  {
+   "id": "ws:البخلاء",
+   "kind": "classic",
+   "title": "البخلاء",
+   "author": "الجاحظ",
+   "level": "C1",
+   "from": {
+    "type": "wikisource",
+    "title": "البخلاء"
+   }
+  },
+  {
+   "id": "ws:طوق الحمامة",
+   "kind": "classic",
+   "title": "طوق الحمامة",
+   "author": "ابن حزم",
+   "level": "C1",
+   "from": {
+    "type": "wikisource",
+    "title": "طوق الحمامة"
+   }
+  },
+  {
+   "id": "ws:البيان والتبيين",
+   "kind": "classic",
+   "title": "البيان والتبيين",
+   "author": "الجاحظ",
+   "level": "C1",
+   "from": {
+    "type": "wikisource",
+    "title": "البيان والتبيين"
+   }
+  },
+  {
+   "id": "ws:لامية العرب",
+   "kind": "short",
+   "title": "لامية العرب",
+   "author": "الشنفرى",
+   "level": "C1",
+   "minutes": 11,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "لامية العرب"
+   }
+  },
+  {
+   "id": "ws:قفا نبك من ذكرى حبيب ومنزل (معلقة)",
+   "kind": "short",
+   "title": "قفا نبك",
+   "author": "امرؤ القيس",
+   "level": "C1",
+   "minutes": 7,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "قفا نبك من ذكرى حبيب ومنزل (معلقة)"
+   }
+  },
+  {
+   "id": "ws:إرادة الحياة",
+   "kind": "short",
+   "title": "إرادة الحياة",
+   "author": "أبو القاسم الشابي",
+   "level": "B2",
+   "minutes": 6,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "إرادة الحياة"
+   }
+  },
+  {
+   "id": "ws:على قدر أهل العزم تأتي العزائم",
+   "kind": "short",
+   "title": "على قدر أهل العزم",
+   "author": "المتنبي",
+   "level": "C1",
+   "minutes": 6,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "على قدر أهل العزم تأتي العزائم"
+   }
+  },
+  {
+   "id": "ws:قم للمعلم",
+   "kind": "short",
+   "title": "قم للمعلم",
+   "author": "أحمد شوقي",
+   "level": "B2",
+   "minutes": 8,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "قم للمعلم"
+   }
+  },
+  {
+   "id": "ws:أراك عصي الدمع",
+   "kind": "short",
+   "title": "أراك عصي الدمع",
+   "author": "أبو فراس الحمداني",
+   "level": "C1",
+   "minutes": 3,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "أراك عصي الدمع"
+   }
+  },
+  {
+   "id": "ws:هل غادر الشعراء من متردم (معلقة)",
+   "kind": "short",
+   "title": "هل غادر الشعراء من متردم",
+   "author": "عنترة بن شداد",
+   "level": "C1",
+   "minutes": 7,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "هل غادر الشعراء من متردم (معلقة)"
+   }
+  },
+  {
+   "id": "ws:وا حر قلباه ممن قلبه شبم",
+   "kind": "short",
+   "title": "وا حر قلباه",
+   "author": "المتنبي",
+   "level": "C1",
+   "minutes": 5,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "وا حر قلباه ممن قلبه شبم"
+   }
+  },
+  {
+   "id": "ws:دمعة وابتسامة (1914)/ابتسامة ودمعة",
+   "kind": "short",
+   "title": "ابتسامة ودمعة",
+   "author": "جبران خليل جبران",
+   "level": "B2",
+   "minutes": 2,
+   "genre": "essay",
+   "from": {
+    "type": "wikisource",
+    "title": "دمعة وابتسامة (1914)/ابتسامة ودمعة"
+   }
+  },
+  {
+   "id": "ws:دمعة وابتسامة (1914)/النفس",
+   "kind": "short",
+   "title": "النفس",
+   "author": "جبران خليل جبران",
+   "level": "B2",
+   "minutes": 1,
+   "genre": "essay",
+   "from": {
+    "type": "wikisource",
+    "title": "دمعة وابتسامة (1914)/النفس"
+   }
+  },
+  {
+   "id": "ws:الأجنحة المتكسرة/توطئة",
+   "kind": "short",
+   "title": "الأجنحة المتكسرة: توطئة",
+   "author": "جبران خليل جبران",
+   "level": "B2",
+   "minutes": 3,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "الأجنحة المتكسرة/توطئة"
+   }
+  },
+  {
+   "id": "ws:الأجنحة المتكسرة/الشعلة البيضاء",
+   "kind": "short",
+   "title": "الشعلة البيضاء",
+   "author": "جبران خليل جبران",
+   "level": "B2",
+   "minutes": 3,
+   "genre": "story",
+   "from": {
+    "type": "wikisource",
+    "title": "الأجنحة المتكسرة/الشعلة البيضاء"
+   }
+  },
+  {
+   "id": "ws:كليلة ودمنة/باب الفحص عن أمر دمنة",
+   "kind": "short",
+   "title": "باب الفحص عن أمر دمنة",
+   "author": "ابن المقفع",
+   "level": "C1",
+   "minutes": 17,
+   "genre": "fable",
+   "from": {
+    "type": "wikisource",
+    "title": "كليلة ودمنة/باب الفحص عن أمر دمنة"
+   }
+  },
+  {
+   "id": "ws:صلوات في هيكل الحب",
+   "kind": "short",
+   "title": "صلوات في هيكل الحب",
+   "author": "جبران خليل جبران",
+   "level": "B2",
+   "minutes": 6,
+   "genre": "poem",
+   "from": {
+    "type": "wikisource",
+    "title": "صلوات في هيكل الحب"
+   }
+  },
+  {
+   "id": "sw113224",
+   "kind": "picture",
+   "title": "أَنا وأَخي",
+   "author": "Amina  Bouiali, Pallak Goswamy",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/35077/size3/32c5acbb641dda85c65de0146802be36.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "113224-ana-wa-akhy"
+   }
+  },
+  {
+   "id": "sw228490",
+   "kind": "picture",
+   "title": "ابْتَسِمْ مِنْ فَضْلِكَ",
+   "author": "Abeer Abuhelaiqa, Ajit Narayan",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/721917/size3/548c488c38612955cf9c42fe6894c5f1.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "228490-aibtasam-min-fadlika"
+   }
+  },
+  {
+   "id": "sw250807",
+   "kind": "picture",
+   "title": "ثعلوب الماكر",
+   "author": "Maha AlAmri, Mdu Ntuli",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/735188/size3/b90d94b9c65b24e49ac0bf3f5faa5908.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "250807-althaalab-juksi-yalaab-khudaa"
+   }
+  },
+  {
+   "id": "sw224787",
+   "kind": "picture",
+   "title": "حِكَايَاتُ مَا قَبْلَ النَّوْمِ",
+   "author": "Zainab Omar, Harshvardhan Gantha",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/34952/size3/cd9982004d7e6ea392ebe738a42cb276.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "224787-hikayat-ma-qabl-alnawm"
+   }
+  },
+  {
+   "id": "sw113066",
+   "kind": "picture",
+   "title": "ماذا أَرْتدِي اليوْم؟",
+   "author": "Amina  Bouiali, Tanvi Bhat",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/2289/size3/466aacc8ac4a2d255bdf88b7bf413bee.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "113066-madha-artadi-alyaom"
+   }
+  },
+  {
+   "id": "sw458307",
+   "kind": "picture",
+   "title": "نق نق!",
+   "author": "Doaa Mohaisen, Ekta Bharti",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/203519/size3/c431226adad48c0a771f46309189d357.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "458307-naq-naq"
+   }
+  },
+  {
+   "id": "sw227768",
+   "kind": "picture",
+   "title": "رِيبَا تُرِيدُ الْمُثَلَّجَاتِ",
+   "author": "Zainab Touati, Dhiman  Sarkar",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/93887/size3/d8f14b0124e4a95d660994b1141c79e2.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "227768-ruba-turid-almuthalajat"
+   }
+  },
+  {
+   "id": "sw228795",
+   "kind": "picture",
+   "title": "آلَاتُ جَدَّتِي الْمُدْهِشَةُ",
+   "author": "Faten Ashour, Rajiv Eipe",
+   "level": "A1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/712718/size3/9afb2c00f7a211ff4c8699e66ca7db0b.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "228795-alat-jadati-almud-hisha"
+   }
+  },
+  {
+   "id": "sw108082",
+   "kind": "picture",
+   "title": "إبتسامة الفراشة",
+   "author": "Amina  Bouiali, Lavanya  Naidu",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/712825/size3/46977bed0760c446c9dd926ee5c83ee5.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "108082-ibtisamatu-alfarasha"
+   }
+  },
+  {
+   "id": "sw307728",
+   "kind": "picture",
+   "title": "الطَّمَاطِمُ الْمُغَامِرَة",
+   "author": "Mubarak  Hadi Mubarak, Google India",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/410348/size3/919df837ade717db0fb09de02c400288.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "307728-altamatim-almughamara"
+   }
+  },
+  {
+   "id": "sw223622",
+   "kind": "picture",
+   "title": "راضية تتعلمُ السباحة",
+   "author": "Arwa Nahia, Lavanya  Naidu",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/715532/size3/275a879874497771e67c6eda8995eff9.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "223622-radih-tataealam-alsibahha"
+   }
+  },
+  {
+   "id": "sw238646",
+   "kind": "picture",
+   "title": "ليلة اختفاء القمر",
+   "author": "Arwa Nahia, Sunaina  Coelho",
+   "level": "A2",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/85034/size3/3d21e461e24f11386172abfe1e74d4b4.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "238646-laylat-ikhtfa-alqamar"
+   }
+  },
+  {
+   "id": "sw230330",
+   "kind": "picture",
+   "title": "أريد أن أركب دراجة نارية",
+   "author": "Nouda Nasser, Rai",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/495468/size3/3b0b9d1cb17d8f956ae21aa3c83c2e18.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "230330-urid-an-arkab-daraja-nariya"
+   }
+  },
+  {
+   "id": "sw142310",
+   "kind": "picture",
+   "title": "خلاي تتحدث إلى النباتات",
+   "author": "Heba Tesheh, Jesse Pietersen",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/235335/size3/01c6bf1eb33fda92149a539c6f0f9fea.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "142310-khulay-tatahadath-iilaa-alnabatat"
+   }
+  },
+  {
+   "id": "sw235106",
+   "kind": "picture",
+   "title": "قضية المياه الضائعة",
+   "author": "Ithar Elnour, Upamanyu  Bhattacharyya",
+   "level": "B1",
+   "cover": "https://storage.googleapis.com/static.storyweaver.org.in/illustration_crops/724112/size3/1c190e70406411ab7431038cc2aaea88.jpg",
+   "from": {
+    "type": "storyweaver",
+    "slug": "235106-khadyat-almyah-aldaa-ia"
+   }
+  }
+ ]
+}

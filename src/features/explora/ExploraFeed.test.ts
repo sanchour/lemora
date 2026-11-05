@@ -6,7 +6,7 @@ const item = (id: string, level: ExploraItem['level']): ExploraItem => ({ id, ki
 
 describe('feedOrder', () => {
   it('puts what is nearest the learner’s level first', () => {
-    const out = feedOrder([item('d', 'C2'), item('c', 'B2'), item('b', 'B1')], 'B1', () => 0);
+    const out = feedOrder([item('d', 'C1'), item('c', 'B2'), item('b', 'B1')], 'B1', () => 0);
     expect(out.map((i) => i.id)).toEqual(['b', 'c', 'd']);
   });
   it('lists each item once and keeps them all', () => {

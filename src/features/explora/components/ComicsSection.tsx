@@ -36,7 +36,7 @@ export function ComicShelf({ lang }: { lang: string }) {
 }
 
 /** Global Voices' latest stories in the language: a click puts one on the shelf and opens it. */
-export function MagazineSection({ lang }: { lang: string }) {
+export function MagazineSection({ lang, title, limit }: { lang: string; title?: string; limit?: number }) {
   const translateUi = useUi();
   const navigate = useNavigate();
   const [stories, setStories] = useState<Story[] | null | 'error'>(null);
@@ -44,7 +44,7 @@ export function MagazineSection({ lang }: { lang: string }) {
   useEffect(() => {
     let alive = true;
     setStories(null);
-    if (hasMagazine(lang)) latestStories(lang, 8).then((s) => alive && setStories(s), () => alive && setStories('error'));
+    if (hasMagazine(lang)) latestStories(lang, limit ?? 8).then((s) => alive && setStories(s), () => alive && setStories('error'));
     return () => {
       alive = false;
     };
@@ -61,8 +61,8 @@ export function MagazineSection({ lang }: { lang: string }) {
     }
   };
   return (
-    <section aria-label={translateUi('Magazine')} className="mb-6">
-      <h2 className="mb-3 font-serif text-[21px] font-semibold tracking-tight text-ink sm:text-[24px]"><UiText source={'Magazine'} /></h2>
+    <section aria-label={title ?? translateUi('Magazine')} className="mb-6">
+      <h2 className="mb-3 font-serif text-[21px] font-semibold tracking-tight text-ink sm:text-[24px]">{title ?? <UiText source={'Magazine'} />}</h2>
       {stories === null ? (
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{[0, 1, 2, 3].map((i) => <div key={i} className="h-36 animate-pulse rounded-[20px] bg-surface" />)}</div>
       ) : stories === 'error' ? (
@@ -104,7 +104,6 @@ export function ComicsSection({ lang }: { lang: string }) {
     <div className="space-y-2">
       <ComicShelf lang={lang} />
       <p className="-mt-3 mb-6 text-[11.5px] text-ink-faint">{PEPPER_CREDIT}</p>
-      <MagazineSection lang={lang} />
       <PictureBooksSection lang={lang} />
     </div>
   );

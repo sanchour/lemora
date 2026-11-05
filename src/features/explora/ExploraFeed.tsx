@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { ArrowRight, Bookmark, ChevronDown, ChevronUp, Info, RotateCcw, X } from 'lucide-react';
+import { ArrowRight, Bookmark, ChevronLeft, ChevronRight, Info, RotateCcw, X } from 'lucide-react';
 import type { Level } from '@/core/lang/levels';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { Hand } from '@/design/drawings';
@@ -13,6 +13,22 @@ import type { PickLookup } from '@/features/mundus/hooks';
 import type { ExploraItem } from './types';
 import { ItemCover, KIND_ICONS, actionIconFor, actionLabelFor } from './components/HeroBillboard';
 import { LevelBadge } from './components/LevelBadge';
+
+/** Flick's hand-drawn mark: three cards fanned along a line, the front one carrying the accent bookmark. */
+export function FlickMark({ size = 24, className }: { size?: number; className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" width={size} height={size} aria-hidden className={cx('shrink-0', className)}>
+      <g fill="none" stroke="currentColor" strokeWidth={2.6} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M5 14Q7 12.5 9 13.5L10 36Q8 37.5 6 36.5Z" opacity={0.45} />
+        <path d="M11 11Q14 9.5 17 10.5L18.5 38Q15 39.5 12 38.5Z" opacity={0.7} />
+        <path d="M20 8Q30 6.5 40 8Q41.5 8.5 41.5 10.5V37.5Q41.5 39.5 40 40Q30 41.5 20 40Q18.5 39.5 18.5 37.5V10.5Q18.5 8.5 20 8Z" />
+        <path stroke="var(--accent)" d="M27 8.6V19L31 16L35 19V8.8" />
+        <path d="M24 28H36M24 33H32" opacity={0.6} />
+        <path stroke="var(--accent)" d="M42 22L46 24L42 26" />
+      </g>
+    </svg>
+  );
+}
 
 /** A fresh order each time the feed opens: closest to the learner's level first, shuffled within each step. */
 export function feedOrder(items: ExploraItem[], learnerLevel: Level, random = Math.random): ExploraItem[] {
@@ -53,7 +69,7 @@ export function ExploraFeed({ items, lang, learnerLevel, lookups, savedIds, onTo
     const box = scroller.current;
     if (!box) return;
     const target = Math.max(0, Math.min(total, to));
-    box.scrollTo({ top: target * box.clientHeight, behavior: still ? 'auto' : 'smooth' });
+    box.scrollTo({ left: target * box.clientWidth, behavior: still ? 'auto' : 'smooth' });
   }, [total, still]);
 
   const save = useCallback((item: ExploraItem, onlyAdd = false) => {
@@ -68,7 +84,7 @@ export function ExploraFeed({ items, lang, learnerLevel, lookups, savedIds, onTo
   // Which slide is showing follows the scroll (wheel, trackpad, touch and the buttons all end up here).
   const onScroll = () => {
     const box = scroller.current;
-    if (box) setIndex(Math.round(box.scrollTop / Math.max(1, box.clientHeight)));
+    if (box) setIndex(Math.round(box.scrollLeft / Math.max(1, box.clientWidth)));
   };
 
   useEffect(() => {
@@ -89,10 +105,12 @@ export function ExploraFeed({ items, lang, learnerLevel, lookups, savedIds, onTo
     if (!box) return;
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
+      // A mouse wheel turns vertically, a trackpad swipe sideways: either one turns the page.
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
       const now = Date.now();
-      if (Math.abs(e.deltaY) < 8 || now < wheelLock.current) return;
+      if (Math.abs(delta) < 8 || now < wheelLock.current) return;
       wheelLock.current = now + 650;
-      goTo(at.current + (e.deltaY > 0 ? 1 : -1));
+      goTo(at.current + (delta > 0 ? 1 : -1));
     };
     box.addEventListener('wheel', onWheel, { passive: false });
     return () => box.removeEventListener('wheel', onWheel);
@@ -104,8 +122,8 @@ export function ExploraFeed({ items, lang, learnerLevel, lookups, savedIds, onTo
       if (document.querySelector('[role="alertdialog"]') || e.metaKey || e.ctrlKey || e.altKey) return;
       if ((e.target as HTMLElement | null)?.closest('input, textarea, [contenteditable="true"]')) return;
       if (e.key === 'Escape') onClose();
-      else if (e.key === 'ArrowDown' || e.key === 'j' || e.key === 'PageDown' || e.key === ' ') goTo(index + 1);
-      else if (e.key === 'ArrowUp' || e.key === 'k' || e.key === 'PageUp') goTo(index - 1);
+      else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'l' || e.key === 'PageDown' || e.key === ' ') goTo(index + 1);
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'h' || e.key === 'PageUp') goTo(index - 1);
       else if (e.key === 'Home') goTo(0);
       else if (e.key === 'End') goTo(total);
       else if ((e.key === 's' || e.key === 'S') && current) save(current);
@@ -122,7 +140,7 @@ export function ExploraFeed({ items, lang, learnerLevel, lookups, savedIds, onTo
     setOrder(feedOrder(items, learnerLevel));
     setIndex(0);
     // After the new order is drawn, so the browser has nothing to keep in view but the top.
-    requestAnimationFrame(() => scroller.current?.scrollTo({ top: 0, behavior: 'auto' }));
+    requestAnimationFrame(() => scroller.current?.scrollTo({ left: 0, behavior: 'auto' }));
   };
 
   return createPortal(
@@ -153,7 +171,8 @@ export function ExploraFeed({ items, lang, learnerLevel, lookups, savedIds, onTo
         tabIndex={-1}
         onScroll={onScroll}
         style={{ overflowAnchor: 'none' }}
-        className="h-full snap-y snap-mandatory overflow-y-auto overscroll-contain outline-none scrollbar-none"
+        dir="ltr"
+        className="flex h-full snap-x snap-mandatory overflow-x-auto overflow-y-hidden overscroll-contain outline-none scrollbar-none"
       >
         {order.map((item, i) => (
           <FeedSlide
@@ -172,7 +191,7 @@ export function ExploraFeed({ items, lang, learnerLevel, lookups, savedIds, onTo
         ))}
 
         {/* The end: start again in a new order, or go back. */}
-        <section className="grid h-full snap-start place-items-center px-6">
+        <section className="grid h-full w-full shrink-0 snap-start place-items-center px-6">
           <div className="flex max-w-sm flex-col items-center text-center">
             <Hand name="seal" size={64} className="text-accent" />
             <h2 className="mt-4 font-serif text-[28px] font-bold tracking-tight text-ink"><UiText source={'You’ve seen it all'} /></h2>
@@ -189,19 +208,17 @@ export function ExploraFeed({ items, lang, learnerLevel, lookups, savedIds, onTo
         </section>
       </div>
 
-      {/* Up and down, at the right edge (desktop). */}
-      <div className="absolute top-1/2 right-4 z-20 hidden -translate-y-1/2 flex-col gap-2 sm:right-6 md:flex">
-        <button type="button" onClick={() => goTo(index - 1)} disabled={index === 0} aria-label={translateUi('Previous')} className="grid size-11 place-items-center rounded-full border border-line/70 bg-raised/90 text-ink-soft shadow-elev-1 transition hover:text-ink active:scale-95 disabled:opacity-35">
-          <ChevronUp size={20} />
-        </button>
-        <button type="button" onClick={() => goTo(index + 1)} disabled={index >= total} aria-label={translateUi('Next')} className="grid size-11 place-items-center rounded-full border border-line/70 bg-raised/90 text-ink-soft shadow-elev-1 transition hover:text-ink active:scale-95 disabled:opacity-35">
-          <ChevronDown size={20} />
-        </button>
-      </div>
+      {/* Back and forward, at the sides (desktop). */}
+      <button type="button" onClick={() => goTo(index - 1)} disabled={index === 0} aria-label={translateUi('Previous')} className="absolute top-1/2 left-4 z-20 hidden size-12 -translate-y-1/2 place-items-center rounded-full border border-line/70 bg-raised/90 text-ink-soft shadow-elev-1 transition hover:text-ink active:scale-95 disabled:opacity-35 md:grid lg:left-8">
+        <ChevronLeft size={22} />
+      </button>
+      <button type="button" onClick={() => goTo(index + 1)} disabled={index >= total} aria-label={translateUi('Next')} className="absolute top-1/2 right-4 z-20 hidden size-12 -translate-y-1/2 place-items-center rounded-full border border-line/70 bg-raised/90 text-ink-soft shadow-elev-1 transition hover:text-ink active:scale-95 disabled:opacity-35 md:grid lg:right-8">
+        <ChevronRight size={22} />
+      </button>
 
       {/* The keys, quietly, at the foot (desktop). */}
       <p className="pointer-events-none absolute bottom-3 left-1/2 z-20 hidden -translate-x-1/2 text-[11.5px] text-ink-faint lg:block">
-        <UiText source={'↑ ↓ to move · S to save · Enter to open · Esc to close'} />
+        <UiText source={'← → to move · S to save · Enter to open · Esc to close'} />
       </p>
     </motion.div>,
     document.body,
@@ -227,7 +244,7 @@ function FeedSlide({ item, lang, learnerLevel, near, poster, saved, burst, onSav
   const blurb = item.blurb ?? item.pick?.why ?? item.artist?.why;
 
   return (
-    <section aria-label={item.title} className="flex h-full snap-start snap-always items-center justify-center gap-5 px-3 py-16 sm:px-6">
+    <section aria-label={item.title} className="flex h-full w-full shrink-0 snap-start snap-always items-center justify-center gap-5 px-3 py-16 sm:px-6">
       {/* The card: tall like a phone screen, the picture filling it, the words over a soft shade at the foot. Only slides near the one showing draw their picture. */}
       <div onDoubleClick={() => onSave(true)} className="relative h-full max-h-[860px] w-full max-w-[min(480px,calc((100dvh-8rem)*0.62))] overflow-hidden rounded-[28px] bg-raised shadow-elev-3 ring-1 ring-line select-none">
         {near && (

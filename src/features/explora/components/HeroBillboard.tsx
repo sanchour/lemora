@@ -30,6 +30,7 @@ import type { PickLookup } from '@/features/mundus/hooks';
 import type { ExploraItem } from '../types';
 import { LevelBadge } from './LevelBadge';
 import { Hand } from '@/design/drawings';
+import { BookCover } from '@/features/codex/library/BookCover';
 
 export const KIND_ICONS: Record<string, typeof Tv> = {
   series: Tv,
@@ -41,6 +42,7 @@ export const KIND_ICONS: Record<string, typeof Tv> = {
   radio: Radio,
   comic: BookImage,
   tip: Lightbulb,
+  read: BookOpen,
 };
 
 interface HeroBillboardProps {
@@ -212,6 +214,7 @@ export function actionLabelFor(kind: ExploraItem['kind'], translateUi: (s: strin
   if (kind === 'music') return translateUi('Sing in Sonus');
   if (kind === 'comic') return translateUi('Read');
   if (kind === 'tip') return translateUi('Try it');
+  if (kind === 'read') return translateUi('Read');
   return translateUi('Open');
 }
 
@@ -225,7 +228,9 @@ export function actionIconFor(kind: ExploraItem['kind']): typeof Tv {
 
 /** The item's picture: its own cover, a poster, an audiobook's or station's artwork, a found image, or a plain binding. */
 export function ItemCover({ item, lang, poster }: { item: ExploraItem; lang: string; poster?: string }) {
-  return item.cover ? (
+  return item.catalogue && !item.cover ? (
+    <BookCover text={{ id: item.id, title: item.title, author: item.sub, lang }} className="size-full object-cover" />
+  ) : item.cover ? (
     <img src={item.cover} alt="" className="size-full object-cover" />
   ) : item.kind === 'tip' ? (
     <div className="grid size-full place-items-center bg-accent-soft"><Hand name="candle" size={72} /></div>

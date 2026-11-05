@@ -1,0 +1,1793 @@
+{
+ "G": {
+  "fr": [
+   {
+    "title": "Candide",
+    "re": "^Candide",
+    "author": "Voltaire",
+    "level": "B2"
+   },
+   {
+    "title": "Le tour du monde en quatre-vingts jours",
+    "re": "^Le tour du monde en quatre",
+    "author": "Verne",
+    "level": "B2"
+   },
+   {
+    "title": "Voyage au centre de la Terre",
+    "re": "^Voyage au Centre",
+    "author": "Verne",
+    "level": "B2"
+   },
+   {
+    "title": "Vingt mille lieues sous les mers",
+    "re": "Vingt mille Lieues Sous Les Mers — Complete|^Vingt mille lieues sous les mers$",
+    "author": "Verne",
+    "level": "B2"
+   },
+   {
+    "title": "Michel Strogoff",
+    "re": "^Michel Strogoff: De Moscou",
+    "author": "Verne",
+    "level": "B2"
+   },
+   {
+    "title": "L’Île mystérieuse",
+    "re": "^L'île mystérieuse",
+    "author": "Verne",
+    "level": "B2"
+   },
+   {
+    "title": "Boule de suif",
+    "re": "^Boule de Suif",
+    "author": "Maupassant",
+    "level": "B2"
+   },
+   {
+    "title": "Lettres de mon moulin",
+    "re": "^Lettres de mon moulin$",
+    "author": "Daudet",
+    "level": "B2"
+   },
+   {
+    "title": "Le Petit Chose",
+    "re": "^Le petit chose",
+    "author": "Daudet",
+    "level": "B2"
+   },
+   {
+    "title": "Poil de Carotte",
+    "re": "^Poil de Carotte",
+    "author": "Renard",
+    "level": "B1"
+   },
+   {
+    "title": "Aventures d’Alice au pays des merveilles",
+    "re": "^Aventures d'Alice",
+    "author": "Carroll",
+    "level": "B1"
+   },
+   {
+    "title": "Fables de La Fontaine (tome 1)",
+    "re": "^Fables de La Fontaine. Tome Premier",
+    "author": "La Fontaine",
+    "level": "B2"
+   },
+   {
+    "title": "Les Trois Mousquetaires",
+    "re": "^Les trois mousquetaires, Volume  1",
+    "author": "Dumas",
+    "level": "B2"
+   },
+   {
+    "title": "Le Comte de Monte-Cristo (tome 1)",
+    "re": "^Le comte de Monte-Cristo, Tome I$",
+    "author": "Dumas",
+    "level": "C1"
+   },
+   {
+    "title": "Les Misérables (tome 1)",
+    "re": "^Les misérables Tome I",
+    "author": "Hugo",
+    "level": "C1"
+   },
+   {
+    "title": "Notre-Dame de Paris",
+    "re": "^Notre-Dame de Paris$",
+    "author": "Hugo",
+    "level": "C1"
+   },
+   {
+    "title": "Madame Bovary",
+    "re": "^Madame Bovary$",
+    "author": "Flaubert",
+    "level": "C1"
+   },
+   {
+    "title": "Trois contes",
+    "re": "^Trois contes$",
+    "author": "Flaubert",
+    "level": "B2"
+   },
+   {
+    "title": "Cyrano de Bergerac",
+    "re": "^Cyrano de Bergerac$",
+    "author": "Rostand",
+    "level": "B2"
+   },
+   {
+    "title": "Le Rouge et le Noir",
+    "re": "^Le rouge et le noir",
+    "author": "Stendhal",
+    "level": "C1"
+   },
+   {
+    "title": "Colomba",
+    "re": "^Colomba",
+    "author": "Mérimée",
+    "level": "B2"
+   },
+   {
+    "title": "Pierre et Jean",
+    "re": "^Pierre et Jean",
+    "author": "Maupassant",
+    "level": "B2"
+   },
+   {
+    "title": "Le Grand Meaulnes",
+    "re": "^Le grand Meaulnes",
+    "author": "Alain-Fournier",
+    "level": "B2"
+   },
+   {
+    "title": "Les Fleurs du mal",
+    "re": "^Les Fleurs du Mal$",
+    "author": "Baudelaire",
+    "level": "C1"
+   },
+   {
+    "title": "Arsène Lupin, gentleman-cambrioleur",
+    "re": "^Arsène Lupin",
+    "author": "Leblanc",
+    "level": "B2"
+   },
+   {
+    "title": "François le Bossu",
+    "re": "^François le Bossu",
+    "author": "Ségur",
+    "level": "B1"
+   }
+  ],
+  "es": [
+   {
+    "title": "El Lazarillo de Tormes",
+    "re": "Lazarillo",
+    "author": "",
+    "level": "B2"
+   },
+   {
+    "title": "Don Quijote",
+    "re": "^Don Quijote$",
+    "author": "Cervantes",
+    "level": "C1"
+   },
+   {
+    "title": "Marianela",
+    "re": "^Marianela$",
+    "author": "Galdós",
+    "level": "B2"
+   },
+   {
+    "title": "Pepita Jiménez",
+    "re": "^Pepita Jim",
+    "author": "Valera",
+    "level": "B2"
+   },
+   {
+    "title": "Cuentos de amor, de locura y de muerte",
+    "re": "^Cuentos de Amor de Locura",
+    "author": "Quiroga",
+    "level": "B2"
+   },
+   {
+    "title": "Tradiciones peruanas",
+    "re": "^Tradiciones peruanas",
+    "author": "Palma",
+    "level": "B2"
+   },
+   {
+    "title": "La gaviota",
+    "re": "^La gaviota",
+    "author": "Caballero",
+    "level": "B2"
+   },
+   {
+    "title": "El sombrero de tres picos",
+    "re": "^El sombrero de tres picos",
+    "author": "Alarc",
+    "level": "B2"
+   },
+   {
+    "title": "El Capitán Veneno",
+    "re": "^El Capit",
+    "author": "Alarc",
+    "level": "B2"
+   },
+   {
+    "title": "Fábulas literarias",
+    "re": "^Fábulas literarias",
+    "author": "Iriarte",
+    "level": "B1"
+   },
+   {
+    "title": "Fábulas de Samaniego",
+    "re": "^Fábulas$",
+    "author": "Samaniego",
+    "level": "B1"
+   },
+   {
+    "title": "Martín Fierro",
+    "re": "^El Gaucho Martín Fierro",
+    "author": "Hern",
+    "level": "C1"
+   },
+   {
+    "title": "La Celestina",
+    "re": "^La Celestina",
+    "author": "Rojas",
+    "level": "C1"
+   },
+   {
+    "title": "Azul…",
+    "re": "^Azul",
+    "author": "Darío",
+    "level": "B2"
+   },
+   {
+    "title": "Cuentos de amor",
+    "re": "^Cuentos de amor$",
+    "author": "Pardo",
+    "level": "B2"
+   },
+   {
+    "title": "La barraca",
+    "re": "^La Barraca",
+    "author": "Blasco",
+    "level": "B2"
+   },
+   {
+    "title": "Facundo",
+    "re": "^Facundo",
+    "author": "Sarmiento",
+    "level": "C1"
+   },
+   {
+    "title": "Niebla",
+    "re": "^Niebla",
+    "author": "Unamuno",
+    "level": "B2"
+   },
+   {
+    "title": "Cuentos ingenuos",
+    "re": "^Cuentos ingenuos",
+    "author": "Trigo",
+    "level": "B2"
+   },
+   {
+    "title": "Sab",
+    "re": "^Sab ",
+    "author": "Gómez de Avellaneda",
+    "level": "B2"
+   }
+  ],
+  "de": [
+   {
+    "title": "Deutsche Märchen (Brüder Grimm)",
+    "re": "^Deutsche Märchen gesammelt",
+    "author": "Grimm",
+    "level": "B1"
+   },
+   {
+    "title": "Faust. Der Tragödie erster Teil",
+    "re": "^Faust: Der Tragödie erster Teil",
+    "author": "Goethe",
+    "level": "C1"
+   },
+   {
+    "title": "Die Leiden des jungen Werther",
+    "re": "^Die Leiden des jungen Werther",
+    "author": "Goethe",
+    "level": "C1"
+   },
+   {
+    "title": "Effi Briest",
+    "re": "^Effi Briest",
+    "author": "Fontane",
+    "level": "C1"
+   },
+   {
+    "title": "Die Verwandlung",
+    "re": "^Die Verwandlung",
+    "author": "Kafka",
+    "level": "B2"
+   },
+   {
+    "title": "Heidis Lehr- und Wanderjahre",
+    "re": "^Heidis Lehr- und Wanderjahre",
+    "author": "Spyri",
+    "level": "B1"
+   },
+   {
+    "title": "Max und Moritz",
+    "re": "^Max und Moritz",
+    "author": "Busch",
+    "level": "B1"
+   },
+   {
+    "title": "Der Struwwelpeter",
+    "re": "^Der Struwwelpeter",
+    "author": "Hoffmann, Heinrich",
+    "level": "A2"
+   },
+   {
+    "title": "Märchen (Andersen)",
+    "re": "^Märchen für Kinder",
+    "author": "Andersen",
+    "level": "B1"
+   },
+   {
+    "title": "Märchen-Almanach (Hauff)",
+    "re": "^Märchen-Almanach auf das Jahr 1826",
+    "author": "Hauff",
+    "level": "B2"
+   },
+   {
+    "title": "Fabeln und Erzählungen (Lessing)",
+    "re": "^Fabeln und Erzählungen",
+    "author": "Lessing",
+    "level": "B2"
+   },
+   {
+    "title": "Immensee",
+    "re": "^Immensee",
+    "author": "Storm",
+    "level": "B2"
+   },
+   {
+    "title": "Pole Poppenspäler",
+    "re": "^Pole Poppenspäler",
+    "author": "Storm",
+    "level": "B2"
+   },
+   {
+    "title": "Die Judenbuche",
+    "re": "^Die Judenbuche",
+    "author": "Droste",
+    "level": "C1"
+   },
+   {
+    "title": "Peter Schlemihls wundersame Geschichte",
+    "re": "^Peter Schlemihl",
+    "author": "Chamisso",
+    "level": "B2"
+   },
+   {
+    "title": "Der goldene Topf",
+    "re": "^Der Goldene Topf",
+    "author": "Hoffmann",
+    "level": "C1"
+   },
+   {
+    "title": "Alice im Wunderland",
+    "re": "^Alice's Abenteuer",
+    "author": "Carroll",
+    "level": "B1"
+   },
+   {
+    "title": "Die Räuber",
+    "re": "^Die Räuber",
+    "author": "Schiller",
+    "level": "C1"
+   },
+   {
+    "title": "Buch der Lieder",
+    "re": "^Buch der Lieder",
+    "author": "Heine",
+    "level": "C1"
+   },
+   {
+    "title": "Der zerbrochne Krug",
+    "re": "^Der Zerbrochene Krug",
+    "author": "Kleist",
+    "level": "C1"
+   },
+   {
+    "title": "Nathan der Weise",
+    "re": "^Nathan der Weise",
+    "author": "Lessing",
+    "level": "C1"
+   },
+   {
+    "title": "Bunte Steine",
+    "re": "^Bunte Steine",
+    "author": "Stifter",
+    "level": "C1"
+   },
+   {
+    "title": "Peterchens Mondfahrt",
+    "re": "^Peterchens Mondfahrt",
+    "author": "Bassewitz",
+    "level": "B1"
+   },
+   {
+    "title": "Die Leute von Seldwyla",
+    "re": "^Die Leute von Seldwyla — Band 1",
+    "author": "Keller",
+    "level": "C1"
+   }
+  ],
+  "ru": [],
+  "zh": [
+   {
+    "title": "紅樓夢",
+    "re": "紅樓夢|红楼梦",
+    "author": "",
+    "level": "C1",
+    "authorName": "曹雪芹"
+   },
+   {
+    "title": "西遊記",
+    "re": "西遊記|西游记",
+    "author": "",
+    "level": "C1",
+    "authorName": "吳承恩"
+   },
+   {
+    "title": "三國演義",
+    "re": "三國演義|三国演义",
+    "author": "",
+    "level": "C1"
+   },
+   {
+    "title": "水滸傳",
+    "re": "水滸|水浒",
+    "author": "",
+    "level": "C1",
+    "authorName": "施耐庵"
+   },
+   {
+    "title": "論語",
+    "re": "論語|论语",
+    "author": "",
+    "level": "B2",
+    "authorName": "孔子"
+   },
+   {
+    "title": "道德經",
+    "re": "道德經|道德经",
+    "author": "",
+    "level": "B2",
+    "authorName": "老子"
+   },
+   {
+    "title": "聊齋志異",
+    "re": "聊齋|聊斋",
+    "author": "",
+    "level": "C1",
+    "authorName": "蒲松齡"
+   },
+   {
+    "title": "鏡花緣",
+    "re": "鏡花緣|镜花缘",
+    "author": "",
+    "level": "C1",
+    "authorName": "李汝珍"
+   },
+   {
+    "title": "儒林外史",
+    "re": "儒林外史",
+    "author": "",
+    "level": "C1",
+    "authorName": "吳敬梓"
+   },
+   {
+    "title": "吶喊",
+    "re": "吶喊|呐喊",
+    "author": "",
+    "level": "B2",
+    "authorName": "魯迅"
+   },
+   {
+    "title": "老殘遊記",
+    "re": "老殘|老残",
+    "author": "",
+    "level": "C1",
+    "authorName": "劉鶚"
+   },
+   {
+    "title": "三字經",
+    "re": "三字經|三字经",
+    "author": "",
+    "level": "A2",
+    "authorName": "王應麟"
+   },
+   {
+    "title": "千字文",
+    "re": "千字文",
+    "author": "",
+    "level": "B1",
+    "authorName": "周興嗣"
+   },
+   {
+    "title": "西廂記",
+    "re": "西廂|西厢",
+    "author": "",
+    "level": "C1",
+    "authorName": "王實甫"
+   },
+   {
+    "title": "官場現形記",
+    "re": "官場|官场",
+    "author": "",
+    "level": "C1",
+    "authorName": "李寶嘉"
+   },
+   {
+    "title": "封神演義",
+    "re": "封神",
+    "author": "",
+    "level": "C1",
+    "authorName": "許仲琳"
+   },
+   {
+    "title": "兒女英雄傳",
+    "re": "兒女英雄|儿女英雄",
+    "author": "",
+    "level": "C1",
+    "authorName": "文康"
+   },
+   {
+    "title": "今古奇觀",
+    "re": "今古奇",
+    "author": "",
+    "level": "C1",
+    "authorName": "抱甕老人"
+   },
+   {
+    "title": "孟子",
+    "re": "孟子",
+    "author": "",
+    "level": "B2",
+    "authorName": "孟子"
+   },
+   {
+    "title": "史記",
+    "re": "史記|史记",
+    "author": "",
+    "level": "C1",
+    "authorName": "司馬遷"
+   },
+   {
+    "title": "唐詩三百首",
+    "re": "唐詩三百|唐诗三百",
+    "author": "",
+    "level": "B1",
+    "authorName": "蘅塘退士"
+   }
+  ],
+  "ar": []
+ },
+ "W": {
+  "fr": [
+   [
+    "Fables de La Fontaine (éd. 1874)/La Cigale et la Fourmi",
+    "La Cigale et la Fourmi",
+    "Jean de La Fontaine",
+    "fable",
+    "B2"
+   ],
+   [
+    "Le Corbeau et le Renard (La Fontaine)",
+    "Le Corbeau et le Renard",
+    "Jean de La Fontaine",
+    "fable",
+    "B2"
+   ],
+   [
+    "Le Loup et l’Agneau (La Fontaine)",
+    "Le Loup et l’Agneau",
+    "Jean de La Fontaine",
+    "fable",
+    "B2"
+   ],
+   [
+    "Fables de La Fontaine (éd. 1874)/Le Lièvre et la Tortue",
+    "Le Lièvre et la Tortue",
+    "Jean de La Fontaine",
+    "fable",
+    "B2"
+   ],
+   [
+    "Fables de La Fontaine (éd. 1874)/Le Chêne et le Roseau",
+    "Le Chêne et le Roseau",
+    "Jean de La Fontaine",
+    "fable",
+    "B2"
+   ],
+   [
+    "Fables de La Fontaine (éd. 1874)/La Grenouille qui se veut faire aussi grosse que le Bœuf",
+    "La Grenouille qui se veut faire aussi grosse que le Bœuf",
+    "Jean de La Fontaine",
+    "fable",
+    "B2"
+   ],
+   [
+    "Le Rat de Ville, et le Rat des Champs (La Fontaine)",
+    "Le Rat de ville et le Rat des champs",
+    "Jean de La Fontaine",
+    "fable",
+    "B2"
+   ],
+   [
+    "Contes de Perrault (éd. 1902)/Cendrillon ou la petite Pantoufle de verre",
+    "Cendrillon",
+    "Charles Perrault",
+    "tale",
+    "B1"
+   ],
+   [
+    "Contes de Perrault (éd. 1902)/Le maître Chat ou le Chat botté",
+    "Le Chat botté",
+    "Charles Perrault",
+    "tale",
+    "B1"
+   ],
+   [
+    "Les Contemplations/« Demain, dès l’aube, à l’heure où blanchit la campagne »",
+    "Demain, dès l’aube…",
+    "Victor Hugo",
+    "poem",
+    "B2"
+   ],
+   [
+    "Les Fleurs du mal (1861)/L’Albatros",
+    "L’Albatros",
+    "Charles Baudelaire",
+    "poem",
+    "B2"
+   ],
+   [
+    "Les Odes (Ronsard)/« Mignonne, allons voir si la rose »",
+    "Mignonne, allons voir si la rose",
+    "Pierre de Ronsard",
+    "poem",
+    "B2"
+   ],
+   [
+    "Alcools/Le Pont Mirabeau",
+    "Le Pont Mirabeau",
+    "Guillaume Apollinaire",
+    "poem",
+    "B2"
+   ],
+   [
+    "Poésies (Rimbaud)/éd. Vanier, 1895/Sensation",
+    "Sensation",
+    "Arthur Rimbaud",
+    "poem",
+    "B2"
+   ],
+   [
+    "Méditations poétiques (éd. originale 1820)/Le Lac",
+    "Le Lac",
+    "Alphonse de Lamartine",
+    "poem",
+    "C1"
+   ],
+   [
+    "Lettres de mon moulin/La chèvre de monsieur Seguin",
+    "La Chèvre de monsieur Seguin",
+    "Alphonse Daudet",
+    "story",
+    "B1"
+   ],
+   [
+    "Lettres de mon moulin/Les étoiles",
+    "Les Étoiles",
+    "Alphonse Daudet",
+    "story",
+    "B1"
+   ],
+   [
+    "Miss Harriet (recueil)/Édition Conard, 1910/La Ficelle",
+    "La Ficelle",
+    "Guy de Maupassant",
+    "story",
+    "B2"
+   ],
+   [
+    "Contes du jour et de la nuit (éd. Flammarion, 1885)/La Parure",
+    "La Parure",
+    "Guy de Maupassant",
+    "story",
+    "B2"
+   ],
+   [
+    "Le Petit Poucet (Perrault)",
+    "Le Petit Poucet",
+    "Charles Perrault",
+    "tale",
+    "B1"
+   ],
+   [
+    "La Belle au bois dormant (Perrault)",
+    "La Belle au bois dormant",
+    "Charles Perrault",
+    "tale",
+    "B1"
+   ],
+   [
+    "Le Petit Chaperon rouge (Perrault)",
+    "Le Petit Chaperon rouge",
+    "Charles Perrault",
+    "tale",
+    "B1"
+   ],
+   [
+    "La Chèvre de monsieur Seguin",
+    "La Chèvre de monsieur Seguin",
+    "Alphonse Daudet",
+    "story",
+    "B1"
+   ],
+   [
+    "La Parure",
+    "La Parure",
+    "Guy de Maupassant",
+    "story",
+    "B2"
+   ],
+   [
+    "Les Fées",
+    "Les Fées",
+    "Charles Perrault",
+    "tale",
+    "B1"
+   ],
+   [
+    "Barbe-bleue",
+    "Barbe-bleue",
+    "Charles Perrault",
+    "tale",
+    "B1"
+   ],
+   [
+    "Les Fleurs du mal (1861)/Spleen (« J’ai plus de souvenirs que si j’avais mille ans »)",
+    "Spleen",
+    "Charles Baudelaire",
+    "poem",
+    "C1"
+   ],
+   [
+    "Les Fleurs du mal (1861)/L’Invitation au voyage",
+    "L’Invitation au voyage",
+    "Charles Baudelaire",
+    "poem",
+    "C1"
+   ]
+  ],
+  "es": [
+   [
+    "La cigarra y la hormiga (Samaniego)",
+    "La cigarra y la hormiga",
+    "Félix María de Samaniego",
+    "fable",
+    "B1"
+   ],
+   [
+    "El cuervo y el zorro",
+    "El cuervo y el zorro",
+    "Félix María de Samaniego",
+    "fable",
+    "B1"
+   ],
+   [
+    "El burro flautista",
+    "El burro flautista",
+    "Tomás de Iriarte",
+    "fable",
+    "B1"
+   ],
+   [
+    "El escarabajo (Tomás de Iriarte)",
+    "El escarabajo",
+    "Tomás de Iriarte",
+    "fable",
+    "B1"
+   ],
+   [
+    "El lobo y el pastor (Iriarte)",
+    "El lobo y el pastor",
+    "Tomás de Iriarte",
+    "fable",
+    "B1"
+   ],
+   [
+    "La campana y el esquilón",
+    "La campana y el esquilón",
+    "Tomás de Iriarte",
+    "fable",
+    "B1"
+   ],
+   [
+    "La hormiga y la pulga",
+    "La hormiga y la pulga",
+    "Tomás de Iriarte",
+    "fable",
+    "B1"
+   ],
+   [
+    "Rimas (Bécquer, 1885)/Rima XXI",
+    "Rima XXI",
+    "Gustavo Adolfo Bécquer",
+    "poem",
+    "B2"
+   ],
+   [
+    "Rimas (Bécquer, 1885)/Rima LIII",
+    "Volverán las oscuras golondrinas",
+    "Gustavo Adolfo Bécquer",
+    "poem",
+    "B2"
+   ],
+   [
+    "Rimas (Bécquer, 1885)/Rima XII",
+    "Rima XII",
+    "Gustavo Adolfo Bécquer",
+    "poem",
+    "B2"
+   ],
+   [
+    "Sonatina",
+    "Sonatina",
+    "Rubén Darío",
+    "poem",
+    "B2"
+   ],
+   [
+    "Lo fatal",
+    "Lo fatal",
+    "Rubén Darío",
+    "poem",
+    "B2"
+   ],
+   [
+    "La saeta (Machado)",
+    "La saeta",
+    "Antonio Machado",
+    "poem",
+    "B2"
+   ],
+   [
+    "El viajero (Machado)",
+    "El viajero",
+    "Antonio Machado",
+    "poem",
+    "B2"
+   ],
+   [
+    "La gallina degollada",
+    "La gallina degollada",
+    "Horacio Quiroga",
+    "story",
+    "B2"
+   ],
+   [
+    "La tortuga gigante",
+    "La tortuga gigante",
+    "Horacio Quiroga",
+    "story",
+    "B1"
+   ],
+   [
+    "Las medias de los flamencos",
+    "Las medias de los flamencos",
+    "Horacio Quiroga",
+    "story",
+    "B1"
+   ],
+   [
+    "El rayo de luna",
+    "El rayo de luna",
+    "Gustavo Adolfo Bécquer",
+    "story",
+    "B2"
+   ],
+   [
+    "Los ojos verdes",
+    "Los ojos verdes",
+    "Gustavo Adolfo Bécquer",
+    "story",
+    "B2"
+   ],
+   [
+    "Cuento de Navidad (Pardo Bazán)",
+    "Cuento de Navidad",
+    "Emilia Pardo Bazán",
+    "story",
+    "B2"
+   ],
+   [
+    "Cultivo una rosa blanca",
+    "Cultivo una rosa blanca",
+    "José Martí",
+    "poem",
+    "B1"
+   ],
+   [
+    "Versos sencillos/I",
+    "Yo soy un hombre sincero",
+    "José Martí",
+    "poem",
+    "B1"
+   ]
+  ],
+  "de": [
+   [
+    "Erlkönig",
+    "Erlkönig",
+    "Johann Wolfgang von Goethe",
+    "poem",
+    "B2"
+   ],
+   [
+    "Ein Gleiches",
+    "Ein Gleiches",
+    "Johann Wolfgang von Goethe",
+    "poem",
+    "B1"
+   ],
+   [
+    "Der Panther",
+    "Der Panther",
+    "Rainer Maria Rilke",
+    "poem",
+    "B2"
+   ],
+   [
+    "Herbsttag",
+    "Herbsttag",
+    "Rainer Maria Rilke",
+    "poem",
+    "B2"
+   ],
+   [
+    "Der Handschuh",
+    "Der Handschuh",
+    "Friedrich Schiller",
+    "poem",
+    "B2"
+   ],
+   [
+    "Mondnacht",
+    "Mondnacht",
+    "Joseph von Eichendorff",
+    "poem",
+    "B2"
+   ],
+   [
+    "Die Bürgschaft",
+    "Die Bürgschaft",
+    "Friedrich Schiller",
+    "poem",
+    "C1"
+   ],
+   [
+    "Die Lorelei",
+    "Die Lorelei",
+    "Heinrich Heine",
+    "poem",
+    "B1"
+   ],
+   [
+    "Der Zauberlehrling",
+    "Der Zauberlehrling",
+    "Johann Wolfgang von Goethe",
+    "poem",
+    "B2"
+   ],
+   [
+    "Die Bremer Stadtmusikanten (1843)",
+    "Die Bremer Stadtmusikanten",
+    "Brüder Grimm",
+    "tale",
+    "B1"
+   ],
+   [
+    "Hänsel und Gretel (1812)",
+    "Hänsel und Gretel",
+    "Brüder Grimm",
+    "tale",
+    "B1"
+   ],
+   [
+    "Rumpelstilzchen (1837)",
+    "Rumpelstilzchen",
+    "Brüder Grimm",
+    "tale",
+    "B1"
+   ],
+   [
+    "Frau Holle (1843)",
+    "Frau Holle",
+    "Brüder Grimm",
+    "tale",
+    "B1"
+   ],
+   [
+    "Der Froschkönig oder der eiserne Heinrich (1843)",
+    "Der Froschkönig",
+    "Brüder Grimm",
+    "tale",
+    "B1"
+   ],
+   [
+    "Der gestiefelte Kater (1812)",
+    "Der gestiefelte Kater",
+    "Brüder Grimm",
+    "tale",
+    "B1"
+   ],
+   [
+    "Der Hase und der Igel (1857)",
+    "Der Hase und der Igel",
+    "Brüder Grimm",
+    "tale",
+    "B1"
+   ],
+   [
+    "Die Sterntaler",
+    "Die Sterntaler",
+    "Brüder Grimm",
+    "tale",
+    "A2"
+   ],
+   [
+    "Rotkäppchen (1857)",
+    "Rotkäppchen",
+    "Brüder Grimm",
+    "tale",
+    "B1"
+   ],
+   [
+    "Schneewittchen (1857)",
+    "Schneewittchen",
+    "Brüder Grimm",
+    "tale",
+    "B1"
+   ],
+   [
+    "Aschenputtel (1857)",
+    "Aschenputtel",
+    "Brüder Grimm",
+    "tale",
+    "B1"
+   ],
+   [
+    "Das Lied von der Glocke (1854)",
+    "Das Lied von der Glocke",
+    "Friedrich Schiller",
+    "poem",
+    "C1"
+   ],
+   [
+    "Der Wolf und die sieben jungen Geißlein",
+    "Der Wolf und die sieben jungen Geißlein",
+    "Brüder Grimm",
+    "tale",
+    "A2"
+   ]
+  ],
+  "ru": [
+   [
+    "Ворона и Лисица (Крылов)",
+    "Ворона и Лисица",
+    "Иван Крылов",
+    "fable",
+    "B1"
+   ],
+   [
+    "Стрекоза и Муравей (Крылов)",
+    "Стрекоза и Муравей",
+    "Иван Крылов",
+    "fable",
+    "B1"
+   ],
+   [
+    "Волк и Ягнёнок (Крылов)",
+    "Волк и Ягнёнок",
+    "Иван Крылов",
+    "fable",
+    "B1"
+   ],
+   [
+    "Мартышка и очки (Крылов)",
+    "Мартышка и очки",
+    "Иван Крылов",
+    "fable",
+    "B1"
+   ],
+   [
+    "Лебедь, Щука и Рак (Крылов)",
+    "Лебедь, Щука и Рак",
+    "Иван Крылов",
+    "fable",
+    "B1"
+   ],
+   [
+    "Квартет (Крылов)",
+    "Квартет",
+    "Иван Крылов",
+    "fable",
+    "B1"
+   ],
+   [
+    "Слон и Моська (Крылов)",
+    "Слон и Моська",
+    "Иван Крылов",
+    "fable",
+    "B1"
+   ],
+   [
+    "К *** («Я помню чудное мгновенье...») (Пушкин)",
+    "Я помню чудное мгновенье",
+    "Александр Пушкин",
+    "poem",
+    "B2"
+   ],
+   [
+    "Выхожу один я на дорогу (Лермонтов)",
+    "Выхожу один я на дорогу",
+    "Михаил Лермонтов",
+    "poem",
+    "B2"
+   ],
+   [
+    "Парус (Лермонтов)",
+    "Парус",
+    "Михаил Лермонтов",
+    "poem",
+    "B2"
+   ],
+   [
+    "Три медведя (Толстой)",
+    "Три медведя",
+    "Лев Толстой",
+    "tale",
+    "A2"
+   ],
+   [
+    "Филипок (Толстой)",
+    "Филипок",
+    "Лев Толстой",
+    "story",
+    "A2"
+   ],
+   [
+    "Корова (Толстой)",
+    "Корова",
+    "Лев Толстой",
+    "story",
+    "A2"
+   ],
+   [
+    "Репка (Ушинский)",
+    "Репка",
+    "Константин Ушинский",
+    "tale",
+    "A1"
+   ],
+   [
+    "Народные русские сказки (Афанасьев)/Колобок",
+    "Колобок",
+    "Александр Афанасьев",
+    "tale",
+    "A2"
+   ],
+   [
+    "Народные русские сказки (Афанасьев)/Царевна-лягушка",
+    "Царевна-лягушка",
+    "Александр Афанасьев",
+    "tale",
+    "B1"
+   ],
+   [
+    "Смерть чиновника (Чехов)",
+    "Смерть чиновника",
+    "Антон Чехов",
+    "story",
+    "B2"
+   ],
+   [
+    "Тоска (Чехов)",
+    "Тоска",
+    "Антон Чехов",
+    "story",
+    "B2"
+   ],
+   [
+    "Хамелеон (Чехов)/Версия 2",
+    "Хамелеон",
+    "Антон Чехов",
+    "story",
+    "B2"
+   ],
+   [
+    "Сказка о рыбаке и рыбке (Пушкин)",
+    "Сказка о рыбаке и рыбке",
+    "Александр Пушкин",
+    "tale",
+    "B1"
+   ],
+   [
+    "Сказка о попе и о работнике его Балде (Пушкин)",
+    "Сказка о попе и о работнике его Балде",
+    "Александр Пушкин",
+    "tale",
+    "B2"
+   ],
+   [
+    "Зимний вечер (Пушкин)",
+    "Зимний вечер",
+    "Александр Пушкин",
+    "poem",
+    "B2"
+   ],
+   [
+    "Бородино (Лермонтов)",
+    "Бородино",
+    "Михаил Лермонтов",
+    "poem",
+    "B2"
+   ]
+  ],
+  "zh": [
+   [
+    "靜夜思",
+    "靜夜思",
+    "李白",
+    "poem",
+    "A2"
+   ],
+   [
+    "登鸛雀樓",
+    "登鸛雀樓",
+    "王之渙",
+    "poem",
+    "A2"
+   ],
+   [
+    "詠鵝",
+    "詠鵝",
+    "駱賓王",
+    "poem",
+    "A1"
+   ],
+   [
+    "春曉",
+    "春曉",
+    "孟浩然",
+    "poem",
+    "A2"
+   ],
+   [
+    "憫農",
+    "憫農",
+    "李紳",
+    "poem",
+    "A2"
+   ],
+   [
+    "江雪",
+    "江雪",
+    "柳宗元",
+    "poem",
+    "B1"
+   ],
+   [
+    "春夜喜雨",
+    "春夜喜雨",
+    "杜甫",
+    "poem",
+    "B1"
+   ],
+   [
+    "相思 (王維)",
+    "相思",
+    "王維",
+    "poem",
+    "A2"
+   ],
+   [
+    "楓橋夜泊",
+    "楓橋夜泊",
+    "張繼",
+    "poem",
+    "B1"
+   ],
+   [
+    "遊子吟 (孟郊)",
+    "遊子吟",
+    "孟郊",
+    "poem",
+    "B1"
+   ],
+   [
+    "望廬山瀑布",
+    "望廬山瀑布",
+    "李白",
+    "poem",
+    "B1"
+   ],
+   [
+    "早發白帝城",
+    "早發白帝城",
+    "李白",
+    "poem",
+    "B1"
+   ],
+   [
+    "九月九日憶山東兄弟",
+    "九月九日憶山東兄弟",
+    "王維",
+    "poem",
+    "B1"
+   ],
+   [
+    "三字經",
+    "三字經",
+    "王應麟",
+    "essay",
+    "A2"
+   ],
+   [
+    "弟子規",
+    "弟子規",
+    "李毓秀",
+    "essay",
+    "B1"
+   ],
+   [
+    "論語/學而第一",
+    "論語·學而",
+    "孔子",
+    "essay",
+    "B2"
+   ],
+   [
+    "陋室銘",
+    "陋室銘",
+    "劉禹錫",
+    "essay",
+    "B2"
+   ],
+   [
+    "愛蓮說",
+    "愛蓮說",
+    "周敦頤",
+    "essay",
+    "B2"
+   ],
+   [
+    "前出師表",
+    "前出師表",
+    "諸葛亮",
+    "essay",
+    "C1"
+   ],
+   [
+    "桃花源記",
+    "桃花源記",
+    "陶淵明",
+    "story",
+    "B2"
+   ],
+   [
+    "醉翁亭記",
+    "醉翁亭記",
+    "歐陽脩",
+    "essay",
+    "C1"
+   ],
+   [
+    "赤壁賦",
+    "赤壁賦",
+    "蘇軾",
+    "poem",
+    "C1"
+   ],
+   [
+    "登高",
+    "登高",
+    "杜甫",
+    "poem",
+    "B2"
+   ],
+   [
+    "鹿柴",
+    "鹿柴",
+    "王維",
+    "poem",
+    "B1"
+   ],
+   [
+    "山居秋暝",
+    "山居秋暝",
+    "王維",
+    "poem",
+    "B2"
+   ],
+   [
+    "登幽州臺歌",
+    "登幽州臺歌",
+    "陳子昂",
+    "poem",
+    "B1"
+   ],
+   [
+    "黃鶴樓",
+    "黃鶴樓",
+    "崔顥",
+    "poem",
+    "B2"
+   ],
+   [
+    "涼州詞 (王之渙)",
+    "涼州詞",
+    "王之渙",
+    "poem",
+    "B1"
+   ]
+  ],
+  "ar": [
+   [
+    "لامية العرب",
+    "لامية العرب",
+    "الشنفرى",
+    "poem",
+    "C1"
+   ],
+   [
+    "قفا نبك من ذكرى حبيب ومنزل (معلقة)",
+    "قفا نبك",
+    "امرؤ القيس",
+    "poem",
+    "C1"
+   ],
+   [
+    "إرادة الحياة",
+    "إرادة الحياة",
+    "أبو القاسم الشابي",
+    "poem",
+    "B2"
+   ],
+   [
+    "على قدر أهل العزم تأتي العزائم",
+    "على قدر أهل العزم",
+    "المتنبي",
+    "poem",
+    "C1"
+   ],
+   [
+    "قم للمعلم",
+    "قم للمعلم",
+    "أحمد شوقي",
+    "poem",
+    "B2"
+   ],
+   [
+    "أراك عصي الدمع",
+    "أراك عصي الدمع",
+    "أبو فراس الحمداني",
+    "poem",
+    "C1"
+   ],
+   [
+    "هل غادر الشعراء من متردم (معلقة)",
+    "هل غادر الشعراء من متردم",
+    "عنترة بن شداد",
+    "poem",
+    "C1"
+   ],
+   [
+    "وا حر قلباه ممن قلبه شبم",
+    "وا حر قلباه",
+    "المتنبي",
+    "poem",
+    "C1"
+   ],
+   [
+    "دمعة وابتسامة (1914)/ابتسامة ودمعة",
+    "ابتسامة ودمعة",
+    "جبران خليل جبران",
+    "essay",
+    "B2"
+   ],
+   [
+    "دمعة وابتسامة (1914)/النفس",
+    "النفس",
+    "جبران خليل جبران",
+    "essay",
+    "B2"
+   ],
+   [
+    "الأجنحة المتكسرة/توطئة",
+    "الأجنحة المتكسرة: توطئة",
+    "جبران خليل جبران",
+    "story",
+    "B2"
+   ],
+   [
+    "الأجنحة المتكسرة/الشعلة البيضاء",
+    "الشعلة البيضاء",
+    "جبران خليل جبران",
+    "story",
+    "B2"
+   ],
+   [
+    "كليلة ودمنة/باب الفحص عن أمر دمنة",
+    "باب الفحص عن أمر دمنة",
+    "ابن المقفع",
+    "fable",
+    "C1"
+   ],
+   [
+    "صلوات في هيكل الحب",
+    "صلوات في هيكل الحب",
+    "جبران خليل جبران",
+    "poem",
+    "B2"
+   ]
+  ]
+ },
+ "C": {
+  "ru": [
+   [
+    "Шинель (Гоголь)",
+    "Шинель",
+    "Николай Гоголь",
+    "B2"
+   ],
+   [
+    "Муму (Тургенев)",
+    "Муму",
+    "Иван Тургенев",
+    "B1"
+   ],
+   [
+    "Капитанская дочка (Пушкин)",
+    "Капитанская дочка",
+    "Александр Пушкин",
+    "B2"
+   ],
+   [
+    "Пиковая дама (Пушкин)",
+    "Пиковая дама",
+    "Александр Пушкин",
+    "B2"
+   ],
+   [
+    "Белые ночи (Достоевский)",
+    "Белые ночи",
+    "Фёдор Достоевский",
+    "B2"
+   ],
+   [
+    "Дама с собачкой (Чехов)",
+    "Дама с собачкой",
+    "Антон Чехов",
+    "B2"
+   ],
+   [
+    "Каштанка (Чехов)",
+    "Каштанка",
+    "Антон Чехов",
+    "B1"
+   ],
+   [
+    "Тарас Бульба (Гоголь)",
+    "Тарас Бульба",
+    "Николай Гоголь",
+    "B2"
+   ],
+   [
+    "Бедная Лиза (Карамзин)",
+    "Бедная Лиза",
+    "Николай Карамзин",
+    "B2"
+   ],
+   [
+    "Дубровский (Пушкин)",
+    "Дубровский",
+    "Александр Пушкин",
+    "B2"
+   ],
+   [
+    "Нос (Гоголь)",
+    "Нос",
+    "Николай Гоголь",
+    "B2"
+   ],
+   [
+    "Ася (Тургенев)",
+    "Ася",
+    "Иван Тургенев",
+    "B2"
+   ],
+   [
+    "Хаджи-Мурат (Толстой)",
+    "Хаджи-Мурат",
+    "Лев Толстой",
+    "C1"
+   ],
+   [
+    "Детство (Толстой)",
+    "Детство",
+    "Лев Толстой",
+    "B2"
+   ],
+   [
+    "Вий (Гоголь)",
+    "Вий",
+    "Николай Гоголь",
+    "B2"
+   ],
+   [
+    "Мцыри (Лермонтов)",
+    "Мцыри",
+    "Михаил Лермонтов",
+    "B2"
+   ],
+   [
+    "Евгений Онегин (Пушкин)",
+    "Евгений Онегин",
+    "Александр Пушкин",
+    "C1"
+   ],
+   [
+    "Герой нашего времени (Лермонтов)",
+    "Герой нашего времени",
+    "Михаил Лермонтов",
+    "C1"
+   ],
+   [
+    "Отцы и дети (Тургенев)",
+    "Отцы и дети",
+    "Иван Тургенев",
+    "C1"
+   ],
+   [
+    "Ревизор (Гоголь)",
+    "Ревизор",
+    "Николай Гоголь",
+    "B2"
+   ],
+   [
+    "Записки сумасшедшего (Гоголь)",
+    "Записки сумасшедшего",
+    "Николай Гоголь",
+    "B2"
+   ],
+   [
+    "Невский проспект (Гоголь)",
+    "Невский проспект",
+    "Николай Гоголь",
+    "B2"
+   ],
+   [
+    "Ночь перед Рождеством (Гоголь)",
+    "Ночь перед Рождеством",
+    "Николай Гоголь",
+    "B2"
+   ],
+   [
+    "Бежин луг (Тургенев)",
+    "Бежин луг",
+    "Иван Тургенев",
+    "B2"
+   ]
+  ],
+  "ar": [
+   [
+    "كليلة ودمنة",
+    "كليلة ودمنة",
+    "ابن المقفع",
+    "C1"
+   ],
+   [
+    "ألف ليلة وليلة",
+    "ألف ليلة وليلة",
+    "مجهول",
+    "B2"
+   ],
+   [
+    "الأجنحة المتكسرة",
+    "الأجنحة المتكسرة",
+    "جبران خليل جبران",
+    "B2"
+   ],
+   [
+    "دمعة وابتسامة (1914)",
+    "دمعة وابتسامة",
+    "جبران خليل جبران",
+    "B2"
+   ],
+   [
+    "حي بن يقظان",
+    "حي بن يقظان",
+    "ابن طفيل",
+    "C1"
+   ],
+   [
+    "رسالة الغفران",
+    "رسالة الغفران",
+    "أبو العلاء المعري",
+    "C1"
+   ],
+   [
+    "مقامات الحريري",
+    "مقامات الحريري",
+    "الحريري",
+    "C1"
+   ],
+   [
+    "البخلاء",
+    "البخلاء",
+    "الجاحظ",
+    "C1"
+   ],
+   [
+    "طوق الحمامة",
+    "طوق الحمامة",
+    "ابن حزم",
+    "C1"
+   ],
+   [
+    "ديوان المتنبي",
+    "ديوان المتنبي",
+    "المتنبي",
+    "C1"
+   ],
+   [
+    "البيان والتبيين",
+    "البيان والتبيين",
+    "الجاحظ",
+    "C1"
+   ],
+   [
+    "كتاب الأغاني",
+    "كتاب الأغاني",
+    "أبو الفرج الأصفهاني",
+    "C1"
+   ],
+   [
+    "ديوان عنترة",
+    "ديوان عنترة",
+    "عنترة بن شداد",
+    "C1"
+   ],
+   [
+    "ديوان امرئ القيس",
+    "ديوان امرئ القيس",
+    "امرؤ القيس",
+    "C1"
+   ],
+   [
+    "الأيام (جبران)",
+    "الأيام",
+    "",
+    "C1"
+   ]
+  ]
+ }
+}
