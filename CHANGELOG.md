@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.29** · 2026-11-05 · Home: left-off card with Words for today, square Discover cards, accent hover
 - **0.1.0-alpha.28** · 2026-11-05 · Home fits one screen, dynamic What next, weekly tracker, centred-greeting setting
 - **0.1.0-alpha.27** · 2026-11-04 · speech-bubble logo (light/dark), burnt-orange welcome book, skip switch to the right
 - **0.1.0-alpha.26** · 2026-11-04 · Lemora 1.1 planned in depth: numbered pushes and specs in docs/1.1, four decisions (docs only)
