@@ -47,7 +47,7 @@ export function ExploraHeaderBar({ category, onSelectCategory, savedCount, learn
       'group flex h-8 shrink-0 items-center gap-1.5 rounded-full px-3 text-[12.5px] font-bold transition-all duration-150 active:scale-95',
       classic
         ? active ? 'bg-inverse text-on-inverse shadow-elev-1' : 'bg-surface/70 text-ink-soft hover:bg-surface hover:text-ink'
-        : active ? 'bg-accent-fill text-on-accent shadow-elev-1' : 'text-ink-soft hover:text-accent-text',
+        : active ? 'border border-accent bg-accent-fill text-on-accent shadow-elev-1' : 'border border-accent/50 text-ink-soft hover:bg-accent-soft hover:text-accent-text',
     );
   // Lemora U4: All · Books · Articles · Comics and magazines · Word decks · Ludus · Things to try (and Lingua's rooms where it has them).
   const categories = ([

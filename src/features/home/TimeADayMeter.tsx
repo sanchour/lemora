@@ -265,7 +265,7 @@ function OnboardingGoalSlider({
           <svg
             viewBox="0 0 600 20"
             preserveAspectRatio="none"
-            className="pointer-events-none absolute inset-x-0 top-1/2 h-5 -translate-y-1/2 overflow-visible text-line-strong"
+            className="pointer-events-none absolute inset-x-0 top-1/2 h-5 w-full -translate-y-1/2 overflow-visible text-line-strong"
             aria-hidden
           >
             <path

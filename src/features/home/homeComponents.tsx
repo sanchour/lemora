@@ -242,7 +242,72 @@ export function GreetingWithNameUnderline({
 // ── Where You Left Off ───────────────────────────────────────────────────────
 
 /** A thick pen line with a little flower in its middle: two brush strokes that taper away from it. */
-export function PenFlourish({ className }: { className?: string }) {
+/** Each core language's small ornament for the middle of the flourish (44×22, drawn in one pen colour); any other language keeps the sprig. */
+function FlourishMotif({ lang }: { lang?: string }) {
+  switch (lang) {
+    case 'fr': // a fleur-de-lis
+      return (
+        <>
+          <path d="M22 3C18.5 6.5 18.5 11 22 14C25.5 11 25.5 6.5 22 3Z" fill="currentColor" fillOpacity={0.22} />
+          <path d="M20 13C14 12.5 11 8.5 13 6C14.5 8 17 8.6 19.4 8.4M24 13C30 12.5 33 8.5 31 6C29.5 8 27 8.6 24.6 8.4" />
+          <path d="M16.5 15.2H27.5M22 14V19.5M19.5 19.5H24.5" />
+        </>
+      );
+    case 'es': // an azulejo tile rosette: four petals round a seed
+      return (
+        <>
+          <path d="M22 2.5C25 6 25 8.5 22 11C19 8.5 19 6 22 2.5ZM22 11C25 13.5 25 16 22 19.5C19 16 19 13.5 22 11ZM11.5 11C15 8 17.5 8 20.2 11C17.5 14 15 14 11.5 11ZM23.8 11C26.5 8 29 8 32.5 11C29 14 26.5 14 23.8 11Z" fill="currentColor" fillOpacity={0.2} />
+          <circle cx={22} cy={11} r={1.5} fill="currentColor" stroke="none" />
+        </>
+      );
+    case 'de': // a pretzel-like knot between two oak leaves
+      return (
+        <>
+          <path d="M22 17C16 17 13 12 16 8.5C19 5.5 22 9 22 12C22 9 25 5.5 28 8.5C31 12 28 17 22 17Z" fill="currentColor" fillOpacity={0.15} />
+          <path d="M10 15C8 11 9 8 12 6.5C12.5 10 11.5 12.5 10 15ZM34 15C36 11 35 8 32 6.5C31.5 10 32.5 12.5 34 15Z" strokeWidth={1} />
+        </>
+      );
+    case 'ru': // three onion domes
+      return (
+        <>
+          <path d="M22 2C19 5 18 8 20 10.5H24C26 8 25 5 22 2ZM12.5 7.5C10.5 9.5 10.2 11.4 11.6 13H15.4C16.8 11.4 16.5 9.5 14.5 7.5ZM29.5 7.5C27.5 9.5 27.2 11.4 28.6 13H32.4C33.8 11.4 33.5 9.5 31.5 7.5Z" fill="currentColor" fillOpacity={0.22} />
+          <path d="M20 10.5V19M24 10.5V19M11.6 13V19M15.4 13V19M28.6 13V19M32.4 13V19M9.5 19H34.5" strokeWidth={1} />
+        </>
+      );
+    case 'zh': // a plum blossom with a seal square
+      return (
+        <>
+          <circle cx={22} cy={6} r={3.2} fill="currentColor" fillOpacity={0.22} />
+          <circle cx={29} cy={11} r={3.2} fill="currentColor" fillOpacity={0.22} />
+          <circle cx={26.4} cy={18} r={3.2} fill="currentColor" fillOpacity={0.22} />
+          <circle cx={17.6} cy={18} r={3.2} fill="currentColor" fillOpacity={0.22} />
+          <circle cx={15} cy={11} r={3.2} fill="currentColor" fillOpacity={0.22} />
+          <circle cx={22} cy={12} r={1.3} fill="currentColor" stroke="none" />
+        </>
+      );
+    case 'ar': // an eight-point star
+      return (
+        <>
+          <path d="M22 1.5L25.2 7.3L31.3 4.7L30.7 11L37 11.4L32 15.2L36 20.2L29.7 18.3L27.2 21L22 17.5L16.8 21L14.3 18.3L8 20.2L12 15.2L7 11.4L13.3 11L12.7 4.7L18.8 7.3Z" fill="currentColor" fillOpacity={0.2} transform="translate(0 -0.5) scale(1 0.9)" />
+          <circle cx={22} cy={11} r={1.4} fill="currentColor" stroke="none" />
+        </>
+      );
+    default:
+      return (
+        <>
+          {/* A little sprig drawn in one go: two leaves, a curl and a seed. */}
+          <path d="M21.6 12C18.4 6.4 13 4.8 8.6 7C11.6 11.4 17 12.8 21.6 12Z" fill="currentColor" fillOpacity={0.22} />
+          <path d="M22.4 12C25.8 6.2 31.4 4.4 35.6 6.8C32.4 11.4 26.8 12.8 22.4 12Z" fill="currentColor" fillOpacity={0.22} />
+          <path d="M21.6 12C16 10.6 12 8.4 9.6 7.4M22.4 12C28 10.4 32 8 34.6 7" strokeWidth={0.9} opacity={0.7} />
+          <path d="M22 12.4C22.6 15 21.4 17.6 19 18.4C17 19 15.6 17.6 16.4 16.2C17 15.2 18.4 15.6 18.2 16.6" />
+          <circle cx={26.6} cy={17.6} r={1.5} fill="currentColor" stroke="none" />
+          <circle cx={31.2} cy={15.8} r={0.9} fill="currentColor" stroke="none" opacity={0.6} />
+        </>
+      );
+  }
+}
+
+export function PenFlourish({ className, lang }: { className?: string; lang?: string }) {
   const side = (flip: boolean) => (
     <svg aria-hidden viewBox="0 0 200 14" preserveAspectRatio="none" className={cx('h-3.5 min-w-0 flex-1 overflow-visible', flip && '-scale-x-100')}>
       <path d="M0 9C40 4 90 11 150 7C170 5.6 186 6.6 198 7" fill="none" stroke="currentColor" strokeWidth={3.4} strokeLinecap="round" vectorEffect="non-scaling-stroke" opacity={0.6} />
@@ -253,13 +318,7 @@ export function PenFlourish({ className }: { className?: string }) {
     <div aria-hidden className={cx('flex items-center gap-3 text-accent', className)}>
       {side(false)}
       <svg viewBox="0 0 44 22" className="h-[22px] w-11 shrink-0 overflow-visible" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
-        {/* A little sprig drawn in one go: two leaves, a curl and a seed. */}
-        <path d="M21.6 12C18.4 6.4 13 4.8 8.6 7C11.6 11.4 17 12.8 21.6 12Z" fill="currentColor" fillOpacity={0.22} />
-        <path d="M22.4 12C25.8 6.2 31.4 4.4 35.6 6.8C32.4 11.4 26.8 12.8 22.4 12Z" fill="currentColor" fillOpacity={0.22} />
-        <path d="M21.6 12C16 10.6 12 8.4 9.6 7.4M22.4 12C28 10.4 32 8 34.6 7" strokeWidth={0.9} opacity={0.7} />
-        <path d="M22 12.4C22.6 15 21.4 17.6 19 18.4C17 19 15.6 17.6 16.4 16.2C17 15.2 18.4 15.6 18.2 16.6" />
-        <circle cx={26.6} cy={17.6} r={1.5} fill="currentColor" stroke="none" />
-        <circle cx={31.2} cy={15.8} r={0.9} fill="currentColor" stroke="none" opacity={0.6} />
+        <FlourishMotif lang={lang} />
       </svg>
       {side(true)}
     </div>
@@ -361,7 +420,7 @@ export function WhereLeftOffCard({
         <BookCover text={data.book} size="sm" className="size-full object-cover" />
       </span>
 
-      <span className="mt-3 inline-flex h-9 items-center gap-1.5 rounded-full bg-accent-fill px-4 text-[13px] font-bold text-on-accent shadow-elev-1 transition-transform group-hover:translate-x-0.5">
+      <span className="mt-3 inline-flex h-9 items-center gap-1.5 rounded-full border border-accent/50 px-4 text-[13px] font-bold text-accent-text transition-[transform,background-color] group-hover:translate-x-0.5 group-hover:bg-accent-soft">
         <UiText source={'Continue reading'} /> <ArrowRight size={14} aria-hidden />
       </span>
 
@@ -573,13 +632,14 @@ export function WhatNextSection({
 }) {
   // At most five, side by side, nothing to scroll: the order and the draw are made in useHomeWhatNext (best fit first).
   const shown = (suggestions ?? items ?? []).slice(0, 5);
+  const { language } = useApp();
 
   return (
     <section aria-label="What next" className="space-y-2.5">
       <h2 className="text-center font-serif text-[26px] font-bold tracking-tight text-ink sm:text-[30px]">
         <UiText source={'What next'} />
       </h2>
-      <PenFlourish className="mx-auto max-w-md" />
+      <PenFlourish lang={language.id} className="mx-auto max-w-md" />
 
       <div aria-label="What next suggestions" className="grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 lg:grid-cols-5">
         {shown.map((item) => {
