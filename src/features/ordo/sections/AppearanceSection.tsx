@@ -159,6 +159,12 @@ export function AppearanceSection({
           onChange={(on) => void patchSetting('ui', { homeTools: on })}
         />
         <ToggleRow
+          title={translateUi('Centre the greeting on Home')}
+          description={translateUi('The date and greeting at the top of Home, in the middle of the page instead of at the left.')}
+          checked={settings?.ui.homeHeaderCentered === true}
+          onChange={(on) => void patchSetting('ui', { homeHeaderCentered: on })}
+        />
+        <ToggleRow
           title={translateUi('Earlier My decks design')}
           description={translateUi('Thesaurus › My decks as it was: Today as a book, the decks in a table below it.')}
           checked={settings?.ui.classicDecks === true}

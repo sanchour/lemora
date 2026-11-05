@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { AudioLines, BookOpen, Bookmark, Clapperboard, Feather, Gamepad2, Headphones, Languages, Layers, MessageCircle, MessagesSquare, Music, PenLine, Radio, Sparkles, Waypoints } from 'lucide-react';
+import { AudioLines, BookA, BookOpen, Bookmark, Clapperboard, Feather, Gamepad2, Headphones, Languages, Layers, MessageCircle, MessagesSquare, Music, Newspaper, Palette, PenLine, Radio, Sparkles, Waypoints } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { getLanguage } from '@/core/lang/languages';
@@ -24,6 +24,10 @@ import { homeGreeting } from './HomeClassic';
 import { SECTIONS, shownFor } from '@/app/sections';
 import { reaches, shows } from '@/product';
 import { flowSteps, starterFor } from '@/core/flow/steps';
+import { pickWeighted } from '@/core/flow/pick';
+import { hashString } from '@/core/hash';
+import { localDateKey } from '@/lib/format';
+import { useJournal } from '@/data/journal';
 import type { FlowStep } from '@/core/flow/steps';
 import { FIRST_BOOKS } from '@/core/lang/firstBooks';
 import { useDecks } from '@/data/decks';
@@ -278,6 +282,8 @@ export interface WhatNextItem {
   percent?: number;
   /** The hand-drawn icon (design/drawings) shown instead of the line icon. */
   hand?: HandName;
+  /** A small dot on the card, like a notification (a new daily prompt). */
+  fresh?: boolean;
 }
 
 export type ContinueItem = WhatNextItem;
@@ -295,6 +301,8 @@ export function useHomeWhatNext(): WhatNextItem[] {
   const due = useDueSummary(lang);
   const decks = useDecks(lang);
   const today = useToolDays(lang, 1)?.[0];
+  const journal = useJournal(lang);
+  const day = localDateKey(Date.now());
 
   return useMemo(() => {
     const readable = (allTexts ?? []).filter((t) => t.kind !== 'shelfItem' && !t.finishedAt);
@@ -480,11 +488,34 @@ export function useHomeWhatNext(): WhatNextItem[] {
       },
     ];
 
-    // The level's steps speak for their rooms; the other rooms (Lingua's Sermo, Sonus…) follow.
-    const covered = new Set(Object.values(FLOW).flatMap((f) => (f ? [f.room] : [])));
-    // Only what leads to a room this build has (src/product.ts).
-    return [...flow, ...rooms.filter((r) => !covered.has(r.room))].filter((s) => reaches(s.to));
-  }, [allTexts, progress, due, decks, today, language.level, language.script, language.seededKnownTopN, lang]);
+    // Beyond the level's own steps: things the app has, a daily prompt if it is still waiting, something to read, random words.
+    const beginner = language.level === 'A0' || language.level === 'A1';
+    const wroteToday = minute(today?.byTool.diarium) || (journal ?? []).some((e) => e.date === day && e.words > 0);
+    const extras: Array<WhatNextItem & { weight: number }> = [
+      ...(wroteToday ? [] : [{ id: 'extra:prompt', room: 'Diarium', title: 'Today’s writing prompt', detail: 'A new prompt is waiting for a few lines.', to: '/mentis/diarium', icon: PenLine, hand: 'quill' as const, badge: 'New prompt', actionLabel: 'Write', hue: '#a07858', fresh: true, weight: 12 }]),
+      { id: 'extra:comic', room: 'Explora', title: 'Read a comic', detail: 'A short comic, page by page.', to: '/explora?kind=comics', icon: Palette, badge: 'Comics', actionLabel: 'Read', hue: '#c86d51', weight: beginner ? 3 : 2 },
+      { id: 'extra:news', room: 'News', title: 'Read the news', detail: 'A short article from today’s headlines.', to: '/explora?kind=news', icon: Newspaper, badge: 'News', actionLabel: 'Read', hue: '#5f87a8', weight: beginner ? 0.5 : 2.5 },
+      { id: 'extra:words', room: 'Dictionary', title: 'Explore some words', detail: 'Browse the dictionary and find ones to keep.', to: '/thesaurus?tab=dictionary', icon: BookA, badge: 'Dictionary', actionLabel: 'Open', hue: '#d49b54', weight: 2 },
+      { id: 'extra:atlas', room: 'Atlas', title: 'See your words as a map', detail: 'Every word you have, laid out.', to: '/atlas', icon: Waypoints, badge: 'Atlas', actionLabel: 'Open', hue: '#4f93a0', weight: 1.5 },
+      { id: 'extra:deck', room: 'Decks', title: 'Make a deck', detail: 'Gather words you met into cards.', to: '/thesaurus/make', icon: Layers, badge: 'Decks', actionLabel: 'Make', hue: '#d49b54', weight: decks?.length ? 1.5 : 2.5 },
+    ];
+
+    // First card: the next thing to read, after the book you are in (the second of "continue reading").
+    const queue = readable.filter((t) => t.id !== activeBook?.id).sort((a, b) => (b.lastOpenedAt ?? b.createdAt) - (a.lastOpenedAt ?? a.createdAt));
+    const nextBook = activeBook ? queue[0] : undefined;
+    const first: WhatNextItem | undefined = nextBook
+      ? { id: `next:${nextBook.id}`, room: 'Codex', title: nextBook.title, detail: 'Up next in your library, after the book you are in.', to: `/codex/read/${nextBook.id}`, icon: BookOpen, hand: 'bookmark', badge: 'Up next', actionLabel: 'Read', hue: '#6b8e78', percent: Math.round((progress?.get(nextBook.id)?.percent ?? 0) * 100) || undefined }
+      : undefined;
+
+    // The rest are drawn for today (the same all day): the level's steps count most, the rest of the rooms least.
+    const candidates = [
+      ...flow.filter((f) => f.id !== 'flow:continue').map((f, i) => ({ ...f, weight: Math.max(2, 8 - i * 1.2) })),
+      ...extras,
+      ...rooms.map((r) => ({ ...r, weight: 1.5 })),
+    ].filter((c) => reaches(c.to));
+    const picked = pickWeighted(candidates, first ? 4 : 5, parseInt(hashString(`${lang}|${day}`), 36));
+    return [...(first ? [first] : []), ...picked];
+  }, [allTexts, progress, due, decks, today, journal, day, language.level, language.script, language.seededKnownTopN, lang]);
 }
 
 /** Backward-compatibility alias */

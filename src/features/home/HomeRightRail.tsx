@@ -44,21 +44,23 @@ export function HomeRightRail() {
   const discoverItems = useHomeDiscover();
   // Lemora U3: Tools on Home can be turned off in Settings › Appearance.
   const showTools = settings.ui.homeTools !== false;
+  // Header (date and greeting) at the left of Home, or in the centre.
+  const centered = settings.ui.homeHeaderCentered === true;
 
   return (
-    <div className="mx-auto max-w-[1152px] pb-20">
+    <div className="mx-auto max-w-[1152px]">
       {/* ── Two-Column Atelier: Left Canvas (Header + Work area) + Right Rail (Tools high up) ─── */}
-      <main className="space-y-6">
+      <main className="space-y-3">
         <div className={cx('grid grid-cols-1 items-start gap-7', showTools && 'lg:grid-cols-[1fr_auto]')}>
           {/* Left Column: Header + Learning Content ──────────────────────────── */}
-          <div className="min-w-0 space-y-5">
+          <div className="min-w-0 space-y-3">
             {/* Top Header */}
-            <header className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-start sm:justify-between">
-              <div>
+            <header className={cx('flex flex-col gap-3 pt-1 sm:flex-row sm:items-start', centered ? 'sm:justify-center' : 'sm:justify-between')}>
+              <div className={cx(centered && 'text-center')}>
                 <p className="font-sans text-[11px] font-bold tracking-[0.14em] text-ink-faint uppercase">
                   {eyebrow}
                 </p>
-                <h1 className="mt-1 font-serif text-[34px] leading-tight font-semibold tracking-tight text-ink sm:text-[40px]">
+                <h1 className="mt-0.5 font-serif text-[32px] leading-tight font-semibold tracking-tight text-ink sm:text-[36px]">
                   <GreetingWithNameUnderline greeting={greeting} name={name} />
                 </h1>
               </div>
@@ -75,8 +77,10 @@ export function HomeRightRail() {
             </header>
 
             {/* 1. Where you left off & Cute Time a Day Meter (Side by side, no background) */}
-            <section aria-label="Current studies" className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-[1.55fr_1fr]">
+            <section aria-label="Current studies" className="mt-2 grid grid-cols-1 items-stretch gap-4 md:grid-cols-[1.4fr_auto_1fr]">
               <WhereLeftOffCard data={leftOff} variant="hero" className="h-full bg-transparent" />
+              {/* A thin accent line between the two. */}
+              <span aria-hidden className="hidden w-px self-stretch rounded-full bg-accent/45 md:block" />
               <TimeADayMeter lang={language.id} goalMinutes={goal} className="h-full bg-transparent" />
             </section>
 
@@ -90,7 +94,7 @@ export function HomeRightRail() {
 
           {/* Right Column: Tools, its heading on the greeting's line and its icons level with the cards ─── */}
           {showTools && (
-            <div className="pt-0.5 lg:pt-10">
+            <div className="pt-0.5 lg:pt-1">
               <ToolsBar mode="rail" />
             </div>
           )}

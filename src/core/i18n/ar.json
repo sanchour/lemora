@@ -8152,5 +8152,7 @@
   "Where it is spoken": "أين تُتحدّث",
   "Hover a word. Drag across several. Hold for the whole sentence.": "مرّر على كلمة. اسحب على عدة كلمات. اضغط مطولًا للجملة كاملة.",
   "Translate the sentence": "ترجمة الجملة",
-  "Back to words": "العودة إلى الكلمات"
+  "Back to words": "العودة إلى الكلمات",
+  "Centre the greeting on Home": "توسيط التحية في الصفحة الرئيسية",
+  "The date and greeting at the top of Home, in the middle of the page instead of at the left.": "التاريخ والتحية في أعلى الصفحة الرئيسية، في الوسط بدل اليسار."
 }

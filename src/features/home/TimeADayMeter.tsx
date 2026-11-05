@@ -7,10 +7,6 @@ import { useApp } from '@/app/context';
 import { DAILY_MINUTES } from '@/app/onboarding/GoalStep';
 import { updateLanguage } from '@/data/languages';
 import { useToolDays } from '@/data/toolGoals';
-import { TOOLS } from '@/core/goals/tools';
-import type { ToolId } from '@/core/goals/tools';
-import { useHomeTools } from './homeData';
-import { ToolDuotoneIcon } from './homeComponents';
 import { UiText, useUi } from '@/design/i18n/UiText';
 import { spring } from '@/design/motion';
 import { cx } from '@/lib/cx';
@@ -26,6 +22,9 @@ function clockWedge(fraction: number): string {
   const y = 16 - 11 * Math.cos(a);
   return `M16 16L16 5A11 11 0 ${a > Math.PI ? 1 : 0} 1 ${x.toFixed(2)} ${y.toFixed(2)}Z`;
 }
+
+/** The first letter of a day's weekday, from its 'YYYY-MM-DD' key. */
+const dayLetter = (key: string) => new Date(`${key}T12:00:00`).toLocaleDateString(undefined, { weekday: 'narrow' });
 
 function descriptorFor(minutes: number): string {
   if (minutes < 5) return 'A sip';
@@ -50,10 +49,10 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
   const { language } = useApp();
   // The same minutes as Home's tools and the day's goal: the recorded sessions, counted once (core/goals/tools).
   const days = useToolDays(lang, 7);
-  const tools = useHomeTools();
   const [sliderOpen, setSliderOpen] = useState(false);
 
   const today = days?.[days.length - 1];
+  const weekMinutes = Math.round((days ?? []).reduce((sum, d) => sum + d.total, 0) / 60_000);
   const minutesToday = Math.round((today?.total ?? 0) / 60_000);
 
   const descriptor = descriptorFor(minutesToday > 0 ? minutesToday : goalMinutes);
@@ -95,19 +94,20 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
           </span>
         </span>
 
-        <span className="mt-3 flex items-center gap-4">
+        <span className="mt-2 flex items-center gap-4">
           {/* The cute clock: an hour's face with today's slice in peach, drawn in the hand of the first start. */}
-          <svg viewBox="0 0 32 32" className="size-[72px] shrink-0" strokeWidth={1.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <circle cx={16} cy={16} r={13} fill="var(--raised)" stroke="var(--ink)" />
-            {fractionOfHour >= 1 ? <circle cx={16} cy={16} r={11} fill={PEACH} stroke="none" /> : fractionOfHour > 0 ? <path d={clockWedge(fractionOfHour)} fill={PEACH} stroke="none" /> : null}
-            <circle cx={16} cy={16} r={13} fill="none" stroke="var(--ink)" />
-            <path d="M16 6.5V8.5M25.5 16H23.5M16 25.5V23.5M6.5 16H8.5" stroke="var(--ink)" />
-            <path d="M16 16V9.5" stroke="var(--accent)" strokeWidth={1.6} />
-            <circle cx={16} cy={16} r={1.3} fill="var(--ink)" />
+          <svg viewBox="0 0 32 32" className="size-[56px] shrink-0" strokeWidth={1.1} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            {fractionOfHour >= 1 ? <circle cx={16} cy={16} r={11.5} fill={PEACH} stroke="none" /> : fractionOfHour > 0 ? <path d={clockWedge(fractionOfHour)} fill={PEACH} stroke="none" /> : null}
+            {/* A pen-drawn ring, a little open and a little uneven, with a second thin pass beside it; four small ticks and one hand. */}
+            <path d="M16.4 3.1C23.6 3 29.1 8.6 28.9 15.8C28.7 23 23.2 28.9 15.9 28.8C8.7 28.7 3.2 23.1 3.2 16C3.2 9 8.4 3.5 15 3.2" fill="none" stroke="var(--ink)" strokeWidth={1.3} />
+            <path d="M15 3.6C21.6 2.6 28 8 28.3 15C28.6 21.8 24.3 27.8 17.5 28.6" fill="none" stroke="var(--ink)" strokeWidth={0.7} opacity={0.4} />
+            <path d="M16 5.4V7.4M26.6 16H24.6M16 26.6V24.6M5.4 16H7.4" stroke="var(--ink)" opacity={0.7} />
+            <path d="M16 16L16.3 9.6" stroke="var(--accent)" strokeWidth={1.6} />
+            <circle cx={16} cy={16} r={1.2} fill="var(--ink)" stroke="none" />
           </svg>
           <span className="min-w-0">
             <span className="flex items-baseline gap-1.5">
-              <span className="font-serif text-[44px] leading-none font-semibold text-ink tabular-nums">{minutesToday}</span>
+              <span className="font-serif text-[38px] leading-none font-semibold text-ink tabular-nums">{minutesToday}</span>
               <span className="font-serif text-[18px] text-ink-soft">/ {goalMinutes} <UiText source={'min'} /></span>
             </span>
             <span className={cx('mt-1.5 inline-flex items-center gap-1 text-[12.5px] font-semibold', isGoalMet ? 'text-sage-text' : 'text-ink-soft')}>
@@ -117,27 +117,25 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
           </span>
         </span>
 
-        {/* Each tool's minutes today, behind its own drawn circle. */}
-        <span className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
-          {/* Only tools that record their time: the atlas has none, and a 0 there would never move. */}
-          {tools.filter((tool) => (TOOLS as readonly string[]).includes(tool.id === 'mentis' ? 'diarium' : tool.id)).map((tool) => {
-            const ms = today?.byTool[(tool.id === 'mentis' ? 'diarium' : tool.id) as ToolId] ?? 0;
-            return (
-              <span key={tool.id} className={cx('inline-flex items-center gap-1.5', ms < 30_000 && 'opacity-45')} title={translateUi(tool.name)}>
-                <span className="grid size-7 place-items-center rounded-full border border-line-strong/70"><ToolDuotoneIcon id={tool.id} className="size-4" /></span>
-                <span className="text-[12.5px] font-semibold tabular-nums text-ink-soft">{Math.round(ms / 60_000)}</span>
-              </span>
-            );
-          })}
-        </span>
-
-        {/* The week, as strokes of a pen: today's in the accent, a met day in sage. */}
-        <span className="mt-4 flex h-9 items-end gap-1.5 border-t border-line/60 pt-2" aria-hidden>
-          {(days ?? []).map((d, i) => {
-            const m = d.total / 60_000;
-            const last = i === (days?.length ?? 0) - 1;
-            return <span key={d.date} className={cx('flex-1 rounded-full', last ? 'bg-accent' : m >= goalMinutes ? 'bg-sage' : m > 0 ? 'bg-ink-soft/35' : 'bg-line')} style={{ height: `${Math.max(12, Math.min(100, (m / Math.max(1, goalMinutes)) * 100))}%` }} />;
-          })}
+        {/* The weekly tracker: the last seven days, each with its day letter and minutes; today's in the accent, a met day in sage. */}
+        <span className="mt-2 block border-t border-line/60 pt-1.5">
+          <span className="flex items-baseline justify-between text-[10.5px] font-bold tracking-[0.12em] text-ink-faint uppercase">
+            <UiText source={'This week'} />
+            <span className="font-semibold tracking-normal normal-case tabular-nums">{weekMinutes} <UiText source={'min'} /></span>
+          </span>
+          <span className="mt-1 flex h-11 items-end gap-1.5">
+            {(days ?? []).map((d, i) => {
+              const m = Math.round(d.total / 60_000);
+              const last = i === (days?.length ?? 0) - 1;
+              return (
+                <span key={d.date} className="flex h-full flex-1 flex-col items-center justify-end gap-0.5" title={`${d.date} · ${m} min`}>
+                  <span className="text-[9.5px] leading-none font-semibold text-ink-faint tabular-nums">{m > 0 ? m : ''}</span>
+                  <span className={cx('w-full rounded-full', last ? 'bg-accent' : m >= goalMinutes ? 'bg-sage' : m > 0 ? 'bg-ink-soft/35' : 'bg-line')} style={{ height: `${Math.max(10, Math.min(70, (m / Math.max(1, goalMinutes)) * 70))}%` }} />
+                  <span className={cx('text-[9.5px] leading-none font-bold', last ? 'text-accent-text' : 'text-ink-faint')}>{dayLetter(d.date)}</span>
+                </span>
+              );
+            })}
+          </span>
         </span>
       </button>
 

@@ -1,9 +1,7 @@
-import { useState, useRef, useCallback, useEffect, useLayoutEffect } from 'react';
 import { Link } from 'react-router';
 import {
   ArrowRight,
   BookOpen,
-  ChevronLeft,
   ChevronRight,
   Route,
   Languages,
@@ -19,7 +17,7 @@ import { Art } from '@/features/mundus/Art';
 import { LESSON_ICON } from '@/features/cursus/course/parts';
 import { patchSetting } from '@/data/settings';
 import type { Settings } from '@/data/settings';
-import { UiText, useUi } from '@/design/i18n/UiText';
+import { UiText } from '@/design/i18n/UiText';
 import { cx } from '@/lib/cx';
 import { Hand } from '@/design/drawings';
 import {
@@ -254,12 +252,12 @@ export function WhereLeftOffCard({
     <Link
       to={data.to}
       className={cx(
-        'group flex flex-col justify-between rounded-[24px] border border-line/80 bg-transparent p-5 transition-[border-color,box-shadow] hover:border-line-strong hover:shadow-elev-1 sm:p-6',
+        'group flex flex-col justify-between rounded-[24px] bg-transparent p-4 transition-shadow hover:shadow-elev-1 sm:p-5',
         className,
       )}
     >
       {/* Central, Fat, Clear Header */}
-      <div className="mb-4 flex flex-col items-center text-center">
+      <div className="mb-2 flex flex-col items-center text-center">
         <div className="inline-flex items-center gap-2">
           <BookOpen size={18} strokeWidth={2.3} className="text-accent-text" aria-hidden />
           <h2 className="font-serif text-[20px] font-bold tracking-tight text-ink sm:text-[22px]">
@@ -278,7 +276,7 @@ export function WhereLeftOffCard({
         <div
           className={cx(
             'shrink-0 overflow-hidden rounded-xl bg-sunken shadow-elev-1',
-            isBanner ? 'h-28 w-20 sm:h-32 sm:w-22' : isLectern ? 'h-32 w-22 sm:h-36 sm:w-24' : 'h-24 w-16 sm:h-28 sm:w-20',
+            isBanner ? 'h-28 w-20 sm:h-32 sm:w-22' : isLectern ? 'h-32 w-22 sm:h-36 sm:w-24' : 'h-20 w-14 sm:h-20 sm:w-14',
           )}
         >
           {data.book ? (
@@ -292,7 +290,7 @@ export function WhereLeftOffCard({
 
         {/* Content Info */}
         <div className="min-w-0 flex-1">
-          <h3 className="line-clamp-2 font-serif text-[21px] font-bold tracking-tight text-ink transition-colors group-hover:text-accent-text sm:text-[24px]">
+          <h3 className="line-clamp-2 font-serif text-[19px] font-bold tracking-tight text-ink transition-colors group-hover:text-accent-text sm:text-[21px]">
             {data.title}
           </h3>
           <p className="mt-1 line-clamp-1 font-sans text-[13.5px] font-medium text-ink-soft">
@@ -516,100 +514,38 @@ export function WhatNextSection({
   items?: WhatNextItem[];
   variant?: 'shelf' | 'cards3' | 'grid4' | 'shelf5';
 }) {
-  const translateUi = useUi();
-  const pool = suggestions ?? items ?? [];
-
-  const rowRef = useRef<HTMLDivElement>(null);
-  const [canPrev, setCanPrev] = useState(false);
-  const [canNext, setCanNext] = useState(true);
-
-  // The order is chosen for the learner's level and today's activity (core/flow/steps): best first, never shuffled.
-  const displayItems = pool;
-
-  const updateScrollState = useCallback(() => {
-    const el = rowRef.current;
-    if (!el) return;
-    const left = el.scrollLeft;
-    const max = el.scrollWidth - el.clientWidth;
-    setCanPrev(left > 6);
-    setCanNext(left < max - 6);
-  }, []);
-
-  useLayoutEffect(() => {
-    if (rowRef.current) {
-      rowRef.current.scrollLeft = 0;
-    }
-    updateScrollState();
-  }, [displayItems.length, updateScrollState]);
-
-  const scrollByAmount = (dir: number) => {
-    const el = rowRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * (el.clientWidth * 0.75), behavior: 'smooth' });
-  };
+  // At most five, side by side, nothing to scroll: the order and the draw are made in useHomeWhatNext (best fit first).
+  const shown = (suggestions ?? items ?? []).slice(0, 5);
 
   return (
-    <section aria-label="What next" className="space-y-3">
-      {/* Header: Title and Horizontal Scroll Controls (No Cycle button, no subtext) */}
-      <div className="flex items-center justify-between gap-3">
-        <h2 className="font-serif text-[22px] font-bold tracking-tight text-ink sm:text-[24px]">
-          <UiText source={'What next'} />
-        </h2>
+    <section aria-label="What next" className="space-y-2.5">
+      <h2 className="font-serif text-[22px] font-bold tracking-tight text-ink sm:text-[24px]">
+        <UiText source={'What next'} />
+      </h2>
 
-        <div className="flex items-center gap-1.5 shrink-0">
-          <button
-            type="button"
-            onClick={() => scrollByAmount(-1)}
-            disabled={!canPrev}
-            aria-label={translateUi('Scroll left')}
-            className="grid size-7.5 place-items-center rounded-full border border-line/70 bg-surface/80 text-ink shadow-2xs transition-all hover:bg-raised hover:scale-105 active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
-          >
-            <ChevronLeft size={15} />
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollByAmount(1)}
-            disabled={!canNext}
-            aria-label={translateUi('Scroll right')}
-            className="grid size-7.5 place-items-center rounded-full border border-line/70 bg-surface/80 text-ink shadow-2xs transition-all hover:bg-raised hover:scale-105 active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
-          >
-            <ChevronRight size={15} />
-          </button>
-        </div>
-      </div>
-
-      {/* Horizontally swipeable shelf: smaller, filled up colored, minimal cards */}
-      <div
-        ref={rowRef}
-        onScroll={updateScrollState}
-        tabIndex={0}
-        aria-label="What next suggestions"
-        className="flex justify-start gap-3 overflow-x-auto pb-3 pt-0.5 overscroll-x-contain scrollbar-none snap-x [overflow-anchor:none] -mx-4 px-4 sm:-mx-0 sm:px-0 outline-none"
-        style={{
-          WebkitOverflowScrolling: 'touch',
-          touchAction: 'pan-x pan-y',
-        }}
-      >
-        {displayItems.map((item, i) => {
+      <div aria-label="What next suggestions" className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        {shown.map((item) => {
           const Icon = item.icon;
           return (
-            // A page-like card: a pen-drawn icon in its soft circle, the room in small capitals, the step, one line why.
+            // A page-like card: a pen-drawn icon in its soft circle beside the room, the step, one line why.
             <Link
               key={item.id}
               to={item.to}
-              className="group relative flex w-[188px] shrink-0 snap-start flex-col items-start rounded-[22px] border border-line px-4 pt-4 pb-3.5 transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-line-strong"
+              className="group relative flex min-w-0 flex-col items-start rounded-[20px] border border-line px-3.5 pt-2.5 pb-2.5 transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-line-strong"
             >
-              <span className="relative grid size-12 place-items-center rounded-full transition-transform duration-300 group-hover:-rotate-6" style={{ background: `color-mix(in oklab, ${item.hue} 16%, transparent)` }}>
-                {item.hand ? <Hand name={item.hand} size={28} /> : <Icon size={20} strokeWidth={1.8} aria-hidden className="text-ink-soft" />}
-                {i === 0 && <span className="absolute -top-0.5 -right-0.5 size-2.5 rounded-full bg-accent" aria-hidden />}
+              <span className="flex w-full items-center gap-2.5">
+                <span className="relative grid size-9 shrink-0 place-items-center rounded-full transition-transform duration-300 group-hover:-rotate-6" style={{ background: `color-mix(in oklab, ${item.hue} 16%, transparent)` }}>
+                  {item.hand ? <Hand name={item.hand} size={22} /> : <Icon size={17} strokeWidth={1.8} aria-hidden className="text-ink-soft" />}
+                  {item.fresh && <span className="absolute -top-0.5 -right-0.5 size-2.5 rounded-full bg-accent" aria-hidden />}
+                </span>
+                <span className="min-w-0 truncate text-[10.5px] font-bold tracking-[0.14em] text-ink-faint uppercase"><UiText source={item.room} /></span>
               </span>
-              <span className="mt-3.5 text-[10.5px] font-bold tracking-[0.14em] text-ink-faint uppercase"><UiText source={item.room} /></span>
-              <h3 className="mt-1 line-clamp-2 font-serif text-[16.5px] font-semibold leading-snug text-ink transition-colors group-hover:text-accent-text">
-                {item.title.startsWith('Review ') || item.title.startsWith('Read “') || item.title.startsWith('The next ') ? item.title : <UiText source={item.title} />}
+              <h3 className="mt-2 line-clamp-2 font-serif text-[15.5px] font-semibold leading-snug text-ink transition-colors group-hover:text-accent-text">
+                {item.title.startsWith('Review ') || item.title.startsWith('Read “') || item.title.startsWith('The next ') || item.id.startsWith('next:') ? item.title : <UiText source={item.title} />}
               </h3>
-              <p className="mt-1 line-clamp-2 text-[12.5px] leading-snug text-ink-faint"><UiText source={item.detail} /></p>
+              <p className="mt-0.5 line-clamp-1 text-[12px] leading-snug text-ink-faint"><UiText source={item.detail} /></p>
               {item.percent !== undefined && (
-                <span className="mt-3 h-[3px] w-full overflow-hidden rounded-full bg-line/70" aria-hidden>
+                <span className="mt-2 h-[3px] w-full overflow-hidden rounded-full bg-line/70" aria-hidden>
                   <span className="block h-full origin-left rounded-full" style={{ transform: `scaleX(${item.percent / 100})`, background: item.hue }} />
                 </span>
               )}
@@ -633,44 +569,9 @@ export function DiscoverMoreSection({
   items: DiscoverItem[];
   variant?: 'shelf' | 'cards4' | 'cards2' | 'grid4';
 }) {
-  const translateUi = useUi();
-  const rowRef = useRef<HTMLDivElement>(null);
-  const [canPrev, setCanPrev] = useState(false);
-  const [canNext, setCanNext] = useState(true);
-
-  const updateScrollState = useCallback(() => {
-    const el = rowRef.current;
-    if (!el) return;
-    const left = el.scrollLeft;
-    const max = el.scrollWidth - el.clientWidth;
-    setCanPrev(left > 6);
-    setCanNext(left < max - 6);
-  }, []);
-
-  // Always keep Discover more scrolled completely to the left when items load
-  useLayoutEffect(() => {
-    if (rowRef.current) {
-      rowRef.current.scrollLeft = 0;
-    }
-    updateScrollState();
-  }, [items.length, updateScrollState]);
-
-  useEffect(() => {
-    if (rowRef.current) {
-      rowRef.current.scrollLeft = 0;
-    }
-    updateScrollState();
-  }, [items, updateScrollState]);
-
-  const scrollByAmount = (dir: number) => {
-    const el = rowRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * (el.clientWidth * 0.75), behavior: 'smooth' });
-  };
-
   return (
-    <section aria-label="Discover more" className="space-y-3">
-      {/* Header: "Discover more >" Link & Desktop Scroll Controls (Explora label removed) */}
+    <section aria-label="Discover more" className="space-y-2.5">
+      {/* Header: "Discover more >" link */}
       <div className="flex items-center justify-between gap-3">
         <Link
           to="/explora"
@@ -684,51 +585,20 @@ export function DiscoverMoreSection({
             aria-hidden
           />
         </Link>
-
-        <div className="flex items-center gap-1.5 shrink-0">
-          <button
-            type="button"
-            onClick={() => scrollByAmount(-1)}
-            disabled={!canPrev}
-            aria-label={translateUi('Scroll left')}
-            className="grid size-7.5 place-items-center rounded-full border border-line/70 bg-surface/80 text-ink shadow-2xs transition-all hover:bg-raised hover:scale-105 active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
-          >
-            <ChevronLeft size={15} />
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollByAmount(1)}
-            disabled={!canNext}
-            aria-label={translateUi('Scroll right')}
-            className="grid size-7.5 place-items-center rounded-full border border-line/70 bg-surface/80 text-ink shadow-2xs transition-all hover:bg-raised hover:scale-105 active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
-          >
-            <ChevronRight size={15} />
-          </button>
-        </div>
       </div>
 
-      {/* Horizontally swipeable shelf: Explora-style Cards (ALL SAME EXACT SIZE, always starting left) */}
-      <div
-        ref={rowRef}
-        onScroll={updateScrollState}
-        tabIndex={0}
-        aria-label="Discover more media"
-        className="flex justify-start gap-3.5 overflow-x-auto pb-3 pt-0.5 overscroll-x-contain scrollbar-none snap-x [overflow-anchor:none] -mx-4 px-4 sm:-mx-0 sm:px-0 outline-none"
-        style={{
-          WebkitOverflowScrolling: 'touch',
-          touchAction: 'pan-x pan-y',
-        }}
-      >
-        {items.map((item) => {
+      {/* Explora-style cards, all the same size, five side by side */}
+      <div aria-label="Discover more media" className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 lg:grid-cols-5">
+        {items.slice(0, 5).map((item) => {
           const Icon = item.icon;
           return (
             <Link
               key={item.id}
               to={item.to}
-              className="group block w-[260px] sm:w-[290px] shrink-0 snap-start text-left"
+              className="group block min-w-0 text-left"
             >
               {/* Unified Aspect Ratio Container (All exact same size, no grow on hover) */}
-              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[18px] sm:rounded-[20px] border border-line/60 bg-surface shadow-elev-1 transition-[border-color,box-shadow] duration-200 group-hover:border-line-strong group-hover:shadow-elev-2">
+              <div className="relative aspect-[5/2] w-full overflow-hidden rounded-[18px] sm:rounded-[20px] border border-line/60 bg-surface shadow-elev-1 transition-[border-color,box-shadow] duration-200 group-hover:border-line-strong group-hover:shadow-elev-2">
                 {/* Artwork Layer */}
                 <Art
                   query={item.query ?? null}
@@ -764,17 +634,10 @@ export function DiscoverMoreSection({
                           : 'Thesaurus'}
                   </span>
                 </div>
-
-                {/* Hover Bouncy Action Bubble */}
-                <div className="absolute inset-0 z-10 grid place-items-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 bg-black/20">
-                  <span className="grid size-10 place-items-center rounded-full bg-raised/95 text-ink shadow-elev-2 transition-transform duration-200 group-hover:scale-110 active:scale-95">
-                    <Icon size={17} />
-                  </span>
-                </div>
               </div>
 
               {/* Caption Information */}
-              <div className="mt-2.5 px-0.5">
+              <div className="mt-2 px-0.5">
                 <h4 className="line-clamp-1 font-serif text-[14px] sm:text-[15px] font-bold text-ink transition-colors group-hover:text-accent-text">
                   {item.title}
                 </h4>
@@ -824,12 +687,12 @@ export function ToolsBar({
 
   if (mode === 'rail') {
     return (
-      <aside aria-label="Tools" className="flex flex-col items-center gap-3 lg:gap-6">
+      <aside aria-label="Tools" className="flex flex-col items-center gap-3 lg:gap-3">
         <h2 className="text-center font-serif text-[20px] font-bold tracking-tight text-ink sm:text-[22px]">
           <UiText source={'Tools'} />
         </h2>
 
-        <div className="grid grid-cols-2 gap-x-4 gap-y-3 sm:gap-x-5 sm:gap-y-3.5">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2 lg:grid-cols-3 lg:gap-x-3 sm:gap-y-2.5">
           {tools.map((tool) => (
             <Link
               key={tool.id}

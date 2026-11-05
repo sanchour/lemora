@@ -258,6 +258,8 @@ export interface Settings {
     homeLayout: 'today' | 'classic' | 'topline' | 'rail' | 'shelf' | 'desk';
     /** Lemora U3: the tools on Home (on unless turned off), and the Ask button at the bottom right (on unless turned off). */
     homeTools?: boolean;
+    /** Home's greeting and date: at the left (default) or centred. */
+    homeHeaderCentered?: boolean;
     askButton?: boolean;
     /** Lemora U9: Thesaurus › My decks in its earlier design (Today as a book, decks in a table). */
     classicDecks?: boolean;
