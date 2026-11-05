@@ -85,7 +85,7 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
         type="button"
         onClick={() => setSliderOpen(true)}
         aria-label={translateUi('Time today · Change daily goal')}
-        className={cx('group flex w-full max-w-[460px] cursor-pointer flex-col rounded-2xl p-1 text-left', className)}
+        className={cx('group flex mx-auto w-full max-w-[380px] cursor-pointer flex-col rounded-2xl p-1 text-left', className)}
       >
         <span className="flex items-center gap-2">
           <h2 className="font-serif text-[21px] font-semibold tracking-tight text-ink"><UiText source={'Time today'} /></h2>
@@ -118,12 +118,12 @@ export function TimeADayMeter({ lang, goalMinutes = 15, className }: TimeADayMet
         </span>
 
         {/* The weekly tracker: the last seven days, each with its day letter and minutes; today's in the accent, a met day in sage. */}
-        <span className="mt-10 block border-t border-line/60 pt-3">
+        <span className="mt-6 block border-t border-line/60 pt-3">
           <span className="flex items-baseline justify-between text-[10.5px] font-bold tracking-[0.12em] text-ink-faint uppercase">
             <UiText source={'This week'} />
             <span className="font-semibold tracking-normal normal-case tabular-nums">{weekMinutes} <UiText source={'min'} /></span>
           </span>
-          <span className="mt-3 flex h-32 items-end gap-1.5">
+          <span className="mt-3 flex h-24 items-end gap-1.5">
             {(days ?? []).map((d, i) => {
               const m = Math.round(d.total / 60_000);
               const last = i === (days?.length ?? 0) - 1;

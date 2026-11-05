@@ -17296,5 +17296,8 @@
   ],
   "Nothing due today. Add words to a deck to see them here.": [
     "src/features/home/homeComponents.tsx"
+  ],
+  "{0} pages left": [
+    "src/features/home/homeComponents.tsx"
   ]
 }

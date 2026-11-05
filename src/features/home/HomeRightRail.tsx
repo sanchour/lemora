@@ -13,6 +13,8 @@ import {
 import {
   ToolsBar,
   WhereLeftOffCard,
+  WordsTodayCard,
+  PenDivider,
   CursusNextStepCard,
   WhatNextSection,
   DiscoverMoreSection,
@@ -77,12 +79,11 @@ export function HomeRightRail() {
             </header>
 
             {/* 1. Where you left off & Cute Time a Day Meter (Side by side, no background) */}
-            <section aria-label="Current studies" className="mt-4 grid grid-cols-1 items-stretch gap-5 md:grid-cols-[300px_auto_minmax(0,1fr)]">
+            <section aria-label="Current studies" className="mt-4 grid grid-cols-1 items-stretch gap-6 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1.2fr)]">
               <WhereLeftOffCard data={leftOff} variant="hero" className="h-full" />
-              {/* A thin accent line between the two. */}
-              <svg aria-hidden viewBox="0 0 8 200" preserveAspectRatio="none" className="hidden w-2 self-stretch overflow-visible text-accent md:block">
-                <path d="M4.5 2C2 40 6.5 80 4 120C2 155 6 185 3.6 198" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" vectorEffect="non-scaling-stroke" opacity={0.55} />
-              </svg>
+              <PenDivider />
+              <WordsTodayCard className="h-full" />
+              <PenDivider />
               <TimeADayMeter lang={language.id} goalMinutes={goal} className="h-full bg-transparent" />
             </section>
 

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { AudioLines, BookA, BookOpen, Bookmark, Clapperboard, Feather, Gamepad2, Headphones, Languages, Layers, MessageCircle, MessagesSquare, Music, Newspaper, Palette, PenLine, Radio, Sparkles, Waypoints } from 'lucide-react';
+import { AudioLines, BookA, BookOpen, Bookmark, Clapperboard, Feather, Gamepad2, Headphones, Lightbulb, Languages, Layers, MessageCircle, MessagesSquare, Music, Newspaper, Palette, PenLine, Radio, Sparkles, Waypoints } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { getLanguage } from '@/core/lang/languages';
@@ -28,6 +28,7 @@ import { pickWeighted } from '@/core/flow/pick';
 import { hashString } from '@/core/hash';
 import { localDateKey } from '@/lib/format';
 import { useJournal } from '@/data/journal';
+import { tipOfTheDay, tipsFor } from '@/core/mundus/tips';
 import type { FlowStep } from '@/core/flow/steps';
 import { FIRST_BOOKS } from '@/core/lang/firstBooks';
 import { useDecks } from '@/data/decks';
@@ -499,6 +500,10 @@ export function useHomeWhatNext(): WhatNextItem[] {
       { id: 'extra:atlas', room: 'Atlas', title: 'See your words as a map', detail: 'Every word you have, laid out.', to: '/atlas', icon: Waypoints, badge: 'Atlas', actionLabel: 'Open', hue: '#4f93a0', weight: 1.5 },
       { id: 'extra:deck', room: 'Decks', title: 'Make a deck', detail: 'Gather words you met into cards.', to: '/thesaurus/make', icon: Layers, badge: 'Decks', actionLabel: 'Make', hue: '#d49b54', weight: decks?.length ? 1.5 : 2.5 },
     ];
+
+    // A tip for the day, from the language's own list.
+    const tip = tipOfTheDay(tipsFor(lang), new Set());
+    if (tip) extras.push({ id: `tip:${tip.id}`, room: 'Tip', title: tip.title, detail: tip.teaser, to: '/explora?kind=try', icon: Lightbulb, badge: 'Tip', actionLabel: 'See', hue: '#d49b54', weight: 4 });
 
     // First card: the next thing to read, after the book you are in (the second of "continue reading").
     const queue = readable.filter((t) => t.id !== activeBook?.id).sort((a, b) => (b.lastOpenedAt ?? b.createdAt) - (a.lastOpenedAt ?? a.createdAt));
