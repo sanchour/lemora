@@ -15,13 +15,10 @@ import { PictureBooksSection } from './BooksSection';
 const COVER_COLOURS = ['#b4452a', '#3f6b5b', '#2f4a73', '#a8741f', '#6a4a7a', '#8a3a4a'];
 
 /** Pepper&Carrot as one series on the shelf: its cover, and a click opens a page with every episode. */
-export function ComicShelf({ lang }: { lang: string }) {
-  const translateUi = useUi();
+export function pepperCard(lang: string): React.ReactNode {
   const episodes = comicEpisodes(lang);
   if (!episodes.length) return null;
   return (
-    <MediaShelf id="comics-shelf" title={translateUi('Comics')} count={1}>
-      {[
         <Link key="pepper-carrot" to="/explora/comics/pepper-carrot" className="group block w-full text-left">
           <div className="relative aspect-[3/4] w-full overflow-hidden rounded-[18px] border border-line bg-raised transition-colors duration-200 group-hover:border-accent">
             <img src={comicCover(lang, episodes[0])} alt="" loading="lazy" className="size-full object-cover" />
@@ -29,10 +26,15 @@ export function ComicShelf({ lang }: { lang: string }) {
           </div>
           <h4 className="mt-2 line-clamp-1 font-serif text-[14px] font-semibold text-ink transition-colors group-hover:text-accent-text">{'Pepper&Carrot'}</h4>
           <p className="text-[11.5px] text-ink-faint"><UiText source={'Series'} /></p>
-        </Link>,
-      ]}
-    </MediaShelf>
+        </Link>
   );
+}
+
+/** Pepper&Carrot alone on a shelf (languages without any comic series of their own). */
+export function ComicShelf({ lang }: { lang: string }) {
+  const translateUi = useUi();
+  const card = pepperCard(lang);
+  return card ? <MediaShelf id="comics-shelf" title={translateUi('Comics')} count={1}>{[card]}</MediaShelf> : null;
 }
 
 /** Global Voices' latest stories in the language: a click puts one on the shelf and opens it. */

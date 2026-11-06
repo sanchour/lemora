@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router';
 import { ArrowRight, ArrowUpRight, BookCheck, Clock, Headphones, LoaderCircle, Quote } from 'lucide-react';
 import { useApp } from '@/app/context';
 import { COLLECTIONS, CATALOGUE_CREDITS, byLevelCloseness, collectionById, itemOfTheDay, loadCatalogue } from '@/core/explora/catalogue';
-import type { CatalogueItem } from '@/core/explora/catalogue';
+import type { Catalogue, CatalogueItem, ComicSeries } from '@/core/explora/catalogue';
 import { PROVERBS } from '@/core/explora/proverbs';
 import { useLibrary, addText } from '@/data/library';
 import { Hand } from '@/design/drawings';
@@ -19,6 +19,20 @@ import { openCatalogueItem, openRecording } from '@/services/explora/catalogue';
 import { toast } from '@/state/ui';
 import { LevelBadge } from './LevelBadge';
 import { MediaShelf } from './MediaShelf';
+
+/** The comic series for the language (none while it loads, and for languages without any). */
+export function useCatalogueSeries(lang: string): ComicSeries[] {
+  const [series, setSeries] = useState<ComicSeries[]>([]);
+  useEffect(() => {
+    let live = true;
+    setSeries([]);
+    void loadCatalogue(lang).then((c: Catalogue) => live && setSeries(c.series ?? []), () => undefined);
+    return () => {
+      live = false;
+    };
+  }, [lang]);
+  return series;
+}
 
 /** The catalogue for the language (empty while it loads, and for languages without one). */
 export function useCatalogueItems(lang: string): CatalogueItem[] {
@@ -216,7 +230,7 @@ export function CollectionItems({ lang, id }: { lang: string; id: string | undef
   if (!collection) return null;
   return (
     <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5">
-      {list.map((item) => (item.kind === 'classic' ? <ClassicCard key={item.id} item={item} lang={lang} opener={opener} /> : item.kind === 'picture' ? <PictureCard key={item.id} item={item} lang={lang} opener={opener} /> : <ShortCard key={item.id} item={item} lang={lang} opener={opener} />))}
+      {list.map((item) => (item.kind === 'classic' ? <ClassicCard key={item.id} item={item} lang={lang} opener={opener} /> : item.kind === 'article' ? <MagazineCard key={item.id} item={item} lang={lang} opener={opener} /> : item.kind === 'picture' ? <PictureCard key={item.id} item={item} lang={lang} opener={opener} /> : <ShortCard key={item.id} item={item} lang={lang} opener={opener} />))}
     </div>
   );
 }
@@ -339,4 +353,64 @@ export function PictureBooksGrid({ lang, items, learner, opener }: { lang: strin
 /** The Books tab: short reads as a shelf above the books. */
 export function ShortReadsGrid({ lang, items, learner, opener }: { lang: string; items: CatalogueItem[]; learner: string; opener: Opener }) {
   return <ShortReadsShelf lang={lang} items={items} learner={learner} opener={opener} />;
+}
+
+// ── Comic series and old magazines ───────────────────────────────────────────
+
+/** A comic series: its first page as a cover, and a click opens the series page. */
+export function SeriesCard({ series, lang }: { series: ComicSeries; lang: string }) {
+  return (
+    <Link to={`/explora/series/${series.id}`} className="group block w-full text-left">
+      <span className="relative block aspect-[3/4] w-full overflow-hidden rounded-[18px] border border-line bg-raised transition-colors duration-200 group-hover:border-accent">
+        <img src={series.cover} alt="" loading="lazy" className="size-full object-cover" />
+        <span className="absolute top-2.5 left-2.5"><LevelBadge level={series.level} size="sm" /></span>
+        <span className="absolute right-2.5 bottom-2.5 rounded-full bg-black/60 px-2.5 py-0.5 text-[10.5px] font-bold text-white/95 backdrop-blur-sm">{series.pages} <UiText source={'pages'} /></span>
+      </span>
+      <h4 lang={lang} className="mt-2 line-clamp-1 font-serif text-[14px] font-semibold text-ink transition-colors group-hover:text-accent-text">{series.title}</h4>
+      <p className="line-clamp-1 text-[11.5px] text-ink-faint">{series.author} · {series.years}</p>
+    </Link>
+  );
+}
+
+/** An article of an old magazine, as the magazine's cover: its name on top, the headline set big, the years and minutes at the foot. */
+export function MagazineCard({ item, lang, opener }: { item: CatalogueItem; lang: string; opener: Opener }) {
+  const translateUi = useUi();
+  const c = item.magazine?.colour ?? '#3f6b5b';
+  return (
+    <button type="button" onClick={() => void opener.open(item)} aria-label={translateUi('View {0}', [item.title])} className="group relative block aspect-[3/4] w-full cursor-pointer overflow-hidden rounded-[4px] text-left text-white shadow-elev-2 transition-all duration-200 hover:-translate-y-1 hover:shadow-elev-3" style={{ background: `linear-gradient(160deg, ${c}, color-mix(in oklab, ${c} 62%, black))` }}>
+      <span aria-hidden className="absolute inset-y-0 left-0 w-2.5 bg-gradient-to-r from-black/35 to-transparent" />
+      <span aria-hidden className="absolute -right-10 -bottom-10 size-40 rounded-full bg-white/10" />
+      <span lang={lang} className="absolute inset-x-5 top-4 line-clamp-2 border-b-2 border-white/70 pb-1.5 text-center font-serif text-[12.5px] font-bold tracking-[0.14em] uppercase">{item.magazine?.name}</span>
+      <h3 lang={lang} className="absolute inset-x-5 top-[4.5rem] bottom-14 line-clamp-6 overflow-hidden font-serif text-[18px] leading-[1.2] font-bold tracking-tight">{item.title}</h3>
+      <span className="absolute inset-x-5 bottom-3.5 flex items-center justify-between border-t border-white/40 pt-2 text-[10.5px] font-bold tracking-[0.12em] uppercase"><span>{item.magazine?.years}</span><span className="inline-flex items-center gap-1">{opener.busy === item.id ? <LoaderCircle size={12} className="animate-spin" aria-hidden /> : <Clock size={11} aria-hidden />} <UiText source={'{0} min'} values={[item.minutes ?? 1]} /></span></span>
+    </button>
+  );
+}
+
+/** The old magazines' articles, as a shelf of covers. */
+export function OldMagazinesShelf({ lang, items, opener, limit = 12 }: { lang: string; items: CatalogueItem[]; opener: Opener; limit?: number }) {
+  const translateUi = useUi();
+  const shown = useMemo(() => items.filter((i) => i.kind === 'article').slice(0, limit), [items, limit]);
+  if (!shown.length) return null;
+  return (
+    <div>
+      <MediaShelf id="old-magazines" title={translateUi('Old magazines')} count={shown.length} itemClass="w-[190px] sm:w-[210px]">
+        {shown.map((item) => <MagazineCard key={item.id} item={item} lang={lang} opener={opener} />)}
+      </MediaShelf>
+      <p className="-mt-3 mb-6 text-[11.5px] text-ink-faint"><UiText source={CATALOGUE_CREDITS.magazines} /></p>
+    </div>
+  );
+}
+
+/** Comics: Pepper&Carrot's card first (passed in), then every series in the language, as one shelf. */
+export function ComicSeriesShelf({ lang, series, first }: { lang: string; series: ComicSeries[]; first?: React.ReactNode }) {
+  const translateUi = useUi();
+  const cards = [...(first ? [first] : []), ...series.map((s) => <SeriesCard key={s.id} series={s} lang={lang} />)];
+  if (!cards.length) return null;
+  return (
+    <div>
+      <MediaShelf id="comic-series" title={translateUi('Comics')} count={cards.length}>{cards}</MediaShelf>
+      {series.length > 0 && <p className="-mt-3 mb-6 text-[11.5px] text-ink-faint"><UiText source={CATALOGUE_CREDITS.commons} /></p>}
+    </div>
+  );
 }

@@ -822,6 +822,233 @@
     "type": "storyweaver",
     "slug": "96628-who-stole-bhaiya-s-smile"
    }
+  },
+  {
+   "id": "mag:tour-du-monde:Cape-Town et le Grand-Constance au cap de Bonne-Espérance (1857)",
+   "kind": "article",
+   "title": "Cape-Town et le Grand-Constance au cap de Bonne-Espérance",
+   "author": "Le Tour du monde",
+   "level": "C1",
+   "minutes": 7,
+   "magazine": {
+    "name": "Le Tour du monde",
+    "years": "1860",
+    "colour": "#2f4a73"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Cape-Town et le Grand-Constance au cap de Bonne-Espérance (1857)"
+   }
+  },
+  {
+   "id": "mag:tour-du-monde:Découverte de grands lacs africains",
+   "kind": "article",
+   "title": "Découverte de grands lacs africains",
+   "author": "Le Tour du monde",
+   "level": "C1",
+   "minutes": 8,
+   "magazine": {
+    "name": "Le Tour du monde",
+    "years": "1860",
+    "colour": "#2f4a73"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Découverte de grands lacs africains"
+   }
+  },
+  {
+   "id": "mag:tour-du-monde:Fragments d’un voyage en Orient",
+   "kind": "article",
+   "title": "Fragments d’un voyage en Orient",
+   "author": "Le Tour du monde",
+   "level": "C1",
+   "minutes": 8,
+   "magazine": {
+    "name": "Le Tour du monde",
+    "years": "1860",
+    "colour": "#2f4a73"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Fragments d’un voyage en Orient"
+   }
+  },
+  {
+   "id": "mag:tour-du-monde:Le Tour du monde",
+   "kind": "article",
+   "title": "Le Tour du monde",
+   "author": "Le Tour du monde",
+   "level": "C1",
+   "minutes": 3,
+   "magazine": {
+    "name": "Le Tour du monde",
+    "years": "1860",
+    "colour": "#2f4a73"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Le Tour du monde"
+   }
+  },
+  {
+   "id": "mag:tour-du-monde:Le capitaine Palliser et l’exploration des montagnes Rocheuses (1857-1859)/02",
+   "kind": "article",
+   "title": "02",
+   "author": "Le Tour du monde",
+   "level": "C1",
+   "minutes": 15,
+   "magazine": {
+    "name": "Le Tour du monde",
+    "years": "1860",
+    "colour": "#2f4a73"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Le capitaine Palliser et l’exploration des montagnes Rocheuses (1857-1859)/02"
+   }
+  },
+  {
+   "id": "mag:tour-du-monde:Le fleuve Amour/01",
+   "kind": "article",
+   "title": "01",
+   "author": "Le Tour du monde",
+   "level": "C1",
+   "minutes": 25,
+   "magazine": {
+    "name": "Le Tour du monde",
+    "years": "1860",
+    "colour": "#2f4a73"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Le fleuve Amour/01"
+   }
+  },
+  {
+   "id": "mag:tour-du-monde:Le fleuve Amour/02",
+   "kind": "article",
+   "title": "02",
+   "author": "Le Tour du monde",
+   "level": "C1",
+   "minutes": 28,
+   "magazine": {
+    "name": "Le Tour du monde",
+    "years": "1860",
+    "colour": "#2f4a73"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Le fleuve Amour/02"
+   }
+  },
+  {
+   "id": "mag:tour-du-monde:Les îles Andaman (océan Indien)",
+   "kind": "article",
+   "title": "Les îles Andaman",
+   "author": "Le Tour du monde",
+   "level": "C1",
+   "minutes": 22,
+   "magazine": {
+    "name": "Le Tour du monde",
+    "years": "1860",
+    "colour": "#2f4a73"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Les îles Andaman (océan Indien)"
+   }
+  },
+  {
+   "id": "mag:tour-du-monde:Mort du voyageur Adolphe Schlagintweit dans le Turkestan (1857)",
+   "kind": "article",
+   "title": "Mort du voyageur Adolphe Schlagintweit dans le Turkestan",
+   "author": "Le Tour du monde",
+   "level": "C1",
+   "minutes": 12,
+   "magazine": {
+    "name": "Le Tour du monde",
+    "years": "1860",
+    "colour": "#2f4a73"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Mort du voyageur Adolphe Schlagintweit dans le Turkestan (1857)"
+   }
+  },
+  {
+   "id": "mag:tour-du-monde:Nouvelles découvertes du docteur Livingstone",
+   "kind": "article",
+   "title": "Nouvelles découvertes du docteur Livingstone",
+   "author": "Le Tour du monde",
+   "level": "C1",
+   "minutes": 8,
+   "magazine": {
+    "name": "Le Tour du monde",
+    "years": "1860",
+    "colour": "#2f4a73"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Nouvelles découvertes du docteur Livingstone"
+   }
+  }
+ ],
+ "series": [
+  {
+   "id": "crepin",
+   "title": "Histoire de monsieur Crépin",
+   "author": "Rodolphe Töpffer",
+   "years": "1837",
+   "level": "B2",
+   "blurb": "One of the first comic albums ever drawn: a Swiss schoolmaster’s comedy of manners, told in captions and pictures.",
+   "category": "Histoire de monsieur Crépin",
+   "pages": 94,
+   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Histoire_de_M._Cr%C3%A9pin.jpg/500px-Histoire_de_M._Cr%C3%A9pin.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "id": "pencil",
+   "title": "Monsieur Pencil",
+   "author": "Rodolphe Töpffer",
+   "years": "1840",
+   "level": "B2",
+   "blurb": "A painter’s misadventures, drawn by the man who invented the comic strip.",
+   "category": "Monsieur Pencil",
+   "pages": 142,
+   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Page_de_titre_de_l%27ouvrage_de_Rodolphe_Topffer_%22Monsieur_Pencil%22.jpg/500px-Page_de_titre_de_l%27ouvrage_de_Rodolphe_Topffer_%22Monsieur_Pencil%22.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "id": "cryptogame",
+   "title": "Histoire de monsieur Cryptogame",
+   "author": "Rodolphe Töpffer",
+   "years": "1845",
+   "level": "B2",
+   "blurb": "A botanist in love, in a long pictured story.",
+   "category": "Autour de la table - histoire de M. Cryptogame (1849)",
+   "pages": 68,
+   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Autour_de_la_table_-_histoire_de_M._Cryptogame_1849_%288115682%29.jpg/500px-Autour_de_la_table_-_histoire_de_M._Cryptogame_1849_%288115682%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "id": "festus",
+   "title": "Le docteur Festus",
+   "author": "Rodolphe Töpffer",
+   "years": "1840",
+   "level": "B2",
+   "blurb": "A doctor’s travels in pictures and verse.",
+   "category": "Docteur Festus",
+   "pages": 35,
+   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a9/Festus-Couverture_dos_-_d206.png/500px-Festus-Couverture_dos_-_d206.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "id": "fenouillard",
+   "title": "La Famille Fenouillard",
+   "author": "Christophe",
+   "years": "1893",
+   "level": "B1",
+   "blurb": "The Fenouillards travel the world: a classic of French comics, funny and easy to follow.",
+   "category": "La Famille Fenouillard",
+   "pages": 360,
+   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Christophe_-_La_Famille_Fenouillard%2C_1895_%28page_1_crop%29.jpg/500px-Christophe_-_La_Famille_Fenouillard%2C_1895_%28page_1_crop%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
   }
  ]
 }

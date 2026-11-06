@@ -1317,7 +1317,8 @@
     "src/features/codex/BookDetailsPage.tsx"
   ],
   "pages": [
-    "src/features/codex/BookDetailsPage.tsx"
+    "src/features/codex/BookDetailsPage.tsx",
+    "src/features/explora/components/ExploraShelves.tsx"
   ],
   "part": [
     "src/features/codex/BookDetailsPage.tsx",
@@ -17723,5 +17724,20 @@
   ],
   "A dark monitoring screen: status pills, a gauge, a heat map, bars and a queue.": [
     "src/features/home/styles/HomeStyleMenu.tsx"
+  ],
+  "The pages couldn’t be reached just now.": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Old magazines": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Articles from magazines of the 1800s and early 1900s, in the language of their day.": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Comic series: scans on Wikimedia Commons, public domain.": [
+    "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Old magazines: Wikisource, public domain (transcriptions CC BY-SA).": [
+    "src/features/explora/components/ExploraShelves.tsx"
   ]
 }

@@ -134,6 +134,57 @@ async function picture(lang) {
   return out;
 }
 
+// ── Comic series (Wikimedia Commons scans) ───────────────────────────────────
+const natural = (a, b) => a.localeCompare(b, 'en', { numeric: true });
+async function series(lang) {
+  const out = [];
+  for (const [id, title, author, years, category, level, blurb] of spec.S[lang] ?? []) {
+    const base = `https://commons.wikimedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=${encodeURIComponent('Category:' + category)}&gcmtype=file&gcmlimit=50&prop=imageinfo&iiprop=url%7Cmime&iiurlwidth=420&format=json&formatversion=2`;
+    const rows = [];
+    let more = '';
+    for (let i = 0; i < 12; i++) {
+      const d = await get(base + more, { json: true });
+      rows.push(...(d?.query?.pages ?? []));
+      if (!d?.continue) break;
+      more = Object.entries(d.continue).map(([k, v]) => `&${k}=${encodeURIComponent(v)}`).join('');
+    }
+    const pages = rows.filter((p) => /^image\/(jpeg|png)/.test(p.imageinfo?.[0]?.mime ?? '')).sort((a, b) => natural(a.title, b.title));
+    if (pages.length < 5) { console.log(`  ✗ ${lang} series: ${title} (${pages.length} pages)`); continue; }
+    out.push({ id, title, author, years, level, blurb, category, pages: pages.length, cover: pages[0].imageinfo[0].thumburl ?? pages[0].imageinfo[0].url });
+  }
+  return out;
+}
+
+// ── Magazines (old periodicals on Wikisource) ────────────────────────────────
+async function magazines(lang) {
+  const out = [];
+  for (const m of spec.M[lang] ?? []) {
+    const titles = [];
+    for (const page of m.pages) {
+      if (m.mode === 'prefix') {
+        const d = await get(`https://${lang}.wikisource.org/w/api.php?action=query&list=allpages&apprefix=${encodeURIComponent(page)}&apnamespace=0&aplimit=60&format=json&formatversion=2`, { json: true });
+        titles.push(...(d?.query?.allpages ?? []).map((p) => p.title));
+      } else {
+        const d = await get(`https://${lang}.wikisource.org/w/api.php?action=parse&page=${encodeURIComponent(page)}&prop=links&redirects=1&format=json&formatversion=2`, { json: true });
+        titles.push(...(d?.parse?.links ?? []).filter((l) => l.exists && l.ns === 0).map((l) => l.title));
+      }
+    }
+    const filter = m.filter ? new RegExp(m.filter) : null;
+    const kept = [];
+    for (const t of [...new Set(titles)]) {
+      if (kept.length >= m.take) break;
+      if (filter && !filter.test(t)) continue;
+      const r = await wikisource(lang, t);
+      if (!r || r.words < 350 || r.words > 6000) continue;
+      const shown = t.split('/').pop().replace(/\s*\([^)]*\)\s*$/, '');
+      kept.push({ id: `mag:${m.id}:${t}`, kind: 'article', title: shown, author: m.name, level: 'C1', minutes: Math.max(1, Math.round(r.words / (lang === 'zh' ? 250 : 200))), magazine: { name: m.name, years: m.years, colour: m.colour }, from: { type: 'wikisource', title: t } });
+    }
+    console.log(`  ${lang} magazine ${m.name}: ${kept.length} articles`);
+    out.push(...kept);
+  }
+  return out;
+}
+
 // ── LibriVox (on archive.org) ────────────────────────────────────────────────
 const ARCHIVE = { fr: 'fre OR fra', es: 'spa', de: 'deu OR ger', ru: 'rus', zh: 'zho OR chi', ar: 'ara' };
 const norm = (s) => s.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/[^\p{L}\p{N} ]/gu, ' ').replace(/\s+/g, ' ').trim();
@@ -155,10 +206,11 @@ for (const lang of langs) {
   console.log(`\n== ${lang}`);
   const classics = [...(await gutenberg(lang)), ...(await wikiClassics(lang))];
   await audio(lang, classics.filter((c) => c.from.type === 'gutenberg'));
-  const items = [...classics, ...(await shorts(lang)), ...(await picture(lang))];
+  const items = [...classics, ...(await shorts(lang)), ...(await picture(lang)), ...(await magazines(lang))];
+  const comics = await series(lang);
   const seen = new Set();
   const unique = items.filter((i) => !seen.has(i.id) && seen.add(i.id));
-  writeFileSync(new URL(`../src/core/explora/data/${lang}.json`, import.meta.url), JSON.stringify({ items: unique }, null, 1) + '\n');
+  writeFileSync(new URL(`../src/core/explora/data/${lang}.json`, import.meta.url), JSON.stringify({ items: unique, series: comics }, null, 1) + '\n');
   const by = (k) => unique.filter((i) => i.kind === k).length;
-  console.log(`  ${lang}: ${by('classic')} classics (${unique.filter((i) => i.audio).length} with a recording), ${by('short')} short reads, ${by('picture')} picture books`);
+  console.log(`  ${lang}: ${comics.length} comic series, ${by('article')} magazine articles, ${by('classic')} classics (${unique.filter((i) => i.audio).length} with a recording), ${by('short')} short reads, ${by('picture')} picture books`);
 }

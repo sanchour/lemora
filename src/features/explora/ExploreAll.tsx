@@ -24,7 +24,7 @@ import { MediaShelf } from './components/MediaShelf';
 import { MediaCard } from './components/MediaCard';
 import { MediaDetailModal } from './components/MediaDetailModal';
 import { ExploraFeed } from './ExploraFeed';
-import { ClassicsShelf, CollectionsShelf, DailyCards, PictureBooksGrid, PictureBooksShelf, ShortReadsShelf, useCatalogueItems, useOpenCatalogue } from './components/ExploraShelves';
+import { ClassicsShelf, CollectionsShelf, ComicSeriesShelf, DailyCards, OldMagazinesShelf, PictureBooksGrid, PictureBooksShelf, ShortReadsShelf, useCatalogueItems, useCatalogueSeries, useOpenCatalogue } from './components/ExploraShelves';
 import type { CatalogueItem } from '@/core/explora/catalogue';
 import { mixByKind } from '@/core/explora/mix';
 import {
@@ -34,7 +34,7 @@ import {
   WikipediaShelf,
 } from './components/BooksSection';
 import { WordDecksShelf } from './components/WordDecksShelf';
-import { ComicShelf, MagazineSection } from './components/ComicsSection';
+import { MagazineSection, pepperCard } from './components/ComicsSection';
 import { PEPPER_CREDIT } from '@/core/comics/peppercarrot';
 import { LudusRow, LudusShelf } from './components/LudusShelf';
 import { comicCover, comicEpisodes } from '@/core/comics/peppercarrot';
@@ -160,7 +160,7 @@ const GENRE_WORD: Record<string, string> = { fable: 'A fable', tale: 'A fairy ta
 export function catalogueToItem(c: CatalogueItem): ExploraItem {
   // A classic has no picture of its own: the app draws its cover (Gutenberg's generated ones are slow to come).
   const cover = c.cover;
-  const blurb = c.kind === 'picture' ? 'A picture book to read with the pictures, free on StoryWeaver.' : c.kind === 'short' ? `${GENRE_WORD[c.genre ?? 'story']}, about ${c.minutes ?? 1} min to read.` : 'A free classic, read in Codex with every word a tap away.';
+  const blurb = c.kind === 'picture' ? 'A picture book to read with the pictures, free on StoryWeaver.' : c.kind === 'article' ? `An article from ${c.magazine?.name ?? 'an old magazine'}, about ${c.minutes ?? 1} min to read.` : c.kind === 'short' ? `${GENRE_WORD[c.genre ?? 'story']}, about ${c.minutes ?? 1} min to read.` : 'A free classic, read in Codex with every word a tap away.';
   return { id: `cat:${c.id}`, kind: c.kind === 'classic' ? 'books' : 'read', title: c.title, sub: c.author, level: c.level, cover, catalogue: c, blurb };
 }
 
@@ -215,6 +215,7 @@ export function ExploreAll({
   const shelf = useLibrary(lang);
   const audiobooks = useAudiobookPicks(lang);
   const catalogue = useCatalogueItems(lang);
+  const comicSeries = useCatalogueSeries(lang);
   const opener = useOpenCatalogue(lang);
 
   const setCategory = (cat: ExploraCategory) => {
@@ -305,8 +306,9 @@ export function ExploreAll({
     const first = FIRST_BOOKS[lang];
     if (first && (level === 'A0' || level === 'A1')) out.push({ id: 'first-book', kind: 'books', title: first.title, level: 'A1', to: '/codex/first', blurb: 'A tiny first book: a line a page, the easiest words.' });
     for (const c of catalogue) out.push(catalogueToItem(c));
+    for (const s of comicSeries) out.push({ id: `series:${s.id}`, kind: 'comic', title: s.title, sub: s.author, level: s.level, cover: s.cover, to: `/explora/series/${s.id}`, blurb: s.blurb });
     return out.filter((item) => kindShown(item.kind));
-  }, [picks, stations, audiobooks, lang, shelf, level, catalogue]);
+  }, [picks, stations, audiobooks, lang, shelf, level, catalogue, comicSeries]);
 
   // Filter items according to active level filter
   const filteredByLevel = useMemo(() => {
@@ -524,11 +526,12 @@ export function ExploreAll({
         <div className="pt-1">
           <NewsSection lang={lang} />
           <MagazineSection lang={lang} />
+          <OldMagazinesShelf lang={lang} items={catalogue} opener={opener} limit={30} />
           <WikipediaShelf lang={lang} />
         </div>
       ) : category === 'comics' ? (
         <div className="pt-1">
-          <ComicShelf lang={lang} />
+          <ComicSeriesShelf lang={lang} series={comicSeries} first={pepperCard(lang)} />
           <p className="-mt-3 mb-6 text-[11.5px] text-ink-faint">{PEPPER_CREDIT}</p>
           <PictureBooksGrid lang={lang} items={catalogue} learner={level} opener={opener} />
           <PictureBooksSection lang={lang} />
@@ -623,6 +626,7 @@ export function ExploreAll({
 
               {/* 5. News and magazines */}
               <MagazineSection lang={lang} title={translateUi('News and magazines')} limit={4} />
+              <OldMagazinesShelf lang={lang} items={catalogue} opener={opener} />
 
               {/* 6. Collections, 7. the daily cards */}
               <CollectionsShelf items={catalogue} />
@@ -651,7 +655,7 @@ export function ExploreAll({
               <WordDecksShelf lang={lang} learnerLevel={level} levelFilter={levelFilter} blurbs={false} />
 
               {/* Lemora U4: comics, free and legal to use */}
-              <ComicShelf lang={lang} />
+              <ComicSeriesShelf lang={lang} series={comicSeries} first={pepperCard(lang)} />
 
               {/* Ludus: a row of games */}
               <LudusRow />

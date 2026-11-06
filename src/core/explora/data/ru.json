@@ -742,6 +742,189 @@
     "type": "storyweaver",
     "slug": "584606-who-stole-bhaiya-s-smile"
    }
+  },
+  {
+   "id": "mag:otechestvennye:А. О. Смирновой (Лермонтов)",
+   "kind": "article",
+   "title": "А. О. Смирновой",
+   "author": "Отечественные записки",
+   "level": "C1",
+   "minutes": 3,
+   "magazine": {
+    "name": "Отечественные записки",
+    "years": "1840",
+    "colour": "#6a4a7a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "А. О. Смирновой (Лермонтов)"
+   }
+  },
+  {
+   "id": "mag:otechestvennye:Воздушный корабль (Лермонтов)",
+   "kind": "article",
+   "title": "Воздушный корабль",
+   "author": "Отечественные записки",
+   "level": "C1",
+   "minutes": 4,
+   "magazine": {
+    "name": "Отечественные записки",
+    "years": "1840",
+    "colour": "#6a4a7a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Воздушный корабль (Лермонтов)"
+   }
+  },
+  {
+   "id": "mag:otechestvennye:Журналист, Читатель и Писатель (Лермонтов)",
+   "kind": "article",
+   "title": "Журналист, Читатель и Писатель",
+   "author": "Отечественные записки",
+   "level": "C1",
+   "minutes": 6,
+   "magazine": {
+    "name": "Отечественные записки",
+    "years": "1840",
+    "colour": "#6a4a7a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Журналист, Читатель и Писатель (Лермонтов)"
+   }
+  },
+  {
+   "id": "mag:otechestvennye:Казачья колыбельная песня (Лермонтов)",
+   "kind": "article",
+   "title": "Казачья колыбельная песня",
+   "author": "Отечественные записки",
+   "level": "C1",
+   "minutes": 3,
+   "magazine": {
+    "name": "Отечественные записки",
+    "years": "1840",
+    "colour": "#6a4a7a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Казачья колыбельная песня (Лермонтов)"
+   }
+  },
+  {
+   "id": "mag:otechestvennye:Как часто, пёстрою толпою окружён (Лермонтов)",
+   "kind": "article",
+   "title": "Как часто, пёстрою толпою окружён",
+   "author": "Отечественные записки",
+   "level": "C1",
+   "minutes": 3,
+   "magazine": {
+    "name": "Отечественные записки",
+    "years": "1840",
+    "colour": "#6a4a7a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Как часто, пёстрою толпою окружён (Лермонтов)"
+   }
+  },
+  {
+   "id": "mag:otechestvennye:Отчего (Лермонтов)",
+   "kind": "article",
+   "title": "Отчего",
+   "author": "Отечественные записки",
+   "level": "C1",
+   "minutes": 2,
+   "magazine": {
+    "name": "Отечественные записки",
+    "years": "1840",
+    "colour": "#6a4a7a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Отчего (Лермонтов)"
+   }
+  },
+  {
+   "id": "mag:otechestvennye:Песня (Скотт; Павлова)",
+   "kind": "article",
+   "title": "Песня",
+   "author": "Отечественные записки",
+   "level": "C1",
+   "minutes": 2,
+   "magazine": {
+    "name": "Отечественные записки",
+    "years": "1840",
+    "colour": "#6a4a7a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Песня (Скотт; Павлова)"
+   }
+  },
+  {
+   "id": "mag:otechestvennye:Ребёнку (Лермонтов)",
+   "kind": "article",
+   "title": "Ребёнку",
+   "author": "Отечественные записки",
+   "level": "C1",
+   "minutes": 2,
+   "magazine": {
+    "name": "Отечественные записки",
+    "years": "1840",
+    "colour": "#6a4a7a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Ребёнку (Лермонтов)"
+   }
+  },
+  {
+   "id": "mag:otechestvennye:Тамань (Лермонтов)",
+   "kind": "article",
+   "title": "Тамань",
+   "author": "Отечественные записки",
+   "level": "C1",
+   "minutes": 18,
+   "magazine": {
+    "name": "Отечественные записки",
+    "years": "1840",
+    "colour": "#6a4a7a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Тамань (Лермонтов)"
+   }
+  },
+  {
+   "id": "mag:otechestvennye:Хуторок (Кольцов)",
+   "kind": "article",
+   "title": "Хуторок",
+   "author": "Отечественные записки",
+   "level": "C1",
+   "minutes": 2,
+   "magazine": {
+    "name": "Отечественные записки",
+    "years": "1840",
+    "colour": "#6a4a7a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Хуторок (Кольцов)"
+   }
+  }
+ ],
+ "series": [
+  {
+   "id": "okna-rosta",
+   "title": "Окна РОСТА",
+   "author": "Владимир Маяковский",
+   "years": "1919",
+   "level": "B2",
+   "blurb": "Poster-comics with rhymed captions, painted and written by Mayakovsky.",
+   "category": "Okna ROSTA by Vladimir Mayakovsky",
+   "pages": 80,
+   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dc/1920._%D0%97%D0%B0%D0%B1%D1%83%D0%B4%D0%B5%D0%BC_%D1%81%D0%BE%D0%BB%D0%B4%D0%B0%D1%82%D1%87%D0%B8%D0%BD%D1%83.jpg/500px-1920._%D0%97%D0%B0%D0%B1%D1%83%D0%B4%D0%B5%D0%BC_%D1%81%D0%BE%D0%BB%D0%B4%D0%B0%D1%82%D1%87%D0%B8%D0%BD%D1%83.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
   }
  ]
 }

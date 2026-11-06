@@ -696,6 +696,177 @@
     "type": "storyweaver",
     "slug": "432310-a-stitch-in-time"
    }
+  },
+  {
+   "id": "mag:ilustracion:La Ilustración Española y Americana/Año XIV/Al público",
+   "kind": "article",
+   "title": "Al público",
+   "author": "La Ilustración Española y Americana",
+   "level": "C1",
+   "minutes": 2,
+   "magazine": {
+    "name": "La Ilustración Española y Americana",
+    "years": "1870",
+    "colour": "#8a3a4a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "La Ilustración Española y Americana/Año XIV/Al público"
+   }
+  },
+  {
+   "id": "mag:ilustracion:La Ilustración Española y Americana/Año XIV/Bellezas de la ciencia",
+   "kind": "article",
+   "title": "Bellezas de la ciencia",
+   "author": "La Ilustración Española y Americana",
+   "level": "C1",
+   "minutes": 11,
+   "magazine": {
+    "name": "La Ilustración Española y Americana",
+    "years": "1870",
+    "colour": "#8a3a4a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "La Ilustración Española y Americana/Año XIV/Bellezas de la ciencia"
+   }
+  },
+  {
+   "id": "mag:ilustracion:La Ilustración Española y Americana/Año XIV/Crónica contemporánea del Núm. 1",
+   "kind": "article",
+   "title": "Crónica contemporánea del Núm. 1",
+   "author": "La Ilustración Española y Americana",
+   "level": "C1",
+   "minutes": 14,
+   "magazine": {
+    "name": "La Ilustración Española y Americana",
+    "years": "1870",
+    "colour": "#8a3a4a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "La Ilustración Española y Americana/Año XIV/Crónica contemporánea del Núm. 1"
+   }
+  },
+  {
+   "id": "mag:ilustracion:La Ilustración Española y Americana/Año XIV/El Arte en 1869",
+   "kind": "article",
+   "title": "El Arte en 1869",
+   "author": "La Ilustración Española y Americana",
+   "level": "C1",
+   "minutes": 8,
+   "magazine": {
+    "name": "La Ilustración Española y Americana",
+    "years": "1870",
+    "colour": "#8a3a4a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "La Ilustración Española y Americana/Año XIV/El Arte en 1869"
+   }
+  },
+  {
+   "id": "mag:ilustracion:La Ilustración Española y Americana/Año XIV/El invierno",
+   "kind": "article",
+   "title": "El invierno",
+   "author": "La Ilustración Española y Americana",
+   "level": "C1",
+   "minutes": 4,
+   "magazine": {
+    "name": "La Ilustración Española y Americana",
+    "years": "1870",
+    "colour": "#8a3a4a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "La Ilustración Española y Americana/Año XIV/El invierno"
+   }
+  },
+  {
+   "id": "mag:ilustracion:La Ilustración Española y Americana/Año XIV/Embarque de los voluntarios",
+   "kind": "article",
+   "title": "Embarque de los voluntarios",
+   "author": "La Ilustración Española y Americana",
+   "level": "C1",
+   "minutes": 4,
+   "magazine": {
+    "name": "La Ilustración Española y Americana",
+    "years": "1870",
+    "colour": "#8a3a4a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "La Ilustración Española y Americana/Año XIV/Embarque de los voluntarios"
+   }
+  },
+  {
+   "id": "mag:ilustracion:La Ilustración Española y Americana/Año XIV/Fernando de Lesseps",
+   "kind": "article",
+   "title": "Fernando de Lesseps",
+   "author": "La Ilustración Española y Americana",
+   "level": "C1",
+   "minutes": 16,
+   "magazine": {
+    "name": "La Ilustración Española y Americana",
+    "years": "1870",
+    "colour": "#8a3a4a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "La Ilustración Española y Americana/Año XIV/Fernando de Lesseps"
+   }
+  },
+  {
+   "id": "mag:ilustracion:La Ilustración Española y Americana/Año XIV/Herculano",
+   "kind": "article",
+   "title": "Herculano",
+   "author": "La Ilustración Española y Americana",
+   "level": "C1",
+   "minutes": 9,
+   "magazine": {
+    "name": "La Ilustración Española y Americana",
+    "years": "1870",
+    "colour": "#8a3a4a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "La Ilustración Española y Americana/Año XIV/Herculano"
+   }
+  },
+  {
+   "id": "mag:ilustracion:La Ilustración Española y Americana/Año XIV/La fiesta de los negros en La Habana",
+   "kind": "article",
+   "title": "La fiesta de los negros en La Habana",
+   "author": "La Ilustración Española y Americana",
+   "level": "C1",
+   "minutes": 6,
+   "magazine": {
+    "name": "La Ilustración Española y Americana",
+    "years": "1870",
+    "colour": "#8a3a4a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "La Ilustración Española y Americana/Año XIV/La fiesta de los negros en La Habana"
+   }
+  },
+  {
+   "id": "mag:ilustracion:La Ilustración Española y Americana/Año XIV/Los libros nuevos del Núm. 1",
+   "kind": "article",
+   "title": "Los libros nuevos del Núm. 1",
+   "author": "La Ilustración Española y Americana",
+   "level": "C1",
+   "minutes": 5,
+   "magazine": {
+    "name": "La Ilustración Española y Americana",
+    "years": "1870",
+    "colour": "#8a3a4a"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "La Ilustración Española y Americana/Año XIV/Los libros nuevos del Núm. 1"
+   }
   }
- ]
+ ],
+ "series": []
 }

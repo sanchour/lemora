@@ -29,6 +29,14 @@ describe.each(CATALOGUE_LANGS)('the %s catalogue', (lang) => {
       if (i.kind === 'short') expect(i.minutes).toBeGreaterThan(0);
     }
   });
+  it('has old-magazine articles and comic series where the sources have them', () => {
+    const { series = [] } = load(lang);
+    const want = { fr: [8, 4], es: [8, 0], de: [8, 3], ru: [8, 1], zh: [0, 0], ar: [8, 1] }[lang];
+    expect(count('article')).toBeGreaterThanOrEqual(want[0]);
+    expect(series.length).toBeGreaterThanOrEqual(want[1]);
+    for (const s of series) expect(s.pages).toBeGreaterThanOrEqual(5);
+    for (const i of items) if (i.kind === 'article') expect(i.magazine?.name).toBeTruthy();
+  });
   it('fills most collections', () => {
     expect(COLLECTIONS.filter((c) => items.filter(c.pick).length >= 3).length).toBeGreaterThanOrEqual(3);
   });

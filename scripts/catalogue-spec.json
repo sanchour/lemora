@@ -1789,5 +1789,191 @@
     "C1"
    ]
   ]
+ },
+ "S": {
+  "fr": [
+   [
+    "crepin",
+    "Histoire de monsieur Crépin",
+    "Rodolphe Töpffer",
+    "1837",
+    "Histoire de monsieur Crépin",
+    "B2",
+    "One of the first comic albums ever drawn: a Swiss schoolmaster’s comedy of manners, told in captions and pictures."
+   ],
+   [
+    "pencil",
+    "Monsieur Pencil",
+    "Rodolphe Töpffer",
+    "1840",
+    "Monsieur Pencil",
+    "B2",
+    "A painter’s misadventures, drawn by the man who invented the comic strip."
+   ],
+   [
+    "cryptogame",
+    "Histoire de monsieur Cryptogame",
+    "Rodolphe Töpffer",
+    "1845",
+    "Autour de la table - histoire de M. Cryptogame (1849)",
+    "B2",
+    "A botanist in love, in a long pictured story."
+   ],
+   [
+    "festus",
+    "Le docteur Festus",
+    "Rodolphe Töpffer",
+    "1840",
+    "Docteur Festus",
+    "B2",
+    "A doctor’s travels in pictures and verse."
+   ],
+   [
+    "fenouillard",
+    "La Famille Fenouillard",
+    "Christophe",
+    "1893",
+    "La Famille Fenouillard",
+    "B1",
+    "The Fenouillards travel the world: a classic of French comics, funny and easy to follow."
+   ]
+  ],
+  "de": [
+   [
+    "max-und-moritz",
+    "Max und Moritz",
+    "Wilhelm Busch",
+    "1865",
+    "Max und Moritz (1865)",
+    "A2",
+    "Two naughty boys and seven tricks, in rhyme and pictures: the German classic."
+   ],
+   [
+    "fromme-helene",
+    "Die fromme Helene",
+    "Wilhelm Busch",
+    "1872",
+    "Wilhelm Busch - Die fromme Helene",
+    "B2",
+    "A picture story in verse about a pious young woman and her troubles."
+   ],
+   [
+    "fipps",
+    "Fipps der Affe",
+    "Wilhelm Busch",
+    "1879",
+    "Fipps der Affe (Wilhelm Busch) drawings",
+    "B1",
+    "A monkey’s adventures, drawn in pen and ink."
+   ]
+  ],
+  "es": [],
+  "ru": [
+   [
+    "okna-rosta",
+    "Окна РОСТА",
+    "Владимир Маяковский",
+    "1919",
+    "Okna ROSTA by Vladimir Mayakovsky",
+    "B2",
+    "Poster-comics with rhymed captions, painted and written by Mayakovsky."
+   ]
+  ],
+  "zh": [],
+  "ar": [
+   [
+    "kalila-dimna",
+    "كليلة ودمنة",
+    "مخطوطة مصوّرة",
+    "1300",
+    "Kalila wa Dimna (MET 1981.373)",
+    "C1",
+    "Fables of two jackals, in an illustrated manuscript of the 1300s."
+   ],
+   [
+    "maqamat",
+    "مقامات الحريري",
+    "مخطوطة مصوّرة",
+    "1237",
+    "Maqamat of al-Hariri - BNF Arabe5847",
+    "C1",
+    "The tricks of Abu Zayd, in an illustrated manuscript."
+   ]
+  ]
+ },
+ "M": {
+  "fr": [
+   {
+    "id": "tour-du-monde",
+    "name": "Le Tour du monde",
+    "years": "1860",
+    "colour": "#2f4a73",
+    "mode": "links",
+    "pages": [
+     "Le Tour du monde/Volume 1"
+    ],
+    "take": 10,
+    "filter": "^(?!.*(Liste|Préface|Biographie))"
+   }
+  ],
+  "de": [
+   {
+    "id": "gartenlaube",
+    "name": "Die Gartenlaube",
+    "years": "1870",
+    "colour": "#3f6b5b",
+    "mode": "links",
+    "pages": [
+     "Die Gartenlaube (1870)"
+    ],
+    "take": 10,
+    "filter": "^(?!.*(Heft|Gartenlaube|:)).{12,}$"
+   }
+  ],
+  "es": [
+   {
+    "id": "ilustracion",
+    "name": "La Ilustración Española y Americana",
+    "years": "1870",
+    "colour": "#8a3a4a",
+    "mode": "prefix",
+    "pages": [
+     "La Ilustración Española y Americana/Año XIV/"
+    ],
+    "take": 10,
+    "filter": ""
+   }
+  ],
+  "ru": [
+   {
+    "id": "otechestvennye",
+    "name": "Отечественные записки",
+    "years": "1840",
+    "colour": "#6a4a7a",
+    "mode": "links",
+    "pages": [
+     "Отечественные записки/1840"
+    ],
+    "take": 10,
+    "filter": "\\("
+   }
+  ],
+  "zh": [],
+  "ar": [
+   {
+    "id": "bayan",
+    "name": "مجلة البيان",
+    "years": "1911",
+    "colour": "#a8741f",
+    "mode": "prefix",
+    "pages": [
+     "مجلة البيان للبرقوقي/العدد 1/",
+     "مجلة البيان للبرقوقي/العدد 2/",
+     "مجلة البيان للبرقوقي/العدد 5/"
+    ],
+    "take": 10,
+    "filter": ""
+   }
+  ]
  }
 }

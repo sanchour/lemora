@@ -20,8 +20,7 @@
    "from": {
     "type": "gutenberg",
     "id": 2229
-   },
-   "audio": "faust2_1008_librivox"
+   }
   },
   {
    "id": "pg2407",
@@ -718,6 +717,211 @@
     "type": "storyweaver",
     "slug": "596019-the-case-of-the-missing-water"
    }
+  },
+  {
+   "id": "mag:gartenlaube:Adolf Müller (Naturforscher)",
+   "kind": "article",
+   "title": "Adolf Müller",
+   "author": "Die Gartenlaube",
+   "level": "C1",
+   "minutes": 4,
+   "magazine": {
+    "name": "Die Gartenlaube",
+    "years": "1870",
+    "colour": "#3f6b5b"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Adolf Müller (Naturforscher)"
+   }
+  },
+  {
+   "id": "mag:gartenlaube:Albert Traeger",
+   "kind": "article",
+   "title": "Albert Traeger",
+   "author": "Die Gartenlaube",
+   "level": "C1",
+   "minutes": 2,
+   "magazine": {
+    "name": "Die Gartenlaube",
+    "years": "1870",
+    "colour": "#3f6b5b"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Albert Traeger"
+   }
+  },
+  {
+   "id": "mag:gartenlaube:Alexander der Erste und die Frauen",
+   "kind": "article",
+   "title": "Alexander der Erste und die Frauen",
+   "author": "Die Gartenlaube",
+   "level": "C1",
+   "minutes": 8,
+   "magazine": {
+    "name": "Die Gartenlaube",
+    "years": "1870",
+    "colour": "#3f6b5b"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Alexander der Erste und die Frauen"
+   }
+  },
+  {
+   "id": "mag:gartenlaube:Alfred Brehm",
+   "kind": "article",
+   "title": "Alfred Brehm",
+   "author": "Die Gartenlaube",
+   "level": "C1",
+   "minutes": 8,
+   "magazine": {
+    "name": "Die Gartenlaube",
+    "years": "1870",
+    "colour": "#3f6b5b"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Alfred Brehm"
+   }
+  },
+  {
+   "id": "mag:gartenlaube:Alpenglühen in Leipzig",
+   "kind": "article",
+   "title": "Alpenglühen in Leipzig",
+   "author": "Die Gartenlaube",
+   "level": "C1",
+   "minutes": 10,
+   "magazine": {
+    "name": "Die Gartenlaube",
+    "years": "1870",
+    "colour": "#3f6b5b"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Alpenglühen in Leipzig"
+   }
+  },
+  {
+   "id": "mag:gartenlaube:Altdeutsches Rügegericht in den Harzer Bergen",
+   "kind": "article",
+   "title": "Altdeutsches Rügegericht in den Harzer Bergen",
+   "author": "Die Gartenlaube",
+   "level": "C1",
+   "minutes": 12,
+   "magazine": {
+    "name": "Die Gartenlaube",
+    "years": "1870",
+    "colour": "#3f6b5b"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Altdeutsches Rügegericht in den Harzer Bergen"
+   }
+  },
+  {
+   "id": "mag:gartenlaube:Am Abend des 31. August in Beaumont",
+   "kind": "article",
+   "title": "Am Abend des 31. August in Beaumont",
+   "author": "Die Gartenlaube",
+   "level": "C1",
+   "minutes": 4,
+   "magazine": {
+    "name": "Die Gartenlaube",
+    "years": "1870",
+    "colour": "#3f6b5b"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Am Abend des 31. August in Beaumont"
+   }
+  },
+  {
+   "id": "mag:gartenlaube:Am Fuße des Harras-Sprungs",
+   "kind": "article",
+   "title": "Am Fuße des Harras-Sprungs",
+   "author": "Die Gartenlaube",
+   "level": "C1",
+   "minutes": 9,
+   "magazine": {
+    "name": "Die Gartenlaube",
+    "years": "1870",
+    "colour": "#3f6b5b"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Am Fuße des Harras-Sprungs"
+   }
+  },
+  {
+   "id": "mag:gartenlaube:Am Grabe der Mutter",
+   "kind": "article",
+   "title": "Am Grabe der Mutter",
+   "author": "Die Gartenlaube",
+   "level": "C1",
+   "minutes": 10,
+   "magazine": {
+    "name": "Die Gartenlaube",
+    "years": "1870",
+    "colour": "#3f6b5b"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Am Grabe der Mutter"
+   }
+  },
+  {
+   "id": "mag:gartenlaube:Am Wachtfeuer vor Rézonville",
+   "kind": "article",
+   "title": "Am Wachtfeuer vor Rézonville",
+   "author": "Die Gartenlaube",
+   "level": "C1",
+   "minutes": 4,
+   "magazine": {
+    "name": "Die Gartenlaube",
+    "years": "1870",
+    "colour": "#3f6b5b"
+   },
+   "from": {
+    "type": "wikisource",
+    "title": "Am Wachtfeuer vor Rézonville"
+   }
+  }
+ ],
+ "series": [
+  {
+   "id": "max-und-moritz",
+   "title": "Max und Moritz",
+   "author": "Wilhelm Busch",
+   "years": "1865",
+   "level": "A2",
+   "blurb": "Two naughty boys and seven tricks, in rhyme and pictures: the German classic.",
+   "category": "Max und Moritz (1865)",
+   "pages": 94,
+   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Max_und_Moritz_%28Busch%29_001.png/500px-Max_und_Moritz_%28Busch%29_001.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "id": "fromme-helene",
+   "title": "Die fromme Helene",
+   "author": "Wilhelm Busch",
+   "years": "1872",
+   "level": "B2",
+   "blurb": "A picture story in verse about a pious young woman and her troubles.",
+   "category": "Wilhelm Busch - Die fromme Helene",
+   "pages": 99,
+   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Busch_Werke_v2_p_201.jpg/500px-Busch_Werke_v2_p_201.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "id": "fipps",
+   "title": "Fipps der Affe",
+   "author": "Wilhelm Busch",
+   "years": "1879",
+   "level": "B1",
+   "blurb": "A monkey’s adventures, drawn in pen and ink.",
+   "category": "Fipps der Affe (Wilhelm Busch) drawings",
+   "pages": 154,
+   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Busch_Werke_v3_p_271_cutout1.jpg/500px-Busch_Werke_v3_p_271_cutout1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
   }
  ]
 }

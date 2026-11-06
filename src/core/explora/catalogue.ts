@@ -7,7 +7,7 @@
 import type { PickLevel } from '@/core/mundus/types';
 import { hashString } from '@/core/hash';
 
-export type CatalogueKind = 'classic' | 'short' | 'picture';
+export type CatalogueKind = 'classic' | 'short' | 'picture' | 'article';
 export type Genre = 'fable' | 'tale' | 'poem' | 'story' | 'essay';
 
 export type CatalogueSource =
@@ -27,11 +27,28 @@ export interface CatalogueItem {
   cover?: string;
   /** archive.org identifier of a LibriVox recording, where there is one (the classic can be read along). */
   audio?: string;
+  /** For an article of an old magazine: which magazine, and its colour for the cover. */
+  magazine?: { name: string; years: string; colour: string };
   from: CatalogueSource;
+}
+
+/** A comic (or picture story) in pages: scans on Wikimedia Commons, public domain, read in Explora page by page. */
+export interface ComicSeries {
+  id: string;
+  title: string;
+  author: string;
+  years: string;
+  level: PickLevel;
+  blurb: string;
+  /** The Commons category the pages are in. */
+  category: string;
+  pages: number;
+  cover: string;
 }
 
 export interface Catalogue {
   items: CatalogueItem[];
+  series?: ComicSeries[];
 }
 
 /** The languages with a catalogue. */
@@ -64,6 +81,8 @@ export function itemUrl(lang: string, item: CatalogueItem): string {
 export const CATALOGUE_CREDITS = {
   gutenberg: 'Classics: Project Gutenberg, public domain.',
   wikisource: 'Short reads: Wikisource, public domain texts (transcriptions CC BY-SA).',
+  commons: 'Comic series: scans on Wikimedia Commons, public domain.',
+  magazines: 'Old magazines: Wikisource, public domain (transcriptions CC BY-SA).',
   storyweaver: 'Picture books: StoryWeaver by Pratham Books, CC BY 4.0, each credited on its page.',
 } as const;
 
@@ -86,6 +105,7 @@ export const COLLECTIONS: Collection[] = [
   { id: 'first-picture-books', title: 'First picture books', blurb: 'Big pictures, a line or two a page: the gentlest start.', icon: 'book', colours: ['#b4452a', '#8a3320'], pick: (i) => i.kind === 'picture' && (i.level === 'A1' || i.level === 'A2') },
   { id: 'read-along', title: 'Read along with a recording', blurb: 'Classics that a volunteer has recorded: follow the text as you listen.', icon: 'sound', colours: ['#2f4a73', '#1f3252'], pick: (i) => i.kind === 'classic' && Boolean(i.audio) },
   { id: 'short-stories', title: 'Short stories', blurb: 'A whole story in one sitting, by the masters of the form.', icon: 'stack', colours: ['#6a4a7a', '#4b3357'], pick: (i) => i.genre === 'story' },
+  { id: 'old-magazines', title: 'Old magazines', blurb: 'Articles from magazines of the 1800s and early 1900s, in the language of their day.', icon: 'stack', colours: ['#2f4a73', '#1f3252'], pick: (i) => i.kind === 'article' },
   { id: 'under-five', title: 'Under five minutes', blurb: 'The quickest reads in Explora, for a coffee break.', icon: 'seal', colours: ['#8a3a4a', '#63283a'], pick: (i) => i.kind === 'short' && (i.minutes ?? 99) <= 5 },
 ];
 
