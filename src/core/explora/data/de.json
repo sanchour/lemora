@@ -899,7 +899,8 @@
    "blurb": "Two naughty boys and seven tricks, in rhyme and pictures: the German classic.",
    "category": "Max und Moritz (1865)",
    "pages": 94,
-   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Max_und_Moritz_%28Busch%29_001.png/500px-Max_und_Moritz_%28Busch%29_001.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Max_und_Moritz_%28Busch%29_001.png/500px-Max_und_Moritz_%28Busch%29_001.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "text": "Max und Moritz"
   },
   {
    "id": "fromme-helene",
@@ -911,17 +912,6 @@
    "category": "Wilhelm Busch - Die fromme Helene",
    "pages": 99,
    "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Busch_Werke_v2_p_201.jpg/500px-Busch_Werke_v2_p_201.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
-  },
-  {
-   "id": "fipps",
-   "title": "Fipps der Affe",
-   "author": "Wilhelm Busch",
-   "years": "1879",
-   "level": "B1",
-   "blurb": "A monkey’s adventures, drawn in pen and ink.",
-   "category": "Fipps der Affe (Wilhelm Busch) drawings",
-   "pages": 154,
-   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Busch_Werke_v3_p_271_cutout1.jpg/500px-Busch_Werke_v3_p_271_cutout1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
   }
  ]
 }

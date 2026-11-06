@@ -138,7 +138,7 @@ async function picture(lang) {
 const natural = (a, b) => a.localeCompare(b, 'en', { numeric: true });
 async function series(lang) {
   const out = [];
-  for (const [id, title, author, years, category, level, blurb] of spec.S[lang] ?? []) {
+  for (const [id, title, author, years, category, level, blurb, text] of spec.S[lang] ?? []) {
     const base = `https://commons.wikimedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=${encodeURIComponent('Category:' + category)}&gcmtype=file&gcmlimit=50&prop=imageinfo&iiprop=url%7Cmime&iiurlwidth=420&format=json&formatversion=2`;
     const rows = [];
     let more = '';
@@ -150,7 +150,7 @@ async function series(lang) {
     }
     const pages = rows.filter((p) => /^image\/(jpeg|png)/.test(p.imageinfo?.[0]?.mime ?? '')).sort((a, b) => natural(a.title, b.title));
     if (pages.length < 5) { console.log(`  ✗ ${lang} series: ${title} (${pages.length} pages)`); continue; }
-    out.push({ id, title, author, years, level, blurb, category, pages: pages.length, cover: pages[0].imageinfo[0].thumburl ?? pages[0].imageinfo[0].url });
+    out.push({ id, title, author, years, level, blurb, category, ...(text ? { text } : {}), pages: pages.length, cover: pages[0].imageinfo[0].thumburl ?? pages[0].imageinfo[0].url });
   }
   return out;
 }

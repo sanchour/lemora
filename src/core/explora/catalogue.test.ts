@@ -31,7 +31,7 @@ describe.each(CATALOGUE_LANGS)('the %s catalogue', (lang) => {
   });
   it('has old-magazine articles and comic series where the sources have them', () => {
     const { series = [] } = load(lang);
-    const want = { fr: [8, 4], es: [8, 0], de: [8, 3], ru: [8, 1], zh: [0, 0], ar: [8, 1] }[lang];
+    const want = { fr: [8, 4], es: [8, 0], de: [8, 2], ru: [8, 1], zh: [0, 0], ar: [8, 0] }[lang];
     expect(count('article')).toBeGreaterThanOrEqual(want[0]);
     expect(series.length).toBeGreaterThanOrEqual(want[1]);
     for (const s of series) expect(s.pages).toBeGreaterThanOrEqual(5);

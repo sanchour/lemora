@@ -643,28 +643,5 @@
    }
   }
  ],
- "series": [
-  {
-   "id": "kalila-dimna",
-   "title": "كليلة ودمنة",
-   "author": "مخطوطة مصوّرة",
-   "years": "1300",
-   "level": "C1",
-   "blurb": "Fables of two jackals, in an illustrated manuscript of the 1300s.",
-   "category": "Kalila wa Dimna (MET 1981.373)",
-   "pages": 264,
-   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6b/%22Burzuyeh_is_Summoned_by_Nushirvan_on_his_Return_from_India%22%2C_Folio_from_a_Kalila_wa_Dimna_MET_DP300740.jpg/500px-%22Burzuyeh_is_Summoned_by_Nushirvan_on_his_Return_from_India%22%2C_Folio_from_a_Kalila_wa_Dimna_MET_DP300740.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
-  },
-  {
-   "id": "maqamat",
-   "title": "مقامات الحريري",
-   "author": "مخطوطة مصوّرة",
-   "years": "1237",
-   "level": "C1",
-   "blurb": "The tricks of Abu Zayd, in an illustrated manuscript.",
-   "category": "Maqamat of al-Hariri - BNF Arabe5847",
-   "pages": 50,
-   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a9/A_Library_in_Golden_Islamic_Age.jpg/500px-A_Library_in_Golden_Islamic_Age.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
-  }
- ]
+ "series": []
 }

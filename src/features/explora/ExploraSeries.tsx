@@ -9,6 +9,9 @@ import { UiText, useUi } from '@/design/i18n/UiText';
 import { useHotkeys } from '@/design/hooks/useHotkeys';
 import { IconButton } from '@/design/primitives';
 import { seriesPages } from '@/services/explora/series';
+import { openCatalogueItem } from '@/services/explora/catalogue';
+import { toast } from '@/state/ui';
+import { useNavigate } from 'react-router';
 import type { SeriesPage } from '@/services/explora/series';
 
 export default function ExploraSeries() {
@@ -16,6 +19,8 @@ export default function ExploraSeries() {
   const { language } = useApp();
   const { id } = useParams();
   const [params, setParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [adding, setAdding] = useState(false);
   const [series, setSeries] = useState<ComicSeries | null | undefined>(undefined);
   const [pages, setPages] = useState<SeriesPage[] | null | 'error'>(null);
   useEffect(() => {
@@ -52,6 +57,22 @@ export default function ExploraSeries() {
           <p className="mt-1 font-serif text-[15px] text-ink-soft italic">{series.author} · {series.years}</p>
           <p className="mt-2 max-w-md text-[14px] text-ink-soft"><UiText source={series.blurb} /></p>
           <p className="mt-2 text-[12px] font-bold tracking-[0.12em] text-accent-text uppercase">{series.pages} <UiText source={'pages'} /></p>
+          {series.text && (
+            // The words of the story as text: the pictures carry them too, but only text can be tapped word by word.
+            <button type="button" disabled={adding} onClick={async () => {
+              setAdding(true);
+              try {
+                const where = await openCatalogueItem(language.id, { id: `series:${series.id}`, kind: 'short', title: series.title, author: series.author, level: series.level, from: { type: 'wikisource', title: series.text! } });
+                if ('to' in where) navigate(where.to);
+              } catch (error) {
+                toast(error instanceof Error ? error.message : 'That couldn’t be added.', { tone: 'error' });
+              } finally {
+                setAdding(false);
+              }
+            }} className="mt-3 inline-flex h-10 items-center rounded-full bg-accent-fill px-5 text-[13.5px] font-bold text-on-accent shadow-elev-1 transition hover:brightness-105 active:scale-95 disabled:opacity-60">
+              <UiText source={'Read the words in Codex'} />
+            </button>
+          )}
         </div>
       </header>
 

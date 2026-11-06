@@ -42,6 +42,8 @@ export interface ComicSeries {
   blurb: string;
   /** The Commons category the pages are in. */
   category: string;
+  /** The Wikisource page with the words of the story as text, where there is one: read in Codex, every word a tap away. */
+  text?: string;
   pages: number;
   cover: string;
 }

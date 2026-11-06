@@ -17739,5 +17739,8 @@
   ],
   "Old magazines: Wikisource, public domain (transcriptions CC BY-SA).": [
     "src/features/explora/components/ExploraShelves.tsx"
+  ],
+  "Read the words in Codex": [
+    "src/features/explora/ExploraSeries.tsx"
   ]
 }

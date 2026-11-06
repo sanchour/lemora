@@ -1808,7 +1808,8 @@
     "1840",
     "Monsieur Pencil",
     "B2",
-    "A painter’s misadventures, drawn by the man who invented the comic strip."
+    "A painter’s misadventures, drawn by the man who invented the comic strip.",
+    "Monsieur Pencil"
    ],
    [
     "cryptogame",
@@ -1835,7 +1836,8 @@
     "1893",
     "La Famille Fenouillard",
     "B1",
-    "The Fenouillards travel the world: a classic of French comics, funny and easy to follow."
+    "The Fenouillards travel the world: a classic of French comics, funny and easy to follow.",
+    "La Famille Fenouillard"
    ]
   ],
   "de": [
@@ -1846,7 +1848,8 @@
     "1865",
     "Max und Moritz (1865)",
     "A2",
-    "Two naughty boys and seven tricks, in rhyme and pictures: the German classic."
+    "Two naughty boys and seven tricks, in rhyme and pictures: the German classic.",
+    "Max und Moritz"
    ],
    [
     "fromme-helene",
@@ -1856,15 +1859,6 @@
     "Wilhelm Busch - Die fromme Helene",
     "B2",
     "A picture story in verse about a pious young woman and her troubles."
-   ],
-   [
-    "fipps",
-    "Fipps der Affe",
-    "Wilhelm Busch",
-    "1879",
-    "Fipps der Affe (Wilhelm Busch) drawings",
-    "B1",
-    "A monkey’s adventures, drawn in pen and ink."
    ]
   ],
   "es": [],
@@ -1880,26 +1874,7 @@
    ]
   ],
   "zh": [],
-  "ar": [
-   [
-    "kalila-dimna",
-    "كليلة ودمنة",
-    "مخطوطة مصوّرة",
-    "1300",
-    "Kalila wa Dimna (MET 1981.373)",
-    "C1",
-    "Fables of two jackals, in an illustrated manuscript of the 1300s."
-   ],
-   [
-    "maqamat",
-    "مقامات الحريري",
-    "مخطوطة مصوّرة",
-    "1237",
-    "Maqamat of al-Hariri - BNF Arabe5847",
-    "C1",
-    "The tricks of Abu Zayd, in an illustrated manuscript."
-   ]
-  ]
+  "ar": []
  },
  "M": {
   "fr": [

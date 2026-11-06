@@ -1015,7 +1015,8 @@
    "blurb": "A painter’s misadventures, drawn by the man who invented the comic strip.",
    "category": "Monsieur Pencil",
    "pages": 142,
-   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Page_de_titre_de_l%27ouvrage_de_Rodolphe_Topffer_%22Monsieur_Pencil%22.jpg/500px-Page_de_titre_de_l%27ouvrage_de_Rodolphe_Topffer_%22Monsieur_Pencil%22.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Page_de_titre_de_l%27ouvrage_de_Rodolphe_Topffer_%22Monsieur_Pencil%22.jpg/500px-Page_de_titre_de_l%27ouvrage_de_Rodolphe_Topffer_%22Monsieur_Pencil%22.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "text": "Monsieur Pencil"
   },
   {
    "id": "cryptogame",
@@ -1048,7 +1049,8 @@
    "blurb": "The Fenouillards travel the world: a classic of French comics, funny and easy to follow.",
    "category": "La Famille Fenouillard",
    "pages": 360,
-   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Christophe_-_La_Famille_Fenouillard%2C_1895_%28page_1_crop%29.jpg/500px-Christophe_-_La_Famille_Fenouillard%2C_1895_%28page_1_crop%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+   "cover": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Christophe_-_La_Famille_Fenouillard%2C_1895_%28page_1_crop%29.jpg/500px-Christophe_-_La_Famille_Fenouillard%2C_1895_%28page_1_crop%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+   "text": "La Famille Fenouillard"
   }
  ]
 }
