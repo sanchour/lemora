@@ -3,6 +3,7 @@
 Every push to `main` has a version (the scheme is [docs/VERSIONS.md](docs/VERSIONS.md)): newest first.
 
 <!-- new versions go here -->
+- **0.1.0-alpha.42** · 2026-11-06 · Explora comic series and old magazines
 - **0.1.0-alpha.41** · 2026-11-05 · Five more Home styles: Planner, Terminal, Poster, Analytics, Cockpit
 - **0.1.0-alpha.40** · 2026-11-05 · Home style button with seven alternative home looks
 - **0.1.0-alpha.39** · 2026-11-05 · Explora catalogue, new All layout, Flick in the header
